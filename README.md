@@ -7,4 +7,7 @@ To start venv, run `. venv/bin/activate`
 
 ### First run  
 Upon first run, install Flask in venv via `pip install Flask`  
-Then, to test the server, run `python run.py`
+Then, to test the server, run `python run.py`  
+
+### Routes  
+Routes are defined in `run.py`
