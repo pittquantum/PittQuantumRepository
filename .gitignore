@@ -52,3 +52,14 @@ docs/_build/
 
 # PyBuilder
 target/
+
+.DS_Store
+*.pyc
+*.pyo
+venv
+venv*
+dist
+*.egg
+*.egg-info
+_mailinglist
+.tox
