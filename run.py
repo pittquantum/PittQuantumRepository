@@ -5,5 +5,10 @@ app = Flask(__name__)
 def index():
 	return "PQR: coming soon"
 
+@app.route('/mol/<key>')
+@app.route('/mol/<key>/')
+def molecule(key):
+	return "Test: " + key
+
 if __name__ == '__main__':
 	app.run()
