@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="style.css" />
+    
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+        
+
+
+    <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+</head>
+
+<body>
+    <header> 
+        {% block header %}
+            <nav class="navbar navbar-default" role="navigation">
+              <div class="container">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/home"><img src="img/LogoV0_1.png" height="40px" alt='logo'></a>
+                </div>
+
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <!-- Search for molecules --> 
+                    <form class="navbar-form navbar-right" role="search">
+                  <div class="input-group">
+                    <input type="text" id="header-molecule-search" class="form-control typeahead" autocomplete="off"  placeholder="Molecule Search">
+                    <span class="input-group-btn">
+                         <button class="btn btn-primary" type="button">
+                              <i class="fa fa-search"></i>
+                         </button>
+                    </span>
+                  </div>
+                    </form>
+                    <!-- Search for molecules --> 
+
+                      <ul class="nav navbar-nav">
+                        <!-- <li <?php if(substr($page, 0, strlen($page)-4) == "home") echo "class='active'"; ?> ><a href="/home">Home</a></li> -->
+                        <li <?php if(substr($page, 0, strlen($page)-4) == "browse") echo "class='active'"; ?> ><a href="/browse">Browse</a></li>
+                        <li <?php if(substr($page, 0, strlen($page)-4) == "molecule") echo "class='active'"; ?> ><a href="/molecule">Molecule (Ex)</a></li>
+                        <li <?php if(substr($page, 0, strlen($page)-4) == "news") echo "class='active'"; ?> ><a href="/news">News</a></li>
+                      </ul>
+
+                      <ul class="nav navbar-nav navbar-right">
+                        <li <?php if(substr($page, 0, strlen($page)-4) == "contact") echo "class='active'"; ?> ><a href="/contact">Contact</a></li>
+
+            <!--             <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Accessibility<span class="caret"></span></a>
+                          <ul class="dropdown-menu" role="menu">
+                            <li>       
+                                <p class="">
+                                    <a href="#" class="navbdar-link" data-container="body" data-toggle="tooltip" title="Decrease overall font size" id="reducefont">A</a>
+                                    <a href="#" class="navbadr-link" data-container="body" data-toggle="tooltip" title="Increase overall font size" id="increasefont">A</a>
+                                    <a href="#" class="navdbar-link" data-container="body" data-toggle="tooltip" title="Revert to the default font size" id="defaultfont"><i class="fa fa-undo"></i></a>
+                                </p> 
+                            </li>
+                            <li> <a href="#">Test</a> </li>
+
+                          </ul>
+                        </li> -->
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li<?php if(substr($page, 0, strlen($page)-4) == "acknowledgments") echo "class='active'"; ?>><a href="/acknowledgments">Acknowledgments</a></li>
+                                <li<?php if(substr($page, 0, strlen($page)-4) == "about") echo "class='active'"; ?>><a href="/about">About Us</a></li>
+                                <li class="divider"></li>
+                                <li<?php if(substr($page, 0, strlen($page)-4) == "contact") echo "class='active'"; ?>><a href="/contact">Report a Problem</a></li>
+                            </ul>
+                        </li>
+
+            <!--                   <li>       
+                          <p class="navbar-text">
+                            <a href="#" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Decrease overall font size" id="reducefont">A</a>
+                            <a href="#" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Increase overall font size" id="increasefont">A</a>
+                            <a href="#" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Revert to the default font size" id="defaultfont"><i class="fa fa-undo"></i></a>
+                          </p> 
+                        </li>  -->
+
+                        <li> 
+                          <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-primary navbar-btn" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Decrease overall font size" id="reducefont"><i class="fa fa-font"></i> <i class="fa fa-arrow-down"></i></button>
+                            <button type="button" class="btn btn-primary navbar-btn" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Increase overall font size" id="increasefont"><i class="fa fa-font"></i> <i class="fa fa-arrow-up"></i></button>
+                            <button type="button" class="btn btn-primary navbar-btn" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Revert to the default font size" id="defaultfont"><i class="fa fa-undo"></i></button>
+                          </div>
+                        </li>
+
+
+                      </ul> 
+
+
+                    </div>
+              </div>
+            </nav>
+        {% endblock %}
+    </header>
+    
+    <div id="content" class="conatiner-fluid">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        {% block footer %}
+            <div class="container-fluid ">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h3> Credits: </h3>
+                        <p>
+                            Hutchison group at the University of Pittsburgh<br/>
+                            Lambrecht group at the University of Pittsburgh<br/>
+                         </p>
+                        <p> Application created by <a href="http://joshuarogan.com" target="_blank">Josh Rogan</a> &amp; <a href="http://ritwikgupta.me"> Ritwik Gupta </a></p>
+                        <p>Copyright © 2015</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h3> About Us </h3>
+                        <p> Fanny pack hashtag wolf, master cleanse cray church-key fingerstache Odd Future four dollar toast pug food truck actually ugh. Ennui pug salvia biodiesel actually. Heirloom VHS DIY meh. Hella butcher photo booth fap, jean shorts kogi swag VHS Portland 3 wolf moon direct trade viral fashion axe. Meditation High Life tofu organic.</p>
+
+
+                        <h4>Fanny pack hashtag wolf</h4>
+                        <ul class="list-unstyled">
+                            <li> Street Address </li>
+                            <li> Pittsburgh, PA 15261 </li>
+                            <li> ###-###-#### </li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-md-3">
+                        <h3> Report a Problem </h3>
+                        <p> Found a problem? <a href="/contact">Report it here!</a> </p>
+                        <img class="img-responsive right-block" alt="footer-logo" src="img/footer-logo.png" width="80px">
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <ul class="list-unstyled list-inline text-center">
+                            <li> <a href="#" target="_blank"><i class="fa fa-facebook fa-lg" ></i></a> </li>
+                            <li> <a href="#" target="_blank"><i class="fa fa-twitter fa-lg" ></i></a> </li>
+                            <li> <a href="#" target="_blank"><i class="fa fa-linkedin fa-lg"></i></a> </li>
+                            <li> <a href="#" target="_blank"><i class="fa fa-youtube fa-lg"></i></a> </li>
+                            <li> <a href="#" target="_blank"><i class="fa fa-flickr fa-lg"></i></a> </li>
+                    </ul>
+
+                    <ul class="list-inline text-center">
+                        <li><a href="/home">Home</a></li>
+                        <li><a href="/browse">Browse</a></li>
+                        <li><a href="/news">News</a></li>
+                        <li><a href="/acknowledgments">Acknowledgments</a></li>
+                    </ul>
+                </div>
+            </div>
+        {% endblock %}
+    </footer>
+
+
+</body>
+
+</html>

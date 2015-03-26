@@ -1,0 +1,18 @@
+{% extends "skeleton/base.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: red; }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    <h1>Index</h1>
+    <p class="important">
+      Welcome to my awesome homepage.
+    </p>
+{% endblock %}
