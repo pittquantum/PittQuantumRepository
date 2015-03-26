@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import render_template
 
+MOLECULE_OF_THE_DAY = 999
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -9,15 +11,14 @@ app = Flask(__name__)
 def index():
 	page = {'id': "page-home"}
 	return render_template("home.html", page = page)
-	# return "Hello"
 
 @app.route('/mol/<key>')
 @app.route('/mol/<key>/')
-@app.route('/mol/') #if no key lets default to the molecule of the day 
-@app.route('/mol') #if no key lets default to the molecule of the day 
+@app.route('/mol/') #if no key lets default to the molecule of the day
+@app.route('/mol') #if no key lets default to the molecule of the day
 def molecule(key = -1):
 	if key == -1:
-		key = 999 #Molecule of the day value  
+		key = MOLECULE_OF_THE_DAY #Molecule of the day value
 	page = {'id': "page-molecule", 'moleculeKey': key}
 	return render_template("molecule.html", page = page)
 
