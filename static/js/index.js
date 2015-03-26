@@ -19,12 +19,14 @@ $(document).ready(function() {
 	//Home Page
 	if($("#main").hasClass("page-home")){
 		pqr.typeahead.activate("#molec-query");
+		console.log("Home Page"); 
 	}
 
 	//Browse Page
 	if($("#main").hasClass("page-browse")){
 		pqr.typeahead.activate("#molec-query");
 		pqr.htmlUtilities.toolTipOptIn(); 
+		console.log("Browse Page"); 
 	}
 
 
