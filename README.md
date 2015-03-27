@@ -11,3 +11,8 @@ Then, to test the server, run `python server.py`
 
 ### Routes  
 Routes are defined in `pqr/views.py`
+
+
+### Grunt  
+Added grunt for watching LESS files for auto compiling. Will be useful for a lot of other things too. 
+
