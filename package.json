@@ -1,0 +1,25 @@
+{
+  "name": "pqr",
+  "version": "1.0.0",
+  "description": "Flask backend for the Pitt Quantum Repository website.",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pittquantum/backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pittquantum/backend/issues"
+  },
+  "homepage": "https://github.com/pittquantum/backend"
+}

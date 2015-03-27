@@ -1,0 +1,307 @@
+//Import bootstrap variables and mixins to use variables 
+@import "bootstrap/variables.less";	
+@import "bootstrap/mixins.less";	
+@import "utils.less";
+
+
+//Bootstrap overrides 
+
+//Reduce the outer padding from 15px - 2px
+.container{
+	padding-left: 2px;
+	padding-right: 2px;
+	/* Small devices (tablets, 768px and up) */
+	@media (min-width: @screen-sm-min) {}
+	/* Medium devices (desktops, 992px and up) */
+	@media (min-width: @screen-md-min) {
+		padding-left: 2px;
+		padding-right: 2px;
+	}
+	/* Large devices (large desktops, 1200px and up) */
+	@media (min-width: @screen-lg-min) {}
+}
+
+//Highligther color 
+::-moz-selection {
+    background: @theme-light-aqua;
+    color: white;
+}
+
+::selection {
+    background: @theme-light-aqua;
+    color: white;
+}
+
+
+
+
+
+body{
+	nav{
+		//Logo Placement in the navbar 
+		.navbar-brand > img{
+			margin-top: -10px;
+			padding-left: 5px;
+		}	
+	}
+
+
+
+
+
+	//Home page styling 
+	.page-home{
+		#splash-search{
+			margin-top: 10px;
+
+			#num-compounds{
+				padding-top: 20px; 
+				.number{
+					color: @brand-danger; 
+				}
+			}
+		}
+
+
+		//list content of articles, links, etc.
+		.other-content{
+			.fa{
+				color: @brand-primary; 
+			}
+		}
+
+		//3Dmol viewer
+		#molecule-viewer{
+			
+			//Make the 3dmole somewhat responsive 
+			div, canvas{
+				margin-top: 150px;
+				height: 200px;
+
+				/* Small devices (tablets, 768px and up) */
+				@media (min-width: @screen-sm-min){
+					height: 250px;
+				}
+				/* Medium devices (desktops, 992px and up) */
+				@media (min-width: @screen-md-min) {
+					height: 350px;
+				}
+				/* Large devices (large desktops, 1200px and up) */
+				@media (min-width: @screen-lg-min) {
+					height: 400px;
+				}
+			}
+		}
+
+
+	}
+
+
+
+	//Molecule Styling 
+	.page-molecule{
+		h1#molecule-name{
+			font-size: 23px;
+			padding-left: 10px;
+			/* Small devices (tablets, 768px and up) */
+			@media (min-width: @screen-sm-min) {font-size: 30px;}
+			/* Medium devices (desktops, 992px and up) */
+			@media (min-width: @screen-md-min) {font-size: 32px;}
+			/* Large devices (large desktops, 1200px and up) */
+			@media (min-width: @screen-lg-min) {font-size: 36px;}
+
+			.small{
+				padding-top: 5px;
+			}
+		}
+
+
+		#molecule-properties{
+
+			//Workaround tooltip size
+			// .tooltip-inner { width:150px; max-width: 400px; } 
+
+			h2{
+				font-size: 21px;
+				margin-bottom: 0px; 
+				padding-bottom: 0px;
+
+
+				/* Small devices (tablets, 768px and up) */
+				@media (min-width: @screen-sm-min) {font-size: 28px;}
+				/* Medium devices (desktops, 992px and up) */
+				@media (min-width: @screen-md-min) {font-size: 24px; margin-top: 0;}
+				/* Large devices (large desktops, 1200px and up) */
+				@media (min-width: @screen-lg-min) {font-size: 28px;}
+
+				.properties-view-options{
+					font-size: 12px;
+				}
+
+			}
+
+
+
+			//Table that holds all of the properties for the molecule 
+			table{
+				tr td:first-of-type {
+					font-weight: bold; //Bold the first column 
+				}
+
+
+				tbody{
+					//Select any specific class/property here 
+					.molecule-qr-code img{
+						max-width: 60%;
+					}
+				}
+				
+			}
+		}
+
+		//3Dmol viewer
+		#molecule-viewer{
+			
+			//Make the 3dmole somewhat responsive 
+			div, canvas{
+				height: 250px;
+
+				/* Small devices (tablets, 768px and up) */
+				@media (min-width: @screen-sm-min){
+					height: 350px;
+				}
+				/* Medium devices (desktops, 992px and up) */
+				@media (min-width: @screen-md-min) {
+					height: 400px;
+				}
+				/* Large devices (large desktops, 1200px and up) */
+				@media (min-width: @screen-lg-min) {
+					height: 500px;
+				}
+			}
+		}
+	}
+
+
+	//Browsing Page Style
+	.page-browse{
+		#splash-search{
+			margin-top: 10px;
+
+			#num-compounds{
+				padding-top: 20px; 
+				.number{
+					color: @brand-danger; 
+				}
+			}
+		}
+
+		#molecule-browser{
+
+
+			//3Dmol viewer
+			.molecule-viwer{
+
+				#material .cards(); 
+				padding: 10px; 
+				margin-bottom: 30px;
+
+
+				//Make the 3dmole somewhat responsive 
+				div, canvas{
+					height: 150px;
+
+					/* Small devices (tablets, 768px and up) */
+					@media (min-width: @screen-sm-min){
+						height: 200px;
+					}
+					/* Medium devices (desktops, 992px and up) */
+					@media (min-width: @screen-md-min) {
+						height: 150px;
+					}
+					/* Large devices (large desktops, 1200px and up) */
+					@media (min-width: @screen-lg-min) {
+						height: 200px;
+					}
+				}
+
+				//Displaying the formula in the browse window 
+				.molecule-formula{
+					text-align: center; 
+					padding-top: 30px;
+
+					font-size: 25px;
+
+					/* Small devices (tablets, 768px and up) */
+					@media (min-width: @screen-sm-min){
+						font-size: 30px;
+					}
+					/* Medium devices (desktops, 992px and up) */
+					@media (min-width: @screen-md-min) {
+						font-size: 35px;
+					}
+					/* Large devices (large desktops, 1200px and up) */
+					@media (min-width: @screen-lg-min) {
+						font-size: 45px;
+					}
+				}
+
+
+			}
+
+
+
+		}
+	}
+
+	//Contact US Styling 
+	.page-contact{
+		address{
+			#material .cards(); 
+			padding: 15px; 
+		}
+	}
+
+
+	footer{
+		#gradient > .vertical(@theme-cadet-blue, darken(@theme-cadet-blue, 5%));
+
+		padding-top: 40px;
+		margin-top: 60px;
+		color: white;
+
+		.container-fluid{
+			margin-left: 2%;
+			margin-right: 2%;
+		}
+
+		a{
+			color: white;
+			font-weight: bold
+		}
+
+		a:hover{
+			color: white;
+		}
+
+	}
+}
+
+
+
+/*****GLOBAL ELEMENTS ****/
+
+//Font size icons 
+// #reducefont{
+// 	font-size: 80%;
+// }
+
+// #increasefont{
+// 	font-size: 100%;
+// }
+
+// #defaultfont{
+// 	font-size: 75%; 
+// }
+
+
