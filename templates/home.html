@@ -1,10 +1,17 @@
 {% extends "skeleton/base.html" %}
 
-{% block title %}Index{% endblock %}
+{% block header %}
+     {% include 'skeleton/default_header.html' %}
+{% endblock %}
+
+{% block footer %}
+     {% include 'skeleton/default_footer.html' %}
+{% endblock %}
+
+{% block title %}Home{% endblock %}
 
 {% block head %}
     {{ super() }}
-
 {% endblock %}
 
 
