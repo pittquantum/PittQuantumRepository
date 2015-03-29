@@ -243,3 +243,10 @@ body footer a:hover {
   color: white;
 }
 /*****GLOBAL ELEMENTS ****/
+#qrcodemodal #qrcode img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -14,10 +14,14 @@ pqr.qrgen = pqr.qrgen || {
 
 /**
  *	Add a QR code to a html element with a jquery selector
- *
+ *		-Currently creates an image AND a canvas
  */
 pqr.qrgen.addQRCode = function(selector, url){
-	new QRCode(document.getElementById(selector), url);  
+	new QRCode(document.getElementById(selector), {
+    text: url,
+    colorDark : "#f16b1d", //Primary Orange
+    colorLight : "#fff"
+});  
 }
 
 
