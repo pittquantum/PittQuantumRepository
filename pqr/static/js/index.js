@@ -25,7 +25,8 @@ $(document).ready(function() {
 	//Browse Page
 	if($("#main").hasClass("page-browse")){
 		pqr.typeahead.activate("#molec-query");
-		pqr.htmlUtilities.toolTipOptIn(); 
+		pqr.htmlUtilities.toolTipOptIn();
+		pqr.qrgen.addQRCode("qrcode", "www.google.com");
 		console.log("Browse Page"); 
 	}
 
@@ -38,8 +39,7 @@ $(document).ready(function() {
 	    //Binding 
 	    pqr.bindevents.moleculeSizeChanger(); 
 
-	    //3D Mole Stuff 
-    	// pqr.threeDMole.activateResponsive();
+	    pqr.qrgen.addQRCode("qrcode", "www.google.com");
 	}
 
   
