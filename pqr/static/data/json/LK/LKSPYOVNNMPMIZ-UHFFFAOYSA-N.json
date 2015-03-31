@@ -1,0 +1,45 @@
+{
+  "inchikey": "LKSPYOVNNMPMIZ-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": 464.15676, 
+    "dipole": [
+      "-0.197", 
+      "2.438", 
+      "-0.001"
+    ], 
+    "volume": 74.77, 
+    "lumo": -0.894, 
+    "homo": -9.984, 
+    "surfaceArea": 90.41, 
+    "dipoleMoment": 2.446
+  }, 
+  "chemspider_id": 14804701, 
+  "tags": [
+    "enamine", 
+    "alkene", 
+    "hydrophilic", 
+    "imino", 
+    "alkyl", 
+    "base", 
+    "ring"
+  ], 
+  "cas": null, 
+  "pubchem_cid": 20185374, 
+  "molecular mass": 53.06262, 
+  "synonyms": [
+    "a", 
+    "e", 
+    "t", 
+    "z"
+  ], 
+  "elements": [
+    "H", 
+    "C", 
+    "N"
+  ], 
+  "pointGroup": "Cs", 
+  "inchi": "InChI=1S/C3H3N/c1-2-4-3-1/h1-3H", 
+  "formula": "C3H3N", 
+  "iupac_name": "azete", 
+  "name": "azete"
+}

@@ -1,0 +1,40 @@
+{
+  "inchikey": "DWRSCILTXDLQBG-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": -73.12361, 
+    "dipole": [
+      "-0.800", 
+      "-0.007", 
+      "0.036"
+    ], 
+    "volume": 129.42, 
+    "lumo": 1.46, 
+    "homo": -10.778, 
+    "surfaceArea": 133.54, 
+    "dipoleMoment": 0.801
+  }, 
+  "chemspider_id": 476131, 
+  "tags": [
+    "alkyl", 
+    "ring"
+  ], 
+  "cas": null, 
+  "pubchem_cid": 547016, 
+  "molecular mass": 86.2077, 
+  "synonyms": [
+    "1$l^{2}-silacyclopenta-2,4-diyne", 
+    "1$l^{2}-silacyclopentane", 
+    "silacyclopentane", 
+    "silolane"
+  ], 
+  "elements": [
+    "H", 
+    "Si", 
+    "C"
+  ], 
+  "pointGroup": "C2", 
+  "inchi": "InChI=1S/C4H10Si/c1-2-4-5-3-1/h1-5H2", 
+  "formula": "C4H10Si", 
+  "iupac_name": "1$l^{2}-silacyclopenta-2,4-diyne", 
+  "name": "silolane"
+}

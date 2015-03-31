@@ -1,0 +1,41 @@
+{
+  "inchikey": "DJMUYABFXCIYSC-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": 148.69332, 
+    "dipole": [
+      "1.922", 
+      "0.011", 
+      "-1.418"
+    ], 
+    "volume": 104.46, 
+    "lumo": -1.126, 
+    "homo": -9.906, 
+    "surfaceArea": 116.3, 
+    "dipoleMoment": 2.389
+  }, 
+  "chemspider_id": 144273, 
+  "tags": [
+    "alkyl", 
+    "ring"
+  ], 
+  "cas": "288-01-7", 
+  "pubchem_cid": 164575, 
+  "molecular mass": 84.056262, 
+  "synonyms": [
+    "1h-phosphole", 
+    "1h-phospholeaindene", 
+    "288-01-7", 
+    "chebi:33134", 
+    "phosphole"
+  ], 
+  "elements": [
+    "P", 
+    "C", 
+    "H"
+  ], 
+  "pointGroup": "Cs", 
+  "inchi": "InChI=1S/C4H5P/c1-2-4-5-3-1/h1-5H", 
+  "formula": "C4H5P", 
+  "iupac_name": "1h-phosphole", 
+  "name": "phosphole"
+}

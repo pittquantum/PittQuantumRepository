@@ -1,0 +1,71 @@
+{
+  "inchikey": "RWRDLPDLKQPQOW-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": -23.28854, 
+    "dipole": [
+      "1.826", 
+      "-0.275", 
+      "-0.799"
+    ], 
+    "volume": 104.26, 
+    "lumo": 3.088, 
+    "homo": -9.218, 
+    "surfaceArea": 116.39, 
+    "dipoleMoment": 2.012
+  }, 
+  "chemspider_id": 29008, 
+  "tags": [
+    "alkyl", 
+    "donor", 
+    "ring", 
+    "hydrophilic"
+  ], 
+  "cas": null, 
+  "pubchem_cid": 31268, 
+  "molecular mass": 71.12096, 
+  "synonyms": [
+    "1-azacyclopentane", 
+    "394238_aldrich", 
+    "5-20-01-00162 (beilstein handbook reference)", 
+    "83240_fluka", 
+    "ai3-24117", 
+    "azacyclopentane", 
+    "azolidine", 
+    "brn 0102395", 
+    "butylenimine", 
+    "ccris 6688", 
+    "chebi:33135", 
+    "einecs 204-648-7", 
+    "fema no. 3523", 
+    "hsdb 120", 
+    "inchi=1/c4h9n/c1-2-4-5-3-1/h5h,1-4h", 
+    "nciopen2_007788", 
+    "nsc 62781", 
+    "nsc62781", 
+    "p73803_aldrich", 
+    "perhydropyrrole", 
+    "prolamine", 
+    "pyrrole, tetrahydro-", 
+    "pyrrolidine", 
+    "pyrrolidine [un1922]  [flammable liquid]", 
+    "pyrrolidine ring", 
+    "st5213762", 
+    "tetrahydropyrrole", 
+    "tetramethyleneimine", 
+    "tetramethylenimine", 
+    "un1922", 
+    "upcmld00wv-121", 
+    "w352306_aldrich", 
+    "wln: t5mtj"
+  ], 
+  "elements": [
+    "H", 
+    "C", 
+    "N"
+  ], 
+  "pointGroup": "Cs", 
+  "inchi": "InChI=1S/C4H9N/c1-2-4-5-3-1/h5H,1-4H2", 
+  "formula": "C4H9N", 
+  "iupac_name": "pyrrolidine", 
+  "name": "pyrrolidine"
+}

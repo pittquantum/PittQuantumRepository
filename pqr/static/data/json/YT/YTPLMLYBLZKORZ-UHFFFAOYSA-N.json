@@ -1,0 +1,83 @@
+{
+  "inchikey": "YTPLMLYBLZKORZ-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": 123.99351, 
+    "dipole": [
+      "0.361", 
+      "-0.000", 
+      "0.000"
+    ], 
+    "volume": 101.55, 
+    "lumo": -0.359, 
+    "homo": -9.044, 
+    "surfaceArea": 113.02, 
+    "dipoleMoment": 0.361
+  }, 
+  "chemspider_id": 7739, 
+  "tags": [
+    "ring", 
+    "aromatic"
+  ], 
+  "cas": [
+    "25233-34-5", 
+    "110-02-1", 
+    "8014-23-1"
+  ], 
+  "pubchem_cid": 8030, 
+  "molecular mass": 84.13956, 
+  "synonyms": [
+    "06914_fluka", 
+    "110-02-1", 
+    "25233-34-5", 
+    "442802_supelco", 
+    "5-17-01-00297 (beilstein handbook reference)", 
+    "516694_aldrich", 
+    "8014-23-1", 
+    "ai3-15417", 
+    "aids-018335", 
+    "aids018335", 
+    "brn 0103222", 
+    "ccris 2935", 
+    "chebi:30856", 
+    "cp 34", 
+    "divinylene sulfide", 
+    "einecs 203-729-4", 
+    "furan, thio-", 
+    "hsdb 130", 
+    "huile h50", 
+    "huile hso", 
+    "inchi=1/c4h4s/c1-2-4-5-3-1/h1-4", 
+    "ncgc00091806-01", 
+    "nsc 405073", 
+    "nsc405073", 
+    "polythiophene", 
+    "st5214534", 
+    "t31801_aldrich", 
+    "thiacyclopentadiene", 
+    "thiaphene", 
+    "thiofen [czech]", 
+    "thiofuram", 
+    "thiofuran", 
+    "thiofurfuran", 
+    "thiole", 
+    "thiophen", 
+    "thiophene", 
+    "thiophene [un2414]  [flammable liquid]", 
+    "thiophene, homopolymer", 
+    "thiotetrole", 
+    "un2414", 
+    "usaf ek-1860", 
+    "wln: t5sj", 
+    "zinc01597767"
+  ], 
+  "elements": [
+    "H", 
+    "S", 
+    "C"
+  ], 
+  "pointGroup": "C2v", 
+  "inchi": "InChI=1S/C4H4S/c1-2-4-5-3-1/h1-4H", 
+  "formula": "C4H4S", 
+  "iupac_name": "thiophene", 
+  "name": "monothiol"
+}

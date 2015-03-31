@@ -1,0 +1,57 @@
+{
+  "inchikey": "BYEVBITUADOIGY-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": -584.06012, 
+    "dipole": [
+      "1.210", 
+      "-1.552", 
+      "0.022"
+    ], 
+    "volume": 268.47, 
+    "lumo": 1.193, 
+    "homo": -10.731, 
+    "surfaceArea": 271.37, 
+    "dipoleMoment": 1.968
+  }, 
+  "chemspider_id": 28991, 
+  "tags": [
+    "alkyl", 
+    "carbonyl", 
+    "ester", 
+    "hydrophilic"
+  ], 
+  "cas": "123-29-5", 
+  "pubchem_cid": 31251, 
+  "molecular mass": 186.29118, 
+  "synonyms": [
+    "112348_aldrich", 
+    "123-29-5", 
+    "76350_fluka", 
+    "ai3-13187", 
+    "brn 1759169", 
+    "einecs 204-615-7", 
+    "ethyl nonanoate", 
+    "ethyl nonanoate (natural)", 
+    "ethyl nonylate", 
+    "ethyl pelargonate", 
+    "fema no. 2447", 
+    "nonanoic acid ethyl ester", 
+    "nonanoic acid, ethyl ester", 
+    "nsc 8901", 
+    "nsc8901", 
+    "pelargonic acid ethyl ester", 
+    "w244708_aldrich", 
+    "wine ether", 
+    "wln: 8vo2"
+  ], 
+  "elements": [
+    "H", 
+    "C", 
+    "O"
+  ], 
+  "pointGroup": "C1", 
+  "inchi": "InChI=1S/C11H22O2/c1-3-5-6-7-8-9-10-11(12)13-4-2/h3-10H2,1-2H3", 
+  "formula": "C11H22O2", 
+  "iupac_name": "ethyl nonanoate", 
+  "name": "ethyl nonanoate"
+}

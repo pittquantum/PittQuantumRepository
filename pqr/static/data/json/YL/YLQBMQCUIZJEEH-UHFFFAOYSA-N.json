@@ -1,0 +1,64 @@
+{
+  "inchikey": "YLQBMQCUIZJEEH-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": -23.66433, 
+    "dipole": [
+      "-0.000", 
+      "0.127", 
+      "-0.000"
+    ], 
+    "volume": 86.45, 
+    "lumo": 0.445, 
+    "homo": -9.546, 
+    "surfaceArea": 100.8, 
+    "dipoleMoment": 0.127
+  }, 
+  "chemspider_id": 7738, 
+  "tags": [
+    "ring", 
+    "aromatic", 
+    "hydrophilic"
+  ], 
+  "cas": "110-00-9", 
+  "pubchem_cid": 8029, 
+  "molecular mass": 68.07396, 
+  "synonyms": [
+    "1,4-epoxy-1,3-butadiene", 
+    "110-00-9", 
+    "185922_aldrich", 
+    "5-17-01-00291 (beilstein handbook reference)", 
+    "ai3-24244", 
+    "axole", 
+    "brn 0103221", 
+    "c14275", 
+    "ccris 3159", 
+    "chebi:35559", 
+    "divinylene oxide", 
+    "einecs 203-727-3", 
+    "furan", 
+    "furan [un2389]  [flammable liquid]", 
+    "furane", 
+    "furfuran", 
+    "hsdb 89", 
+    "inchi=1/c4h4o/c1-2-4-5-3-1/h1-4", 
+    "ncgc00091774-01", 
+    "nci-c56202", 
+    "oxacyclopentadiene", 
+    "oxole", 
+    "rcra waste no. u124", 
+    "rcra waste number u124", 
+    "tetrole", 
+    "un2389", 
+    "zinc02041074"
+  ], 
+  "elements": [
+    "H", 
+    "C", 
+    "O"
+  ], 
+  "pointGroup": "C2v", 
+  "inchi": "InChI=1S/C4H4O/c1-2-4-5-3-1/h1-4H", 
+  "formula": "C4H4O", 
+  "iupac_name": "furan", 
+  "name": "furan"
+}

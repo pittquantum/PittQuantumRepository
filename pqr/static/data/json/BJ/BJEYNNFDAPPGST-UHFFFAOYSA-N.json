@@ -1,0 +1,44 @@
+{
+  "inchikey": "BJEYNNFDAPPGST-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": 202.25676, 
+    "dipole": [
+      "-2.071", 
+      "-0.011", 
+      "-0.013"
+    ], 
+    "volume": 57.29, 
+    "lumo": 0.221, 
+    "homo": -9.257, 
+    "surfaceArea": 74.66, 
+    "dipoleMoment": 2.071
+  }, 
+  "chemspider_id": 140985, 
+  "tags": [
+    "alkene", 
+    "enol_ether", 
+    "hydrophilic", 
+    "alkyl", 
+    "ring", 
+    "ether"
+  ], 
+  "cas": "157-18-6", 
+  "pubchem_cid": 160438, 
+  "molecular mass": 42.03668, 
+  "synonyms": [
+    "157-18-6", 
+    "chebi:30973", 
+    "oxene", 
+    "oxirene"
+  ], 
+  "elements": [
+    "H", 
+    "C", 
+    "O"
+  ], 
+  "pointGroup": "C2v", 
+  "inchi": "InChI=1S/C2H2O/c1-2-3-1/h1-2H", 
+  "formula": "C2H2O", 
+  "iupac_name": "oxirene", 
+  "name": "oxirene"
+}

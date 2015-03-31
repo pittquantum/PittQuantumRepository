@@ -1,0 +1,63 @@
+{
+  "inchikey": "VOVUARRWDCVURC-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": 98.88376, 
+    "dipole": [
+      "-1.708", 
+      "-0.002", 
+      "-0.007"
+    ], 
+    "volume": 78.45, 
+    "lumo": -0.616, 
+    "homo": -8.927, 
+    "surfaceArea": 94.11, 
+    "dipoleMoment": 1.708
+  }, 
+  "chemspider_id": 9481, 
+  "tags": [
+    "alkyl", 
+    "thioether", 
+    "ring"
+  ], 
+  "cas": "420-12-2", 
+  "pubchem_cid": 9865, 
+  "molecular mass": 60.11816, 
+  "synonyms": [
+    "03910_fluka", 
+    "128252_aldrich", 
+    "2,3-dihydrothiirene", 
+    "420-12-2", 
+    "aethylensulfid", 
+    "aethylensulfid [german]", 
+    "ai3-52351", 
+    "ccris 782", 
+    "chebi:30977", 
+    "dimethylene sulfide", 
+    "einecs 206-993-9", 
+    "epithioethane", 
+    "ethylene episulfide", 
+    "ethylene episulphide", 
+    "ethylene sulfide", 
+    "ethylene sulphide", 
+    "hsdb 5489", 
+    "inchi=1/c2h4s/c1-2-3-1/h1-2h", 
+    "nsc 89690", 
+    "nsc89690", 
+    "sulfurane", 
+    "thiacyclopropane", 
+    "thiiran", 
+    "thiirane", 
+    "thiirene, 2,3-dihydro-", 
+    "wln: t3stj"
+  ], 
+  "elements": [
+    "H", 
+    "S", 
+    "C"
+  ], 
+  "pointGroup": "C2v", 
+  "inchi": "InChI=1S/C2H4S/c1-2-3-1/h1-2H2", 
+  "formula": "C2H4S", 
+  "iupac_name": "thiirane", 
+  "name": "thiirane"
+}

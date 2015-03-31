@@ -1,0 +1,65 @@
+{
+  "inchikey": "YLYBTZIQSIBWLI-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": -564.29879, 
+    "dipole": [
+      "-0.885", 
+      "1.071", 
+      "1.797"
+    ], 
+    "volume": 247.14, 
+    "lumo": 1.144, 
+    "homo": -10.827, 
+    "surfaceArea": 252.96, 
+    "dipoleMoment": 2.271
+  }, 
+  "chemspider_id": 7872, 
+  "tags": [
+    "alkyl", 
+    "carbonyl", 
+    "ester", 
+    "hydrophilic"
+  ], 
+  "cas": "112-14-1", 
+  "pubchem_cid": 8164, 
+  "molecular mass": 172.2646, 
+  "synonyms": [
+    "1-octanol acetate", 
+    "1-octyl acetate", 
+    "112-14-1", 
+    "4-02-00-00165 (beilstein handbook reference)", 
+    "acetate c-8", 
+    "acetic acid octyl ester", 
+    "acetic acid, octyl ester", 
+    "ai3-11269", 
+    "brn 1754554", 
+    "caprylyl acetate", 
+    "einecs 203-939-6", 
+    "fema no. 2806", 
+    "n-octanyl acetate", 
+    "n-octyl acetate", 
+    "n-octyl ethanoate", 
+    "nciopen2_000238", 
+    "nsc 67348", 
+    "nsc67348", 
+    "o5500_aldrich", 
+    "octyl acetate", 
+    "octyl acetate (natural)", 
+    "octyl acetate, normal", 
+    "octyl alcohol acetate", 
+    "octyl ethanoate", 
+    "w280607_aldrich", 
+    "w280615_aldrich", 
+    "wln: 8ov1"
+  ], 
+  "elements": [
+    "H", 
+    "C", 
+    "O"
+  ], 
+  "pointGroup": "C1", 
+  "inchi": "InChI=1S/C10H20O2/c1-3-4-5-6-7-8-9-12-10(2)11/h3-9H2,1-2H3", 
+  "formula": "C10H20O2", 
+  "iupac_name": "octyl acetate", 
+  "name": "octyl acetate"
+}

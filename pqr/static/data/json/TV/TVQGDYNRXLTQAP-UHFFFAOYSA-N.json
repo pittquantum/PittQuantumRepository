@@ -1,0 +1,71 @@
+{
+  "inchikey": "TVQGDYNRXLTQAP-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": -541.35372, 
+    "dipole": [
+      "1.224", 
+      "-1.549", 
+      "-0.008"
+    ], 
+    "volume": 224.54, 
+    "lumo": 1.195, 
+    "homo": -10.737, 
+    "surfaceArea": 231.05, 
+    "dipoleMoment": 1.974
+  }, 
+  "chemspider_id": 7509, 
+  "tags": [
+    "alkyl", 
+    "carbonyl", 
+    "ester", 
+    "hydrophilic"
+  ], 
+  "cas": "106-30-9", 
+  "pubchem_cid": 7797, 
+  "molecular mass": 158.23802, 
+  "synonyms": [
+    "106-30-9", 
+    "112364_aldrich", 
+    "4-02-00-00960 (beilstein handbook reference)", 
+    "75200_fluka", 
+    "aether oenanthicus", 
+    "ai3-24251", 
+    "brn 1752311", 
+    "ccris 1344", 
+    "cognac oil", 
+    "einecs 203-382-9", 
+    "enanthic acid ethyl ester", 
+    "enanthylic ether", 
+    "ethyl enantate", 
+    "ethyl enanthate", 
+    "ethyl heptanoate", 
+    "ethyl heptanoate (natural)", 
+    "ethyl heptoate", 
+    "ethyl heptylate", 
+    "ethyl n-heptanoate", 
+    "ethyl oenanthate", 
+    "ethyl oenanthylate", 
+    "fema no. 2437", 
+    "grape oil", 
+    "heptanoic acid ethyl ester", 
+    "heptanoic acid, ethyl ester", 
+    "nsc 8891", 
+    "nsc8891", 
+    "oenanthic ether", 
+    "oleum vitis viniferae", 
+    "w243701_aldrich", 
+    "w243728_aldrich", 
+    "wine oil", 
+    "zinc01648312"
+  ], 
+  "elements": [
+    "H", 
+    "C", 
+    "O"
+  ], 
+  "pointGroup": "Cs", 
+  "inchi": "InChI=1S/C9H18O2/c1-3-5-6-7-8-9(10)11-4-2/h3-8H2,1-2H3", 
+  "formula": "C9H18O2", 
+  "iupac_name": "ethyl heptanoate", 
+  "name": "oil of grapes"
+}

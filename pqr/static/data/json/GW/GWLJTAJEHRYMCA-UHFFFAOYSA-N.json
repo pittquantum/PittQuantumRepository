@@ -1,0 +1,41 @@
+{
+  "inchikey": "GWLJTAJEHRYMCA-UHFFFAOYSA-N", 
+  "pm7": {
+    "heatOfFormation": -48.89543, 
+    "dipole": [
+      "3.351", 
+      "-0.104", 
+      "-1.240"
+    ], 
+    "volume": 119.93, 
+    "lumo": 0.084, 
+    "homo": -9.844, 
+    "surfaceArea": 128.55, 
+    "dipoleMoment": 3.574
+  }, 
+  "chemspider_id": 69459, 
+  "tags": [
+    "alkyl", 
+    "ring"
+  ], 
+  "cas": "3466-00-0", 
+  "pubchem_cid": 77013, 
+  "molecular mass": 88.088022, 
+  "synonyms": [
+    "3466-00-0", 
+    "chebi:33133", 
+    "einecs 222-420-5", 
+    "phosphacyclopentane", 
+    "phospholane"
+  ], 
+  "elements": [
+    "P", 
+    "C", 
+    "H"
+  ], 
+  "pointGroup": "C1", 
+  "inchi": "InChI=1S/C4H9P/c1-2-4-5-3-1/h5H,1-4H2", 
+  "formula": "C4H9P", 
+  "iupac_name": "phospholane", 
+  "name": "phospholane"
+}
