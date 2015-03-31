@@ -42,7 +42,7 @@ def contact():
 
 @pqr.errorhandler(404)
 def page_not_found(e):
-	return "404"
+	return "404", 404
 
 if __name__ == '__main__':
 	pqr.run()
