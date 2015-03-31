@@ -22,7 +22,7 @@
 
 
 {% block content %}
-<!-- QR CODE MODAL--> 
+<!-- QR CODE MODAL-->
 <div class="modal fade" id="qrcodemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -39,12 +39,12 @@
     </div>
   </div>
 </div>
-<!-- QR CODE MODAL --> 
+<!-- QR CODE MODAL -->
 
 <div class="container">
     {% import '/macros/molecule.html' as molecule %}
-	{{ molecule.staticMolecule('Methyl 2-Hydroxybenzoate', 'meth.mol2') }}
-	
+	{{ molecule.staticMolecule('Methyl 2-Hydroxybenzoate', page["keyFirstTwo"] + "/" + page["moleculeKey"] + ".mol2") }}
+
 </div>
 
 {% endblock %}

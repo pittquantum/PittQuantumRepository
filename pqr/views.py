@@ -18,7 +18,8 @@ def index():
 def molecule(key = -1):
 	if key == -1:
 		key = MOLECULE_OF_THE_DAY #Molecule of the day value
-	page = {'id': "page-molecule", 'moleculeKey': key}
+	keyFirstTwo = key[:2]
+	page = {'id': "page-molecule", 'moleculeKey': key, 'keyFirstTwo': keyFirstTwo}
 	return render_template("molecule.html", page = page)
 
 @pqr.route('/news')
