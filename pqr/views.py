@@ -1,12 +1,12 @@
 #!./venv/bin/python
-from flask import render_template
+from flask import Flask, render_template, url_for, redirect
 from pqr import pqr
 from settings import APP_JSON
 import os
 import json
 import math
 
-MOLECULE_OF_THE_DAY = 'AHHWIHXENZJRFG-UHFFFAOYSA-N'
+MOLECULE_OF_THE_DAY = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ###############################################################################################################
 @pqr.route('/')
@@ -22,7 +22,6 @@ def index():
 @pqr.route('/mol/') #if no key lets default to the molecule of the day
 @pqr.route('/mol') #if no key lets default to the molecule of the day
 def molecule(key = -1):
-
 	if key == -1:
 		key = MOLECULE_OF_THE_DAY #Molecule of the day value
 
@@ -30,9 +29,11 @@ def molecule(key = -1):
 
 	page = {'id': "page-molecule", 'moleculeKey': key, 'keyFirstTwo': keyFirstTwo}
 
-	with open(os.path.join(APP_JSON, keyFirstTwo + '/' + key + '.json')) as j:
-		jsonDict = json.load(j)
-	print json.dumps(jsonDict, indent=4, sort_keys=True)
+	try:
+		with open(os.path.join(APP_JSON, keyFirstTwo + '/' + key + '.json')) as j:
+			jsonDict = json.load(j)
+	except IOError:
+		return redirect(url_for('molecule', key=MOLECULE_OF_THE_DAY))
 
 	dipole = jsonDict["pm7"]["dipole"]
 	dipoleMoment = 0
@@ -73,8 +74,7 @@ def contact():
 ###############################################################################################################
 @pqr.errorhandler(404)
 def page_not_found(e):
-
-	return "404", 404
+	molecule(key=MOLECULE_OF_THE_DAY)
 
 ###############################################################################################################
 if __name__ == '__main__':
