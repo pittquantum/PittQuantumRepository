@@ -5,9 +5,8 @@ from pqr import pqr
 from settings import APP_JSON
 import os
 import json
-import math
 
-cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
+#cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ###############################################################################################################
@@ -23,7 +22,7 @@ def index():
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/') #if no key lets default to the molecule of the day
 @pqr.route('/mol') #if no key lets default to the molecule of the day
-@cache.cached(timeout=50)
+#@cache.cached(timeout=5)
 def molecule(key = -1):
 	if key == -1:
 		key = MOLECULE_OF_THE_WEEK
@@ -39,17 +38,8 @@ def molecule(key = -1):
 		flash("You entered a molecule that didn't exist, so you've been redirected to the molecule of the week!")
 		return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
-	dipole = jsonDict["pm7"]["dipole"]
-	dipoleMoment = 0
-
-	for i in dipole:
-		dipoleMoment += float(i)**2
-	dipoleMoment = math.sqrt(dipoleMoment)
-	dipoleMoment = float("{0:.3f}".format(dipoleMoment))
-	print dipoleMoment
-
 	# return the view
-	return render_template("molecule.html", page = page, jsonDict = jsonDict, dipoleMoment = dipoleMoment)
+	return render_template("molecule.html", page = page, jsonDict = jsonDict)
 
 ###############################################################################################################
 @pqr.route('/news')

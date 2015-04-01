@@ -33,7 +33,9 @@
 <!-- QR CODE MODAL -->
 
 <div class="container">
-     {% import '/macros/molecule.html' as molecule %} {{ molecule.staticMolecule('', page["keyFirstTwo"] + "/" + page["moleculeKey"] + ".mol2", jsonDict, dipoleMoment) }}
+     {% import '/macros/molecule.html' as molecule %}
+     <!-- -->
+     {{ molecule.staticMolecule('', page["keyFirstTwo"] + "/" + page["moleculeKey"] + ".mol2", jsonDict) }}
 
 </div>
 

@@ -1,7 +1,7 @@
 <!-- Need to determine how the data will come in  -->
 {% macro molecule(data) -%} {%- endmacro %}
 <!-- Used for testing -->
-{% macro staticMolecule(name, mol2, jsonDict, dipoleMoment) -%}
+{% macro staticMolecule(name, mol2, jsonDict) -%}
 <!-- -->
 
 {% with messages = get_flashed_messages() %}
@@ -20,7 +20,7 @@
 
      <!-- Molecule name as h1 for SEO-->
      <h1 id="molecule-name">
-          <a class="visible-xs-inline" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> {{ jsonDict["iupac_name"].title() }}
+          <a class="visible-xs-inline" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> {{ jsonDict["name"].title() }}
      </h1>
 
 
@@ -41,7 +41,7 @@
 
                     <div class="panel-body">
                          <p>Listed below are the properties for
-                              <strong>{{ jsonDict["iupac_name"].title() }}</strong>.</p>
+                              <strong>{{ jsonDict["name"].title() }}</strong>.</p>
                     </div>
 
                     <!-- Table for all of the properties -->
@@ -75,7 +75,7 @@
 
                               <tr class="molecule-dipole-movement">
                                    <td>Dipole Moment<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
-                                   <td>{{ dipoleMoment }}</td>
+                                   <td>{{ jsonDict["pm7"]["dipoleMoment"] }} D</td>
                               </tr>
 
                               <tr class="molecule-doi">
@@ -125,7 +125,7 @@
 
                               <tr class="molecule-surface-area detailed">
                                    <td>Surface Area<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
-                                   <td>{{ jsonDict["pm7"]["surfaceArea"] }} &#8491;<sup>3</sup></td>
+                                   <td>{{ jsonDict["pm7"]["surfaceArea"] }} &#8491;<sup>2</sup></td>
                               </tr>
 
                               <tr class="molecule-homo-energy detailed">
