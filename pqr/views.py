@@ -4,6 +4,7 @@ from pqr import pqr
 from settings import APP_JSON
 import os
 import json
+import math
 
 MOLECULE_OF_THE_DAY = 999
 
@@ -31,11 +32,19 @@ def molecule(key = -1):
 
 	with open(os.path.join(APP_JSON, keyFirstTwo + '/' + key + '.json')) as j:
 		jsonDict = json.load(j)
-	print jsonDict["iupac_name"].strip()
-	iupac_name = jsonDict["iupac_name"].strip()
+	print json.dumps(jsonDict, indent=4, sort_keys=True)
+
+	dipole = jsonDict["pm7"]["dipole"]
+	dipoleMoment = 0
+
+	for i in dipole:
+		dipoleMoment += float(i)**2
+	dipoleMoment = math.sqrt(dipoleMoment)
+	dipoleMoment = float("{0:.3f}".format(dipoleMoment))
+	print dipoleMoment
 
 	# return the view
-	return render_template("molecule.html", page = page, iupac_name = str(iupac_name))
+	return render_template("molecule.html", page = page, jsonDict = jsonDict, dipoleMoment = dipoleMoment)
 
 ###############################################################################################################
 @pqr.route('/news')
