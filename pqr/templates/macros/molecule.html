@@ -133,10 +133,14 @@
                               <tr class="molecule-tags"> 
                                    <td> <i class="fa fa-tags"></i></td>
                                    <td> 
-                                        <a href="#"><span class="label label-primary">nitrogen</span></a>
-                                        <a href="#"><span class="label label-primary">carbon</span></a>
-                                        <a href="#"><span class="label label-primary">base</span></a>
-                                        <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a>
+                                        
+
+                                   {% for i in jsonDict["tags"] %}
+                                        <a href="#"><span class="label label-primary">{{ i }}</span></a>
+                                   {% endfor %}
+
+                                   <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a>
+
                                    </td>
                               </tr>
 
