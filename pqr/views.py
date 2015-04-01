@@ -6,7 +6,7 @@ import os
 import json
 import math
 
-MOLECULE_OF_THE_DAY = 999
+MOLECULE_OF_THE_DAY = 'AHHWIHXENZJRFG-UHFFFAOYSA-N'
 
 ###############################################################################################################
 @pqr.route('/')
