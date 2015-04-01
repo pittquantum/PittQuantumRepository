@@ -39,7 +39,10 @@ $(document).ready(function() {
 	    //Binding 
 	    pqr.bindevents.moleculeSizeChanger(); 
 
-	    pqr.qrgen.addQRCode("qrcode", "www.google.com");
+
+	    ; //2 = Default Value 
+	    pqr.qrgen.addQRCode("qrcode", pqr.htmlUtilities.getINCHIKey());
+
 	}
 
   
@@ -120,6 +123,19 @@ pqr.htmlUtilities.updateMoleculeView = function(){
 			else $("#molecule-details table .detailed").addClass("hidden"); 
 		}
 	}
+}
+
+/** 
+ *	Get the INCHI key. Used to generate the QR Code
+ *	
+ *	
+ */
+pqr.htmlUtilities.getINCHIKey = function(){
+	var key = ""; 
+	if($(".molecule-inchikey").length){
+		var  key = $(".molecule-inchikey").children().next().html();
+	}
+	return $.trim(key)
 }
 
 /**

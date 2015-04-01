@@ -18,7 +18,7 @@ pqr.qrgen = pqr.qrgen || {
  */
 pqr.qrgen.addQRCode = function(selector, url){
 	new QRCode(document.getElementById(selector), {
-    text: url,
+    text: "permurl.com/mol" + url,
     colorDark : "#f16b1d", //Primary Orange
     colorLight : "#fff"
 });  
