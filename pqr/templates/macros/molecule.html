@@ -2,6 +2,20 @@
 {% macro molecule(data) -%} {%- endmacro %}
 <!-- Used for testing -->
 {% macro staticMolecule(name, mol2, jsonDict, dipoleMoment) -%}
+<!-- -->
+
+{% with messages = get_flashed_messages() %}
+<!-- -->
+{% if messages %}
+<!-- -->
+{% for message in messages %}
+<div class="flashes"><p>{{ message }}</p></div>
+{% endfor %}
+<!-- -->
+{% endif %}
+<!-- -->
+{% endwith %}
+
 <div class="molecule row">
 
      <!-- Molecule name as h1 for SEO-->
@@ -135,11 +149,15 @@
                                    <td>
 
 
-                                   {% for i in jsonDict["tags"] %}
-                                        <a href="#"><span class="label label-primary">{{ i }}</span></a>
-                                   {% endfor %}
+                                        {% for i in jsonDict["tags"] %}
+                                        <a href="#">
+                                             <span class="label label-primary">{{ i }}</span>
+                                        </a>
+                                        {% endfor %}
 
-                                   <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a>
+                                        <a href="#">
+                                             <span class="label label-warning"><i class="fa fa-plus-square-o"></i></span>
+                                        </a>
 
                                    </td>
                               </tr>

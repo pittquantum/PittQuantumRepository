@@ -3,6 +3,7 @@
  *    font-# (1-6)
  *
  */
+
 #material .cards {
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
   border-radius: 2px;
@@ -44,8 +45,7 @@ body .page-home #splash-search #num-compounds .number {
 body .page-home .other-content .fa {
   color: #f16b1d;
 }
-body .page-home #molecule-viewer div,
-body .page-home #molecule-viewer canvas {
+body .page-home #molecule-viewer div, body .page-home #molecule-viewer canvas {
   margin-top: 150px;
   height: 200px;
   /* Small devices (tablets, 768px and up) */
@@ -53,20 +53,17 @@ body .page-home #molecule-viewer canvas {
   /* Large devices (large desktops, 1200px and up) */
 }
 @media (min-width: 768px) {
-  body .page-home #molecule-viewer div,
-  body .page-home #molecule-viewer canvas {
+  body .page-home #molecule-viewer div, body .page-home #molecule-viewer canvas {
     height: 250px;
   }
 }
 @media (min-width: 992px) {
-  body .page-home #molecule-viewer div,
-  body .page-home #molecule-viewer canvas {
+  body .page-home #molecule-viewer div, body .page-home #molecule-viewer canvas {
     height: 350px;
   }
 }
 @media (min-width: 1200px) {
-  body .page-home #molecule-viewer div,
-  body .page-home #molecule-viewer canvas {
+  body .page-home #molecule-viewer div, body .page-home #molecule-viewer canvas {
     height: 400px;
   }
 }
@@ -128,28 +125,24 @@ body .page-molecule #molecule-properties table tr td:first-of-type {
 body .page-molecule #molecule-properties table tbody .molecule-qr-code img {
   max-width: 60%;
 }
-body .page-molecule #molecule-viewer div,
-body .page-molecule #molecule-viewer canvas {
+body .page-molecule #molecule-viewer div, body .page-molecule #molecule-viewer canvas {
   height: 250px;
   /* Small devices (tablets, 768px and up) */
   /* Medium devices (desktops, 992px and up) */
   /* Large devices (large desktops, 1200px and up) */
 }
 @media (min-width: 768px) {
-  body .page-molecule #molecule-viewer div,
-  body .page-molecule #molecule-viewer canvas {
+  body .page-molecule #molecule-viewer div, body .page-molecule #molecule-viewer canvas {
     height: 350px;
   }
 }
 @media (min-width: 992px) {
-  body .page-molecule #molecule-viewer div,
-  body .page-molecule #molecule-viewer canvas {
+  body .page-molecule #molecule-viewer div, body .page-molecule #molecule-viewer canvas {
     height: 400px;
   }
 }
 @media (min-width: 1200px) {
-  body .page-molecule #molecule-viewer div,
-  body .page-molecule #molecule-viewer canvas {
+  body .page-molecule #molecule-viewer div, body .page-molecule #molecule-viewer canvas {
     height: 500px;
   }
 }
@@ -168,28 +161,24 @@ body .page-browse #molecule-browser .molecule-viwer {
   padding: 10px;
   margin-bottom: 30px;
 }
-body .page-browse #molecule-browser .molecule-viwer div,
-body .page-browse #molecule-browser .molecule-viwer canvas {
+body .page-browse #molecule-browser .molecule-viwer div, body .page-browse #molecule-browser .molecule-viwer canvas {
   height: 150px;
   /* Small devices (tablets, 768px and up) */
   /* Medium devices (desktops, 992px and up) */
   /* Large devices (large desktops, 1200px and up) */
 }
 @media (min-width: 768px) {
-  body .page-browse #molecule-browser .molecule-viwer div,
-  body .page-browse #molecule-browser .molecule-viwer canvas {
+  body .page-browse #molecule-browser .molecule-viwer div, body .page-browse #molecule-browser .molecule-viwer canvas {
     height: 200px;
   }
 }
 @media (min-width: 992px) {
-  body .page-browse #molecule-browser .molecule-viwer div,
-  body .page-browse #molecule-browser .molecule-viwer canvas {
+  body .page-browse #molecule-browser .molecule-viwer div, body .page-browse #molecule-browser .molecule-viwer canvas {
     height: 150px;
   }
 }
 @media (min-width: 1200px) {
-  body .page-browse #molecule-browser .molecule-viwer div,
-  body .page-browse #molecule-browser .molecule-viwer canvas {
+  body .page-browse #molecule-browser .molecule-viwer div, body .page-browse #molecule-browser .molecule-viwer canvas {
     height: 200px;
   }
 }
@@ -226,7 +215,7 @@ body footer {
   background-image: -o-linear-gradient(top, #5f9ea0 0%, #568e90 100%);
   background-image: linear-gradient(to bottom, #5f9ea0 0%, #568e90 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5f9ea0', endColorstr='#ff568e90', GradientType=0);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff5f9ea0', endColorstr='#ff568e90', GradientType=0);
   padding-top: 40px;
   margin-top: 60px;
   color: white;
@@ -243,10 +232,17 @@ body footer a:hover {
   color: white;
 }
 /*****GLOBAL ELEMENTS ****/
+
 #qrcodemodal #qrcode img {
   max-width: 100%;
   height: auto;
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.flashes {
+  background: #f53f3f;
+  padding-top: 0.5em;
+  padding-left: 0.1em;
+  border: 1px solid #aacbe2;
 }

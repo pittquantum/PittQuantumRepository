@@ -1,5 +1,5 @@
 #!./venv/bin/python
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, flash
 from pqr import pqr
 from settings import APP_JSON
 import os
@@ -33,6 +33,7 @@ def molecule(key = -1):
 		with open(os.path.join(APP_JSON, keyFirstTwo + '/' + key + '.json')) as j:
 			jsonDict = json.load(j)
 	except IOError:
+		flash("You entered a molecule that didn't exist, so you've been redirected to the molecule of the week!")
 		return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
 	dipole = jsonDict["pm7"]["dipole"]
@@ -77,5 +78,10 @@ def page_not_found(e):
 	molecule(key=MOLECULE_OF_THE_WEEK)
 
 ###############################################################################################################
+
+### CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
+pqr.secret_key = ';t}UzRZmis-xueR*5Hh:F={7?2^|.mPxW-`@*||L]]y]:h7v[A4TCn_:[j{-:+`9'
+###
+
 if __name__ == '__main__':
 	pqr.run()
