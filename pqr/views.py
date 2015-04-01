@@ -1,11 +1,13 @@
 #!./venv/bin/python
-from flask import Flask, render_template, url_for, redirect, flash
+from flask import render_template, url_for, redirect, flash
+from flask.ext.cache import Cache
 from pqr import pqr
 from settings import APP_JSON
 import os
 import json
 import math
 
+cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ###############################################################################################################
@@ -21,6 +23,7 @@ def index():
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/') #if no key lets default to the molecule of the day
 @pqr.route('/mol') #if no key lets default to the molecule of the day
+@cache.cached(timeout=50)
 def molecule(key = -1):
 	if key == -1:
 		key = MOLECULE_OF_THE_WEEK
