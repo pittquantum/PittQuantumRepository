@@ -6,7 +6,7 @@ import os
 import json
 import math
 
-MOLECULE_OF_THE_DAY = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
+MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ###############################################################################################################
 @pqr.route('/')
@@ -23,7 +23,7 @@ def index():
 @pqr.route('/mol') #if no key lets default to the molecule of the day
 def molecule(key = -1):
 	if key == -1:
-		key = MOLECULE_OF_THE_DAY #Molecule of the day value
+		key = MOLECULE_OF_THE_WEEK
 
 	keyFirstTwo = key[:2]
 
@@ -33,7 +33,7 @@ def molecule(key = -1):
 		with open(os.path.join(APP_JSON, keyFirstTwo + '/' + key + '.json')) as j:
 			jsonDict = json.load(j)
 	except IOError:
-		return redirect(url_for('molecule', key=MOLECULE_OF_THE_DAY))
+		return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
 	dipole = jsonDict["pm7"]["dipole"]
 	dipoleMoment = 0
@@ -74,7 +74,7 @@ def contact():
 ###############################################################################################################
 @pqr.errorhandler(404)
 def page_not_found(e):
-	molecule(key=MOLECULE_OF_THE_DAY)
+	molecule(key=MOLECULE_OF_THE_WEEK)
 
 ###############################################################################################################
 if __name__ == '__main__':
