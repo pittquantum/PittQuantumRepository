@@ -1,49 +1,39 @@
 {% extends "skeleton/base.html" %}
-
-{% block header %}
-     {% include 'skeleton/default_header.html' %}
-{% endblock %}
-
-{% block footer %}
-     {% include 'skeleton/default_footer.html' %}
-{% endblock %}
-
+<!-- -->
+{% block header %} {% include 'skeleton/default_header.html' %} {% endblock %}
+<!-- -->
+{% block footer %} {% include 'skeleton/default_footer.html' %} {% endblock %}
+<!-- -->
 {% block title %}Index{% endblock %}
-
-{% block head %}
-    {{ super() }}
-
+<!-- -->
+{% block head %} {{ super() }}
+<!-- -->
 {% endblock %}
-
-
-{% block lazyScripts %}
-	{{ super() }}
-{% endblock %}
-
-
-{% block content %}
+<!-- -->
+{% block lazyScripts %} {{ super() }} {% endblock %} {% block content %}
 <!-- QR CODE MODAL-->
 <div class="modal fade" id="qrcodemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">QR Code</h4>
-      </div>
-      <div class="modal-body">
-        <div class="img-responsive center-block" id="qrcode"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
+     <div class="modal-dialog">
+          <div class="modal-content">
+               <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">QR Code</h4>
+               </div>
+               <div class="modal-body">
+                    <div class="img-responsive center-block" id="qrcode"></div>
+               </div>
+               <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               </div>
+          </div>
+     </div>
 </div>
 <!-- QR CODE MODAL -->
 
 <div class="container">
-  {% import '/macros/molecule.html' as molecule %}
-	{{ molecule.staticMolecule('', page["keyFirstTwo"] + "/" + page["moleculeKey"] + ".mol2", jsonDict, dipoleMoment) }}
+     {% import '/macros/molecule.html' as molecule %} {{ molecule.staticMolecule('', page["keyFirstTwo"] + "/" + page["moleculeKey"] + ".mol2", jsonDict, dipoleMoment) }}
 
 </div>
 
