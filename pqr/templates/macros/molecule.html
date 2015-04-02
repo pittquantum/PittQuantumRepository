@@ -9,7 +9,7 @@
 {% if messages %}
 <!-- -->
 {% for message in messages %}
-<div class="flashes"><p>{{ message }}</p></div>
+<div class="alert alert-danger" role="alert"><p><strong>{{ message }}</strong></p></div>
 {% endfor %}
 <!-- -->
 {% endif %}
