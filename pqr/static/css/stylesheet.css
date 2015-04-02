@@ -250,3 +250,9 @@ body footer a:hover {
   margin-left: auto;
   margin-right: auto;
 }
+.flashes {
+  background: #f53f3f;
+  padding-top: 0.5em;
+  padding-left: 0.1em;
+  border: 1px solid #aacbe2;
+}
