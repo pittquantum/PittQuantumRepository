@@ -65,14 +65,15 @@
 
      <!-- Molecule Browser -->
      <div class="row clearfix" id="molecule-browser">
-          {% import '/macros/molecule.html' as molecule %}
-
-          <!-- Create a new filter to properly generate the formulas  -->
-          {{ molecule.moleculeBrowser(name, formula, qr, data) }}
-          {{ molecule.moleculeBrowser(name, formula, qr, data) }}
-          {{ molecule.moleculeBrowser(name, formula, qr, data) }}
-          {{ molecule.moleculeBrowser(name, formula, qr, data) }}
-          {{ molecule.moleculeBrowser(name, formula, qr, data) }}
+          {% import '/macros/molecules.html' as molecule %}
+          
+          {{ molecule.resultMolecule() }}
+          {{ molecule.resultMolecule(style='sphere') }}
+          {{ molecule.resultMolecule(style='line') }}
+          {{ molecule.resultMolecule(style='cross') }}
+          {{ molecule.resultMolecule() }}
+          {{ molecule.resultMolecule() }}
+          {{ molecule.resultMolecule() }}
      </div>
 
 
