@@ -134,7 +134,8 @@
 
                               <tr class="molecule-pg-symmetry detailed">
                                    <td>Point Group Symmetry<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
-                                   <td>{{ jsonDict["pointGroup"] }}</td>
+                                   <td>{{ jsonDict["pointGroup"]|truncate(1, true, '') }}<sub>{{jsonDict["pointGroup"]|replace(jsonDict["pointGroup"]|truncate(1, true, ''), '') }}</sub>
+                                   </td>
                                    <!--Will use JS to automatically add subscripts -->
                               </tr>
 
