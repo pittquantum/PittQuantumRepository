@@ -1,5 +1,5 @@
 #!./venv/bin/python
-from flask import render_template, url_for, redirect, flash
+from flask import render_template, url_for, redirect, flash, send_from_directory
 from flask.ext.cache import Cache
 from pqr import pqr
 from settings import APP_JSON
@@ -66,11 +66,21 @@ def contact():
 	return render_template("contact.html", page = page)
 
 ###############################################################################################################
+#Properly handle the favicon 
+@pqr.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(pqr.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+###############################################################################################################
+
+###############################################################################################################
 @pqr.errorhandler(404)
 def page_not_found(e):
 	molecule(key=MOLECULE_OF_THE_WEEK)
 
 ###############################################################################################################
+
 
 ### CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
 pqr.secret_key = ';t}UzRZmis-xueR*5Hh:F={7?2^|.mPxW-`@*||L]]y]:h7v[A4TCn_:[j{-:+`9'

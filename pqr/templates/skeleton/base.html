@@ -28,8 +28,22 @@
 
     {% endblock %}
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="alerts" class="container"> 
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert"><p>{{ message }}</p></div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
 
     <div id="main" class="container-fluid {{page.id}}">
+        <!--Display Error Messages -->
+
+
+
         {% block content %}{% endblock %}
     </div>
 

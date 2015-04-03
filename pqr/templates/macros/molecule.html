@@ -1,21 +1,9 @@
 <!-- Need to determine how the data will come in  -->
 {% macro molecule(data) -%} {%- endmacro %}
+
+
 <!-- Used for testing -->
 {% macro staticMolecule(name, mol2, jsonDict) -%}
-<!-- -->
-
-{% with messages = get_flashed_messages() %}
-<!-- -->
-{% if messages %}
-<!-- -->
-{% for message in messages %}
-<div class="alert alert-danger" role="alert"><p>{{ message }}</p></div>
-{% endfor %}
-<!-- -->
-{% endif %}
-<!-- -->
-{% endwith %}
-
 <div class="molecule row">
 
      <!-- Molecule name as h1 for SEO-->
@@ -27,6 +15,7 @@
      <!--This is where the canvas/img/js will be for the molecule viewer (Using an image for tempalte-->
      <div id="molecule-viewer" class="col-sm-12 col-md-7 col-md-push-5">
           <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-style='stick'></div>
+          
      </div>
 
      <section id="molecule-details">
@@ -54,8 +43,7 @@
 
                               <tr class="molecule-formula">
                                    <td>Formula<sup><a href="#" data-container="body" data-toggle="tooltip" title="Chemical formula"><i class="fa fa-question"></i></a></sup></td>
-                                   <td>{{ jsonDict["formula"] }}</td>
-                                   <!--Will use JS or tempalte engine for formatting-->
+                                   <td>{{ jsonDict["formula"]|subnumbers|safe}}</td>
                               </tr>
 
                               <tr class="molecule-iupac-name">
@@ -175,7 +163,10 @@
 
 
 </div>
-{%- endmacro %} {% macro moleculeBrowser(name, formula='', qr='', data='', key='') -%}
+{%- endmacro %} 
+
+
+{% macro moleculeBrowser(name, formula='', qr='', data='', key='') -%}
 <div class="molecule-viwer row">
      <div class="col-md-4" class="">
           <div class='viewer_3Dmoljs' data-href='/static/data/mol2/meth.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-style='sphere'></div>
