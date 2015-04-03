@@ -1,5 +1,5 @@
 <!-- View of a molecule in search results or browsing   -->
-{% macro simpleViewer(mol2='AH/AHHWIHXENZJRFG-UHFFFAOYSA-N.mol2', style='stick') -%} 
+{% macro simpleViewer(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', style='stick') -%} 
      <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' 
           data-type='mol2'
           data-backgroundcolor='0xffffff' 
@@ -8,7 +8,7 @@
 {%- endmacro %}
 
 <!-- View of a molecule in search results or browsing   -->
-{% macro resultMolecule(mol2='AH/AHHWIHXENZJRFG-UHFFFAOYSA-N.mol2', style='stick') -%} 
+{% macro resultMolecule(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', data, style='stick') -%} 
 <div class="molecule-viwer row">
      <div class="col-md-4" class="">
           <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'></div>
@@ -170,14 +170,12 @@
 
 
                                         {% for i in jsonDict["tags"] %}
-                                        <a href="#">
+                                       <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
                                              <span class="label label-primary">{{ i }}</span>
-                                        </a>
+                                        <!-- </a> -->
                                         {% endfor %}
 
-                                        <a href="#">
-                                             <span class="label label-warning"><i class="fa fa-plus-square-o"></i></span>
-                                        </a>
+                                        <!-- <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a> -->
 
                                    </td>
                               </tr>
