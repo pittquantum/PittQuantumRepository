@@ -128,6 +128,10 @@ body .page-molecule #molecule-properties table tr td:first-of-type {
 body .page-molecule #molecule-properties table tbody .molecule-qr-code img {
   max-width: 60%;
 }
+body .page-molecule #molecule-properties table tbody .molecule-alt-names ul {
+  max-height: 200px;
+  overflow-y: scroll;
+}
 body .page-molecule #molecule-viewer div,
 body .page-molecule #molecule-viewer canvas {
   height: 250px;
@@ -249,10 +253,4 @@ body footer a:hover {
   display: block;
   margin-left: auto;
   margin-right: auto;
-}
-.flashes {
-  background: #f53f3f;
-  padding-top: 0.5em;
-  padding-left: 0.1em;
-  border: 1px solid #aacbe2;
 }
