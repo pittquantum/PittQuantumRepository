@@ -61,3 +61,6 @@ dist
 *.egg-info
 _mailinglist
 .tox
+
+# IntelliJ Stuff
+.idea/
