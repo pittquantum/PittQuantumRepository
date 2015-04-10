@@ -33,7 +33,7 @@ def molecule(key="-1"):
     page = {'id': "page-molecule", 'moleculeKey': key, 'key_first_two': key_first_two}
 
     try:
-        with open(os.path.join(APP_JSON, key + '.json')) as j:
+        with open(os.path.join(APP_JSON, key_first_two + '/' + key + '.json')) as j:
             json_dict = json.load(j)
     except IOError:
         flash("You entered a molecule that didn't exist, so you've been redirected to the molecule of the week!")
@@ -83,7 +83,7 @@ def favicon():
 ###############################################################################################################
 @pqr.errorhandler(404)
 def page_not_found(e):
-    molecule(MOLECULE_OF_THE_WEEK)
+    molecule(key=MOLECULE_OF_THE_WEEK)
 
 ###############################################################################################################
 

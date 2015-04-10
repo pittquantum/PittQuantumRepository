@@ -1,5 +1,5 @@
 <!-- View of a molecule in search results or browsing   -->
-{% macro simpleViewer(mol2='RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', style='stick') -%}
+{% macro simpleViewer(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', style='stick') -%}
      <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}'
           data-type='mol2'
           data-backgroundcolor='0xffffff'
@@ -8,7 +8,7 @@
 {%- endmacro %}
 
 <!-- View of a molecule in search results or browsing   -->
-{% macro resultMolecule(mol2='RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', data='', style='stick') -%}
+{% macro resultMolecule(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', data='', style='stick') -%}
 <div class="molecule-viwer row">
      <div class="col-md-4" class="">
           <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'></div>
