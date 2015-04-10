@@ -1,14 +1,14 @@
 <!-- View of a molecule in search results or browsing   -->
-{% macro simpleViewer(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', style='stick') -%} 
-     <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' 
+{% macro simpleViewer(mol2='RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', style='stick') -%}
+     <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}'
           data-type='mol2'
-          data-backgroundcolor='0xffffff' 
+          data-backgroundcolor='0xffffff'
           data-style='{{style}}'>
      </div>
 {%- endmacro %}
 
 <!-- View of a molecule in search results or browsing   -->
-{% macro resultMolecule(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', data='', style='stick') -%} 
+{% macro resultMolecule(mol2='RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', data='', style='stick') -%}
 <div class="molecule-viwer row">
      <div class="col-md-4" class="">
           <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'></div>
@@ -41,7 +41,7 @@
      <!--This is where the canvas/img/js will be for the molecule viewer (Using an image for tempalte-->
      <div id="molecule-viewer" class="col-sm-12 col-md-7 col-md-push-5">
           <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'></div>
-          
+
      </div>
 
      <section id="molecule-details">
@@ -117,12 +117,12 @@
                                              {% if jsonDict["cas"] is string %}
                                                   <li>{{ jsonDict["cas"] }}</li>
                                                   {% else %}
-                                                  
+
                                                   {% for i in jsonDict["cas"] %}
                                                        <li>{{ i }}</li>
                                                   {% endfor %}
                                              {% endif %}
-   
+
                                         </ul>
                                    </td>
                               </tr>
@@ -194,6 +194,4 @@
 
 
 </div>
-{%- endmacro %} 
-
-
+{%- endmacro %}
