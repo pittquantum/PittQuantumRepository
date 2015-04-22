@@ -1,5 +1,5 @@
 #!./venv/bin/python
-from flask import render_template, url_for, redirect, flash, send_from_directory
+from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify
 # from flask.ext.cache import Cache
 from pqr import pqr
 from settings import APP_JSON
@@ -51,7 +51,6 @@ def news():
 
     return render_template("news.html", page=page)
 
-
 ###############################################################################################################
 @pqr.route('/browse')
 @pqr.route('/browse/')
@@ -60,6 +59,12 @@ def browse():
 
     return render_template("browse.html", page=page)
 
+@pqr.route('/data')
+@pqr.route('/data/<key>')
+def data(key):
+    with open(os.path.join(APP_JSON, key[:2] + '/' + key + '.json')) as j:
+        json_dict = json.load(j)
+    return jsonify(json_dict)
 
 ###############################################################################################################
 @pqr.route('/contact')
