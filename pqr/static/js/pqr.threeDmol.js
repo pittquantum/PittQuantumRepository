@@ -25,6 +25,9 @@ pqr.threeDMole.changeStyle = function(newStyle, viewer){
 	else if(newStyle == "cross"){
 		viewer.setStyle({}, {cross:{}});
 	}
+	else if(newStyle == "line"){
+		viewer.setStyle({}, {line:{}});
+	}
 	
 	viewer.render();
 

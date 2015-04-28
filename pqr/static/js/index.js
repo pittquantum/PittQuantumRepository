@@ -115,7 +115,7 @@ pqr.bindevents.moleculeStyleChanger = function(){
 	if($('#changeStyleLine').length){
 		$('#changeStyleLine').on("click", function(event){
 			event.preventDefault();
-			pqr.threeDMole.changeStyle("stick");
+			pqr.threeDMole.changeStyle("line");
 		});
 	}
 
@@ -123,6 +123,14 @@ pqr.bindevents.moleculeStyleChanger = function(){
 		$('#changeStyleCross').on("click", function(event){
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("cross");
+			 
+		});
+	}	
+
+	if($('#changeStyleStick').length){
+		$('#changeStyleStick').on("click", function(event){
+			event.preventDefault();
+			pqr.threeDMole.changeStyle("stick");
 			 
 		});
 	}
