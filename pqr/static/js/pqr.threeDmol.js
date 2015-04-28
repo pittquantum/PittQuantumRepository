@@ -7,6 +7,36 @@ pqr.threeDMole = pqr.threeDMole || {}; //Everything relating to 3dmol FILE: pqr.
 pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin 
 
 
+
+/**
+ *	Changet the layout style of selected viewer (currently just the first viewer)
+ *		
+ *
+ */
+pqr.threeDMole.changeStyle = function(newStyle, viewer){
+	var viewer = $3Dmol.viewers[0]; //Currently only getting the first viewer 
+
+	if(newStyle == "sphere"){
+		viewer.setStyle({}, {sphere:{}});
+	}
+	else if(newStyle == "stick"){
+		viewer.setStyle({}, {stick:{}});
+	}
+	else if(newStyle == "cross"){
+		viewer.setStyle({}, {cross:{}});
+	}
+	
+	viewer.render();
+
+}
+
+
+
+
+
+
+
+
 /**
  *	Attempt to get responsiveness working. 
  *	Try redrawing the item over and over on width/height changes 

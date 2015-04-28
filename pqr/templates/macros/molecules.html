@@ -174,10 +174,26 @@
 
               </td>
             </tr>
+
             <tr class="molecule-data detailed">
               <td>JSON<sup><a href="#" data-container="body" data-toggle="tooltip" title="Get the data for this molecule in JSON format"><i class="fa fa-question"></i></a></sup></td>
               <td> <a href="{{ url_for('data', key=jsonDict["inchikey"]) }}"> Get JSON data </a></td>
             </tr>
+
+
+            <tr class="molecule-switchview">
+              <td>Switch Views<sup><a href="#" data-container="body" data-toggle="tooltip" title="Switch the layout style of the molecule"><i class="fa fa-question"></i></a></sup></td>
+              <td> 
+
+                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                  <button type="button" class="btn btn-primary" id="changeStyleSphere">Spheres</button>
+                  <button type="button" class="btn btn-primary" id="changeStyleLine">Lines</button>
+                  <button type="button" class="btn btn-primary" id="changeStyleCross">Crosses</button>
+                </div>
+
+              </td>
+            </tr>
+
           </tbody>
         </table>
       </div>

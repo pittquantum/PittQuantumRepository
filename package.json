@@ -4,10 +4,14 @@
   "description": "Flask backend for the Pitt Quantum Repository website.",
   "main": "Gruntfile.js",
   "dependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "^0.4.5",
+    "grunt-contrib-less": "~0.8.2",
+    "grunt-contrib-watch": "~0.6.1"
   },
   "devDependencies": {
-    "grunt": "^0.4.5"
+    "grunt": "~0.4.5",
+    "grunt-contrib-less": "~0.8.2",
+    "grunt-contrib-watch": "~0.6.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

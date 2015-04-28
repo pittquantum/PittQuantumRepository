@@ -38,10 +38,13 @@ $(document).ready(function() {
 
 	    //Binding 
 	    pqr.bindevents.moleculeSizeChanger(); 
+	    pqr.bindevents.moleculeStyleChanger(); 
 
 
-	    ; //2 = Default Value 
+	    //2 = Default Value 
 	    pqr.qrgen.addQRCode("qrcode", pqr.htmlUtilities.getINCHIKey());
+
+
 
 	}
 
@@ -93,17 +96,36 @@ pqr.bindevents.moleculeSizeChanger = function(){
 }
 
 
-
-/*************************Properties Formatter*************************/
-
 /**
- * 	Correctly formats the molecule formula for display. Not implemneted 
- *		as it might not be neccessary. 
- * 	@param {string} formulaString Molecule formaula string (ex: C7H14O2)
- * 	@return {string} The string with proper subscripts (ex C<sub>7</sub>)
+ * 	Binds the Molecule style changer events to the buttons to change between 
+ * 		spheres, lines, or crosses
+ * 
  */
-pqr.propertiesFormatter.formula = function(formulaString){
+pqr.bindevents.moleculeStyleChanger = function(){
+	
+	if($('#changeStyleSphere').length){
+		$('#changeStyleSphere').on("click", function(event){
+			event.preventDefault();
+			pqr.threeDMole.changeStyle("sphere");
+		});
+	}
 
+
+
+	if($('#changeStyleLine').length){
+		$('#changeStyleLine').on("click", function(event){
+			event.preventDefault();
+			pqr.threeDMole.changeStyle("stick");
+		});
+	}
+
+	if($('#changeStyleCross').length){
+		$('#changeStyleCross').on("click", function(event){
+			event.preventDefault();
+			pqr.threeDMole.changeStyle("cross");
+			 
+		});
+	}
 }
 
 
