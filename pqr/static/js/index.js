@@ -107,15 +107,16 @@ pqr.bindevents.moleculeStyleChanger = function(){
 		$('#changeStyleSphere').on("click", function(event){
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("sphere");
+			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
 		});
 	}
-
 
 
 	if($('#changeStyleLine').length){
 		$('#changeStyleLine').on("click", function(event){
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("line");
+			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
 		});
 	}
 
@@ -123,6 +124,7 @@ pqr.bindevents.moleculeStyleChanger = function(){
 		$('#changeStyleCross').on("click", function(event){
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("cross");
+			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
 			 
 		});
 	}	
@@ -131,7 +133,7 @@ pqr.bindevents.moleculeStyleChanger = function(){
 		$('#changeStyleStick').on("click", function(event){
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("stick");
-			 
+			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
 		});
 	}
 }
@@ -146,13 +148,33 @@ pqr.bindevents.moleculeStyleChanger = function(){
  *	
  */
 pqr.htmlUtilities.updateMoleculeView = function(){
-	if($("#simpleView").length && $("#detailedView").length){
-		//Check the localStorage for the moleculeLayout using modernizer
-		if (Modernizr.localstorage){
-			if(localStorage.getItem("moleculeLayout") == "detailed") $("#molecule-details table .detailed").removeClass("hidden"); //Probably not necessary 
-			else $("#molecule-details table .detailed").addClass("hidden"); 
+
+	//Check the localStorage for the moleculeLayout using modernizer
+	if (Modernizr.localstorage){
+		
+		//Update the 
+		if(localStorage.getItem("moleculeLayout") == "detailed") $("#molecule-details table .detailed").removeClass("hidden"); //Probably not necessary 
+		else $("#molecule-details table .detailed").addClass("hidden"); 
+
+		//Update style of the viewer
+		var moleculeLayoutStyle = localStorage.getItem("moleculeViewerlayout");
+		if(false){ //Not yet working 
+			if(moleculeLayoutStyle = "spheres"){
+				pqr.threeDMole.changeStyle("sphere");
+			}
+			else if(moleculeViewerlayout = "lines"){
+				pqr.threeDMole.changeStyle("line");
+			}
+			else if(moleculeViewerlayout = "sticks"){
+				pqr.threeDMole.changeStyle("stick");
+			}
+			else if(moleculeViewerlayout == "crosses"){
+				pqr.threeDMole.changeStyle("cross");
+			}
 		}
+
 	}
+	
 }
 
 /** 

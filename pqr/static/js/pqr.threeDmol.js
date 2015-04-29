@@ -10,26 +10,28 @@ pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin
 
 /**
  *	Changet the layout style of selected viewer (currently just the first viewer)
- *		
+ *		--Viewer must exist at this point !
  *
  */
 pqr.threeDMole.changeStyle = function(newStyle, viewer){
-	var viewer = $3Dmol.viewers[0]; //Currently only getting the first viewer 
+	var viewer = $3Dmol.viewers[0]; //Currently only getting the first viewer that exists 
+	if(viewer){
+		if(newStyle == "sphere"){
+			viewer.setStyle({}, {sphere:{}});
+		}
+		else if(newStyle == "stick"){
+			viewer.setStyle({}, {stick:{}});
+		}
+		else if(newStyle == "cross"){
+			viewer.setStyle({}, {cross:{}});
+		}
+		else if(newStyle == "line"){
+			viewer.setStyle({}, {line:{}});
+		}
+		
+		viewer.render();
+	}
 
-	if(newStyle == "sphere"){
-		viewer.setStyle({}, {sphere:{}});
-	}
-	else if(newStyle == "stick"){
-		viewer.setStyle({}, {stick:{}});
-	}
-	else if(newStyle == "cross"){
-		viewer.setStyle({}, {cross:{}});
-	}
-	else if(newStyle == "line"){
-		viewer.setStyle({}, {line:{}});
-	}
-	
-	viewer.render();
 
 }
 
