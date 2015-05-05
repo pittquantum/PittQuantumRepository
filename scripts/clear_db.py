@@ -4,23 +4,12 @@ from pprint import pprint
 client = MongoClient()
 db = client.test
 
-cursor = db.properties.find()
-for document in cursor: 
-	pprint(document)
+print "# Properties Documents: " + str(db.properties.count())
+print "# Molecule Documents: " + str(db.molecules.count())
 
-##Show all molecules being created 
-cursor = db.molecules.find()
-for document in cursor: 
-	pprint(document)
+print "Deleting"
+db.properties.drop()
+db.molecules.drop()
 
-db.properties.remove({})
-db.molecules.remove({})
-
-cursor = db.properties.find()
-for document in cursor: 
-	pprint(document)
-
-##Show all molecules being created 
-cursor = db.molecules.find()
-for document in cursor: 
-	pprint(document)
+print "# Properties Documents: " + str(db.properties.count())
+print "# Molecule Documents: " + str(db.molecules.count())
