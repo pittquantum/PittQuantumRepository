@@ -3,6 +3,7 @@ from flask import render_template, url_for, redirect, flash, send_from_directory
 # from flask.ext.cache import Cache
 from pqr import pqr
 from settings import APP_JSON
+from secret_key import secret_key
 import os
 import json
 
@@ -94,7 +95,7 @@ def page_not_found(e):
 
 
 ### CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
-pqr.secret_key = ';t}UzRZmis-xueR*5Hh:F={7?2^|.mPxW-`@*||L]]y]:h7v[A4TCn_:[j{-:+`9'
+pqr.secret_key = secret_key
 ###
 
 if __name__ == '__main__':

@@ -64,3 +64,5 @@ _mailinglist
 
 # IntelliJ Stuff
 .idea/
+
+pqr/secret_key.py
