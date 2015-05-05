@@ -21,42 +21,26 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
         json_data = json.load(json_file)
 
 
-
-
-
         ##Creating a properties document
         properties_id = db.properties.insert_one({
         	"molecular mass": json_data['molecular mass'], 
-        	"inchi": json_data['inchi']
+        	"inchi": json_data['inchikey']
         }).inserted_id #Use this to link the molcules 
 
 
 
-
-
-
-
         ##Mol2 File (Ignore for now)
-        
-
-
-
+    
 
         ##Creating a molcules document use the properties id to link
         	##For now lets just have a link here to the mol2 data 
         molecules_id = db.molecules.insert_one({
         	"last_updated": datetime.now(), 
         	"properties_id": properties_id, 
-        	"inchikey": json_data['inchi'], 
+        	"inchikey": json_data['inchikey'], 
         	"name": json_data['name'], 
         	"formula": json_data['formula']
         }).inserted_id #
-
-
-
-
-
-
 
 
 
@@ -69,11 +53,11 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
 ##Show all properties being created  
 cursor = db.properties.find()
 for document in cursor: 
-	print(document)
+	pprint(document)
 
 ##Show all molecules being created 
 cursor = db.molecules.find()
 for document in cursor: 
-	print(document)
+	pprint(document)
 
         
