@@ -66,13 +66,16 @@ def browse(query="-1"):
         ("inchikey", "text"),
         ("formula", "text")
     ])
-    for i in temp:
-        print i
-    # query = request.form['molec-query']
+
+    tempArr = []
+
     print query
     cursor = db.molecules.find({ "$text": {"$search": str(query) }} )
     for i in cursor:
-	print i
+	       tempArr.append(i)
+
+    print tempArr
+    
     page = {'id': "page-browse"}
 
     return render_template("browse.html", page=page)
