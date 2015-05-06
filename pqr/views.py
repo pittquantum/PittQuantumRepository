@@ -59,6 +59,10 @@ def news():
 @pqr.route('/browse/<query>/')
 def browse(query="-1"):
 
+    if query == "-1":
+        flash("You didn't search for anything!")
+        return redirect(url_for('index'))
+
     client = MongoClient()
     db = client.test
     temp = db.molecules.ensure_index([
