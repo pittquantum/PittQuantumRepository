@@ -55,6 +55,8 @@ def news():
     return render_template("news.html", page=page)
 
 ###############################################################################################################
+@pqr.route('/browse')
+@pqr.route('/browse/')
 @pqr.route('/browse/<query>')
 @pqr.route('/browse/<query>/')
 def browse(query="-1"):
