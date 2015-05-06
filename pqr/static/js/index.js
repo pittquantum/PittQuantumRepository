@@ -28,7 +28,11 @@ $(document).ready(function() {
 	if($("#main").hasClass("page-browse")){
 		pqr.typeahead.activate("#molec-query");
 		pqr.htmlUtilities.toolTipOptIn();
+
+
 		pqr.qrgen.addQRCode("qrcode", "www.google.com"); 
+
+
 		pqr.bindevents.moleculeSearch('#splash-molecule-search .molecule-query');
 		console.log("Browse Page"); 
 	}
@@ -161,6 +165,15 @@ pqr.bindevents.moleculeStyleChanger = function(){
 
 		});
  	}
+ }
+
+/**
+ * 	When the 
+ * 		
+ * 
+ */
+ pqr.bindevents.updateQRCode = function(selector){
+
  }
 
 

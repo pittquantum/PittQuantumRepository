@@ -5,21 +5,21 @@
 {%- endmacro %}
 
 <!-- View of a molecule in search results or browsing   -->
-{% macro resultMolecule(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', data='', style='stick') -%}
+{% macro resultMolecule(data, style='stick') -%}
 <div class="molecule-viwer row">
   <div class="col-md-4" class="">
-    <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'></div>
+    <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{data.mol2url}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'></div>
   </div>
 
   <div class="col-md-8 properties">
-    <h3><a href="/mol/152135" target="_blank">Caffeine</a>
+    <h3><a href="/mol/{{data.inchikey}}" target="_blank">{{data.name}}</a>
       <span class="pull-right">
         <a href="#" data-toggle="modal" data-target="#qrcodemodal"> <i class="fa fa-qrcode"></i> </a>
       </span>
     </h3>
     <!-- Table for all of the properties -->
     <div class="molecule-formula">
-      C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>
+      {{data.formula|subnumbers|safe}}
     </div>
   </div>
 </div>

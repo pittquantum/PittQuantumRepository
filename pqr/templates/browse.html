@@ -66,14 +66,26 @@
      <!-- Molecule Browser -->
      <div class="row clearfix" id="molecule-browser">
           {% import '/macros/molecules.html' as molecule %}
+
+          {% if results %}
+            {% for result in results %}
+              {{ molecule.resultMolecule(result) }}
+            {% endfor %}
+          {% else %}
+            <div class="alert alert-warning row" role="alert">
+                <div class="col-sm-2"> 
+                  <p><i class="fa fa-exclamation-triangle fa-5x"></i></p>
+                </div>
+
+                <div class="col-sm-8"> 
+                  <h2><strong> Your query returned 0 results! </strong></h2>
+                </div>
+            </div>
+          {% endif %}
+
+         
           
-          {{ molecule.resultMolecule() }}
-          {{ molecule.resultMolecule(style='sphere') }}
-          {{ molecule.resultMolecule(style='line') }}
-          {{ molecule.resultMolecule(style='cross') }}
-          {{ molecule.resultMolecule() }}
-          {{ molecule.resultMolecule() }}
-          {{ molecule.resultMolecule() }}
+
      </div>
 
 
