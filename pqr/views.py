@@ -61,10 +61,12 @@ def browse(query="-1"):
 
     client = MongoClient()
     db = client.test
-    print db.molecules.ensure_index([("name", "text")])
+    temp = db.molecules.create_index( [ ("name", "text") ] )
+    for i in temp:
+        print i
     # query = request.form['molec-query']
     print query
-    cursor = db.inventory.find({"$text": {"$search": query}})
+    cursor = db.molecules.find({ "$text": {"$search": str(query) }} )
     for i in cursor:
 	print i
     page = {'id': "page-browse"}
