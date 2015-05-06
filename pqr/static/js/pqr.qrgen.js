@@ -17,8 +17,12 @@ pqr.qrgen = pqr.qrgen || {
  *		-Currently creates an image AND a canvas
  */
 pqr.qrgen.addQRCode = function(selector, url){
+	if (!location.origin) location.origin = location.protocol + "//" + location.host;
+	
+
 	new QRCode(document.getElementById(selector), {
-    text: "permurl.com/mol" + url,
+
+    text: location.origin + "/mol/" + url,
     colorDark : "#f16b1d", //Primary Orange
     colorLight : "#fff"
 });  
