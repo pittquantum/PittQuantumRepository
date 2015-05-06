@@ -61,5 +61,7 @@ for document in cursor:
 	pprint(document)
 
 db.molecules.create_index([
-    ("name", "text")
+    ("name", "text"),
+    ("inchikey", "text"),
+    ("formula", "text")
 ])
