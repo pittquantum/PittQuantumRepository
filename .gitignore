@@ -65,4 +65,8 @@ _mailinglist
 # IntelliJ Stuff
 .idea/
 
+# Virtual environment
+venv/
+
+# Secrets
 pqr/secret_key.py
