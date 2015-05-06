@@ -55,8 +55,8 @@ def news():
     return render_template("news.html", page=page)
 
 ###############################################################################################################
-@pqr.route('/browse', methods=['POST'])
 @pqr.route('/browse/<query>')
+@pqr.route('/browse/<query>/')
 def browse(query="-1"):
 
     client = MongoClient()
