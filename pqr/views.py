@@ -61,7 +61,7 @@ def browse(query="-1"):
 
     client = MongoClient()
     db = client.test
-    temp = db.molecules.create_index([
+    temp = db.molecules.ensure_index([
         ("name", "text"),
         ("inchikey", "text"),
         ("formula", "text")
