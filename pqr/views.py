@@ -1,6 +1,8 @@
 #!./venv/bin/python
-from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify
+
+from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request
 # from flask.ext.cache import Cache
+from pymongo import MongoClient
 from pqr import pqr
 from settings import APP_JSON
 from secret_key import secret_key
@@ -53,9 +55,16 @@ def news():
     return render_template("news.html", page=page)
 
 ###############################################################################################################
-@pqr.route('/browse')
-@pqr.route('/browse/')
+@pqr.route('/browse', methods=['POST'])
+@pqr.route('/browse/', methods=['POST'])
 def browse():
+
+    client = MongoClient()
+    db = client.test
+
+    query = request.form['molec-query']
+    print db.inventory.find( { name: query })
+    
     page = {'id': "page-browse"}
 
     return render_template("browse.html", page=page)
