@@ -60,6 +60,6 @@ cursor = db.molecules.find()
 for document in cursor:
 	pprint(document)
 
-db.molecules.create_index({
-    "name": "text"
-})
+db.molecules.create_index([
+    ("name", "text")
+])
