@@ -56,15 +56,17 @@ def news():
 
 ###############################################################################################################
 @pqr.route('/browse', methods=['POST'])
-@pqr.route('/browse/', methods=['POST'])
-def browse():
+@pqr.route('/browse/<query>')
+def browse(query="-1"):
 
     client = MongoClient()
     db = client.test
-
-    query = request.form['molec-query']
-    print db.inventory.find( { name: query })
-    
+    print db.molecules.ensure_index([("name", "text")])
+    # query = request.form['molec-query']
+    print query
+    cursor = db.inventory.find({"$text": {"$search": query}})
+    for i in cursor:
+	print i
     page = {'id': "page-browse"}
 
     return render_template("browse.html", page=page)
