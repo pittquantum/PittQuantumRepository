@@ -15,10 +15,12 @@ $(document).ready(function() {
 	pqr.htmlUtilities.fontSizeChanger(0); //Restore previous values 
 	pqr.bindevents.fontSizeChanger("#reducefont", "#increasefont", "#defaultfont");
 	pqr.typeahead.activate("#header-molecule-search");
+	pqr.bindevents.moleculeSearch('.navbar-form .molecule-query');
 
 	//Home Page
 	if($("#main").hasClass("page-home")){
 		pqr.typeahead.activate("#molec-query");
+		pqr.bindevents.moleculeSearch('#home-molecule-query .molecule-query'); 
 		console.log("Home Page"); 
 	}
 
@@ -26,7 +28,8 @@ $(document).ready(function() {
 	if($("#main").hasClass("page-browse")){
 		pqr.typeahead.activate("#molec-query");
 		pqr.htmlUtilities.toolTipOptIn();
-		pqr.qrgen.addQRCode("qrcode", "www.google.com");
+		pqr.qrgen.addQRCode("qrcode", "www.google.com"); 
+		pqr.bindevents.moleculeSearch('#splash-molecule-search .molecule-query');
 		console.log("Browse Page"); 
 	}
 
@@ -138,6 +141,27 @@ pqr.bindevents.moleculeStyleChanger = function(){
 	}
 }
 
+
+/**
+ * 	Binds the Molecule style changer events to the buttons to change between 
+ * 		spheres, lines, or crosses
+ * 
+ */
+ pqr.bindevents.moleculeSearch = function(selector){
+ 	if($(selector).length){
+ 		$(selector).on("click", function(event){
+			event.preventDefault();
+
+			//Get the query from the input box (parent, prev)
+			var query = $(this).parent().prev().val();
+
+			//Get the base URL and redirect 
+			if (!location.origin) location.origin = location.protocol + "//" + location.host;
+			window.location = location.origin + "/browse/" + encodeURIComponent(query);
+
+		});
+ 	}
+ }
 
 
 /*************************HTML UTILTIES*************************/
