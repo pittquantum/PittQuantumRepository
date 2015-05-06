@@ -16,3 +16,6 @@ Routes are defined in `pqr/views.py`
 ### Grunt  
 Added grunt for watching LESS files for auto compiling. Will be useful for a lot of other things too. 
 
+### Mongo  
+Build index with db.molecules.ensureIndex({name: "text", <fieldToBeIndexed>: "text"})  
+Then db.molecules.find({<field>: "query"})
