@@ -14,19 +14,19 @@ $(document).ready(function() {
 	pqr.htmlUtilities.toolTipOptIn(); 
 	pqr.htmlUtilities.fontSizeChanger(0); //Restore previous values 
 	pqr.bindevents.fontSizeChanger("#reducefont", "#increasefont", "#defaultfont");
-	pqr.typeahead.activate("#header-molecule-search");
+	// pqr.typeahead.activate("#header-molecule-search");
 	pqr.bindevents.moleculeSearch('.navbar-form .molecule-query');
 
 	//Home Page
 	if($("#main").hasClass("page-home")){
-		pqr.typeahead.activate("#molec-query");
+		// pqr.typeahead.activate("#molec-query");
 		pqr.bindevents.moleculeSearch('#home-molecule-query .molecule-query'); 
 		console.log("Home Page"); 
 	}
 
 	//Browse Page
 	if($("#main").hasClass("page-browse")){
-		pqr.typeahead.activate("#molec-query");
+		// pqr.typeahead.activate("#molec-query");
 		pqr.htmlUtilities.toolTipOptIn();
 
 
@@ -152,17 +152,21 @@ pqr.bindevents.moleculeStyleChanger = function(){
  * 
  */
  pqr.bindevents.moleculeSearch = function(selector){
- 	if($(selector).length){
- 		$(selector).on("click", function(event){
-			event.preventDefault();
+ 	
 
+ 	if($(selector).length){
+
+ 		console.log("selctor exists"); 
+ 		$(selector).on("click", function(event){
 			//Get the query from the input box (parent, prev)
 			var query = $(this).parent().prev().val();
+			// console.log(query); 
 
 			//Get the base URL and redirect 
 			if (!location.origin) location.origin = location.protocol + "//" + location.host;
 			window.location = location.origin + "/browse/" + encodeURIComponent(query);
-
+			
+			event.preventDefault();
 		});
  	}
  }
