@@ -116,11 +116,11 @@ def favicon():
 ###############################################################################################################
 @pqr.errorhandler(404)
 def page_not_found(e):
-    molecule(key=MOLECULE_OF_THE_WEEK)
+    return redirect(url_for('index'))
 
 @pqr.errorhandler(500)
 def page_not_found(e):
-    molecule(key=MOLECULE_OF_THE_WEEK)
+    return redirect(url_for('index'))
 ###############################################################################################################
 
 
