@@ -118,6 +118,9 @@ def favicon():
 def page_not_found(e):
     molecule(key=MOLECULE_OF_THE_WEEK)
 
+@pqr.errorhandler(500)
+def page_not_found(e):
+    molecule(key=MOLECULE_OF_THE_WEEK)
 ###############################################################################################################
 
 
