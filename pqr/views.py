@@ -72,10 +72,11 @@ def browse(query="-1"):
     print query
     cursor = db.molecules.find({ "$text": {"$search": str(query) }} )
     for i in cursor:
-	       tempArr.append(i)
+        i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
+        tempArr.append(i)
 
     print tempArr
-    
+
     page = {'id': "page-browse"}
 
     return render_template("browse.html", page=page)
