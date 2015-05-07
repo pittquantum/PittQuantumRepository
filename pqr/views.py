@@ -90,7 +90,10 @@ def browse(query="-1", page_num="-1"):
 
     tempArr = list(chunks(results,10))
     num_pages = len(tempArr)
-    results = tempArr[page_num - 1]
+    try:
+        results = tempArr[page_num - 1]
+    except IndexError:
+        results = tempArr[0]
 
     page = {'id': "page-browse"}
 
