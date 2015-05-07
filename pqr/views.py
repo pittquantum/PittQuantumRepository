@@ -105,7 +105,10 @@ def browse(query="-1", page_num="-1"):
     elif page_num == -1 and num_pages == 1:
         active = -1
     else:
-        active = page_num
+        if page_num > num_pages:
+            active = 1
+        else:
+            active = page_num
 
     return render_template("browse.html", page=page, results=results, query=query, num_pages=num_pages, active=active)
 
