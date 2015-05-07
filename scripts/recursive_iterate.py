@@ -39,7 +39,8 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
         	"properties_id": properties_id,
         	"inchikey": json_data['inchikey'],
         	"name": json_data['name'],
-        	"formula": json_data['formula']
+        	"formula": json_data['formula'],
+		"tags": json_data['tags']
         }).inserted_id #
 
 
@@ -63,5 +64,6 @@ for document in cursor:
 db.molecules.create_index([
     ("name", "text"),
     ("inchikey", "text"),
-    ("formula", "text")
+    ("formula", "text"),
+    ("tags", "text")
 ])
