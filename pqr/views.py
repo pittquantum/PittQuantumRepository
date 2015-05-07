@@ -1,7 +1,7 @@
 #!./venv/bin/python
 
 from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request
-# from flask.ext.cache import Cache
+from flask.ext.cache import Cache
 from pymongo import MongoClient
 from pqr import pqr
 from settings import APP_JSON
@@ -9,7 +9,7 @@ from secret_key import secret_key
 import os
 import json
 
-# cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
+cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ###############################################################################################################
@@ -26,7 +26,7 @@ def index():
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/')  # if no key lets default to the molecule of the day
 @pqr.route('/mol')  #if no key lets default to the molecule of the day
-# @cache.cached(timeout=5)
+@cache.cached(timeout=50)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
