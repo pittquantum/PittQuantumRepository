@@ -89,11 +89,12 @@ def browse(query="-1", page_num="-1"):
         results.append(i)
 
     tempArr = chunks(results, 10)
-    results = tempArr[page_num - 1]
+    results = list(tempArr)[page_num - 1]
+    num_pages=len(list(tempArr))
 
     page = {'id': "page-browse"}
 
-    return render_template("browse.html", page=page, results=results, query=query, num_pages=len(tempArr))
+    return render_template("browse.html", page=page, results=results, query=query, num_pages=num_pages)
 
 @pqr.route('/data')
 @pqr.route('/data/<key>')
