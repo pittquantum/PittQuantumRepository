@@ -70,7 +70,8 @@ def browse(query="-1"):
     temp = db.molecules.ensure_index([
         ("name", "text"),
         ("inchikey", "text"),
-        ("formula", "text")
+        ("formula", "text"),
+	("tags", "text")
     ])
 
     tempArr = []
