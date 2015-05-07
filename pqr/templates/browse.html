@@ -66,6 +66,16 @@
      <!-- Molecule Browser -->
      <div class="row clearfix" id="molecule-browser">
           {% import '/macros/molecules.html' as molecule %}
+
+           <div class="alert alert-success row" role="alert">
+           	<strong>Search Successful!</strong>
+           		<samp>Num Pages Returned: {{num_pages}} 
+           		Current Page {{active}}
+           		Your Query: "{{query}}" </samp>
+           	</div>
+          
+
+
           {% if results %}
             {% for result in results %}
               {{molecule.resultMolecule(result) }}
@@ -81,7 +91,12 @@
                 </a>
               </li> -->
               {% for i in range(1,num_pages+1)%}
+              	{% if i == active %}
+				<li class="active"><a href="/browse/{{query}}/{{i}}">{{i}}</a></li>
+              	{% else %}
                 <li><a href="/browse/{{query}}/{{i}}">{{i}}</a></li>
+
+                {% endif %}
               {% endfor %}
 
               <!-- <li>
