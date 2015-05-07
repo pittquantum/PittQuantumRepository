@@ -66,10 +66,6 @@
      <!-- Molecule Browser -->
      <div class="row clearfix" id="molecule-browser">
           {% import '/macros/molecules.html' as molecule %}
-          <code> 
-            Num Pages: {{num_pages}} Query: {{query}} 
-
-          </code>
           {% if results %}
             {% for result in results %}
               {{molecule.resultMolecule(result) }}
