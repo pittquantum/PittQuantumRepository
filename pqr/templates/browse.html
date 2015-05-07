@@ -66,7 +66,10 @@
      <!-- Molecule Browser -->
      <div class="row clearfix" id="molecule-browser">
           {% import '/macros/molecules.html' as molecule %}
-          <code> {{num_pages}} </code>
+          <code> 
+            Num Pages: {{num_pages}} Query: {{query}} 
+
+          </code>
           {% if results %}
             {% for result in results %}
               {{molecule.resultMolecule(result) }}
@@ -81,7 +84,7 @@
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li> -->
-              {% for i in range(1,num_pages)%}
+              {% for i in range(1,num_pages+1)%}
                 <li><a href="/browse/{{query}}/{{i}}">{{i}}</a></li>
               {% endfor %}
 
