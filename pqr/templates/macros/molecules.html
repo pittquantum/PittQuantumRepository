@@ -93,10 +93,15 @@
             <tr class="molecule-doi">
               <td>D.O.I<sup><a href="#" data-container="body" data-toggle="tooltip" title="Digital Object Identifier"><i class="fa fa-question"></i></a></sup></td>
               <td><a href="#"> dx.doi.org/10.1234/pqr-mlfhjehsliiphl-uhfffaoysa-n</td>
+
 							</tr>
 
+
+
 							<!-- Begin Detailed Section -->
+
 							<tr class="molecule-alt-names detailed">
+
 								<td>Synonyms<sup><a href="#" data-container="body" data-toggle="tooltip" title="Alternate names for this substance"><i class="fa fa-question"></i></a></sup>
               </td>
               <td>
@@ -163,7 +168,7 @@
 
             <tr class="molecule-data detailed">
               <td>JSON<sup><a href="#" data-container="body" data-toggle="tooltip" title="Get the data for this molecule in JSON format"><i class="fa fa-question"></i></a></sup></td>
-              <td> <a href="{{ url_for('data', key=jsonDict["inchikey"]) }}"> Get JSON data </a></td>
+              <td> <a href="{{ url_for('data', key=jsonDict[" inchikey "]) }}"> Get JSON data </a></td>
             </tr>
             <tr class="molecule-tags">
               <td> <i class="fa fa-tags"></i></td>
@@ -172,7 +177,9 @@
 
                 {% for i in jsonDict["tags"] %}
                 <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
-                <a href="/browse/{{i|urlencode}}"><span class="label label-primary">{{ i }}</span></a>
+                <a href="/browse/{{i|urlencode}}">
+                  <span class="label label-primary">{{ i }}</span>
+                </a>
                 <!-- </a> -->
                 {% endfor %}
 
@@ -189,11 +196,11 @@
 
         <div class="panel-footer molecule-switchview block-center center-block text-center">
           <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                  <button type="button" class="btn btn-primary" id="changeStyleSphere">Spheres</button>
-                  <button type="button" class="btn btn-primary" id="changeStyleLine">Lines</button>
-                  <button type="button" class="btn btn-primary" id="changeStyleStick">Sticks</button>
-                  <button type="button" class="btn btn-primary" id="changeStyleCross">Crosses</button>
-              </div>
+            <button type="button" class="btn btn-primary" id="changeStyleSphere">Spheres</button>
+            <button type="button" class="btn btn-primary" id="changeStyleLine">Lines</button>
+            <button type="button" class="btn btn-primary" id="changeStyleStick">Sticks</button>
+            <button type="button" class="btn btn-primary" id="changeStyleCross">Crosses</button>
+          </div>
         </div>
 
       </div>
