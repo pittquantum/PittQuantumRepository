@@ -171,7 +171,7 @@
 
                 {% for i in jsonDict["tags"] %}
                 <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
-                <span class="label label-primary">{{ i }}</span>
+                <a href="/browse/{{i|urlencode}}"><span class="label label-primary">{{ i }}</span></a>
                 <!-- </a> -->
                 {% endfor %}
 
