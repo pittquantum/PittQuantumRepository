@@ -59,12 +59,14 @@ def news():
 @pqr.route('/browse/')
 @pqr.route('/browse/<query>')
 @pqr.route('/browse/<query>/')
-def browse(query="-1", page="-1"):
+@pqr.route('/browse/<query>/<page_num>')
+@pqr.route('/browse/<query>/<page_num>/')
+def browse(query="-1", page_num="-1"):
 
     try:
-        page = int(page)
+        page_num = int(page_num)
     except ValueError:
-        page = 1
+        page_num = 1
 
     if query == "-1":
         flash("You didn't search for anything!")
@@ -86,8 +88,8 @@ def browse(query="-1", page="-1"):
         i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
         results.append(i)
 
-    tempArr = list(chunks(results, 10))
-    results = tempArr[page - 1]
+    tempArr = chunks(results, 10)
+    results = tempArr[page_num - 1]
 
     page = {'id': "page-browse"}
 
