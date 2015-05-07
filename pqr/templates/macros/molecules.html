@@ -22,7 +22,7 @@
       {{data.formula|subnumbers|safe}}
     </div>
   </div>
-  
+
 </div>
 {%- endmacro %}
 
@@ -80,24 +80,24 @@
               <td>{{ jsonDict["molecular mass"] }} g·mol<sup>−1</sup></td>
             </tr>
 
-            <tr class="molecule-head-of-formation">
-              <td>Heat of Formation<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+            <tr class="molecule-heat-of-formation">
+              <td>Heat of Formation<sup><a href="#" data-container="body" data-toggle="tooltip" title="Change of enthalpy from the formation of 1 mol of a compound from its elements at 1 atm."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pm7"]["heatOfFormation"] }} kJ·mol<sup>−1</sup></td>
             </tr>
 
             <tr class="molecule-dipole-movement">
-              <td>Dipole Moment<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>Dipole Moment<sup><a href="#" data-container="body" data-toggle="tooltip" title="Measure of electric polarity of a system of charges."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pm7"]["dipoleMoment"] }} D</td>
             </tr>
 
             <tr class="molecule-doi">
-              <td>D.O.I<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>D.O.I<sup><a href="#" data-container="body" data-toggle="tooltip" title="Digital Object Identifier"><i class="fa fa-question"></i></a></sup></td>
               <td><a href="#"> dx.doi.org/10.1234/pqr-mlfhjehsliiphl-uhfffaoysa-n</td>
 							</tr>
 
 							<!-- Begin Detailed Section -->
 							<tr class="molecule-alt-names detailed">
-								<td>Synonyms<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup>
+								<td>Synonyms<sup><a href="#" data-container="body" data-toggle="tooltip" title="Alternate names for this substance"><i class="fa fa-question"></i></a></sup>
               </td>
               <td>
                 <ul class="list-inline">
@@ -109,7 +109,7 @@
             </tr>
 
             <tr class="molecule-cas-numbers detailed">
-              <td>CAS Number(s)<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>CAS Number(s)<sup><a href="#" data-container="body" data-toggle="tooltip" title="Chemical Abstracts Service registry number(s)"><i class="fa fa-question"></i></a></sup></td>
               <td>
                 <ul class="list-inline">
                   {% if jsonDict["cas"] is string %}
@@ -123,34 +123,34 @@
             </tr>
 
             <tr class="molecule-inchikey detailed">
-              <td>inchikey<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>InChIKey<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["inchikey"] }}</td>
             </tr>
 
             <tr class="molecule-pg-symmetry detailed">
-              <td>Point Group Symmetry<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>Point Group Symmetry<sup><a href="#" data-container="body" data-toggle="tooltip" title="Group of geometric symmetries that keep one point fixed."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pointGroup"]|truncate(1, true, '') }}<sub>{{jsonDict["pointGroup"]|replace(jsonDict["pointGroup"]|truncate(1, true, ''), '') }}</sub>
               </td>
               <!--Will use JS to automatically add subscripts -->
             </tr>
 
             <tr class="molecule-volume detailed">
-              <td>Volume<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>Volume<sup><a href="#" data-container="body" data-toggle="tooltip" title="Volume of a molecule."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pm7"]["volume"] }} &#8491;<sup>3</sup></td>
             </tr>
 
             <tr class="molecule-surface-area detailed">
-              <td>Surface Area<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>Surface Area<sup><a href="#" data-container="body" data-toggle="tooltip" title="The total surface area of a molecule."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pm7"]["surfaceArea"] }} &#8491;<sup>2</sup></td>
             </tr>
 
             <tr class="molecule-homo-energy detailed">
-              <td>Homo Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>Homo Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Highest occupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pm7"]["homo"] }} eV</td>
             </tr>
 
             <tr class="molecule-lumo-energy detailed">
-              <td>LUMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Some tooltip text!"><i class="fa fa-question"></i></a></sup></td>
+              <td>LUMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Lowest unoccupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pm7"]["lumo"] }} eV</td>
             </tr>
             <!-- End Detailed Section -->
