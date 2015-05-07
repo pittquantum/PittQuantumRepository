@@ -97,7 +97,7 @@ def browse(query="-1", page_num="-1"):
 
     page = {'id': "page-browse"}
 
-    return render_template("browse.html", page=page, results=results, query=query, num_pages=num_pages, active=(page_num == 1 ? -1 : page_num))
+    return render_template("browse.html", page=page, results=results, query=query, num_pages=num_pages, active=(-1 if page_num == 1 else page_num))
 
 @pqr.route('/data')
 @pqr.route('/data/<key>')
