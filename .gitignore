@@ -70,3 +70,6 @@ venv/
 
 # Secrets
 pqr/secret_key.py
+
+# Random files that pop out of nowhere
+output.txt
