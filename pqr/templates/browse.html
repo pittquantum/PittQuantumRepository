@@ -70,7 +70,7 @@
            <div class="alert alert-success row" role="alert">
            	<strong>Search Successful!</strong>
            		<samp>Num Pages Returned: {{num_pages}} 
-           		Current Page {{active}}
+           		{% if active != -1 %} Current Page {{active}}{% endif %}
            		Your Query: "{{query}}" </samp>
            	</div>
           
@@ -81,7 +81,7 @@
               {{molecule.resultMolecule(result) }}
             {% endfor %}
             
-          
+          {% if active != -1 %}
           <div class="text-center">
             <nav>
               <ul class="pagination">
@@ -90,6 +90,7 @@
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li> -->
+
               {% for i in range(1,num_pages+1)%}
               	{% if i == active %}
 				<li class="active"><a href="/browse/{{query}}/{{i}}">{{i}}</a></li>
@@ -107,6 +108,7 @@
               </ul>
             </nav>
           </div>
+          {% endif %}
 
           {% else %}
             <div class="alert alert-warning row" role="alert">
