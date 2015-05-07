@@ -78,7 +78,7 @@ def browse(query="-1", page_num="-1"):
         ("name", "text"),
         ("inchikey", "text"),
         ("formula", "text"),
-	("tags", "text")
+	    ("tags", "text")
     ])
 
     results = []
@@ -91,7 +91,10 @@ def browse(query="-1", page_num="-1"):
     tempArr = list(chunks(results,10))
     num_pages = len(tempArr)
     try:
-        results = tempArr[page_num - 1]
+        if num_pages > 0:
+            results = tempArr[page_num - 1]
+        else:
+            results = None
     except IndexError:
         results = tempArr[0]
 
