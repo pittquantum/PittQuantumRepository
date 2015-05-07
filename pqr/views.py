@@ -68,9 +68,6 @@ def browse(query="-1", page_num="-1"):
     except ValueError:
         page_num = 1
 
-    if page_num == -1:
-        page_num = 1
-
     if query == "-1":
         flash("You didn't search for anything!")
         return redirect(url_for('index'))
