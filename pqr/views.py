@@ -83,7 +83,7 @@ def browse(query="-1"):
 
     page = {'id': "page-browse"}
 
-    return render_template("browse.html", page=page, results=tempArr)
+    return render_template("browse.html", page=page, results=tempArr, query=query)
 
 @pqr.route('/data')
 @pqr.route('/data/<key>')
