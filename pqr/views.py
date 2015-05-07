@@ -74,16 +74,19 @@ def browse(query="-1"):
 	("tags", "text")
     ])
 
-    tempArr = []
+    results = []
 
     cursor = db.molecules.find({ "$text": {"$search": str(query) }} ).limit(10)
     for i in cursor:
         i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
-        tempArr.append(i)
+        results.append(i)
+
+    tempArr = chunks(results, 10)
+    results = tempArr[page]
 
     page = {'id': "page-browse"}
 
-    return render_template("browse.html", page=page, results=tempArr, query=query)
+    return render_template("browse.html", page=page, results=results, query=query)
 
 @pqr.route('/data')
 @pqr.route('/data/<key>')
@@ -120,6 +123,12 @@ def page_not_found(e):
 def page_not_found(e):
     return redirect(url_for('index'))
 ###############################################################################################################
+
+def chunks(l, n):
+    """ Yield successive n-sized chunks from l.
+    """
+    for i in xrange(0, len(l), n):
+        yield l[i:i+n]
 
 
 ### CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
