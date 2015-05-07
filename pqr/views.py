@@ -64,7 +64,7 @@ def news():
 def browse(query="-1", page_num="-1"):
 
     try:
-        page_num = int(page_num)
+        page_num = abs(int(page_num))
     except ValueError:
         page_num = 1
 
