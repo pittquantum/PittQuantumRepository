@@ -88,9 +88,9 @@ def browse(query="-1", page_num="-1"):
         i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
         results.append(i)
 
-    tempArr = chunks(results, 10)
-    results = list(tempArr)[0][page_num - 1]
-    num_pages=len(list(tempArr)[0])
+    tempArr = list(chunks(results,10))
+    num_pages = len(tempArr)
+    results = tempArr[page_num - 1]
 
     page = {'id': "page-browse"}
 
