@@ -89,8 +89,8 @@ def browse(query="-1", page_num="-1"):
         results.append(i)
 
     tempArr = chunks(results, 10)
-    results = list(tempArr)[page_num - 1]
-    num_pages=len(list(tempArr))
+    results = list(tempArr)[0][page_num - 1]
+    num_pages=len(list(tempArr)[0])
 
     page = {'id': "page-browse"}
 
