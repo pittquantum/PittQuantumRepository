@@ -83,7 +83,7 @@ def browse(query="-1", page_num="-1"):
 
     results = []
 
-    cursor = db.molecules.find({ "$text": {"$search": str(query) }} ).limit(10)
+    cursor = db.molecules.find({ "$text": {"$search": str(query) }} )
     for i in cursor:
         i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
         results.append(i)
