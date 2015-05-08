@@ -71,8 +71,8 @@
       <script>
         setInterval(function() {
           if ($3Dmol.viewers)
-            if ($3Dmol.viewers[0]) {
-              var view = $3Dmol.viewers[0];
+            for (x in $3Dmol.viewers) {
+              var view = x;
               view.rotate(1);
             }
         }, 50);
