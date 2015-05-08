@@ -25,8 +25,8 @@
      <div class="row clearfix" id="splash-search">
           <div class="col-md-12">
                <div class="jumbotron text-center">
-                    <h2>Pitt Quantum Repository</h2>
-                    <p>Enter your molecule name, inCHI key, or &lt;any ID&gt; </p>
+                    <h2>Welcome to Pitt Quantum Repository!</h2>
+                    <p>Search for a molecule by name, InChI, category, etc. </p>
 
                     <form id='home-molecule-query' class="text-center form-inline" role="form" action="">
                          <div class="input-group">
@@ -45,8 +45,19 @@
      </div>
 
      <div class="row">
+     <div id="molecule-of-the-week" class="col-md-6">
+               <h2> Molecule of the Week </h2>
+               <p> Explore new molecules weekly via the molecule of the week module! Click the molecule name to get more information.  </p>
+               <h3> <a href="/mol/RYYVLZVUVIJVGH-UHFFFAOYSA-N/"> Caffeine </a></h3>
+
+               <div id="molecule-viewer">
+                    {% import '/macros/molecules.html' as molecule %}
+                    {{ molecule.simpleViewer() }}
+               </div>
+          </div>
+
           <div class="col-md-6">
-               <h2> Welcome to Pitt Quantum Repository! </h2>
+               <h2> News </h2>
                <p> Check out the molecule of the week, news, links, or search for a molecule above. </p>
                <div class="list-group other-content">
                     <a href="https://github.com/pittquantum/backend" target="_blank" class="list-group-item"><span class="badge">New</span><i class="fa fa-newspaper-o"></i> First Launch</a>
@@ -62,18 +73,7 @@
           </div>
 
 
-          <div id="molecule-of-the-week" class="col-md-6">
-               <h2> Molecule of the Week </h2>
-               <p> Explore new molecules weekly via the molecule of the week module! Click the molecule name to get more information.  </p>
-               <h3> <a href="/mol/RYYVLZVUVIJVGH-UHFFFAOYSA-N/"> Caffeine </a></h3>
-
-               <div id="molecule-viewer">
-                    {% import '/macros/molecules.html' as molecule %}
-                    {{ molecule.simpleViewer() }}
-               </div>
-
-
-          </div>
+          
 
      </div>
 
