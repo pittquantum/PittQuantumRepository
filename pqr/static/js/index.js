@@ -252,7 +252,7 @@ pqr.htmlUtilities.toolTipOptIn = function(){
  * 	
  */
 pqr.htmlUtilities.fontSizeChanger = function(type){
- 	var DEFAULTSIZE = "14px"; 
+ 	var DEFAULTSIZE = "16px"; 
  	var localstore = false; //Is localstorage avaiable 
  	var currentBaseSize, newBaseSize;
  	
