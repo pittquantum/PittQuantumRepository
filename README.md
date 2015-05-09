@@ -16,7 +16,7 @@ To run PQR locally, do the following:
 ### Starting the server
 Start the server by running `./server.py` on Linux systems. On Windows, run `.\venv\Scripts\python .\server.py`. If you are running for the first time, follow the steps below instead!
 
-### First run
+### First run/Data update
 The first time you run the server, or any time you update the data in the folders, you'll have to perform the following steps:  
 1. `cd scripts/`  
 2. (If you are updating the data only) `python clear_db.py`  
