@@ -35,13 +35,14 @@ def index():
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/')  # if no key lets default to the molecule of the day
 @pqr.route('/mol')  #if no key lets default to the molecule of the day
-@cache.cached(timeout=50)
+#@cache.cached(timeout=50)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
 
     if key in redirect_table.keys():
-        return redirect(url_for('index'), key=redirect_table[key])
+        flash("Redirected! " + str(key) + " is actually the same as " + str(redirect_table[key]))
+        return redirect(url_for('molecule', key=redirect_table[key]))
 
     # This gets the first two characters of the key, allowing for directory traversal
     key_first_two = key[:2]
@@ -201,13 +202,3 @@ def chunks(l, n):
 ### CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
 pqr.secret_key = secret_key
 ###
-
-if __name__ == '__main__':
-    with open("redirects/redirect_file", "r") as redir:
-        for line in redir:
-            lineArr = line.strip().split(',')
-            key = lineArr[0]
-            value = lineArr[1]
-            redirect_table[key] = value
-
-    pqr.run()
