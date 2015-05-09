@@ -17,6 +17,8 @@ import os
 import json
 
 cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
+
+redirect_table = {}
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ###############################################################################################################
@@ -37,6 +39,9 @@ def index():
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
+
+    if key in redirect_table.keys():
+        return redirect(url_for('index'), key=redirect_table[key])
 
     # This gets the first two characters of the key, allowing for directory traversal
     key_first_two = key[:2]
@@ -198,4 +203,11 @@ pqr.secret_key = secret_key
 ###
 
 if __name__ == '__main__':
+    with open("redirects/redirect_file", "r") as redir:
+        for line in redir:
+            lineArr = line.strip().split(',')
+            key = lineArr[0]
+            value = lineArr[1]
+            redirect_table[key] = value
+
     pqr.run()
