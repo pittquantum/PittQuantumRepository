@@ -19,6 +19,7 @@ import json
 cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
 
 redirect_table = {}
+amount_mol = 0
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ###############################################################################################################
@@ -27,7 +28,7 @@ MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 @pqr.route('/home/')
 def index():
     page = {'id': "page-home"}
-    return render_template("home.html", page=page)
+    return render_template("home.html", page=page, amount_mol=amount_mol)
 
 
 ###############################################################################################################
