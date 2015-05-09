@@ -131,6 +131,11 @@
               </td>
             </tr>
 
+            <tr class="molecule-pubchem-id detailed">
+              <td>PubChem CID<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
+              <td><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}"> {{ jsonDict['pubchem_cid'] }}</a></td>
+            </tr>
+
             <tr class="molecule-inchikey detailed">
               <td>InChIKey<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["inchikey"] }}</td>
