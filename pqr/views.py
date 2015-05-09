@@ -19,7 +19,7 @@ import json
 cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
 
 redirect_table = {}
-amount_mol = 0
+amount_mol = None
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ###############################################################################################################
@@ -206,3 +206,6 @@ def chunks(l, n):
 ### CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
 pqr.secret_key = secret_key
 ###
+
+if __name__ == '__main__':
+    pqr.run()
