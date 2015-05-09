@@ -35,11 +35,14 @@ def index():
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/')  # if no key lets default to the molecule of the day
 @pqr.route('/mol')  #if no key lets default to the molecule of the day
-#@cache.cached(timeout=50)
+@cache.cached(timeout=50)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
 
+    # Checks to see if the key passed in exists in the redirect table
+    # If it does, it redirects to this same route, except with the proper key
+    # It also flashes a message that shows the redirection
     if key in redirect_table.keys():
         flash("Redirected! " + str(key) + " is actually the same as " + str(redirect_table[key]))
         return redirect(url_for('molecule', key=redirect_table[key]))
