@@ -68,15 +68,6 @@
 
     {% for result in results %}
       {{ molecule.resultMolecule(result) }}
-      <script>
-        setInterval(function() {
-          if ($3Dmol.viewers)
-            for (x in $3Dmol.viewers) {
-              var view = x;
-              view.rotate(1);
-            }
-        }, 50);
-      </script>
     {% endfor %}
 
     {% if active != -1 %}
