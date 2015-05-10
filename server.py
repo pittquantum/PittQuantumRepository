@@ -17,7 +17,7 @@ with open("./pqr/server_start/redirect_file", "r") as redir:
 # Set the Molecule of the Week
 with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
     for line in molfile:
-        if line.strip.split(",")[0] == datetime.date.isoformat(datetime.datetime.now()):
+        if line.strip().split(",")[0] == datetime.date.isoformat(datetime.datetime.now()):
             pqv.MOLECULE_OF_THE_WEEK = line.strip.split(",")[1].strip()
             break
 
