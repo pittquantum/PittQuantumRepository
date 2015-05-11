@@ -51,7 +51,7 @@ body .page-home .other-content .fa {
 }
 body .page-home #molecule-viewer div,
 body .page-home #molecule-viewer canvas {
-  margin-top: 175px;
+  margin-top: 225px;
   height: 200px;
   /* Small devices (tablets, 768px and up) */
   /* Medium devices (desktops, 992px and up) */
@@ -60,6 +60,7 @@ body .page-home #molecule-viewer canvas {
 @media (min-width: 768px) {
   body .page-home #molecule-viewer div,
   body .page-home #molecule-viewer canvas {
+    margin-top: 175px;
     height: 250px;
   }
 }
