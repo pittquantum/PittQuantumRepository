@@ -105,7 +105,8 @@ def browse(query="-1", page_num="-1"):
         ("name", "text"),
         ("inchikey", "text"),
         ("formula", "text"),
-	    ("tags", "text")
+	    ("tags", "text"),
+        ("synonyms", "text")
     ])
 
     results = []

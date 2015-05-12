@@ -40,7 +40,8 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
         	"inchikey": json_data['inchikey'],
         	"name": json_data['name'],
         	"formula": json_data['formula'],
-		"tags": json_data['tags']
+		    "tags": json_data['tags'],
+            "synonyms": json_data['synonyms']
         }).inserted_id #
 
 
@@ -65,5 +66,6 @@ db.molecules.create_index([
     ("name", "text"),
     ("inchikey", "text"),
     ("formula", "text"),
-    ("tags", "text")
+    ("tags", "text"),
+    ("synonyms", "text")
 ])
