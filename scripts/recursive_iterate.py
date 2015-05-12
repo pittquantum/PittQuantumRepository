@@ -18,7 +18,10 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
     for file in files:
     	# print file
         json_file = open(DIRECTORY + file[:2] + "/" + file, "r")
-        json_data = json.load(json_file)
+        try:
+            json_data = json.load(json_file)
+        except ValueError:
+            print file
 
         try:
             molecular_mass = json_data['molecular_mass']
