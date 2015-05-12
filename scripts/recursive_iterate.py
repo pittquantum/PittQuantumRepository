@@ -21,9 +21,9 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
         json_data = json.load(json_file)
 
         try:
-            molecular mass = json_data['molecular mass']
+            molecular_mass = json_data['molecular_mass']
         except KeyError:
-            molecular mass = ""
+            molecular_mass = ""
         try:
             inchi = json_data['inchi']
         except KeyError:
@@ -31,7 +31,7 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
 
         ##Creating a properties document
         properties_id = db.properties.insert_one({
-        	"molecular mass": molecular_mass,
+        	"molecular_mass": molecular_mass,
         	"inchi": inchi
         }).inserted_id #Use this to link the molcules
 
