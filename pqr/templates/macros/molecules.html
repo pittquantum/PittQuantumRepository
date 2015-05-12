@@ -31,9 +31,11 @@
 <div class="molecule row">
 
   <!-- Molecule name as h1 for SEO-->
+  {%if jsonDict["name"]%}
   <h1 id="molecule-name">
     <a class="visible-xs-inline" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> {{ jsonDict["name"].title() }}
   </h1>
+  {%endif%}
 
 
   <!--This is where the canvas/img/js will be for the molecule viewer (Using an image for tempalte-->
@@ -53,8 +55,10 @@
         </div>
 
         <div class="panel-body">
-          <p>Listed below are the properties for
-            <strong>{{ jsonDict["name"].title() }}</strong>.</p>
+	        {%if jsonDict["name"]%}
+	          <p>Listed below are the properties for
+	            <strong>{{ jsonDict["name"].title() }}</strong>.</p>
+	        {%endif%}
         </div>
 
         <!-- Table for all of the properties -->
@@ -64,33 +68,42 @@
           </thead>
 
           <tbody>
-
+			{%if jsonDict["formula"]%}
             <tr class="molecule-formula">
               <td>Formula<sup><a href="#" data-container="body" data-toggle="tooltip" title="Chemical formula"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["formula"]|subnumbers|safe}}</td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["iupac_name"]%}
             <tr class="molecule-iupac-name">
               <td>IUPAC Name<sup><a href="#" data-container="body" data-toggle="tooltip" title="The standard name of this molecule"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["iupac_name"].title() }}</td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["molecular mass"]%}
             <tr class="molecule-molecular-mass">
               <td>Molecular Mass<sup><a href="#" data-container="body" data-toggle="tooltip" title="The mass of the molecule in g/mol"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ '%10.3f' % jsonDict["molecular mass"] }} g·mol<sup>−1</sup></td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["heatOfFormation"]%}
             <tr class="molecule-heat-of-formation">
               <td>Heat of Formation<sup><a href="#" data-container="body" data-toggle="tooltip" title="Change of enthalpy from the formation of 1 mol of a compound from its elements at 1 atm."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ '%8.1f' % jsonDict["pm7"]["heatOfFormation"] }}
               &plusmn; 16.7 kJ·mol<sup>−1</sup></td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["dipoleMoment"]%}
             <tr class="molecule-dipole-movement">
               <td>Dipole Moment<sup><a href="#" data-container="body" data-toggle="tooltip" title="Measure of electric polarity of a system of charges."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ '%8.2f' % jsonDict["pm7"]["dipoleMoment"] }}
               &plusmn; 1.08 D</td>
             </tr>
+            {%endif%}
 
             <!-- ignore for now
             <tr class="molecule-doi">
@@ -102,12 +115,11 @@
 
 
 
-							<!-- Begin Detailed Section -->
-
-							<tr class="molecule-alt-names detailed">
-
-								<td>Synonyms<sup><a href="#" data-container="body" data-toggle="tooltip" title="Alternate names for this substance"><i class="fa fa-question"></i></a></sup>
-              </td>
+			<!-- Begin Detailed Section -->
+			{%if jsonDict["synonyms"] %}
+			<tr class="molecule-alt-names detailed">
+				<td>Synonyms<sup><a href="#" data-container="body" data-toggle="tooltip" title="Alternate names for this substance"><i class="fa fa-question"></i></a></sup>
+			</td>
               <td>
                 <ul class="list-inline">
                   {% for i in jsonDict["synonyms"] %}
@@ -116,7 +128,9 @@
                 </ul>
               </td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["cas"] %}
             <tr class="molecule-cas-numbers detailed">
               <td>CAS Number(s)<sup><a href="#" data-container="body" data-toggle="tooltip" title="Chemical Abstracts Service registry number(s)"><i class="fa fa-question"></i></a></sup></td>
               <td>
@@ -130,43 +144,58 @@
                 </ul>
               </td>
             </tr>
+            {%endif%}
 
+
+            {%if jsonDict["pubchem_cid"] %}
             <tr class="molecule-pubchem-id detailed">
               <td>PubChem CID<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
               <td><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}"> {{ jsonDict['pubchem_cid'] }}</a></td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["inchikey"] %}
             <tr class="molecule-inchikey detailed">
               <td>InChIKey<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["inchikey"] }}</td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["pointGroup"] %}
             <tr class="molecule-pg-symmetry detailed">
               <td>Point Group Symmetry<sup><a href="#" data-container="body" data-toggle="tooltip" title="Group of geometric symmetries that keep one point fixed."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pointGroup"]|truncate(1, true, '') }}<sub>{{jsonDict["pointGroup"]|replace(jsonDict["pointGroup"]|truncate(1, true, ''), '') }}</sub>
               </td>
-              <!--Will use JS to automatically add subscripts -->
             </tr>
+            {%endif%}
 
+            {%if jsonDict["pm7"]["volume"] %}
             <tr class="molecule-volume detailed">
               <td>Volume<sup><a href="#" data-container="body" data-toggle="tooltip" title="Volume of a molecule."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pm7"]["volume"] }} &#8491;<sup>3</sup></td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["pm7"]["surfaceArea"] %}
             <tr class="molecule-surface-area detailed">
               <td>Surface Area<sup><a href="#" data-container="body" data-toggle="tooltip" title="The total surface area of a molecule."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ jsonDict["pm7"]["surfaceArea"] }} &#8491;<sup>2</sup></td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["pm7"]["homo"] %}
             <tr class="molecule-homo-energy detailed">
               <td>HOMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Highest occupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ '%8.2f' % jsonDict["pm7"]["homo"] }} &plusmn; 0.55 eV</td>
             </tr>
+            {%endif%}
 
+            {%if jsonDict["pm7"]["lumo"] %}
             <tr class="molecule-lumo-energy detailed">
               <td>LUMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Lowest unoccupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
               <td>{{ '%8.2f' % jsonDict["pm7"]["lumo"] }} eV</td>
             </tr>
+            {%endif%}
             <!-- End Detailed Section -->
 
 
@@ -175,10 +204,14 @@
               <td> <a href="#" data-toggle="modal" data-target="#qrcodemodal"> Generate QR Code </a></td>
             </tr>
 
+            {%if jsonDict["pubchem_cid"] %}
             <tr class="molecule-data detailed">
               <td>JSON<sup><a href="#" data-container="body" data-toggle="tooltip" title="Get the data for this molecule in JSON format"><i class="fa fa-question"></i></a></sup></td>
               <td> <a href="{{ url_for('data', key=jsonDict['inchikey']) }}"> Get JSON data </a></td>
             </tr>
+            {%endif%}
+
+            {%if jsonDict["tags"] %}
             <tr class="molecule-tags">
               <td> <i class="fa fa-tags"></i></td>
               <td>
@@ -196,6 +229,7 @@
 
               </td>
             </tr>
+            {%endif%}
 
 
 
