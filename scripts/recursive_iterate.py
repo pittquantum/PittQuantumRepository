@@ -78,17 +78,6 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
 
 #########################
 
-
-##Show all properties being created
-cursor = db.properties.find()
-for document in cursor:
-	pprint(document)
-
-##Show all molecules being created
-cursor = db.molecules.find()
-for document in cursor:
-	pprint(document)
-
 db.molecules.create_index([
     ("name", "text"),
     ("inchikey", "text"),
