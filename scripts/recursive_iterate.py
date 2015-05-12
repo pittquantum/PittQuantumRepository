@@ -20,11 +20,19 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
         json_file = open(DIRECTORY + file[:2] + "/" + file, "r")
         json_data = json.load(json_file)
 
+        try:
+            molecular mass = json_data['molecular mass']
+        except KeyError:
+            molecular mass = ""
+        try:
+            inchi = json_data['inchi']
+        except KeyError:
+            inchi = ""
 
         ##Creating a properties document
         properties_id = db.properties.insert_one({
-        	"molecular mass": json_data['molecular mass'],
-        	"inchi": json_data['inchikey']
+        	"molecular mass": molecular_mass,
+        	"inchi": inchi
         }).inserted_id #Use this to link the molcules
 
 
@@ -34,17 +42,36 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
 
         ##Creating a molcules document use the properties id to link
         	##For now lets just have a link here to the mol2 data
+        try:
+            inchikey = json_data['inchikey']
+        except KeyError:
+            inchikey = ""
+        try:
+            name = json_data['name']
+        except KeyError:
+            name = ""
+        try:
+            formula = json_data['formula']
+        except KeyError:
+            formula = ""
+        try:
+            tags = json_data['tags']
+        except KeyError:
+            tags = []
+        try:
+            synonyms = json_data['synonyms']
+        except KeyError:
+            synonyms = []
+
         molecules_id = db.molecules.insert_one({
         	"last_updated": datetime.now(),
         	"properties_id": properties_id,
-        	"inchikey": json_data['inchikey'],
-        	"name": json_data['name'],
-        	"formula": json_data['formula'],
-		    "tags": json_data['tags'],
-            "synonyms": json_data['synonyms']
+        	"inchikey": inchikey,
+        	"name": name,
+        	"formula": formula,
+            "tags": tags,
+            "synonyms": synonyms
         }).inserted_id #
-
-
 
         # pprint(data)
         json_file.close()
