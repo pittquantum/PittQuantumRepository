@@ -75,4 +75,4 @@ pqr/secret_key.py
 output.txt
 
 # Data
-pqr/static/data/
+pqr/static/data/*
