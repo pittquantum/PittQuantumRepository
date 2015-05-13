@@ -8,7 +8,7 @@ import pqr.views as pqv
 
 if(not sys.argv[1]):
     print "You have to pass a port as a command line argument"
-    return
+    sys.exit()
 
 # Opens the redirect file and stores in the redirect_table
 # dictionary in the views.py file
