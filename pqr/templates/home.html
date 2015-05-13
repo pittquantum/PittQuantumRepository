@@ -26,7 +26,7 @@
           <div class="col-md-12">
                <div class="jumbotron text-center">
                     <h2>Welcome to Pitt Quantum Repository!</h2>
-                    <p>Search for {{ amount_mol }} molecules by name, InChI, category, etc. </p>
+                    <p>Search for {{ "{:,}".format(amount_mol) }} molecules by name, InChI, category, etc. </p>
 
                     <form id='home-molecule-query' class="text-center form-inline" role="form" action="">
                          <div class="input-group">
