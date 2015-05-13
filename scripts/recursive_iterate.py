@@ -87,4 +87,13 @@ db.molecules.create_index([
     ("formula", "text"),
     ("tags", "text"),
     ("synonyms", "text")
-])
+],
+name="molecules_index",
+weights={
+    "name": 500,
+    "tags": 50,
+    "synonyms": 40,
+    "formula": 30,
+    "inchikey": 20
+    }
+)

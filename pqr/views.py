@@ -101,13 +101,13 @@ def browse(query="-1", page_num="-1"):
     db = client.test
 
     # Make sure the index exists
-    temp = db.molecules.ensure_index([
-        ("name", "text"),
-        ("inchikey", "text"),
-        ("formula", "text"),
-	    ("tags", "text"),
-        ("synonyms", "text")
-    ])
+    #temp = db.molecules.ensure_index([
+    #    ("name", "text"),
+    #    ("inchikey", "text"),
+    #    ("formula", "text"),
+    #    ("tags", "text"),
+    #    ("synonyms", "text")
+    #])
 
     results = []
 
