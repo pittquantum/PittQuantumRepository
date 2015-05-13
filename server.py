@@ -1,9 +1,14 @@
 #!./venv/bin/python
 from pymongo import MongoClient
 import datetime
+import sys
 
 from pqr import pqr
 import pqr.views as pqv
+
+if(not sys.argv[1]):
+    print "You have to pass a port as a command line argument"
+    return
 
 # Opens the redirect file and stores in the redirect_table
 # dictionary in the views.py file
@@ -27,4 +32,4 @@ db = client.test
 pqv.amount_mol = db.molecules.count()
 client.close()
 
-pqr.run(debug=True)
+pqr.run(debug=True, host="0.0.0.0", port=int(sys.argv[1]))
