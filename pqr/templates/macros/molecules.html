@@ -8,7 +8,7 @@
 {% macro resultMolecule(data, style='stick') -%}
 <div class="molecule-viwer row">
   <div class="col-md-4" class="">
-    <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{data.mol2url}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'></div>
+    <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{data.mol2url}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-surface1='opacity:.7;color:white' data-style='{{style}}'></div>
   </div>
 
   <div class="col-md-8 properties">
