@@ -86,7 +86,7 @@
             </tr>
             {%endif%}
 
-            {%if jsonDict["heatOfFormation"]%}
+            {%if jsonDict["pm7"]["heatOfFormation"]%}
             <tr class="molecule-heat-of-formation">
               <td>Heat of Formation<sup><a href="#" data-container="body" data-toggle="tooltip" title="Change of enthalpy from the formation of 1 mol of a compound from its elements at 1 atm."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ '%8.1f' % jsonDict["pm7"]["heatOfFormation"] }}
@@ -94,7 +94,7 @@
             </tr>
             {%endif%}
 
-            {%if jsonDict["dipoleMoment"]%}
+            {%if jsonDict["pm7"]["dipoleMoment"]%}
             <tr class="molecule-dipole-movement">
               <td>Dipole Moment<sup><a href="#" data-container="body" data-toggle="tooltip" title="Measure of electric polarity of a system of charges."><i class="fa fa-question"></i></a></sup></td>
               <td>{{ '%8.2f' % jsonDict["pm7"]["dipoleMoment"] }}
@@ -190,7 +190,7 @@
             {%if jsonDict["pm7"]["lumo"] %}
             <tr class="molecule-lumo-energy detailed">
               <td>LUMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Lowest unoccupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
-              <td>{{ '%8.2f' % jsonDict["pm7"]["lumo"] }} eV</td>
+              <td>{{ '%8.2f' % jsonDict["pm7"]["lumo"] }} &plusmn;  eV</td>
             </tr>
             {%endif%}
             <!-- End Detailed Section -->
