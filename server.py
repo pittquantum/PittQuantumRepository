@@ -20,8 +20,14 @@ with open("./pqr/server_start/redirect_file", "r") as redir:
         value = lineArr[1].strip()
         pqv.redirect_table[key] = value
 
+# Set the Molecule of the Week
 def set_weeekly_mol():
-    # Set the Molecule of the Week
+
+    # Gets todays date, then rewinds it to the last Sunday
+    # (if today is Sunday it sticks with today)
+    # Then it compares each line in the file to Sunday's date
+    # And when it finds a match, it changes MOLECULE_OF_THE_WEEK in views
+    # Also, this thread is run once per day
     today = datetime.date.toordinal(datetime.datetime.now())
     sunday = today - ( today % 7)
     sunday = datetime.date.fromordinal(sunday)
