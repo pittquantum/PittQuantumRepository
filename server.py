@@ -1,6 +1,7 @@
 #!./venv/bin/python
 from pymongo import MongoClient
 import datetime
+import threading
 import sys
 
 from pqr import pqr
@@ -19,12 +20,20 @@ with open("./pqr/server_start/redirect_file", "r") as redir:
         value = lineArr[1].strip()
         pqv.redirect_table[key] = value
 
-# Set the Molecule of the Week
-with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
-    for line in molfile:
-        if line.strip().split(",")[0] == datetime.date.isoformat(datetime.datetime.now()):
-            pqv.MOLECULE_OF_THE_WEEK = line.strip.split(",")[1].strip()
-            break
+def set_weeekly_mol():
+    # Set the Molecule of the Week
+    today = datetime.date.toordinal(datetime.datetime.now())
+    sunday = today - ( today % 7)
+    sunday = datetime.date.fromordinal(sunday)
+    sunday = datetime.date.isoformat(sunday)
+    with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
+        for line in molfile:
+            if line.strip().split(",")[0] == sunday:
+                pqv.MOLECULE_OF_THE_WEEK = line.strip.split(",")[1].strip()
+                break
+    threading.Timer(86400, set_weeekly_mol).start()
+
+set_weeekly_mol()
 
 # Get number of molecules in database
 client = MongoClient()
