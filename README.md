@@ -13,6 +13,9 @@ To run PQR locally, do the following:
 5. On Linux systems, run `. venv/bin/activate` to activate the virtual enviroment. On Windows, run `.\venv\Scripts\activate`.  
 6. Run `pip install -r requirements.txt`  
 
+### Grunt
+If you have Grunt installed you can run the tasks `grunt concat`, and `grunt uglify` to combine and minify JS. If you are developing you can run `grunt watch` and it will look for changes to any of the JS or CSS and automatically combine and concat all files.
+
 ### Starting the server
 Start the server by running `./server.py` on Linux systems. On Windows, run `.\venv\Scripts\python .\server.py`. If you are running for the first time, follow the steps below instead!
 
@@ -23,3 +26,5 @@ The first time you run the server, or any time you update the data in the folder
 3. `python recursive_iterate.py`  
 4. `cd ..` (Back to root)  
 5. `./server.py`  
+
+
