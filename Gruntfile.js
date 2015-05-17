@@ -7,15 +7,26 @@ module.exports = function(grunt) {
           paths: ["assets/css"]
         },
         files: {
-          "pqr/static/css/bootstrap.css": "pqr/static/css/bootstrap/bootstrap.less",
-          "pqr/static/css/stylesheet.css": "pqr/static/css/stylesheet.less",
+          "assets/css/bootstrap.css": "assets/less/bootstrap/bootstrap.less",
+          "assets/css/stylesheet.css": "assets/less/stylesheet.less", 
+        }
+      }
+    },
+    cssmin:{//minify and combine css
+      options: {
+        shorthandCompacting: false,
+        roundingPrecision: -1
+      },
+      target: {
+        files: { //Bootstrap first
+          'pqr/static/css/style.min.css': ['assets/css/bootstrap.css', 'assets/css/font-awesome.css', 'assets/css/**/*.css']
         }
       }
     },
     concat: {
   		options: {
   			// define a string to put between each file in the concatenated output
-  			separator: ';'
+  			separator: ';\n'
   		},
   		dist: {
   			// the files to concatenate (modernizr, then jquery, then bootstrap, then everythign else)
@@ -39,8 +50,8 @@ module.exports = function(grunt) {
 	},
     watch: {
       styles: {
-        files: ['pqr/static/css/**/*.less'], // which files to watch
-        tasks: ['less'],
+        files: ['pqr/static/css/**/*.less'], 
+        tasks: ['less', 'cssmin'],
         options: {
           nospawn: true
         }
@@ -55,6 +66,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   grunt.registerTask('default', ['watch']);
 };

@@ -15,7 +15,8 @@
     "grunt-contrib-uglify": "~0.9.1",
     "grunt-contrib-concat": "~0.5.1",
     "assets": "0.0.1",
-    "modernizr": "~3.0.0-alpha.4"
+    "modernizr": "~3.0.0-alpha.4",
+    "grunt-contrib-cssmin": "~0.12.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
