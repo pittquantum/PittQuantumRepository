@@ -48,6 +48,8 @@ $(document).ready(function() {
 	    pqr.bindevents.moleculeStyleChanger(); 
 
 
+
+
 	    //2 = Default Value 
 	    pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
 
@@ -143,6 +145,23 @@ pqr.bindevents.moleculeStyleChanger = function(){
 			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
 		});
 	}
+}
+
+/**
+ * 	Binds the Molecule surface changer to the proper button. 
+ * 		s
+ * 
+ */
+pqr.bindevents.moleculeSurfaceChanger = function(){
+	if($('#surfaceSwitch').length){
+		$('#surfaceSwitch').on("click", function(event){
+			event.preventDefault();
+
+			pqr.threeDMole.changeSurface(true);
+			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerSurface", "true");
+		});
+	}
+
 }
 
 

@@ -17830,6 +17830,8 @@ $(document).ready(function() {
 	    pqr.bindevents.moleculeStyleChanger(); 
 
 
+
+
 	    //2 = Default Value 
 	    pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
 
@@ -17925,6 +17927,23 @@ pqr.bindevents.moleculeStyleChanger = function(){
 			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
 		});
 	}
+}
+
+/**
+ * 	Binds the Molecule surface changer to the proper button. 
+ * 		s
+ * 
+ */
+pqr.bindevents.moleculeSurfaceChanger = function(){
+	if($('#surfaceSwitch').length){
+		$('#surfaceSwitch').on("click", function(event){
+			event.preventDefault();
+
+			pqr.threeDMole.changeSurface(true);
+			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerSurface", "true");
+		});
+	}
+
 }
 
 
@@ -18154,6 +18173,39 @@ pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin
 pqr.threeDMole.changeStyle = function(newStyle, viewer){
 	var viewer = $3Dmol.viewers[0]; //Currently only getting the first viewer that exists 
 	if(viewer){
+		if(newStyle == "sphere"){
+			viewer.setStyle({}, {sphere:{}});
+		}
+		else if(newStyle == "stick"){
+			viewer.setStyle({}, {stick:{}});
+		}
+		else if(newStyle == "cross"){
+			viewer.setStyle({}, {cross:{}});
+		}
+		else if(newStyle == "line"){
+			viewer.setStyle({}, {line:{}});
+		}
+		
+		viewer.render();
+	}
+}
+
+/**
+ *	Change whether or not to display the surface
+ *		
+ *
+ */
+pqr.threeDMole.changeSurface = function(surface, viewer){
+	var viewer = $3Dmol.viewers[0]; //Currently only getting the first viewer that exists 
+	if(viewer){
+
+		if(surface === true){ //We want to turn on the surface 
+
+		}
+		else{//Disable the surface 
+			
+		}
+
 		if(newStyle == "sphere"){
 			viewer.setStyle({}, {sphere:{}});
 		}

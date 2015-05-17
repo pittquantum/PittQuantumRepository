@@ -31,6 +31,39 @@ pqr.threeDMole.changeStyle = function(newStyle, viewer){
 		
 		viewer.render();
 	}
+}
+
+/**
+ *	Change whether or not to display the surface
+ *		
+ *
+ */
+pqr.threeDMole.changeSurface = function(surface, viewer){
+	var viewer = $3Dmol.viewers[0]; //Currently only getting the first viewer that exists 
+	if(viewer){
+
+		if(surface === true){ //We want to turn on the surface 
+
+		}
+		else{//Disable the surface 
+			
+		}
+
+		if(newStyle == "sphere"){
+			viewer.setStyle({}, {sphere:{}});
+		}
+		else if(newStyle == "stick"){
+			viewer.setStyle({}, {stick:{}});
+		}
+		else if(newStyle == "cross"){
+			viewer.setStyle({}, {cross:{}});
+		}
+		else if(newStyle == "line"){
+			viewer.setStyle({}, {line:{}});
+		}
+		
+		viewer.render();
+	}
 
 
 }
