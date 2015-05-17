@@ -50,14 +50,14 @@ module.exports = function(grunt) {
 	},
     watch: {
       styles: {
-        files: ['pqr/static/css/**/*.less'], 
+        files: ['assets/less/**/*.less'], 
         tasks: ['less', 'cssmin'],
         options: {
           nospawn: true
         }
       },
       scripts:{
-      	files: ['pqr/static/js/**/*.js'],
+      	files: ['assets/js/**/*.js'],
       	tasks: ['concat', 'uglify']
       }
     }

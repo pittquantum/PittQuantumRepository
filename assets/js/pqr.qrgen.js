@@ -7,9 +7,18 @@ pqr.threeDMole = pqr.threeDMole || {}; //Everything relating to 3dmol FILE: pqr.
 pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin 
 
 pqr.qrgen = pqr.qrgen || {
-
-	element: null
-
+	element: null, 
+	default_options: {
+		render: 'image', 
+		minVersion: 1,
+    	maxVersion: 5, 
+    	ecLevel: 'M',
+    	fill: '#000', 
+    	mode: 2, //Show the label 
+    	label: 'PQR',
+    	fontname: '"Source Sans Pro","Helvetica Neue",Helvetica, Arial,sans-serif',
+    	fontcolor: '#f16b1d'//Primary Orange 
+	}
 }; //QR Code generator 
 
 /**
@@ -17,15 +26,30 @@ pqr.qrgen = pqr.qrgen || {
  *		-Currently creates an image AND a canvas
  */
 pqr.qrgen.addQRCode = function(selector, url){
+	//Properly set the origin 
 	if (!location.origin) location.origin = location.protocol + "//" + location.host;
 	
+	if($(selector).length){
+		this.default_options.text = location.origin + "/mol/" + url;
+		$(selector).qrcode(this.default_options); 
+	}
+	else{
+		console.log("Couldn't find the selector", selector); 
+	}
 
-	new QRCode(document.getElementById(selector), {
 
-    text: location.origin + "/mol/" + url,
-    colorDark : "#f16b1d", //Primary Orange
-    colorLight : "#fff"
-});  
+// 	new QRCode(document.getElementById(selector), {
+
+//     text: location.origin + "/mol/" + url,
+//     colorDark : "#f16b1d", //Primary Orange
+//     colorLight : "#fff"
+// });  
+
+
+
+
+
+
 }
 
 

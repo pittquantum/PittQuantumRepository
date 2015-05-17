@@ -30,7 +30,7 @@ $(document).ready(function() {
 		pqr.htmlUtilities.toolTipOptIn();
 
 
-		pqr.qrgen.addQRCode("qrcode", "www.google.com"); 
+		pqr.qrgen.addQRCode("#qrcode", "www.google.com"); 
 
 
 		pqr.bindevents.moleculeSearch('#splash-molecule-search .molecule-query');
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
 
 	    //2 = Default Value 
-	    pqr.qrgen.addQRCode("qrcode", pqr.htmlUtilities.getINCHIKey());
+	    pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
 
 
 
