@@ -7,6 +7,56 @@
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
   border-radius: 2px;
 }
+/**
+ *	Various font helper classes for colors and more
+ *
+ */
+.font-bold {
+  font-weight: bold;
+}
+.font-light {
+  font-weight: 300;
+}
+.font-p {
+  color: #333333;
+}
+.font-primary {
+  color: #f16b1d;
+}
+.font-white {
+  color: #fff;
+}
+.font-off-white {
+  color: #ecf0f1;
+}
+.font-blue {
+  color: #3498db;
+}
+.font-yellow {
+  color: #f1c40f;
+}
+.font-purple {
+  color: #9b59b6;
+}
+.font-green {
+  color: #2ecc71;
+}
+.font-blue-green {
+  color: #1abc9c;
+}
+.font-red {
+  color: #e74c3c;
+}
+.font-orange {
+  color: #e67e22;
+}
+.font-concrete {
+  color: #95a5a6;
+}
+/**
+ *	Various transitions helpers
+ *
+ */
 .container {
   padding-left: 2px;
   padding-right: 2px;
@@ -238,13 +288,15 @@ body footer {
   background-image: linear-gradient(to bottom, #5f9ea0 0%, #568e90 100%);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5f9ea0', endColorstr='#ff568e90', GradientType=0);
-  padding-top: 40px;
-  margin-top: 60px;
+  padding-top: 25px;
+  padding-bottom: 10px;
+  margin-top: 10px;
   color: white;
 }
-body footer .container-fluid {
-  margin-left: 2%;
-  margin-right: 2%;
+@media (max-width: 991px) {
+  body footer {
+    text-align: center !important;
+  }
 }
 body footer a {
   color: white;
@@ -252,6 +304,41 @@ body footer a {
 }
 body footer a:hover {
   color: white;
+}
+body footer .footer-brand {
+  font-size: 25px;
+  padding-right: 10px;
+}
+body footer .footer-map {
+  display: inline-block;
+}
+body footer .footer-map li {
+  padding-left: 15px;
+  text-transform: uppercase;
+}
+body footer .footer-social .fa {
+  font-size: 1em;
+  min-height: 1.5em;
+  transition: font-size 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) !important;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (tablets, 768px and up) */
+}
+@media (min-width: 768px) {
+  body footer .footer-social .fa {
+    font-size: 2em;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
+@media (min-width: 992px) {
+  body footer .footer-social .fa {
+    font-size: 2.5em;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+body footer .footer-social .fa:hover {
+  color: #b3b3b3;
 }
 /*****GLOBAL ELEMENTS ****/
 #qrcodemodal #qrcode img {

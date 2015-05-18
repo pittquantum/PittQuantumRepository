@@ -2,6 +2,8 @@
 @import "bootstrap/variables.less";	
 @import "bootstrap/mixins.less";	
 @import "utils.less";
+@import "font-helpers.less";
+@import "transitions.less";
 
 
 //Bootstrap overrides 
@@ -280,13 +282,14 @@ body{
 	footer{
 		#gradient > .vertical(@theme-cadet-blue, darken(@theme-cadet-blue, 5%));
 
-		padding-top: 40px;
-		margin-top: 60px;
+		padding-top: 25px;
+  		padding-bottom: 10px;
+
+		margin-top: 10px;
 		color: white;
 
-		.container-fluid{
-			margin-left: 2%;
-			margin-right: 2%;
+		@media (max-width: @screen-sm-max){
+			text-align: center !important;
 		}
 
 		a{
@@ -297,6 +300,56 @@ body{
 		a:hover{
 			color: white;
 		}
+
+
+		.footer-brand{
+			font-size: 25px; 
+			padding-right: 10px; 
+
+			
+		}
+
+		.footer-map{
+			display: inline-block;
+
+			li{
+				padding-left: 15px;
+				text-transform: uppercase;
+			}
+		}
+
+		.footer-social{
+
+			.fa{
+				font-size: 1em; 
+				min-height: 1.5em;
+				transition: font-size @custom-trans-speed @custom-trans-type !important;
+
+				
+				/* Small devices (tablets, 768px and up) */
+				@media (min-width: @screen-sm-min){
+					font-size: 2em;
+					padding-right: 5px;
+					padding-left: 5px;
+				}
+
+				/* Medium devices (tablets, 768px and up) */
+				@media (min-width: @screen-md-min){
+					font-size: 2.5em;
+					padding-right: 10px;
+					padding-left: 10px;
+				}	 
+			}
+
+
+			.fa:hover{
+				 color: darken(#fff, 30%); 
+			}
+
+			
+		}
+
+
 
 	}
 }
