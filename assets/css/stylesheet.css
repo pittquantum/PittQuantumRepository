@@ -57,6 +57,111 @@
  *	Various transitions helpers
  *
  */
+h1 {
+  font-size: 32.800000000000004px;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+}
+@media (min-width: 768px) {
+  h1 {
+    font-size: 36.9px;
+  }
+}
+@media (min-width: 992px) {
+  h1 {
+    font-size: 38.949999999999996px;
+  }
+}
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 41px;
+  }
+}
+h2 {
+  font-size: 27.200000000000003px;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+}
+@media (min-width: 768px) {
+  h2 {
+    font-size: 30.6px;
+  }
+}
+@media (min-width: 992px) {
+  h2 {
+    font-size: 32.3px;
+  }
+}
+@media (min-width: 1200px) {
+  h2 {
+    font-size: 34px;
+  }
+}
+h3 {
+  font-size: 22.400000000000002px;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+}
+@media (min-width: 768px) {
+  h3 {
+    font-size: 25.2px;
+  }
+}
+@media (min-width: 992px) {
+  h3 {
+    font-size: 26.599999999999998px;
+  }
+}
+@media (min-width: 1200px) {
+  h3 {
+    font-size: 28px;
+  }
+}
+h4 {
+  font-size: 16px;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+}
+@media (min-width: 768px) {
+  h4 {
+    font-size: 18px;
+  }
+}
+@media (min-width: 992px) {
+  h4 {
+    font-size: 19px;
+  }
+}
+@media (min-width: 1200px) {
+  h4 {
+    font-size: 20px;
+  }
+}
+h5 {
+  font-size: 12.8px;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+}
+@media (min-width: 768px) {
+  h5 {
+    font-size: 14.4px;
+  }
+}
+@media (min-width: 992px) {
+  h5 {
+    font-size: 15.2px;
+  }
+}
+@media (min-width: 1200px) {
+  h5 {
+    font-size: 16px;
+  }
+}
 .container {
   padding-left: 2px;
   padding-right: 2px;
@@ -78,6 +183,10 @@
   background: #9ad2d1;
   color: white;
 }
+html,
+body {
+  overflow-x: hidden;
+}
 body nav .navbar-brand > img {
   margin-top: -10px;
   padding-left: 5px;
@@ -86,6 +195,9 @@ body nav .navbar-brand > img {
   body nav .navbar-collapse li {
     padding-left: 5%;
   }
+}
+body #main {
+  min-height: 800px;
 }
 body .page-home #splash-search {
   margin-top: 10px;

@@ -4,6 +4,7 @@
 @import "utils.less";
 @import "font-helpers.less";
 @import "transitions.less";
+@import "typography.less";
 
 
 //Bootstrap overrides 
@@ -35,10 +36,11 @@
 }
 
 
-
+html, body { overflow-x: hidden; }
 
 
 body{
+
 	nav{
 		//Logo Placement in the navbar 
 		.navbar-brand > img{
@@ -53,6 +55,10 @@ body{
 			}
 		}
 
+	}
+
+	#main{
+		min-height: 800px;
 	}
 
 
@@ -161,16 +167,18 @@ body{
 
 
 				tbody{
-					//Select any specific class/property here 
+					
 					.molecule-qr-code img{
 						max-width: 60%;
 					}
 
 					.molecule-alt-names ul{
 						max-height: 200px;
-	    				overflow-y:scroll; 
-	    				overflow-x:scroll; 
+	    				overflow-y: scroll; 
+	    				overflow-x: scroll; 
 					}
+
+
 				}	
 			}
 		}
