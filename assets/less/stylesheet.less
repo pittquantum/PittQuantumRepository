@@ -6,22 +6,21 @@
 @import "transitions.less";
 @import "typography.less";
 
-
 //Bootstrap overrides 
 
 //Reduce the outer padding from 15px - 2px
 .container{
-	padding-left: 2px;
-	padding-right: 2px;
-	/* Small devices (tablets, 768px and up) */
-	@media (min-width: @screen-sm-min) {} 
-	/* Medium devices (desktops, 992px and up) */
-	@media (min-width: @screen-md-min) {
-		padding-left: 2px;
-		padding-right: 2px;
-	}
-	/* Large devices (large desktops, 1200px and up) */
-	@media (min-width: @screen-lg-min) {}
+	// padding-left: 2px;
+	// padding-right: 2px;
+	// /* Small devices (tablets, 768px and up) */
+	// @media (min-width: @screen-sm-min) {} 
+	// /* Medium devices (desktops, 992px and up) */
+	// @media (min-width: @screen-md-min) {
+	// 	padding-left: 2px;
+	// 	padding-right: 2px;
+	// }
+	// /* Large devices (large desktops, 1200px and up) */
+	// @media (min-width: @screen-lg-min) {}
 }
 
 //Highligther color 
@@ -230,15 +229,18 @@ body{
 				padding: 10px; 
 				margin-bottom: 30px;
 
+				/* Small devices (tablets, 768px and up) */
+				@media (max-width: @screen-sm-max){
+					padding-top: 0; 
+				}
 
 				//Make the 3dmole somewhat responsive 
 				div, canvas{
-					height: 150px;
+					
 
-					/* Small devices (tablets, 768px and up) */
-					@media (min-width: @screen-sm-min){
-						height: 200px;
-					}
+					
+
+
 					/* Medium devices (desktops, 992px and up) */
 					@media (min-width: @screen-md-min) {
 						height: 150px;
@@ -252,8 +254,6 @@ body{
 				//Displaying the formula in the browse window 
 				.molecule-formula{
 					text-align: center; 
-					padding-top: 30px;
-
 					font-size: 25px;
 
 					/* Small devices (tablets, 768px and up) */
@@ -263,6 +263,7 @@ body{
 					/* Medium devices (desktops, 992px and up) */
 					@media (min-width: @screen-md-min) {
 						font-size: 35px;
+						padding-top: 30px;
 					}
 					/* Large devices (large desktops, 1200px and up) */
 					@media (min-width: @screen-lg-min) {

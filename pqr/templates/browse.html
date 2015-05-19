@@ -60,10 +60,14 @@
 
   <!-- Molecule Browser -->
   <div class="row clearfix" id="molecule-browser">
-    {% import '/macros/molecules.html' as molecule %} {% if results %}
-    <div class="alert alert-success row" role="alert">
-      <strong>Search Successful!</strong>
-      <samp>Number Pages Returned: {{num_pages}} {% if active != -1 %} Current Page {{active}}{% endif %} Your Query: "{{query}}" </samp>
+    {% import '/macros/molecules.html' as molecule %} 
+
+    {% if results %}
+    <div class="row alert alert-success" role="alert">
+      <div class="col-xs-12"> 
+        <strong>Search Successful!</strong>
+        <samp>Number Pages Returned: {{num_pages}} {% if active != -1 %} Current Page {{active}}{% endif %} Your Query: "{{query}}" </samp>
+      </div>
     </div>
 
     {% for result in results %}
@@ -118,17 +122,19 @@
     </div>
     {% endif %}
     {% else %}
-    <div class="alert alert-warning row" role="alert">
-      <div class="col-sm-2">
-        <p><i class="fa fa-exclamation-triangle fa-5x"></i></p>
+   
+      <div class="alert alert-warning row" role="alert">
+        <div class="col-sm-2">
+          <p><i class="fa fa-exclamation-triangle fa-5x"></i></p>
+        </div>
+
+        <div class="col-sm-8">
+          <h2>
+            <strong> Your query returned 0 results! </strong>
+          </h2>
+        </div>
       </div>
 
-      <div class="col-sm-8">
-        <h2>
-          <strong> Your query returned 0 results! </strong>
-        </h2>
-      </div>
-    </div>
     {% endif %}
 
 
