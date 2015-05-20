@@ -1,7 +1,9 @@
 //Loaded on everypage
 
 //Namespaces (Might have to be on every js page)
-var pqr = pqr || {};
+var pqr = pqr || {
+	debug: true //Show debugging info in the console if true 
+};
 pqr.htmlUtilities = pqr.htmlUtilities || {}; //General DOM maniplating and such mostly using jquery 
 pqr.bindevents = pqr.bindevents || {}; //Any event binding should be done here if possible 
 pqr.propertiesFormatter = pqr.propertiesFormatter || {}; //Functions to properly format various ascpets of the molecules  
@@ -16,12 +18,14 @@ $(document).ready(function() {
 	pqr.bindevents.fontSizeChanger("#reducefont", "#increasefont", "#defaultfont");
 	// pqr.typeahead.activate("#header-molecule-search");
 	pqr.bindevents.moleculeSearch('.navbar-form .molecule-query');
+	pqr.htmlUtilities.checkWebGL(); 
+
 
 	//Home Page
 	if($("#main").hasClass("page-home")){
 		// pqr.typeahead.activate("#molec-query");
 		pqr.bindevents.moleculeSearch('#home-molecule-query .molecule-query'); 
-		console.log("Home Page"); 
+		if(pqr.debug) console.log("Home Page"); 
 	}
 	
 	//Browse Page
@@ -34,7 +38,7 @@ $(document).ready(function() {
 
 
 		pqr.bindevents.moleculeSearch('#splash-molecule-search .molecule-query');
-		console.log("Browse Page"); 
+		if(pqr.debug) console.log("Browse Page"); 
 	}
 
 
@@ -175,7 +179,7 @@ pqr.bindevents.moleculeSurfaceChanger = function(){
 
  	if($(selector).length){
 
- 		console.log("selctor exists"); 
+ 		if(pqr.debug) console.log("selctor exists"); 
  		$(selector).on("click", function(event){
 			//Get the query from the input box (parent, prev)
 			var query = $(this).parent().prev().val();
@@ -190,123 +194,4 @@ pqr.bindevents.moleculeSurfaceChanger = function(){
  	}
  }
 
-/**
- * 	When the 
- * 		
- * 
- */
- pqr.bindevents.updateQRCode = function(selector){
-
- }
-
-
-/*************************HTML UTILTIES*************************/
-
-/** 
- *	Adds the click events to the links and checks local storage
- *	to maintain previous set layout. 
- *	
- */
-pqr.htmlUtilities.updateMoleculeView = function(){
-
-	//Check the localStorage for the moleculeLayout using modernizer
-	if (Modernizr.localstorage){
-		
-		//Update the 
-		if(localStorage.getItem("moleculeLayout") == "detailed") $("#molecule-details table .detailed").removeClass("hidden"); //Probably not necessary 
-		else $("#molecule-details table .detailed").addClass("hidden"); 
-
-		//Update style of the viewer
-		var moleculeLayoutStyle = localStorage.getItem("moleculeViewerlayout");
-		if(false){ //Not yet working 
-			if(moleculeLayoutStyle = "spheres"){
-				pqr.threeDMole.changeStyle("sphere");
-			}
-			else if(moleculeViewerlayout = "lines"){
-				pqr.threeDMole.changeStyle("line");
-			}
-			else if(moleculeViewerlayout = "sticks"){
-				pqr.threeDMole.changeStyle("stick");
-			}
-			else if(moleculeViewerlayout == "crosses"){
-				pqr.threeDMole.changeStyle("cross");
-			}
-		}
-
-	}
-	
-}
-
-/** 
- *	Get the INCHI key. Used to generate the QR Code
- *	
- *	
- */
-pqr.htmlUtilities.getINCHIKey = function(){
-	var key = ""; 
-	if($(".molecule-inchikey").length){
-		var  key = $(".molecule-inchikey").children().next().html();
-	}
-	return $.trim(key)
-}
-
-/**
- *	Activate bootstrap tooltips. 
- *		-Only do this on pages that tooltips exist for performance 
- */
-pqr.htmlUtilities.toolTipOptIn = function(){
- 	$('[data-toggle="tooltip"]').on("click", function(event){event.preventDefault();}); 
- 	$(function() {
- 		 $('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips 
- 	});
-
-     
-
- }
-
-/**
- * 	Allows you to increase or decrease the body font size  
- *		Only should be used when pixels are the unit. 
- * 	@param {int} type either 0 = "init", 1 = "increase", -1 = "decrease", 2 = default
- * 	
- */
-pqr.htmlUtilities.fontSizeChanger = function(type){
- 	var DEFAULTSIZE = "16px"; 
- 	var localstore = false; //Is localstorage avaiable 
- 	var currentBaseSize, newBaseSize;
- 	
- 	if (Modernizr.localstorage) localstore = true; 
-
-	if(type == 0){//Initizliaze by restoring the users settings  
-	 	//Check the localStorage for the value 
-		if(localstore){
-			if(localStorage.getItem("baseFontSize") !== null){ //If set
-				newBaseSize = localStorage.getItem("baseFontSize"); //Store the whole value e.g. = "14px" 
-			}
-		}
-	}
-	else{
-		currentBaseSize = $("body").css("font-size");
-		if(type == 1){//Increasing font
-			newBaseSize = (parseInt(currentBaseSize) + 2).toString() + "px"; //Add two and concat "px"
-		}
-		else if(type == -1){//Decreasing font
-			if(parseInt(currentBaseSize) >= 2){
-				newBaseSize = (parseInt(currentBaseSize) - 2).toString() + "px"; //Subtract two and concat "px"
-			}
-		}
-		else if(type == 2){ //Default Value 
-			newBaseSize = DEFAULTSIZE;
-		}
-	}
-
-
-	//Change the fontsize of the body tag
-	$("body").css("font-size", newBaseSize);
-
-	//Add the new value to the localstorage if avaiable 
-	if(localstore){
-		localStorage.setItem("baseFontSize", newBaseSize)
-	}
-}
 

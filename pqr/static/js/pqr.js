@@ -17783,7 +17783,9 @@ var qrcode = function() {
 //Loaded on everypage
 
 //Namespaces (Might have to be on every js page)
-var pqr = pqr || {};
+var pqr = pqr || {
+	debug: true //Show debugging info in the console if true 
+};
 pqr.htmlUtilities = pqr.htmlUtilities || {}; //General DOM maniplating and such mostly using jquery 
 pqr.bindevents = pqr.bindevents || {}; //Any event binding should be done here if possible 
 pqr.propertiesFormatter = pqr.propertiesFormatter || {}; //Functions to properly format various ascpets of the molecules  
@@ -17798,12 +17800,14 @@ $(document).ready(function() {
 	pqr.bindevents.fontSizeChanger("#reducefont", "#increasefont", "#defaultfont");
 	// pqr.typeahead.activate("#header-molecule-search");
 	pqr.bindevents.moleculeSearch('.navbar-form .molecule-query');
+	pqr.htmlUtilities.checkWebGL(); 
+
 
 	//Home Page
 	if($("#main").hasClass("page-home")){
 		// pqr.typeahead.activate("#molec-query");
 		pqr.bindevents.moleculeSearch('#home-molecule-query .molecule-query'); 
-		console.log("Home Page"); 
+		if(pqr.debug) console.log("Home Page"); 
 	}
 	
 	//Browse Page
@@ -17816,7 +17820,7 @@ $(document).ready(function() {
 
 
 		pqr.bindevents.moleculeSearch('#splash-molecule-search .molecule-query');
-		console.log("Browse Page"); 
+		if(pqr.debug) console.log("Browse Page"); 
 	}
 
 
@@ -17957,7 +17961,7 @@ pqr.bindevents.moleculeSurfaceChanger = function(){
 
  	if($(selector).length){
 
- 		console.log("selctor exists"); 
+ 		if(pqr.debug) console.log("selctor exists"); 
  		$(selector).on("click", function(event){
 			//Get the query from the input box (parent, prev)
 			var query = $(this).parent().prev().val();
@@ -17972,18 +17976,8 @@ pqr.bindevents.moleculeSurfaceChanger = function(){
  	}
  }
 
-/**
- * 	When the 
- * 		
- * 
- */
- pqr.bindevents.updateQRCode = function(selector){
 
- }
-
-
-/*************************HTML UTILTIES*************************/
-
+;
 /** 
  *	Adds the click events to the links and checks local storage
  *	to maintain previous set layout. 
@@ -18092,7 +18086,24 @@ pqr.htmlUtilities.fontSizeChanger = function(type){
 	}
 }
 
-;
+/**
+ *	Returns true if webGl is avaiable otherwise false
+ *
+ *	@return boolean 
+ */
+ pqr.htmlUtilities.checkWebGL = function(){
+ 	if(!Modernizr.webgl){
+ 		var msg = "<div class='alert alert-danger' role='alert'> <strong> <a href='http://get.webgl.org/'>WebGL</a> </strong> is not supported on your device! </div"; 
+ 		$("#main").prepend(msg); 
+
+ 		//Currently sending them to get web gl page 
+ 		window.location.replace("https://get.webgl.org/");
+ 	}
+ 	else{
+ 		if(pqr.debug) console.log("WebGL Supported"); 
+ 	}
+
+ };
 /**
  *	Large list of keywords that typeahead is going to attempt to get 
  *	it will contain all of the words 
