@@ -6687,21 +6687,22 @@ body nav .navbar-brand > img {
 body #main {
   min-height: 800px;
 }
-body .page-home #home-banner {
+body #home-banner,
+body #browse-banner {
   margin-top: -35px;
 }
-body .page-home #splash-search {
+body #splash-search {
   margin-top: 10px;
   /* Small devices only */
 }
 @media (max-width: 991px) {
-  body .page-home #splash-search {
+  body #splash-search {
     margin-top: 0;
   }
-  body .page-home #splash-search h2 {
+  body #splash-search h2 {
     font-size: 22px;
   }
-  body .page-home #splash-search p {
+  body #splash-search p {
     font-size: 14px;
   }
 }

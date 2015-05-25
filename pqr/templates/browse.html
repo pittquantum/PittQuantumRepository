@@ -1,3 +1,4 @@
+<!-- -->
 {% extends "skeleton/base.html" %}
 <!-- -->
 {% block header %} {% include 'skeleton/default_header.html' %} {% endblock %}
@@ -12,76 +13,74 @@
 <!-- -->
 {% block lazyScripts %} {{ super() }} {% endblock %}
 <!-- -->
-
 {% block content %}
 <!-- QR CODE MODAL-->
 <div class="modal fade" id="qrcodemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">QR Code</h4>
-      </div>
-      <div class="modal-body">
-        <div class="img-responsive center-block" id="qrcode"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">QR Code</h4>
+            </div>
+            <div class="modal-body">
+                <div class="img-responsive center-block" id="qrcode"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!-- QR CODE MODAL -->
-
-<div class="container">
-  <div class="row clearfix" id="splash-search">
-    <div class="col-md-12">
-      <div class="jumbotron text-center">
-        <h2>Pitt Quantum Repository</h2>
-        <p>Search Results for <samp>{{query}}</samp></p>
-
-        <form id="splash-molecule-search" class="text-center form-inline" role="form">
-          <div class="input-group">
-            <input type="text" id="molec-query" class="form-control typeahead" autocomplete="off" placeholder="Enter Query">
-            <span class="input-group-btn">
+<div>
+    <div class="clearfix" id="splash-search">
+        <div id='browse-banner'>
+            <div class="jumbotron text-center row">
+                <h2>Pitt Quantum Repository</h2>
+                <p>Search Results for
+                    <samp>{{query}}</samp>
+                </p>
+                <form id="splash-molecule-search" class="text-center form-inline" role="form">
+                    <div class="input-group">
+                        <input type="text" id="molec-query" class="form-control typeahead" autocomplete="off" placeholder="Enter Query">
+                        <span class="input-group-btn">
               <button class="btn btn-default molecule-query" type="submit">
                 <i class="fa fa-search"></i>
               </button>
             </span>
-          </div>
-        </form>
-
-        <!-- <p id="num-compounds"><strong>PQR currently includes <span class="number">55,000</span> compounds in <span class="number">25</span> categories!</strong></p> -->
-      </div>
+                    </div>
+                </form>
+                <!-- <p id="num-compounds"><strong>PQR currently includes <span class="number">55,000</span> compounds in <span class="number">25</span> categories!</strong></p> -->
+            </div>
+        </div>
     </div>
-  </div>
+</div>
 
-  <!-- Molecule Browser -->
-  <div class="row clearfix" id="molecule-browser">
-    {% import '/macros/molecules.html' as molecule %} 
 
-    {% if results %}
-    <div class="row alert alert-success" role="alert">
-      <div class="col-xs-12"> 
-        <strong>Search Successful!</strong>
-        <samp>Number Pages Returned: {{num_pages}} {% if active != -1 %} Current Page {{active}}{% endif %} Your Query: "{{query}}" </samp>
-      </div>
-    </div>
 
-    {% for result in results %}
-      {{ molecule.resultMolecule(result) }}
-    {% endfor %}
 
-    {% if active != -1 %}
-    <div class="text-center">
-      <nav>
-        <ul class="pagination">
 
-          <li>
-            {% if active == 1 %}
-            <a href="/browse/{{query}}/{{active}}" aria-label="Previous">
+
+
+  <div class="container">
+    <!-- Molecule Browser -->
+    <div class="row clearfix" id="molecule-browser">
+        {% import '/macros/molecules.html' as molecule %} {% if results %}
+        <div class="row alert alert-success" role="alert">
+            <div class="col-xs-12">
+                <strong>Search Successful!</strong>
+                <samp>Number Pages Returned: {{num_pages}} {% if active != -1 %} Current Page {{active}}{% endif %} Your Query: "{{query}}" </samp>
+            </div>
+        </div>
+        {% for result in results %} {{ molecule.resultMolecule(result) }} {% endfor %} {% if active != -1 %}
+        <div class="text-center">
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        {% if active == 1 %}
+                        <a href="/browse/{{query}}/{{active}}" aria-label="Previous">
 
                 {% else %}
 
@@ -92,58 +91,41 @@
                   <span aria-hidden="true"><i class="fa fa-arrow-left"></i></span>
 
                 </a>
-          </li>
+                    </li>
+                    {% for i in range(0,0) %} {% if i == active %}
+                    <!-- <li class="active"><a href="/browse/{{query}}/{{i}}">{{i}}</a></li> -->
+                    {% else %}
+                    <!-- <li><a href="/browse/{{query}}/{{i}}">{{i}}</a></li> -->
+                    {% endif %} {% endfor %}
+                    <li>
+                        {% if active == (num_pages) %}
+                        <a href="/browse/{{query}}/{{active}}" aria-label="Next">
 
-          {% for i in range(0,0) %}
-          {% if i == active %}
-          <!-- <li class="active"><a href="/browse/{{query}}/{{i}}">{{i}}</a></li> -->
-          {% else %}
-          <!-- <li><a href="/browse/{{query}}/{{i}}">{{i}}</a></li> -->
+                {% else %}
 
-          {% endif %}
-          {% endfor %}
+                <a href="/browse/{{query}}/{{active+1}}" aria-label="Next">
 
-          <li>
-            {% if active == (num_pages) %}
-            <a href="/browse/{{query}}/{{active}}" aria-label="Next">
-
-              	{% else %}
-
-              	<a href="/browse/{{query}}/{{active+1}}" aria-label="Next">
-
-              	{% endif %}
+                {% endif %}
 
                   <span aria-hidden="true"><i class="fa fa-arrow-right"></i></span>
 
                 </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    {% endif %}
-    {% else %}
-   
-      <div class="alert alert-warning row" role="alert">
-        <div class="col-sm-2">
-          <p><i class="fa fa-exclamation-triangle fa-5x"></i></p>
+                    </li>
+                </ul>
+            </nav>
         </div>
-
-        <div class="col-sm-8">
-          <h2>
+        {% endif %} {% else %}
+        <div class="alert alert-warning row" role="alert">
+            <div class="col-sm-2">
+                <p><i class="fa fa-exclamation-triangle fa-5x"></i></p>
+            </div>
+            <div class="col-sm-8">
+                <h2>
             <strong> Your query returned 0 results! </strong>
           </h2>
+            </div>
         </div>
-      </div>
-
-    {% endif %}
-
-
-
-
-
-
-  </div>
-
-
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
