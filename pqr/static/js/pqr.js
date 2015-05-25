@@ -18537,6 +18537,7 @@ $(document).ready(function() {
 		//Binding 
 		pqr.bindevents.moleculeSizeChanger();
 		pqr.bindevents.moleculeStyleChanger();
+		pqr.bindevents.moleculeReset('#reset-molecule');
 
 
 		//2 = Default Value 
@@ -18547,10 +18548,7 @@ $(document).ready(function() {
 	}
 
 
-});
-
-/*************************Bind Events*************************/
-
+});;
 /**
  * 	Binds the fontSize changer events to the fontSizeChanger function in
  *		pqr.htmlUtilities
@@ -18660,8 +18658,6 @@ pqr.bindevents.moleculeSurfaceChanger = function() {
  *
  */
 pqr.bindevents.moleculeSearch = function(selector) {
-
-
 	if ($(selector).length) {
 
 		if (pqr.debug) console.log("selctor exists");
@@ -18675,6 +18671,20 @@ pqr.bindevents.moleculeSearch = function(selector) {
 			window.location = location.origin + "/browse/" + encodeURIComponent(query);
 
 			event.preventDefault();
+		});
+	}
+}
+
+/**
+ * Reset the zoom level of the viewer
+ *
+ * @param  {String} selector an html selector to bind the reset button
+ */
+pqr.bindevents.moleculeReset = function(selector) {
+	if ($(selector).length) {
+		$(selector).on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.resetView();
 		});
 	}
 };
