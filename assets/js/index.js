@@ -25,6 +25,8 @@ $(document).ready(function() {
 		// pqr.typeahead.activate("#molec-query");
 
 		pqr.threeDMole.initializeViewers();
+		pqr.bindevents.moleculeReset('#reset-molecule');
+		pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
 
 
 		pqr.bindevents.moleculeSearch('#home-molecule-query .molecule-query');
@@ -57,6 +59,7 @@ $(document).ready(function() {
 		pqr.bindevents.moleculeStyleChanger();
 		pqr.bindevents.moleculeReset('#reset-molecule');
 		pqr.bindevents.moleculeToggleSurface('#surfaceSwitch');
+		pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
 
 		//2 = Default Value 
 		pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());

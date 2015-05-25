@@ -1,83 +1,44 @@
-{% extends "skeleton/base.html" %}
-
-{% block header %}
-     {% include 'skeleton/default_header.html' %}
-{% endblock %}
-
-{% block footer %}
-     {% include 'skeleton/default_footer.html' %}
-{% endblock %}
-
-{% block title %}PQR | Home{% endblock %}
-
-{% block head %}
-    {{ super() }}
-{% endblock %}
-
-
-{% block lazyScripts %}
-	{{ super() }}
-{% endblock %}
-
-
-{% block content %}
-<div class="container">
-     <div class="row clearfix" id="splash-search">
-          <div class="col-md-12">
-               <div class="jumbotron text-center">
-                    <h2>Welcome to Pitt Quantum Repository!</h2>
-                    <p>Search for {{ "{:,}".format(amount_mol) }} molecules by name, InChI, category, etc. </p>
-
-                    <form id='home-molecule-query' class="text-center form-inline" role="form" action="">
-                         <div class="input-group">
-                              <input type="text" id="molec-query" class="form-control typeahead" autocomplete="off"  placeholder="Enter Query">
-                              <span class="input-group-btn">
-                                   <button class="btn btn-default molecule-query" type="submit">
-                                        <i class="fa fa-search"></i>
-                                   </button>
-                              </span>
-                         </div>
-                    </form>
-
-                    <!-- <p id="num-compounds"><strong>PQR currently includes <span class="number">55,000</span> compounds in <span class="number">25</span> categories!</strong></p> -->
-               </div>
-          </div>
-     </div>
-
-     <div class="row">
-     <div id="molecule-of-the-week" class="col-md-6">
-               <h2> Molecule of the Week </h2>
-               <p> Click the molecule name to get more information.  </p>
-               <h3> <a href="/mol/RYYVLZVUVIJVGH-UHFFFAOYSA-N"> Caffeine </a></h3>
-
-               <div id="molecule-viewer">
-                    {% import '/macros/molecules.html' as molecule %}
-                    {{ molecule.simpleViewer() }}
-               </div>
-          </div>
-
-          <div class="col-md-6">
-               <h2> News </h2>
-               <div class="list-group other-content">
-                    <a href="https://github.com/pittquantum/backend" target="_blank" class="list-group-item"><span class="badge">New</span><i class="fa fa-newspaper-o"></i> First Launch</a>
-<!--                     <a href="#" class="list-group-item"><span class="badge">New</span><i class="fa fa-link"></i> Dapibus ac facilisis in</a>
-                    <a href="#" class="list-group-item"><i class="fa fa-newspaper-o"></i> Morbi leo risus</a>
-                    <a href="#" class="list-group-item"><i class="fa fa-newspaper-o"></i> Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item"><i class="fa fa-link"></i> Vestibulum at eros</a>
-                    <a href="#" class="list-group-item"><i class="fa fa-newspaper-o"></i> Morbi leo risus</a>
-                    <a href="#" class="list-group-item"><i class="fa fa-link"></i> Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item"><i class="fa fa-newspaper-o"></i> Cras justo odio</a>
-                    <a href="#" class="list-group-item"><i class="fa fa-link"></i> Dapibus ac facilisis in</a> -->
-               </div>
-          </div>
-
-
-
-
-     </div>
-
-
-
+{% extends "skeleton/base.html" %} {% block header %} {% include 'skeleton/default_header.html' %} {% endblock %} {% block footer %} {% include 'skeleton/default_footer.html' %} {% endblock %} {% block title %}PQR | Home{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block lazyScripts %} {{ super() }} {% endblock %} {% block content %}
+<div id='home-banner'>
+    <div class="row" id="splash-search">
+        <div class="jumbotron text-center">
+            <h2>Welcome to Pitt Quantum Repository!</h2>
+            <p>Search for <span class='font-red'>{{ "{:,}".format(amount_mol) }}</span> molecules by name, InChI, category, etc. </p>
+            <form id='home-molecule-query' class="text-center form-inline" role="form" action="#">
+                <div class="input-group">
+                    <input type="text" id="molec-query" class="form-control typeahead" autocomplete="off" placeholder="Enter Query">
+                    <span class="input-group-btn">
+                              <button class="btn btn-default molecule-query" type="submit">
+                                   <i class="fa fa-search"></i>
+                              </button>
+                         </span>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+<div class="container">
+    <div id="molecule-of-the-week" class="row">
+        <div class="col-md-6">
+            <h2> Molecule of the Week </h2>
+            <p> Click the molecule name to get more information. </p>
+            <h3> <a href="/mol/RYYVLZVUVIJVGH-UHFFFAOYSA-N"> Caffeine </a> 
+               <span class='pull-right'>
+                    <a href='#' id="rotationSwitch" data-container="body" data-toggle="tooltip" title="Toggle Molecule Rotation"><i class="fa fa-toggle-on"></i></a>
+                    <a href='#' id='reset-molecule' data-container="body" data-toggle="tooltip" title="Reset Zoom"><i class="fa fa-crosshairs"></i></a>
+               </span>
 
+               </h3>
+            <div id="molecule-viewer">
+                {% import '/macros/molecules.html' as molecule %} {{ molecule.simpleViewer() }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2> News </h2>
+            <div class="list-group other-content">
+                <a href="https://github.com/pittquantum/backend" target="_blank" class="list-group-item"><span class="badge">New</span><i class="fa fa-newspaper-o"></i> First Launch</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

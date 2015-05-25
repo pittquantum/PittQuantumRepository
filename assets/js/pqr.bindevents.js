@@ -138,11 +138,42 @@ pqr.bindevents.moleculeReset = function(selector) {
 	}
 }
 
-pqr.bindevents.moleculeToggleSurface = function(selector){
+/**
+ * Deactive the surface of the viewer.
+ *
+ * @param  {String} selector an html selector to bind to a toggle surface button
+ */
+pqr.bindevents.moleculeToggleSurface = function(selector) {
 	if ($(selector).length) {
 		$(selector).on("click", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.toggleSurface();
+			$(this).addClass('disabled btn-success');
+			$(this).removeClass('btn-danger');
+			$(this).html('Surface Removed');
+		});
+	}
+}
+
+/**
+ * Toggle rotation of the current viewer
+ *
+ * @param  {String} selector an html selector to bind to a toggle rotation button
+ */
+pqr.bindevents.moleculeToggleRotation = function(selector) {
+	if ($(selector).length) {
+		$(selector).on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.toggleRotation();
+			var toggle = $(this).children();
+			
+			if (toggle.hasClass('fa-toggle-on')) {
+				toggle.removeClass('fa-toggle-on');
+				toggle.addClass('fa-toggle-off');
+			} else {
+				toggle.removeClass('fa-toggle-off');
+				toggle.addClass('fa-toggle-on');
+			}
 		});
 	}
 }

@@ -8,11 +8,12 @@ pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin
 
 pqr.threeDMole = {
 	all_viewers: [],
+	rotation_timers: [],
 	data_type: 'mol2',
 	default_style: 'stick',
 	backgroundColor: 0xffffff,
 	backgroundOpacity: 1.0,
-	rotationTime: 9,	
+	rotationTime: 9,
 	rotationXDegree: 1, //How many degrees to move every rotationTime
 	rotationYDegree: 1,
 	showSurface: true
@@ -35,9 +36,9 @@ pqr.threeDMole.initializeViewers = function(config) {
 };
 
 /**
- * Set all of the background color alpha channel to 0. Cannot be done 
- * with data attributes. 
- * 
+ * Set all of the background color alpha channel to 0. Cannot be done
+ * with data attributes.
+ *
  * @param  {GLviewer}
  */
 pqr.threeDMole.clearBackgrounds = function(viewer) {
@@ -54,13 +55,33 @@ pqr.threeDMole.clearBackgrounds = function(viewer) {
  * @param  {GLViewer}
  */
 pqr.threeDMole.rotate = function(viewer) {
-	window.setInterval(function() {
+	var rotation_timers = window.setInterval(function() {
 		viewer.rotate(pqr.threeDMole.rotationYDegree, 'y');
 		viewer.rotate(pqr.threeDMole.rotationXDegree, 'x');
 		viewer.render();
 	}, this.rotationTime, viewer);
 
+	this.rotation_timers.push(rotation_timers);
+
 	if (pqr.debug) console.log("Adding Rotation: ", viewer);
+}
+
+/**
+ * Toggle the rotation of the viewer. Only hanldes one viewer.
+ * 
+ * @param  {GLViewer} the viewer to toggle the rotation
+ */
+pqr.threeDMole.toggleRotation = function(viewer){
+	var rotation_timer = this.rotation_timers.pop();
+	if(pqr.debug) console.log("The rotation time is: ", rotation_timer); 
+	if(rotation_timer !== undefined){
+		if(pqr.debug) console.log("Rotation timer not null. Clearing interval"); 
+		clearInterval(rotation_timer);
+	}
+	else{
+		if(pqr.debug) console.log("Rotation timer is null. Restarting rotation"); 
+		this.rotate(this.all_viewers[0]);
+	}
 }
 
 /**
@@ -70,7 +91,7 @@ pqr.threeDMole.rotate = function(viewer) {
  */
 pqr.threeDMole.toggleSurface = function(viewer) {
 	viewer = typeof viewer !== 'undefined' ? viewer : this.all_viewers[0];
-	
+
 	console.log("Toggling the surface of ", viewer);
 
 	this.removeSurface(viewer);

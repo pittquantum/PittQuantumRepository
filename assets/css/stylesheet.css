@@ -162,12 +162,12 @@ h5 {
     font-size: 16px;
   }
 }
-::-moz-selection {
-  background: #9ad2d1;
+color::-moz-selection {
+  background: #3498db;
   color: white;
 }
 ::selection {
-  background: #9ad2d1;
+  background: #3498db;
   color: white;
 }
 html,
@@ -186,14 +186,23 @@ body nav .navbar-brand > img {
 body #main {
   min-height: 800px;
 }
+body .page-home #home-banner {
+  margin-top: -35px;
+}
 body .page-home #splash-search {
   margin-top: 10px;
+  /* Small devices only */
 }
-body .page-home #splash-search #num-compounds {
-  padding-top: 20px;
-}
-body .page-home #splash-search #num-compounds .number {
-  color: #d9534f;
+@media (max-width: 991px) {
+  body .page-home #splash-search {
+    margin-top: 0;
+  }
+  body .page-home #splash-search h2 {
+    font-size: 22px;
+  }
+  body .page-home #splash-search p {
+    font-size: 14px;
+  }
 }
 body .page-home .other-content .fa {
   color: #f16b1d;
@@ -249,6 +258,10 @@ body .page-molecule h1#molecule-name {
 }
 body .page-molecule h1#molecule-name .small {
   padding-top: 5px;
+}
+body .page-molecule #molecule-properties .tooltip-inner {
+  width: 150px;
+  max-width: 400px;
 }
 body .page-molecule #molecule-properties h2 {
   font-size: 21px;

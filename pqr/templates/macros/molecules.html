@@ -4,6 +4,7 @@
 </div>
 {%- endmacro %}
 <!-- View of a molecule for testing or displaying a simple view (such as the homepage)  -->
+
 <!-- View of a molecule in search results or browsing   -->
 {% macro resultMolecule(data, style='stick') -%}
 <div class="molecule-viwer row">
@@ -24,13 +25,19 @@
 </div>
 {%- endmacro %}
 <!-- View of a molecule in search results or browsing   -->
+
 {% macro moleculeMainView(mol2, jsonDict, style='stick') -%}
 <div class="molecule row">
     {%if jsonDict["name"]%}
     <h1 id="molecule-name"><!-- Molecule name as h1 for SEO-->
     <a class="visible-xs-inline" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> 
     {{ jsonDict["name"].title() }}
-    <span class='pull-right'><a href='#' id='reset-molecule'><i class="fa fa-crosshairs"></i></a></span>
+    <span class='pull-right'>
+    <a href='#' id="rotationSwitch" data-container="body" data-toggle="tooltip" title="Toggle Molecule Rotation"><i class="fa fa-toggle-on"></i></a>
+    <a href='#' id='reset-molecule' data-container="body" data-toggle="tooltip" title="Reset Zoom"><i class="fa fa-crosshairs"></i></a>
+
+
+    </span>
     
     </h1> {%endif%}
     <!--3DMol Viewer Container-->
@@ -84,7 +91,6 @@
                                 <td>{{ '%8.2f' % jsonDict["pm7"]["dipoleMoment"] }} &plusmn; 1.08 D</td>
                             </tr>
                             {%endif%}
-
                             <tr class="molecule-doi hidden">
                                 <td>DOI<sup><a href="#" data-container="body" data-toggle="tooltip" title="Digital Object Identifier"><i class="fa fa-question"></i></a></sup></td>
                                 <td><a href="#"> dx.doi.org/10.1234/pqr-mlfhjehsliiphl-uhfffaoysa-n</td>
@@ -182,11 +188,12 @@
                     </table>
                 </div>
                 <div class="panel-footer molecule-switchview block-center center-block text-center">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Change display">
+                    <div class="btn-group btn-group-sm" role="group">
                         <button type="button" class="btn btn-primary" id="changeStyleSphere">Spheres</button>
                         <button type="button" class="btn btn-primary" id="changeStyleLine">Lines</button>
                         <button type="button" class="btn btn-primary" id="changeStyleStick">Sticks</button>
                         <button type="button" class="btn btn-danger" id="surfaceSwitch">Remove Surface</button>
+                        <!-- <button type="button" class="btn btn-info" id="rotationSwitch">Rotation <i class="fa fa-toggle-on"></i></button> -->
                     </div>
                 </div>
             </div>
