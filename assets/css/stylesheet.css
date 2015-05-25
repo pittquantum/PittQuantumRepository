@@ -280,8 +280,9 @@ body .page-molecule #molecule-properties h2 .properties-view-options {
 body .page-molecule #molecule-properties table tr td:first-of-type {
   font-weight: bold;
 }
-body .page-molecule #molecule-properties table tbody .molecule-qr-code img {
-  max-width: 60%;
+body .page-molecule #molecule-properties table tbody tr td {
+  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 body .page-molecule #molecule-properties table tbody .molecule-alt-names ul {
   max-height: 200px;

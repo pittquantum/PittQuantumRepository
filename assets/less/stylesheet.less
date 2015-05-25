@@ -6,8 +6,6 @@
 @import "transitions.less";
 @import "typography.less";
 
-//Bootstrap overrides 
-
 //Reduce the outer padding from 15px - 2px
 .container{
 	// padding-left: 2px;
@@ -153,7 +151,6 @@ body{
 				.properties-view-options{
 					font-size: 12px;
 				}
-
 			}
 
 
@@ -166,9 +163,9 @@ body{
 
 
 				tbody{
-					
-					.molecule-qr-code img{
-						max-width: 60%;
+					tr td{
+						text-overflow: ellipsis;
+						word-wrap: break-word;
 					}
 
 					.molecule-alt-names ul{
@@ -220,8 +217,6 @@ body{
 		}
 
 		#molecule-browser{
-
-
 			//3Dmol viewer
 			.molecule-viwer{
 
@@ -236,11 +231,6 @@ body{
 
 				//Make the 3dmole somewhat responsive 
 				div, canvas{
-					
-
-					
-
-
 					/* Medium devices (desktops, 992px and up) */
 					@media (min-width: @screen-md-min) {
 						height: 150px;
