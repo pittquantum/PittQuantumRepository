@@ -93,7 +93,7 @@
                             {%endif%}
                             <tr class="molecule-doi hidden">
                                 <td>DOI<sup><a href="#" data-container="body" data-toggle="tooltip" title="Digital Object Identifier"><i class="fa fa-question"></i></a></sup></td>
-                                <td><a href="#"> dx.doi.org/10.1234/pqr-mlfhjehsliiphl-uhfffaoysa-n</td>
+                                <td><a href="#"> dx.doi.org/10.1234/pqr-mlfhjehsliiphl-uhfffaoysa-n</a></td>
                             </tr>
                             
                             <!-- Begin Detailed Section -->
@@ -141,12 +141,12 @@
                             {%endif%} {%if jsonDict["pm7"]["volume"] %}
                             <tr class="molecule-volume detailed">
                                 <td>Volume<sup><a href="#" data-container="body" data-toggle="tooltip" title="Volume of a molecule."><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ jsonDict["pm7"]["volume"] }} &#8491;<sup>3</sup></td>
+                                <td>{{ jsonDict["pm7"]["volume"] }} &#8491; <sup>3</sup></td>
                             </tr>
                             {%endif%} {%if jsonDict["pm7"]["surfaceArea"] %}
                             <tr class="molecule-surface-area detailed">
                                 <td>Surface Area<sup><a href="#" data-container="body" data-toggle="tooltip" title="The total surface area of a molecule."><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ jsonDict["pm7"]["surfaceArea"] }} &#8491;<sup>2</sup></td>
+                                <td>{{ jsonDict["pm7"]["surfaceArea"] }} &#8491; <sup>2</sup></td>
                             </tr>
                             {%endif%} {%if jsonDict["pm7"]["homo"] %}
                             <tr class="molecule-homo-energy detailed">

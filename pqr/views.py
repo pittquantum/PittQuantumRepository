@@ -1,7 +1,7 @@
 #!./venv/bin/python
 
 # Flask specific imports
-from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request
+from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request, Markup
 from flask.ext.cache import Cache
 
 # MongoDB specific imports
@@ -9,34 +9,39 @@ from pymongo import MongoClient
 
 # PQR specific imports
 from pqr import pqr
-from settings import APP_JSON
+from settings import APP_JSON, APP_ARTICLES
 from secret_key import secret_key
 
 # Python library imports
 import os
 import json
+import markdown
 
-cache = Cache(pqr,config={'CACHE_TYPE': 'simple'})
+cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
 
 redirect_table = {}
 amount_mol = None
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
-###############################################################################################################
+##########################################################################
+
+
 @pqr.route('/')
 @pqr.route('/home')
 @pqr.route('/home/')
 def index():
     page = {'id': "page-home"}
-    return render_template("home.html", page=page, amount_mol=amount_mol)
+    articles = [ os.path.splitext(article)[0] for article in next(os.walk(APP_ARTICLES))[2] ]
+
+    return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles)
 
 
-###############################################################################################################
+##########################################################################
 @pqr.route('/mol/<key>')
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/')  # if no key lets default to the molecule of the day
-@pqr.route('/mol')  #if no key lets default to the molecule of the day
-@cache.cached(timeout=50)
+@pqr.route('/mol')  # if no key lets default to the molecule of the day
+# @cache.cached(timeout=50)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
@@ -45,13 +50,16 @@ def molecule(key="-1"):
     # If it does, it redirects to this same route, except with the proper key
     # It also flashes a message that shows the redirection
     if key in redirect_table.keys():
-        flash("Redirected! " + str(key) + " is actually the same as " + str(redirect_table[key]))
+        flash("Redirected! " + str(key) +
+              " is actually the same as " + str(redirect_table[key]))
         return redirect(url_for('molecule', key=redirect_table[key]))
 
-    # This gets the first two characters of the key, allowing for directory traversal
+    # This gets the first two characters of the key, allowing for directory
+    # traversal
     key_first_two = key[:2]
 
-    page = {'id': "page-molecule", 'moleculeKey': key, 'key_first_two': key_first_two}
+    page = {'id': "page-molecule", 'moleculeKey': key,
+            'key_first_two': key_first_two}
 
     try:
         # Loads the JSON file relevant to the InChI key requested
@@ -59,22 +67,43 @@ def molecule(key="-1"):
             json_dict = json.load(j)
     except IOError:
         # If we don't have the key, flash
-        flash("You entered a molecule that didn't exist, so you've been redirected to the molecule of the week!")
+        flash(
+            "You entered a molecule that didn't exist, so you've been redirected to the molecule of the week!")
         return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
     # return the view
     return render_template("molecule.html", page=page, jsonDict=json_dict)
 
 
-###############################################################################################################
+##########################################################################
 @pqr.route('/news')
 @pqr.route('/news/')
-def news():
+@pqr.route('/news/<title>')
+@pqr.route('/news/<title>/')
+def news(title="-1"):
     page = {'id': "page-news"}
 
-    return render_template("news.html", page=page)
+    try:
+        # Loads the JSON file relevant to the InChI key requested
+        with open(os.path.join(APP_ARTICLES,  title + '.md'), 'r') as f:
+            print "Trying to read the file"
+            opened = f.read().strip()
+            html = markdown.markdown(opened)
+            f.close()
+    except IOError:
+        # If we don't have the key, flash
+        flash(
+        "You entered a article that doesn't exist! You have been redirected to the home page.")
+        return redirect(url_for('index'))
+    
+    output = Markup(html)
+    print output
 
-###############################################################################################################
+    return render_template("news.html", output=output, page=page)
+
+##########################################################################
+
+
 @pqr.route('/browse')
 @pqr.route('/browse/')
 @pqr.route('/browse/<query>')
@@ -101,7 +130,7 @@ def browse(query="-1", page_num="-1"):
     db = client.test
 
     # Make sure the index exists
-    #temp = db.molecules.ensure_index([
+    # temp = db.molecules.ensure_index([
     #    ("name", "text"),
     #    ("inchikey", "text"),
     #    ("formula", "text"),
@@ -112,7 +141,7 @@ def browse(query="-1", page_num="-1"):
     results = []
 
     # Do a text search for the passed in query
-    cursor = db.molecules.find({ "$text": {"$search": str(query) }} )
+    cursor = db.molecules.find({"$text": {"$search": str(query)}})
 
     # Append all dicts in the cursor to a results array
     for i in cursor:
@@ -120,7 +149,7 @@ def browse(query="-1", page_num="-1"):
         results.append(i)
 
     # Split the reults array into chunks of 10 each for search pagination
-    tempArr = list(chunks(results,10))
+    tempArr = list(chunks(results, 10))
 
     # The number of pages is just the total number of chunks
     num_pages = len(tempArr)
@@ -156,6 +185,7 @@ def browse(query="-1", page_num="-1"):
 
     return render_template("browse.html", page=page, results=results, query=query, num_pages=num_pages, active=active)
 
+
 @pqr.route('/data')
 @pqr.route('/data/<key>')
 def data(key):
@@ -167,7 +197,9 @@ def data(key):
     # Return a JSON request with proper MIME type
     return jsonify(json_dict)
 
-###############################################################################################################
+##########################################################################
+
+
 @pqr.route('/contact')
 @pqr.route('/contact/')
 def contact():
@@ -175,25 +207,29 @@ def contact():
 
     return render_template("contact.html", page=page)
 
-
-###############################################################################################################
+##########################################################################
 # Properly handle the favicon
+
+
 @pqr.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(pqr.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-###############################################################################################################
+##########################################################################
 
-###############################################################################################################
+##########################################################################
+
+
 @pqr.errorhandler(404)
 def page_not_found(e):
     return redirect(url_for('index'))
 
+
 @pqr.errorhandler(500)
 def page_not_found(e):
     return redirect(url_for('index'))
-###############################################################################################################
+##########################################################################
 
 
 # Helper method to make chunks. Thanks StackOverflow
@@ -201,10 +237,10 @@ def chunks(l, n):
     """ Yield successive n-sized chunks from l.
     """
     for i in xrange(0, len(l), n):
-        yield l[i:i+n]
+        yield l[i:i + n]
 
 
-### CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
+# CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
 pqr.secret_key = secret_key
 ###
 
