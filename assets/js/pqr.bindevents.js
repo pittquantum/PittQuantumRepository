@@ -137,3 +137,12 @@ pqr.bindevents.moleculeReset = function(selector) {
 		});
 	}
 }
+
+pqr.bindevents.moleculeToggleSurface = function(selector){
+	if ($(selector).length) {
+		$(selector).on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.toggleSurface();
+		});
+	}
+}

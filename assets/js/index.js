@@ -56,12 +56,10 @@ $(document).ready(function() {
 		pqr.bindevents.moleculeSizeChanger();
 		pqr.bindevents.moleculeStyleChanger();
 		pqr.bindevents.moleculeReset('#reset-molecule');
-
+		pqr.bindevents.moleculeToggleSurface('#surfaceSwitch');
 
 		//2 = Default Value 
 		pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
-
-
 
 	}
 

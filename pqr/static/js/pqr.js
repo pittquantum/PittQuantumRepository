@@ -18538,12 +18538,10 @@ $(document).ready(function() {
 		pqr.bindevents.moleculeSizeChanger();
 		pqr.bindevents.moleculeStyleChanger();
 		pqr.bindevents.moleculeReset('#reset-molecule');
-
+		pqr.bindevents.moleculeToggleSurface('#surfaceSwitch');
 
 		//2 = Default Value 
 		pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
-
-
 
 	}
 
@@ -18685,6 +18683,15 @@ pqr.bindevents.moleculeReset = function(selector) {
 		$(selector).on("click", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.resetView();
+		});
+	}
+}
+
+pqr.bindevents.moleculeToggleSurface = function(selector){
+	if ($(selector).length) {
+		$(selector).on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.toggleSurface();
 		});
 	}
 };
@@ -18890,7 +18897,7 @@ pqr.threeDMole = {
 	default_style: 'stick',
 	backgroundColor: 0xffffff,
 	backgroundOpacity: 1.0,
-	rotationTime: 9,
+	rotationTime: 9,	
 	rotationXDegree: 1, //How many degrees to move every rotationTime
 	rotationYDegree: 1,
 	showSurface: true
@@ -18908,14 +18915,14 @@ pqr.threeDMole.initializeViewers = function(config) {
 	$.each(this.all_viewers, function(index, viewer) {
 		pqr.threeDMole.clearBackgrounds(viewer);
 		pqr.threeDMole.rotate(viewer);
-		pqr.threeDMole.toggleSurface(viewer);
 	});
 
 };
 
 /**
- * Set all of the background color alpha channel to 0
- *
+ * Set all of the background color alpha channel to 0. Cannot be done 
+ * with data attributes. 
+ * 
  * @param  {GLviewer}
  */
 pqr.threeDMole.clearBackgrounds = function(viewer) {
@@ -18942,17 +18949,16 @@ pqr.threeDMole.rotate = function(viewer) {
 }
 
 /**
- * Toggle the surface of this viewer
+ * Toggle the surface of this viewer.
  *
  * @param  {GLViewer}
  */
 pqr.threeDMole.toggleSurface = function(viewer) {
-
-	if (pqr.debug) console.log("Removing Surface: ", viewer);
+	viewer = typeof viewer !== 'undefined' ? viewer : this.all_viewers[0];
+	
+	console.log("Toggling the surface of ", viewer);
 
 	this.removeSurface(viewer);
-
-
 }
 
 /**
@@ -18963,6 +18969,7 @@ pqr.threeDMole.toggleSurface = function(viewer) {
 pqr.threeDMole.removeSurface = function(viewer) {
 	viewer.removeAllSurfaces();
 	viewer.render();
+	if (pqr.debug) console.log("Surface Removed");
 }
 
 /**
@@ -18976,9 +18983,9 @@ pqr.threeDMole.resetView = function(viewer) {
 
 
 /**
- *	Changet the layout style of selected viewer (currently just the first viewer)
- *		--Viewer must exist at this point !
+ * Change the layout style of the selected viewer
  *
+ * @param  {String} newStyle - the type of style to change this viewer to
  */
 pqr.threeDMole.changeStyle = function(newStyle) {
 	var viewer = this.all_viewers[0]; //Currently only getting the first viewer that exists 
@@ -19003,89 +19010,7 @@ pqr.threeDMole.changeStyle = function(newStyle) {
 
 		viewer.render();
 	}
-};
-
-/**
- *	Change whether or not to display the surface
- *
- *
- */
-pqr.threeDMole.changeSurface = function(surface, viewer) {
-	var viewer = $3Dmol.viewers[0]; //Currently only getting the first viewer that exists 
-	if (viewer) {
-
-		if (surface === true) { //We want to turn on the surface 
-
-		} else { //Disable the surface 
-
-		}
-
-		if (newStyle == "sphere") {
-			viewer.setStyle({}, {
-				sphere: {}
-			});
-		} else if (newStyle == "stick") {
-			viewer.setStyle({}, {
-				stick: {}
-			});
-		} else if (newStyle == "cross") {
-			viewer.setStyle({}, {
-				cross: {}
-			});
-		} else if (newStyle == "line") {
-			viewer.setStyle({}, {
-				line: {}
-			});
-		}
-
-		viewer.render();
-	}
-};
-
-
-
-/**
- *	Attempt to get responsiveness working.
- *	Try redrawing the item over and over on width/height changes
- *		-Expensive function
- *
- */
-pqr.threeDMole.activateResponsive = function() {
-	console.log("Hello");
-	console.log($3Dmol.viewers[0]);
-	// pqr.threeDMole.updateContainerSize($("#molecule-properties").css("height")); //Check for the id
-	// pqr.threeDMole.redraw($3Dmol.viewers[0]);
-
-	// $(window).resize(function() { //Can be more efficient 
-	// 	//For the main molecule page get the height of the molecule properties
-	// 	pqr.threeDMole.updateContainerSize($("#molecule-properties").css("height")); //Check for the id
-	// 	var viewer = $3Dmol.viewers[0];
-	// 	pqr.threeDMole.redraw(viewer);
-	// });
-
-};
-
-/**
- *	Change the height and width of this element and render it
- *	Doesn't seem to be neccessary but can play around with the zoom level
- */
-pqr.threeDMole.redraw = function(viewer) {
-	// viewer.resize();
-	viewer.zoomTo(1);
-	// viewer.render();
-	// console.log(viewer); 
-}
-
-
-
-/**
- *
- *
- */
-pqr.threeDMole.updateContainerSize = function(height) {
-	// $("#molecule-viewer canvas").css("height", height);
-	// $("#molecule-viewer div").css("height", height);
-};
+};;
 
 //Namespaces
 var pqr = pqr || {};
