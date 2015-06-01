@@ -68,20 +68,28 @@ pqr.threeDMole.rotate = function(viewer) {
 
 /**
  * Toggle the rotation of the viewer. Only hanldes one viewer.
- * 
+ *
  * @param  {GLViewer} the viewer to toggle the rotation
  */
-pqr.threeDMole.toggleRotation = function(viewer){
+pqr.threeDMole.toggleRotation = function(viewer) {
 	var rotation_timer = this.rotation_timers.pop();
-	if(pqr.debug) console.log("The rotation time is: ", rotation_timer); 
-	if(rotation_timer !== undefined){
-		if(pqr.debug) console.log("Rotation timer not null. Clearing interval"); 
+	if (pqr.debug) console.log("The rotation time is: ", rotation_timer);
+	if (rotation_timer !== undefined) {
+		if (pqr.debug) console.log("Rotation timer not null. Clearing interval");
 		clearInterval(rotation_timer);
-	}
-	else{
-		if(pqr.debug) console.log("Rotation timer is null. Restarting rotation"); 
+	} else {
+		if (pqr.debug) console.log("Rotation timer is null. Restarting rotation");
 		this.rotate(this.all_viewers[0]);
 	}
+}
+
+/**
+ * Update the surface color to the correct value 
+ * 
+ * @param  {GLViewer} the viewer to set the surfaceColor on 
+ */
+pqr.threeDMole.setSurfaceColor = function(viewer) {
+
 }
 
 /**
@@ -92,7 +100,7 @@ pqr.threeDMole.toggleRotation = function(viewer){
 pqr.threeDMole.toggleSurface = function(viewer) {
 	viewer = typeof viewer !== 'undefined' ? viewer : this.all_viewers[0];
 
-	console.log("Toggling the surface of ", viewer);
+	if (pqr.debug) console.log("Toggling the surface of ", viewer);
 
 	this.removeSurface(viewer);
 }
