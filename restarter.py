@@ -14,9 +14,9 @@ elif len(sys.argv) < 3:
 
 PORT = sys.argv[1]
 
-if sys.argv[3] == 'prod':
+if sys.argv[2] == 'prod':
 	AFTER = ["nohup", "python", "server.py", PORT, "&"]
-elif sys.argv[3] == 'dev':
+elif sys.argv[2] == 'dev':
 	AFTER = ["python", "server.py", PORT]
 
 # Command: sudo netstat -ap | grep :5000
