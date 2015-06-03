@@ -232,6 +232,7 @@ def clear_cache():
 	cache.clear()
 	cache = Cache(config={'CACHE_TYPE': 'null'})
 	cache.init_app(pqr)
+	print cache.config
 	flash('Cache cleared')
 	return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
