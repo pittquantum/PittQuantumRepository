@@ -69,11 +69,11 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
         molecules_id = db.molecules.insert_one({
         	"last_updated": datetime.now(),
         	"properties_id": properties_id,
-        	"inchikey": inchikey,
         	"name": name,
+                "inchikey": inchikey,
         	"formula": formula,
-            "tags": tags,
-            "synonyms": synonyms
+                "tags": tags,
+                "synonyms": synonyms
         }).inserted_id #
 
         # pprint(data)
@@ -88,9 +88,8 @@ db.molecules.create_index([
     ("tags", "text"),
     ("synonyms", "text")
 ],
-name="molecules_index",
 weights={
-    "name": 500,
+    "name": 50000,
     "tags": 50,
     "synonyms": 40,
     "formula": 30,
