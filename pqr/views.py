@@ -31,6 +31,7 @@ MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 @pqr.route('/')
 @pqr.route('/home')
 @pqr.route('/home/')
+@cache.cached(timeout=86400)
 def index():
     page = {'id': "page-home"}
     articles = [os.path.splitext(article)[0]
@@ -44,7 +45,7 @@ def index():
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/')  # if no key lets default to the molecule of the day
 @pqr.route('/mol')  # if no key lets default to the molecule of the day
-# @cache.cached(timeout=50)
+@cache.cached(timeout=86400)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
@@ -83,6 +84,7 @@ def molecule(key="-1"):
 @pqr.route('/news/')
 @pqr.route('/news/<title>')
 @pqr.route('/news/<title>/')
+@cache.cached(timeout=86400)
 def news(title="-1"):
     page = {'id': "page-news"}
 
@@ -200,6 +202,7 @@ def data(key):
 ##########################################################################
 @pqr.route('/contact', methods=['POST', 'GET'])
 @pqr.route('/contact/', methods=['POST', 'GET'])
+@cache.cached(timeout=259200)
 def contact():
     page = {'id': "page-contact"}
 
