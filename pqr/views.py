@@ -22,6 +22,8 @@ import markdown
 from datetime import datetime
 
 cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
+cache.init_app(pqr)
+
 
 redirect_table = {}
 amount_mol = None
@@ -223,6 +225,15 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 ##########################################################################
+
+@pqr.route('/3spooky5me')
+def clear_cache():
+	global cache
+	cache.clear()
+	cache = Cache(config={'CACHE_TYPE': 'null'})
+	cache.init_app(pqr)
+	flash('Cache cleared')
+	return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
 ##########################################################################
 @pqr.errorhandler(404)
