@@ -8,9 +8,16 @@ import sys
 if len(sys.argv) < 2:
 	print "Please enter a port number! Exiting..."
 	sys.exit()
+elif len(sys.argv < 3):
+	print "Please enter 'prod' or 'dev' after port! Exiting..."
+	sys.exit()
 
 PORT = sys.argv[1]
-AFTER = ["python", "server.py", PORT]
+
+if sys.argv[3] == 'prod':
+	AFTER = ["nohup", "python", "server.py", PORT, "&"]
+elif sys.argv[3] == 'dev':
+	AFTER = ["python", "server.py", PORT]
 
 # Command: sudo netstat -ap | grep :5000
 results = check_output(["sudo", "netstat", "-ap", "|", "grep :" + PORT])
