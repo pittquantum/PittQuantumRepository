@@ -8,7 +8,7 @@ import sys
 if len(sys.argv) < 2:
 	print "Please enter a port number! Exiting..."
 	sys.exit()
-elif len(sys.argv < 3):
+elif len(sys.argv) < 3:
 	print "Please enter 'prod' or 'dev' after port! Exiting..."
 	sys.exit()
 
