@@ -32,8 +32,6 @@
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
-
-    
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css"> {% endblock %}
 </head>
@@ -44,16 +42,41 @@
     <![endif]-->
     {% block header %} {% endblock %}
     <!-- -->
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
     <!-- -->
     {% if messages %}
     <div id="alerts" class="container">
-        {% for message in messages %}
-        <div class="alert alert-danger" role="alert">
-            <p>{{ message }}</p>
-        </div>
+        {% for category, message in messages %} 
+            {% if category == 'redirect' %} 
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i class="fa fa-sign-in"></i> {{ message }}
+            </div>
+            {% elif category == 'sent' %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i class="fa fa-paper-plane"></i> Your messsage was sent!
+            </div>
+
+            {% elif category == 'error' %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ message }}
+            </div>
+            {% elif category == 404 %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <i class="fa fa-cogs"></i> <samp>404 Page Not Found.</samp> You have been redirected to the home page. 
+            </div>
+            {% elif category == 500 %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong> <i class="fa fa-cogs"></i> <pre>500 Internal Sever Error.</pre> You have been redirected to the home page. </strong>
+            </div>
+            {% endif %} 
         {% endfor %}
     </div>
+    <div class='clearfix'> &nbsp;</div>
     {% endif %}
     <!-- -->
     {% endwith %}

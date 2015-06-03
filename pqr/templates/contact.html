@@ -19,32 +19,34 @@
 
           <div class="col-md-8">
 
-               <form id="form-contact" role="form">
+               <form id="form-contact" role="form" method="POST" action="/contact/">
                     <h3> Send us a direct message! </h3>
 
                     <div class="form-group">
                          <label for="name">Name</label>
-                         <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+                         <input type="text" class="form-control" id="name" name='name' placeholder="John Doe">
                     </div>
 
                     <div class="form-group">
                          <label for="email">Email address</label>
-                         <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                         <input type="email" class="form-control" id="email" name='email' placeholder="Enter your email" >
                     </div>
 
                     <div class="form-group">
                          <label for="verify_email">Verify Email address</label>
-                         <input type="email" class="form-control" id="verify_email" placeholder="Enter your email" required>
+                         <input type="email" class="form-control" id="verify_email" name='verify_email' placeholder="Enter your email" >
                     </div>
 
                     <div class="form-group">
                          <label for="subject">Subject</label>
-                         <input type="text" class="form-control" id="subject" placeholder="Subject" value="" required>
+                         <input type="text" class="form-control" id="subject" name='subject' placeholder="Subject" value="" >
                     </div>
 
                     <div class="form-group">
-                         <textarea class="form-control" id="message" placeholder="Please enter your message here" rows="8" required></textarea>
+                         <textarea class="form-control" id="message" placeholder="Please enter your message here" rows="8" name='message'></textarea>
                     </div>
+                    
+                    <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
 
                     <button class="btn btn-primary" id="submit">Submit</button>
                </form>

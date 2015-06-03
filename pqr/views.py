@@ -4,18 +4,22 @@
 from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request, Markup
 from flask.ext.cache import Cache
 
+# mandrill emailing
+from flask.ext.mandrill import Mandrill
+
 # MongoDB specific imports
 from pymongo import MongoClient
 
 # PQR specific imports
-from pqr import pqr
+from pqr import pqr, secret_config
+
 from settings import APP_JSON, APP_ARTICLES
-from secret_key import secret_key
 
 # Python library imports
 import os
 import json
 import markdown
+from datetime import datetime
 
 cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
 
@@ -24,14 +28,13 @@ amount_mol = None
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 
 ##########################################################################
-
-
 @pqr.route('/')
 @pqr.route('/home')
 @pqr.route('/home/')
 def index():
     page = {'id': "page-home"}
-    articles = [ os.path.splitext(article)[0] for article in next(os.walk(APP_ARTICLES))[2] ]
+    articles = [os.path.splitext(article)[0]
+                for article in next(os.walk(APP_ARTICLES))[2]]
 
     return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles)
 
@@ -51,7 +54,7 @@ def molecule(key="-1"):
     # It also flashes a message that shows the redirection
     if key in redirect_table.keys():
         flash("Redirected! " + str(key) +
-              " is actually the same as " + str(redirect_table[key]))
+              " is actually the same as " + str(redirect_table[key]), 'redirect')
         return redirect(url_for('molecule', key=redirect_table[key]))
 
     # This gets the first two characters of the key, allowing for directory
@@ -68,7 +71,7 @@ def molecule(key="-1"):
     except IOError:
         # If we don't have the key, flash
         flash(
-            "You entered a molecule that didn't exist, so you've been redirected to the molecule of the week!")
+            "You entered a molecule that didn't exist, so you've been redirected to the molecule of the week!", 'redirect')
         return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
     # return the view
@@ -86,24 +89,20 @@ def news(title="-1"):
     try:
         # Loads the JSON file relevant to the InChI key requested
         with open(os.path.join(APP_ARTICLES,  title + '.md'), 'r') as f:
-            print "Trying to read the file"
             opened = f.read().strip()
             html = markdown.markdown(opened)
             f.close()
     except IOError:
         # If we don't have the key, flash
         flash(
-        "You entered a article that doesn't exist! You have been redirected to the home page.")
+            "You entered a article that doesn't exist! You have been redirected to the home page.", 'redirect')
         return redirect(url_for('index'))
-    
+
     output = Markup(html)
-    print output
 
     return render_template("news.html", output=output, page=page)
 
 ##########################################################################
-
-
 @pqr.route('/browse')
 @pqr.route('/browse/')
 @pqr.route('/browse/<query>')
@@ -122,7 +121,8 @@ def browse(query="-1", page_num="-1"):
 
     # If there was no query searched for, flash and go to home
     if query == "-1":
-        flash("You didn't search for anything!")
+        flash(
+            "You didn't search for anything! You have been redirected to the home page.", 'redirect')
         return redirect(url_for('index'))
 
     # Initialize the Mongo client
@@ -198,14 +198,17 @@ def data(key):
     return jsonify(json_dict)
 
 ##########################################################################
-
-
-@pqr.route('/contact')
-@pqr.route('/contact/')
+@pqr.route('/contact', methods=['POST', 'GET'])
+@pqr.route('/contact/', methods=['POST', 'GET'])
 def contact():
     page = {'id': "page-contact"}
 
-    return render_template("contact.html", page=page)
+    if request.method == 'GET':
+        return render_template("contact.html", page=page)
+    else:
+        if(validate_contact_us(request.form)):
+            send_email(request.form)
+        return render_template("contact.html", page=page)
 
 ##########################################################################
 # Properly handle the favicon
@@ -219,15 +222,15 @@ def favicon():
 ##########################################################################
 
 ##########################################################################
-
-
 @pqr.errorhandler(404)
 def page_not_found(e):
+    flash("Page not found", 404)
     return redirect(url_for('index'))
 
 
 @pqr.errorhandler(500)
 def page_not_found(e):
+    flash("Page not found", 500)
     return redirect(url_for('index'))
 ##########################################################################
 
@@ -239,10 +242,33 @@ def chunks(l, n):
     for i in xrange(0, len(l), n):
         yield l[i:i + n]
 
+# Validate the contact us form
 
-# CHANGE THIS ON PRODUCTION SERVER!!!!!!!!
-pqr.secret_key = secret_key
-###
+
+def validate_contact_us(form):
+    if(form['name'] and form['email'] and form['verify_email'] and form['subject'] and form['message']):
+        if(form['email'] != form['verify_email']):
+            flash("Emails don't match!", 'error')
+            return False
+        else:
+            return True
+    else:
+        flash("Please make sure everything has been filled out!", "error")
+        return False
+
+# Send an email using mandrill
+def send_email(form):
+    mandrill = Mandrill(pqr)
+    mandrill.send_email(
+        from_email='webmaster@pqr.pitt.edu',
+        subject=form['subject'],
+        to=[{'email': pqr.config['DEFAULT_EMAIL']}, {'email': 'jjr76@pitt.edu'}],
+        text=form['subject'] + "\n" + "From: " + form['email'] + "\n" + form['message'],
+        html=render_template("email/contact.html", date=datetime.now().strftime('%Y/%m/%d %H:%M:%S'),
+                             name=form['name'], email=form['email'], subject=form['subject'], message=form['message']),
+    )
+    flash("Message has been sent!", 'sent')
+
 
 if __name__ == '__main__':
     pqr.run()
