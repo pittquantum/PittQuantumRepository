@@ -228,11 +228,14 @@ def favicon():
 
 @pqr.route('/3spooky5me')
 def clear_cache():
+	if(not pqr.debug):
+	    return "You're not supposed to be here o_0"
 	global cache
 	cache.clear()
 	cache = Cache(config={'CACHE_TYPE': 'null'})
 	cache.init_app(pqr)
 	print cache.config
+	print pqr.debug
 	flash('Cache cleared')
 	return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
