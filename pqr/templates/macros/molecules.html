@@ -1,6 +1,6 @@
 <!-- View of a molecule for testing or displaying a simple view (such as the homepage)  -->
-{% macro simpleViewer(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N.mol2', style='stick') -%}
-<div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'>
+{% macro simpleViewer(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N', style='stick') -%}
+<div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}'>
 </div>
 {%- endmacro %}
 <!-- View of a molecule for testing or displaying a simple view (such as the homepage)  -->
