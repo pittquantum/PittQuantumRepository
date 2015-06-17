@@ -21263,7 +21263,7 @@ pqr.threeDMole.initializeViewers = function(config) {
 
 	$.each(this.all_viewers, function(index, viewer) {
 		pqr.threeDMole.clearBackgrounds(viewer);
-		pqr.threeDMole.rotate(viewer);
+		// pqr.threeDMole.rotate(viewer);
 	});
 
 };
