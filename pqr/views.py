@@ -39,7 +39,7 @@ def index():
     articles = [os.path.splitext(article)[0]
                 for article in next(os.walk(APP_ARTICLES))[2]]
 
-    return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles)
+    return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, week_mol=(MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK))
 
 
 ##########################################################################
