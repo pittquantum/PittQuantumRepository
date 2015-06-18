@@ -24,7 +24,6 @@ from datetime import datetime
 cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
 cache.init_app(pqr)
 
-
 redirect_table = {}
 amount_mol = None
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
@@ -134,6 +133,11 @@ def browse(query="-1", page_num="-1"):
     # Initialize the Mongo client
     client = MongoClient()
     db = client.test
+
+    #this is the get variable type accepted values name,inchi, keyword, formula
+    searchType = request.args.get('type', '')
+    
+    # return searchType
 
     # Make sure the index exists
     # temp = db.molecules.ensure_index([
@@ -288,7 +292,6 @@ def send_email(form):
                              name=form['name'], email=form['email'], subject=form['subject'], message=form['message']),
     )
     flash("Message has been sent!", 'sent')
-
 
 if __name__ == '__main__':
     pqr.run()
