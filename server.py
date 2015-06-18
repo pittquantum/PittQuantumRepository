@@ -34,8 +34,10 @@ def set_weeekly_mol():
     sunday = datetime.date.isoformat(sunday)
     with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
         for line in molfile:
-            if line.strip().split(",")[0] == sunday:
-                pqv.MOLECULE_OF_THE_WEEK = line.strip.split(",")[1].strip()
+            if line.strip().split(",")[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
+                pqv.MOLECULE_OF_THE_WEEK = line.strip().split(",")[1]
+                print pqv.MOLECULE_OF_THE_WEEK
+            if line.strip().split(",")[0] > datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
                 break
     threading.Timer(86400, set_weeekly_mol).start()
 
