@@ -103,25 +103,22 @@ pqr.bindevents.moleculeSurfaceChanger = function() {
  */
 pqr.bindevents.moleculeSearch = function(selector) {
 	
-	var finder = ".search-options li a"; //Location of the clickable elements from the root selector 
-	selector = selector + finder; 
-	console.log(selector); 
+	var finder = " .search-options li a"; //Location of the clickable elements from the root selector 
+	var button_selector = selector + finder; 
 
-	// console.log($(selector));
-	if ($(selector).length) {
+	if ($(button_selector).length) {
 		if (pqr.debug) console.log("selctor exists");
-		$(selector).on("click", function(event) {
+		$(button_selector).on("click", {selector: selector}, function(event) {
 			//Get the type of serach based on the id of the button pressed 
 			var type = $(this).attr('data-search-type');
-			console.log("hello");
 
-			//Get the query from the input box (parent, prev)
-			// var query = $(this).parent().parent().parent().parent().child().val();
-			// console.log(query); 
+			//Get the query from the root selector then the .query class contains the actual query
+			var query = $(selector + ' .query').val();
+			if(pqr.debug) console.log("Query from " + selector + " was =" + query); 
 
 			//Get the base URL and redirect 
-			// if (!location.origin) location.origin = location.protocol + "//" + location.host;
-			// window.location = location.origin + "/browse/" + encodeURIComponent(query) + "?type=" + encodeURIComponent(type); 
+			if (!location.origin) location.origin = location.protocol + "//" + location.host;
+			window.location = location.origin + "/browse/" + encodeURIComponent(query) + "?type=" + encodeURIComponent(type); 
 
 			event.preventDefault();
 		});
