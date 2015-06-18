@@ -1,0 +1,14 @@
+{% macro search_input_group(style='btn-primary', id='molecule-search-group') -%}
+<div class="input-group" id="{{id}}">
+    <input type="text" class="form-control typeahead query" autocomplete="off" placeholder="Enter Query">
+    <div class="input-group-btn">
+    <button type="button" class="btn {{style}} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search"></i> <span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-menu-right search-options">
+      <li><a href="#" data-search-type='name'><i class="fa fa-search"></i> Name</a></li>
+      <li><a href="#" data-search-type='inchi'><i class="fa fa-search"></i> InChI</a></li>
+      <li><a href="#" data-search-type='keyword'><i class="fa fa-search"></i> Keyword</a></li>
+      <li><a href="#" data-search-type='formula'><i class="fa fa-search"></i> Formula</a></li>
+    </ul>
+  </div><!-- /btn-group -->      
+</div>
+{%- endmacro %}

@@ -40,11 +40,9 @@ pqr.bindevents.moleculeSizeChanger = function() {
 	});
 }
 
-
 /**
- * 	Binds the Molecule style changer events to the buttons to change between
- * 		spheres, lines, or crosses
- *
+ * Bind the buttons to change the style of the molecule between spheres, lines or
+ * crosses.
  */
 pqr.bindevents.moleculeStyleChanger = function() {
 
@@ -84,9 +82,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 }
 
 /**
- * 	Binds the Molecule surface changer to the proper button.
- * 		s
- *
+ * Binds the molecule surface changer to the proper button
  */
 pqr.bindevents.moleculeSurfaceChanger = function() {
 	if ($('#surfaceSwitch').length) {
@@ -100,24 +96,32 @@ pqr.bindevents.moleculeSurfaceChanger = function() {
 
 }
 
-
 /**
- * 	Binds the Molecule style changer events to the buttons to change between
- * 		spheres, lines, or crosses
- *
+ * Bind click events to each search option and redirect to the browse/<query> url
+ * 
+ * @param  {String} selector javascript seletor of the input group
  */
 pqr.bindevents.moleculeSearch = function(selector) {
-	if ($(selector).length) {
+	
+	var finder = ".search-options li a"; //Location of the clickable elements from the root selector 
+	selector = selector + finder; 
+	console.log(selector); 
 
+	// console.log($(selector));
+	if ($(selector).length) {
 		if (pqr.debug) console.log("selctor exists");
 		$(selector).on("click", function(event) {
+			//Get the type of serach based on the id of the button pressed 
+			var type = $(this).attr('data-search-type');
+			console.log("hello");
+
 			//Get the query from the input box (parent, prev)
-			var query = $(this).parent().prev().val();
+			// var query = $(this).parent().parent().parent().parent().child().val();
 			// console.log(query); 
 
 			//Get the base URL and redirect 
-			if (!location.origin) location.origin = location.protocol + "//" + location.host;
-			window.location = location.origin + "/browse/" + encodeURIComponent(query);
+			// if (!location.origin) location.origin = location.protocol + "//" + location.host;
+			// window.location = location.origin + "/browse/" + encodeURIComponent(query) + "?type=" + encodeURIComponent(type); 
 
 			event.preventDefault();
 		});

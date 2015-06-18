@@ -43,14 +43,7 @@
                     <samp>{{query}}</samp>
                 </p>
                 <form id="splash-molecule-search" class="text-center form-inline" role="form">
-                    <div class="input-group">
-                        <input type="text" id="molec-query" class="form-control typeahead" autocomplete="off" placeholder="Enter Query">
-                        <span class="input-group-btn">
-              <button class="btn btn-default molecule-query" type="submit">
-                <i class="fa fa-search"></i>
-              </button>
-            </span>
-                    </div>
+                {% import '/macros/helpers.html' as helpers %} {{ helpers.search_input_group('btn-default', 'molecule-search-group') }}
                 </form>
                 <!-- <p id="num-compounds"><strong>PQR currently includes <span class="number">55,000</span> compounds in <span class="number">25</span> categories!</strong></p> -->
             </div>

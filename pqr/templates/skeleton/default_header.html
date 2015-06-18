@@ -20,14 +20,7 @@
 
         <!-- Search for molecules -->
         <form class="navbar-form navbar-right" role="search">
-          <div class="input-group">
-            <input type="text" id="header-molecule-search" class="form-control typeahead" autocomplete="off" placeholder="Molecule Search">
-            <span class="input-group-btn">
-              <button class="btn btn-primary molecule-query" type="submit">
-                <i class="fa fa-search"></i>
-              </button>
-            </span>
-          </div>
+          {% import '/macros/helpers.html' as helpers %} {{ helpers.search_input_group('btn-primary', 'nav-molecule-search-group') }}
         </form>
         <!-- Search for molecules -->
 

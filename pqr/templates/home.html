@@ -5,20 +5,9 @@
             <h2>Welcome to Pitt Quantum Repository!</h2>
             <p>Search for <span class='font-red'>{{ "{:,}".format(amount_mol) }}</span> molecules by name, InChI, category, etc. </p>
             <form id='home-molecule-query' class="text-center form-inline" role="form" action="#">
-                <div class="input-group">
-                    <input type="text" id="molec-query" class="form-control typeahead" autocomplete="off" placeholder="Enter Query">
+                
+            {% import '/macros/helpers.html' as helpers %} {{ helpers.search_input_group('btn-default', 'molecule-search-group') }}
 
-                    <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle molecule-query-FIXME" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search"></i> <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right">
-                      <li><a href="#"><i class="fa fa-search"></i> Name</a></li>
-                      <li><a href="#"><i class="fa fa-search"></i> INCHI</a></li>
-                      <li><a href="#"><i class="fa fa-search"></i> Keyword</a></li>
-                      <li><a href="#"><i class="fa fa-search"></i> Formula</a></li>
-                    </ul>
-                  </div><!-- /btn-group -->
-                         
-                </div>
             </form>
         </div>
     </div>

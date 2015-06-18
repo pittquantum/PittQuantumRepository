@@ -16,7 +16,7 @@ $(document).ready(function() {
 	pqr.htmlUtilities.fontSizeChanger(0); //Restore previous values 
 	pqr.bindevents.fontSizeChanger("#reducefont", "#increasefont", "#defaultfont");
 	// pqr.typeahead.activate("#header-molecule-search");
-	pqr.bindevents.moleculeSearch('.navbar-form .molecule-query');
+	pqr.bindevents.moleculeSearch('#nav-molecule-search-group');
 	pqr.htmlUtilities.checkWebGL();
 
 
@@ -28,8 +28,7 @@ $(document).ready(function() {
 		pqr.bindevents.moleculeReset('#reset-molecule');
 		pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
 
-
-		pqr.bindevents.moleculeSearch('#home-molecule-query .molecule-query');
+		pqr.bindevents.moleculeSearch('#molecule-search-group');
 		if (pqr.debug) console.log("Home Page");
 	}
 
@@ -37,12 +36,9 @@ $(document).ready(function() {
 	if ($("#main").hasClass("page-browse")) {
 		// pqr.typeahead.activate("#molec-query");
 		pqr.htmlUtilities.toolTipOptIn();
-
-
 		pqr.qrgen.addQRCode("#qrcode", "www.google.com");
+		pqr.bindevents.moleculeSearch('#molecule-search-group');
 
-
-		pqr.bindevents.moleculeSearch('#splash-molecule-search .molecule-query');
 		if (pqr.debug) console.log("Browse Page");
 	}
 
