@@ -36,6 +36,7 @@ def set_weeekly_mol():
         for line in molfile:
             if line.strip().split(",")[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
                 pqv.MOLECULE_OF_THE_WEEK = line.strip().split(",")[1]
+                pqv.WEEKLY_MOL_NAME = line.strip().split(",")[2].title()
                 print pqv.MOLECULE_OF_THE_WEEK
             if line.strip().split(",")[0] > datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
                 break
