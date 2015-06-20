@@ -151,7 +151,11 @@ def browse(query="-1", page_num="-1"):
     results = []
 
     # Do a text search for the passed in query
-    cursor = db.molecules.find({"$text": {"$search": str(query)}})
+    if searchType == 'formula':
+        query = query.upper()
+    elif searchType == 'keyword':
+        searchType = 'tags'
+    cursor = db.molecules.find({str(searchType): str(query)})
 
     # Append all dicts in the cursor to a results array
     for i in cursor:
