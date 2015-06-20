@@ -155,6 +155,8 @@ def browse(query="-1", page_num="-1"):
         query = query.upper()
     elif searchType == 'keyword':
         searchType = 'tags'
+    elif searchType == 'inchi':
+        searchType = 'inchikey'
     cursor = db.molecules.find({str(searchType): str(query)})
 
     # Append all dicts in the cursor to a results array
