@@ -157,8 +157,10 @@ def browse(page_num="-1"):
     # Do a text search for the passed in query
     if searchType == 'formula':
         query = query.upper()
-    elif searchType == 'keyword':
+    elif searchType == 'tag':
         searchType = 'tags'
+    elif searchType == 'synonym':
+        searchType = 'synonym'
     elif searchType == 'inchi':
         searchType = 'inchikey'
     cursor = db.molecules.find({str(searchType): str(query)})
