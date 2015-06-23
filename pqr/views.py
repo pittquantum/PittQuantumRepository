@@ -163,6 +163,7 @@ def browse(page_num="-1"):
         searchType = 'synonym'
     elif searchType == 'inchi':
         searchType = 'inchikey'
+        query = query.upper()
     cursor = db.molecules.find({str(searchType): str(query)})
 
     # Append all dicts in the cursor to a results array
