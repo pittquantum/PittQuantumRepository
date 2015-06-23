@@ -125,7 +125,7 @@ def browse(page_num="-1"):
         page_num = 1
 
     # Set the query string
-    query = request.args.get('query', '')
+    query = request.args.get('query', '').lower()
 
     #this is the get variable type accepted values name,inchi, keyword, formula
     searchType = request.args.get('type', '')
