@@ -21,7 +21,7 @@ import json
 import markdown
 from datetime import datetime
 
-cache = Cache(pqr, config={'CACHE_TYPE': 'redis'})
+cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
 cache.init_app(pqr)
 
 redirect_table = {}
@@ -33,7 +33,7 @@ WEEKLY_MOL_NAME = None
 @pqr.route('/')
 @pqr.route('/home')
 @pqr.route('/home/')
-@cache.cached(timeout=86400)
+# @cache.cached(timeout=86400)
 def index():
     page = {'id': "page-home"}
     articles = [os.path.splitext(article)[0]
@@ -48,7 +48,7 @@ def index():
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/')  # if no key lets default to the molecule of the day
 @pqr.route('/mol')  # if no key lets default to the molecule of the day
-@cache.cached(timeout=43200)
+# @cache.cached(timeout=43200)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
@@ -110,11 +110,11 @@ def news(title="-1"):
 ##########################################################################
 @pqr.route('/browse')
 @pqr.route('/browse/')
-@pqr.route('/browse/<query>')
-@pqr.route('/browse/<query>/')
-@pqr.route('/browse/<query>/<page_num>')
-@pqr.route('/browse/<query>/<page_num>/')
-def browse(query="-1", page_num="-1"):
+@pqr.route('/browse/')
+@pqr.route('/browse/')
+@pqr.route('/browse/<page_num>')
+@pqr.route('/browse/<page_num>/')
+def browse(page_num="-1"):
 
     # Get the page number that is passed in
     # If negative, make it positive
@@ -123,6 +123,12 @@ def browse(query="-1", page_num="-1"):
         page_num = abs(int(page_num))
     except ValueError:
         page_num = 1
+
+    # Set the query string
+    query = request.args.get('query', '')
+
+    #this is the get variable type accepted values name,inchi, keyword, formula
+    searchType = request.args.get('type', '')
 
     # If there was no query searched for, flash and go to home
     if query == "-1":
@@ -134,8 +140,6 @@ def browse(query="-1", page_num="-1"):
     client = MongoClient()
     db = client.test
 
-    #this is the get variable type accepted values name,inchi, keyword, formula
-    searchType = request.args.get('type', '')
     
     # return searchType
 
@@ -199,7 +203,7 @@ def browse(query="-1", page_num="-1"):
         else:
             active = page_num
 
-    return render_template("browse.html", page=page, results=results, query=query, num_pages=num_pages, active=active)
+    return render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
 
 
 @pqr.route('/data')

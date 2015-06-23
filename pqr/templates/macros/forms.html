@@ -1,0 +1,45 @@
+{% macro nav_molecule_search() -%}
+<form id='nav-molecule-search' role="search" action="/browse" method="GET">
+    <div class="form-group">
+        <label for="query" class="control-label hide">Query:</label>
+        <input type="text" class="form-control" name='query' placeholder="Enter Query">
+    </div>
+
+    <div class="form-group">
+        <label for="type" class='control-label'>Query Type:</label>
+        <select class="form-control search-options" name="type">
+	        <option value='name'>Name</option>
+	        <option value='inchi'>InChI</option>
+	        <option value='tag'>Tag</option>
+	        <option value='synonym'>Synonym</option>
+	        <option value='formula'>Formula</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Search</button>
+</form>
+{%- endmacro %} 
+
+{% macro banner_search(style='btn-primary', id='home-molecule-search') -%}
+<form id="{{id}}" class="text-center form-inline" role="form" action="/browse" method="GET">
+
+    <div class="input-group">
+        <input type="text" class="form-control typeahead query" autocomplete="off" name="query" placeholder="Enter Query">
+        <span class="input-group-btn">
+        <button type="submit" class="btn {{style}}" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search"></i></button>
+      </span>
+    </div>
+
+    <div class="form-group"> 
+	    <label for="type" class='control-label hide'>Query Type:</label>
+	    <select class="form-control search-options" name="type">
+	        <option value='name'>Name</option>
+	        <option value='inchi'>InChI</option>
+	        <option value='tag'>Tag</option>
+	        <option value='synonym'>Synonym</option>
+	        <option value='formula'>Formula</option>
+	    </select>
+	</div>
+
+</form>
+{%- endmacro %}

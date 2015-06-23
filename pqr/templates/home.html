@@ -4,11 +4,7 @@
         <div class="jumbotron text-center">
             <h2>Welcome to Pitt Quantum Repository!</h2>
             <p>Search for <span class='font-red'>{{ "{:,}".format(amount_mol) }}</span> molecules by name, InChI, category, etc. </p>
-            <form id='home-molecule-query' class="text-center form-inline" role="form" action="#">
-                
-            {% import '/macros/helpers.html' as helpers %} {{ helpers.search_input_group('btn-default', 'molecule-search-group') }}
-
-            </form>
+                {% import '/macros/forms.html' as forms %} {{ forms.banner_search('btn-default', 'molecule-search-group') }}
         </div>
     </div>
 </div>
@@ -32,7 +28,7 @@
             <h2> News </h2>
             <div class="list-group other-content">
                 {% for article in articles %}
-                <a href="/news/{{article}}" target="_blank" class="list-group-item"><span class="badge">New</span><i class="fa fa-newspaper-o"></i> {{article|title}}</a>
+                    <a href="/news/{{article}}" target="_blank" class="list-group-item"><span class="badge">New</span><i class="fa fa-newspaper-o"></i> {{article|title}}</a> 
                 {% endfor %}
             </div>
         </div>

@@ -28,12 +28,21 @@ body {
 			margin-top: -10px;
 			padding-left: 5px;
 		}
+
+		.dropdown-menu{
+			//Make the drop down bigger when it isn't collapsed 
+			@media (min-width: @screen-sm-min) {
+				min-width: 350px;
+			}
+		}
+
 		//Add padding to the navbar when collapsed
 		@media (max-width:@screen-xs-max) {
 			.navbar-collapse li {
 				padding-left: 5%;
 			}
 		}
+
 	}
 	#main {
 		min-height: 800px;

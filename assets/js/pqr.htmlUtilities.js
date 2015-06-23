@@ -3,34 +3,31 @@
  *	to maintain previous set layout. 
  *	
  */
-pqr.htmlUtilities.updateMoleculeView = function(){
+pqr.htmlUtilities.updateMoleculeView = function() {
 
 	//Check the localStorage for the moleculeLayout using modernizer
-	if (Modernizr.localstorage){
-		
+	if (Modernizr.localstorage) {
+
 		//Update the 
-		if(localStorage.getItem("moleculeLayout") == "detailed") $("#molecule-details table .detailed").removeClass("hidden"); //Probably not necessary 
-		else $("#molecule-details table .detailed").addClass("hidden"); 
+		if (localStorage.getItem("moleculeLayout") == "detailed") $("#molecule-details table .detailed").removeClass("hidden"); //Probably not necessary 
+		else $("#molecule-details table .detailed").addClass("hidden");
 
 		//Update style of the viewer
 		var moleculeLayoutStyle = localStorage.getItem("moleculeViewerlayout");
-		if(false){ //Not yet working 
-			if(moleculeLayoutStyle = "spheres"){
+		if (false) { //Not yet working 
+			if (moleculeLayoutStyle = "spheres") {
 				pqr.threeDMole.changeStyle("sphere");
-			}
-			else if(moleculeViewerlayout = "lines"){
+			} else if (moleculeViewerlayout = "lines") {
 				pqr.threeDMole.changeStyle("line");
-			}
-			else if(moleculeViewerlayout = "sticks"){
+			} else if (moleculeViewerlayout = "sticks") {
 				pqr.threeDMole.changeStyle("stick");
-			}
-			else if(moleculeViewerlayout == "crosses"){
+			} else if (moleculeViewerlayout == "crosses") {
 				pqr.threeDMole.changeStyle("cross");
 			}
 		}
 
 	}
-	
+
 }
 
 /** 
@@ -38,10 +35,10 @@ pqr.htmlUtilities.updateMoleculeView = function(){
  *	
  *	
  */
-pqr.htmlUtilities.getINCHIKey = function(){
-	var key = ""; 
-	if($(".molecule-inchikey").length){
-		var  key = $(".molecule-inchikey").children().next().html();
+pqr.htmlUtilities.getINCHIKey = function() {
+	var key = "";
+	if ($(".molecule-inchikey").length) {
+		var key = $(".molecule-inchikey").children().next().html();
 	}
 	return $.trim(key)
 }
@@ -50,15 +47,24 @@ pqr.htmlUtilities.getINCHIKey = function(){
  *	Activate bootstrap tooltips. 
  *		-Only do this on pages that tooltips exist for performance 
  */
-pqr.htmlUtilities.toolTipOptIn = function(){
- 	$('[data-toggle="tooltip"]').on("click", function(event){event.preventDefault();}); 
- 	$(function() {
- 		 $('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips 
- 	});
+pqr.htmlUtilities.toolTipOptIn = function() {
+	$('[data-toggle="tooltip"]').on("click", function(event) {
+		event.preventDefault();
+	});
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips 
+	});
 
-     
+}
 
- }
+/**
+ * Activate bootstrap popovers plugin
+ * 	-Limit this to only pages that require popovers 
+ */
+pqr.htmlUtilities.popOverOptIn = function() {
+	$('[data-toggle="popover"]').popover();
+}
+
 
 /**
  * 	Allows you to increase or decrease the body font size  
@@ -66,32 +72,29 @@ pqr.htmlUtilities.toolTipOptIn = function(){
  * 	@param {int} type either 0 = "init", 1 = "increase", -1 = "decrease", 2 = default
  * 	
  */
-pqr.htmlUtilities.fontSizeChanger = function(type){
- 	var DEFAULTSIZE = "16px"; 
- 	var localstore = false; //Is localstorage avaiable 
- 	var currentBaseSize, newBaseSize;
- 	
- 	if (Modernizr.localstorage) localstore = true; 
+pqr.htmlUtilities.fontSizeChanger = function(type) {
+	var DEFAULTSIZE = "16px";
+	var localstore = false; //Is localstorage avaiable 
+	var currentBaseSize, newBaseSize;
 
-	if(type == 0){//Initizliaze by restoring the users settings  
-	 	//Check the localStorage for the value 
-		if(localstore){
-			if(localStorage.getItem("baseFontSize") !== null){ //If set
+	if (Modernizr.localstorage) localstore = true;
+
+	if (type == 0) { //Initizliaze by restoring the users settings  
+		//Check the localStorage for the value 
+		if (localstore) {
+			if (localStorage.getItem("baseFontSize") !== null) { //If set
 				newBaseSize = localStorage.getItem("baseFontSize"); //Store the whole value e.g. = "14px" 
 			}
 		}
-	}
-	else{
+	} else {
 		currentBaseSize = $("body").css("font-size");
-		if(type == 1){//Increasing font
+		if (type == 1) { //Increasing font
 			newBaseSize = (parseInt(currentBaseSize) + 2).toString() + "px"; //Add two and concat "px"
-		}
-		else if(type == -1){//Decreasing font
-			if(parseInt(currentBaseSize) >= 2){
+		} else if (type == -1) { //Decreasing font
+			if (parseInt(currentBaseSize) >= 2) {
 				newBaseSize = (parseInt(currentBaseSize) - 2).toString() + "px"; //Subtract two and concat "px"
 			}
-		}
-		else if(type == 2){ //Default Value 
+		} else if (type == 2) { //Default Value 
 			newBaseSize = DEFAULTSIZE;
 		}
 	}
@@ -101,7 +104,7 @@ pqr.htmlUtilities.fontSizeChanger = function(type){
 	$("body").css("font-size", newBaseSize);
 
 	//Add the new value to the localstorage if avaiable 
-	if(localstore){
+	if (localstore) {
 		localStorage.setItem("baseFontSize", newBaseSize)
 	}
 }
@@ -111,16 +114,15 @@ pqr.htmlUtilities.fontSizeChanger = function(type){
  *
  *	@return boolean 
  */
- pqr.htmlUtilities.checkWebGL = function(){
- 	if(!Modernizr.webgl){
- 		var msg = "<div class='alert alert-danger' role='alert'> <strong> <a href='http://get.webgl.org/'>WebGL</a> </strong> is not supported on your device! </div"; 
- 		$("#main").prepend(msg); 
+pqr.htmlUtilities.checkWebGL = function() {
+	if (!Modernizr.webgl) {
+		var msg = "<div class='alert alert-danger' role='alert'> <strong> <a href='http://get.webgl.org/'>WebGL</a> </strong> is not supported on your device! </div";
+		$("#main").prepend(msg);
 
- 		//Currently sending them to get web gl page 
- 		window.location.replace("https://get.webgl.org/");
- 	}
- 	else{
- 		if(pqr.debug) console.log("WebGL Supported"); 
- 	}
+		//Currently sending them to get web gl page 
+		window.location.replace("https://get.webgl.org/");
+	} else {
+		if (pqr.debug) console.log("WebGL Supported");
+	}
 
- }
+}

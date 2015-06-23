@@ -6679,6 +6679,11 @@ body nav .navbar-brand > img {
   margin-top: -10px;
   padding-left: 5px;
 }
+@media (min-width: 768px) {
+  body nav .dropdown-menu {
+    min-width: 350px;
+  }
+}
 @media (max-width: 767px) {
   body nav .navbar-collapse li {
     padding-left: 5%;

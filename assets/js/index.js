@@ -13,6 +13,8 @@ $(document).ready(function() {
 
 	//All Pages
 	pqr.htmlUtilities.toolTipOptIn();
+
+
 	pqr.htmlUtilities.fontSizeChanger(0); //Restore previous values 
 	pqr.bindevents.fontSizeChanger("#reducefont", "#increasefont", "#defaultfont");
 	// pqr.typeahead.activate("#header-molecule-search");
