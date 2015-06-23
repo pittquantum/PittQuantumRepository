@@ -175,7 +175,7 @@
                                 <td>
                                     {% for i in jsonDict["tags"] %}
                                     <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
-                                    <a href="/browse/{{i|urlencode}}">
+                                    <a href="/browse/?query={{i|urlencode}}&amp;type=keyword">
                                         <span class="label label-primary">{{ i }}</span>
                                     </a>
                                     <!-- </a> -->
