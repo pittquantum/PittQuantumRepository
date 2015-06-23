@@ -170,6 +170,12 @@ def browse(page_num="-1"):
         i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
         results.append(i)
 
+    if len(results) == 0:
+        cursor = db.molecules.find({"$text": {"$search": str(query)}})
+        for i in cursor:
+            i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
+            results.append(i)
+
     # Split the reults array into chunks of 10 each for search pagination
     tempArr = list(chunks(results, 10))
 
