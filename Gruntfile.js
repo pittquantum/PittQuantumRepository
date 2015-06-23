@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 			},
 			js: {
 				// the files to concatenate (modernizr, then jquery, then bootstrap, then everythign else)
-				src: ['assets/js/modernizr/**/*.js', 'assets/js/jquery/**/*.js', 'assets/js/bootstrap/**/*.js', 'assets/js/**/*.js'],
+				src: ['assets/js/modernizr/**/*.js', 'assets/js/jquery/**/*.js', 'assets/js/bootstrap/**/*.js', 'assets/js/helpers/**/*.js', 'assets/js/pqr/pqr.js', 'assets/js/pqr/config.js', 'assets/js/**/*.js'],
 
 				// the location of the resulting JS file
 				dest: 'pqr/static/js/pqr.js'

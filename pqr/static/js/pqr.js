@@ -2325,6 +2325,133 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 ;
+/**
+ * @fileoverview Various web accessibility functions 
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
+ */
+var accessibility = accessibility || {
+	fontSizeChangerIndex: 2,
+	defaultFontSize: 16
+};
+
+/**
+ * Increases the body font size by some units multiplied by the fontSizeChangerIndex
+ * 
+ * @param  {String} current Current size of the font or false if not set
+ * @param  {int} type    default 0, increase 1, decrease -1, 
+ * @return {String}      the value of the new font size
+ */
+accessibility.fontSizeChanger = function(type, current) {
+	if (type === -1) {
+		return this.changeFontSize(parseInt(current) - this.fontSizeChangerIndex);
+	} else if (type === 0) {
+		return this.changeFontSize(this.defaultFontSize);
+	} else if (type === 1) {
+		return this.changeFontSize(parseInt(current) + this.fontSizeChangerIndex);
+	}
+};
+
+/**
+ * Changes the body font size to the size passed. 
+ * 
+ * @param  {int} size The newly calculated size of the body font, in a valid font size.
+ * @return {int} The value of the new font size
+ */
+accessibility.changeFontSize = function(size){
+	$("body").css("font-size", size.toString() + "px");
+	return size;
+};
+
+;
+/**
+ * @fileoverview Misc. boostrap helper functions
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ */
+
+var bootstrapUtilities = bootstrapUtilities || {};
+
+
+/**
+ * When a tooltip toggle is click activate the tooltip. 
+ * 
+ */
+bootstrapUtilities.FullToolTipOptIn = function() {
+	$('[data-toggle="tooltip"]').on("click", function(event) {
+		event.preventDefault();
+	});
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips 
+	});
+};
+/**
+ * @fileoverview Misc. DOM manipulation utilites
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ */
+
+var htmlutilities = htmlutilities || {}; 
+
+/**
+ * Get the base URL of the current page. If you are on 'http://melwood.jcubedworld.com/baseball/?type=dog'
+ * 	'http://melwood.jcubedworld.com' will be returned. The protocal and domain will be returned. 
+ * 
+ * @return {String} The base URL of the current page including the protocal. 
+ */
+htmlutilities.getRootURL = function(){
+	if (!location.origin) location.origin = location.protocol + "//" + location.host;
+	return location.origin; 
+};
+
+
+;
+/**
+ * @fileoverview Initialize all JS for the website. Must be the 
+ * first file concated in the pqr folder. 
+ * 
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
+ */
+
+var pqr = pqr || {
+	debug: true 
+};
+
+pqr.features = { //Default to false 
+	localstorage: false, 
+	webGL: false
+};
+
+//Name Spaces 
+pqr.bindevents = pqr.bindevents || {};
+pqr.threeDMole = pqr.threeDMole || {};
+pqr.utilities = pqr.utilities || {};
+pqr.qrgen = pqr.qrgen || {};
+
+/**
+ * Update the avaiable features flags for this user. 
+ * 
+ */
+pqr.checkFeatures = function(){
+	if (Modernizr.localstorage) {
+		this.features.localstorage = true;
+	}
+	else {
+		if(this.debug) console.log ("Local storage is not avaiable!"); 
+		pqr.redirectNoWebGL(); 
+	}
+
+
+	if (Modernizr.webgl) {
+		this.features.webGL = true; 
+	}
+	else if(this.debug){
+		console.log ("Web GL is not avaiable!"); 
+	} 
+};
+
+
+
+;
 /*
  * math-like functionality
  * quaternion, vector, matrix
@@ -20795,215 +20922,37 @@ var qrcode = function() {
 }());
 ;
 /**
- * @fileoverview General all purpose utilities I use often. 
+ * @fileoverview Any event binding functions.
+ *  
  * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
  */
-
-var rogan = rogan || {};
-rogan.helpers = rogan.helpers || {};
 
 /**
- * 
- *
+ * Bind the events to the proper font switching buttons for web accessibility. 
  * 
  */
+pqr.bindevents.bindFontSwitchers = function() {
+	var increaseButtonSelector = "#increasefont";
+	var decreaseButtonSelector = "#reducefont";
+	var resetButtonSelector = "#defaultfont";
 
+	$(increaseButtonSelector).on("click", function(event) {
+		event.preventDefault();
+		pqr.htmlUtilities.updateFont(1);
+	});
 
-;
-//Namespaces (Might have to be on every js page)
-var pqr = pqr || {
-	debug: true //Show debugging info in the console if true 
+	$(decreaseButtonSelector).on("click", function(event) {
+		event.preventDefault();
+		pqr.htmlUtilities.updateFont(-1);
+	});
+
+	$(resetButtonSelector).on("click", function(event) {
+		event.preventDefault();
+		pqr.htmlUtilities.updateFont(0);
+	});
 };
 
-pqr.htmlUtilities = pqr.htmlUtilities || {}; //General DOM maniplating and such mostly using jquery 
-pqr.bindevents = pqr.bindevents || {}; //Any event binding should be done here if possible 
-pqr.propertiesFormatter = pqr.propertiesFormatter || {}; //Functions to properly format various ascpets of the molecules  
-pqr.threeDMole = pqr.threeDMole || {}; //Everything relating to 3dmol FILE: pqr.threedmol.js
-pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin 
-
-$(document).ready(function() {
-
-	//All Pages
-	pqr.htmlUtilities.toolTipOptIn();
-
-
-	pqr.htmlUtilities.fontSizeChanger(0); //Restore previous values 
-	pqr.bindevents.fontSizeChanger("#reducefont", "#increasefont", "#defaultfont");
-	// pqr.typeahead.activate("#header-molecule-search");
-	pqr.bindevents.moleculeSearch('#nav-molecule-search-group');
-	pqr.htmlUtilities.checkWebGL();
-
-
-	//Home Page
-	if ($("#main").hasClass("page-home")) {
-		// pqr.typeahead.activate("#molec-query");
-
-		pqr.threeDMole.initializeViewers();
-		pqr.bindevents.moleculeReset('#reset-molecule');
-		pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
-
-		pqr.bindevents.moleculeSearch('#molecule-search-group');
-		if (pqr.debug) console.log("Home Page");
-	}
-
-	//Browse Page
-	if ($("#main").hasClass("page-browse")) {
-		// pqr.typeahead.activate("#molec-query");
-		pqr.htmlUtilities.toolTipOptIn();
-		pqr.qrgen.addQRCode("#qrcode", "www.google.com");
-		pqr.bindevents.moleculeSearch('#molecule-search-group');
-
-		if (pqr.debug) console.log("Browse Page");
-	}
-
-
-	//Molecule Page
-	if ($("#main").hasClass("page-molecule")) {
-		// pqr.threeDMole
-		pqr.threeDMole.initializeViewers();
-
-		pqr.htmlUtilities.updateMoleculeView();
-
-		//Binding 
-		pqr.bindevents.moleculeSizeChanger();
-		pqr.bindevents.moleculeStyleChanger();
-		pqr.bindevents.moleculeReset('#reset-molecule');
-		pqr.bindevents.moleculeToggleSurface('#surfaceSwitch');
-		pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
-
-		//2 = Default Value 
-		pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
-
-	}
-
-
-});;
-/**
- * 	Binds the fontSize changer events to the fontSizeChanger function in
- *		pqr.htmlUtilities
- * 	@param {string} reduceSelector the selector for the reduce fontsize
- * 	@param {string} increaseSelector the selector for the increase fontsize
- */
-pqr.bindevents.fontSizeChanger = function(reduceSelector, increaseSelector, defaultSelctor) {
-	$(reduceSelector).on("click", function(event) {
-		event.preventDefault();
-		pqr.htmlUtilities.fontSizeChanger(-1); //-1 = reduce
-	});
-
-	$(increaseSelector).on("click", function(event) {
-		event.preventDefault();
-		pqr.htmlUtilities.fontSizeChanger(1); //1 = increase
-	});
-
-	$(defaultSelctor).on("click", function(event) {
-		event.preventDefault();
-		pqr.htmlUtilities.fontSizeChanger(2); //2 = Default Value 
-	});
-}
-
-/**
- * 	Binds the Molecule size changer events between simple and detailed by
- * 	adding classes.
- *
- */
-pqr.bindevents.moleculeSizeChanger = function() {
-	$("#simpleView").on("click", function(event) {
-		event.preventDefault();
-		$("#molecule-details table .detailed").addClass("hidden");
-		if (Modernizr.localstorage) localStorage.setItem("moleculeLayout", "simple");
-	});
-
-	$("#detailedView").on("click", function(event) {
-		event.preventDefault();
-		$("#molecule-details table .detailed").removeClass("hidden");
-		if (Modernizr.localstorage) localStorage.setItem("moleculeLayout", "detailed");
-	});
-}
-
-/**
- * Bind the buttons to change the style of the molecule between spheres, lines or
- * crosses.
- */
-pqr.bindevents.moleculeStyleChanger = function() {
-
-	if ($('#changeStyleSphere').length) {
-		$('#changeStyleSphere').on("click", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.changeStyle("sphere");
-			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
-		});
-	}
-
-
-	if ($('#changeStyleLine').length) {
-		$('#changeStyleLine').on("click", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.changeStyle("line");
-			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
-		});
-	}
-
-	if ($('#changeStyleCross').length) {
-		$('#changeStyleCross').on("click", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.changeStyle("cross");
-			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
-
-		});
-	}
-
-	if ($('#changeStyleStick').length) {
-		$('#changeStyleStick').on("click", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.changeStyle("stick");
-			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
-		});
-	}
-}
-
-/**
- * Binds the molecule surface changer to the proper button
- */
-pqr.bindevents.moleculeSurfaceChanger = function() {
-	if ($('#surfaceSwitch').length) {
-		$('#surfaceSwitch').on("click", function(event) {
-			event.preventDefault();
-
-			pqr.threeDMole.changeSurface(true);
-			if (Modernizr.localstorage) localStorage.setItem("moleculeViewerSurface", "true");
-		});
-	}
-
-}
-
-/**
- * Bind click events to each search option and redirect to the browse/<query> url
- * 
- * @param  {String} selector javascript seletor of the input group
- */
-pqr.bindevents.moleculeSearch = function(selector) {
-	
-	var finder = " .search-options li a"; //Location of the clickable elements from the root selector 
-	var button_selector = selector + finder; 
-
-	if ($(button_selector).length) {
-		if (pqr.debug) console.log("selctor exists");
-		$(button_selector).on("click", {selector: selector}, function(event) {
-			//Get the type of serach based on the id of the button pressed 
-			var type = $(this).attr('data-search-type');
-
-			//Get the query from the root selector then the .query class contains the actual query
-			var query = $(selector + ' .query').val();
-			if(pqr.debug) console.log("Query from " + selector + " was =" + query); 
-
-			//Get the base URL and redirect 
-			if (!location.origin) location.origin = location.protocol + "//" + location.host;
-			window.location = location.origin + "/browse/" + encodeURIComponent(query) + "?type=" + encodeURIComponent(type); 
-
-			event.preventDefault();
-		});
-	}
-}
 
 /**
  * Reset the zoom level of the viewer
@@ -21017,7 +20966,90 @@ pqr.bindevents.moleculeReset = function(selector) {
 			pqr.threeDMole.resetView();
 		});
 	}
-}
+};
+
+/**
+ * Toggle rotation of the current viewer
+ *
+ * @param  {String} selector an html selector to bind to a toggle rotation button
+ */
+pqr.bindevents.moleculeToggleRotation = function(selector) {
+	if ($(selector).length) {
+		$(selector).on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.toggleRotation();
+			var toggle = $(this).children();
+
+			if (toggle.hasClass('fa-toggle-on')) {
+				toggle.removeClass('fa-toggle-on');
+				toggle.addClass('fa-toggle-off');
+			} else {
+				toggle.removeClass('fa-toggle-off');
+				toggle.addClass('fa-toggle-on');
+			}
+		});
+	}
+};
+
+/**
+ *	Handle the clickng of detailed and simple layouts and update
+ * 	the local storate to reflect the changes. 
+ * 	
+ */
+pqr.bindevents.propertiesViewerHandler = function() {
+	$("#simpleView").on("click", function(event) {
+		event.preventDefault();
+		$("#molecule-details table .detailed").addClass("hidden");
+		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "simple");
+	});
+
+	$("#detailedView").on("click", function(event) {
+		event.preventDefault();
+		$("#molecule-details table .detailed").removeClass("hidden");
+		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "detailed");
+	});
+};
+
+
+/**
+ * Binds the buttons to change the style of the molecule beeweten spheres, lines or crosses. 
+ * 
+ */
+pqr.bindevents.moleculeStyleChanger = function() {
+
+	if ($('#changeStyleSphere').length) {
+		$('#changeStyleSphere').on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.changeStyle("sphere");
+			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
+		});
+	}
+
+
+	if ($('#changeStyleLine').length) {
+		$('#changeStyleLine').on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.changeStyle("line");
+			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
+		});
+	}
+
+	if ($('#changeStyleCross').length) {
+		$('#changeStyleCross').on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.changeStyle("cross");
+			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
+		});
+	}
+
+	if ($('#changeStyleStick').length) {
+		$('#changeStyleStick').on("click", function(event) {
+			event.preventDefault();
+			pqr.threeDMole.changeStyle("stick");
+			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
+		});
+	}
+};
 
 /**
  * Deactive the surface of the viewer.
@@ -21034,227 +21066,92 @@ pqr.bindevents.moleculeToggleSurface = function(selector) {
 			$(this).html('Surface Removed');
 		});
 	}
-}
+};;
+/**
+ * @fileoverview Initialize the app on document ready. Should be the last file. 
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
+ */
 
 /**
- * Toggle rotation of the current viewer
- *
- * @param  {String} selector an html selector to bind to a toggle rotation button
+ * Initialize the app on document ready
+ *  
  */
-pqr.bindevents.moleculeToggleRotation = function(selector) {
-	if ($(selector).length) {
-		$(selector).on("click", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.toggleRotation();
-			var toggle = $(this).children();
-			
-			if (toggle.hasClass('fa-toggle-on')) {
-				toggle.removeClass('fa-toggle-on');
-				toggle.addClass('fa-toggle-off');
-			} else {
-				toggle.removeClass('fa-toggle-off');
-				toggle.addClass('fa-toggle-on');
-			}
-		});
-	}
-};
-/** 
- *	Adds the click events to the links and checks local storage
- *	to maintain previous set layout. 
- *	
- */
-pqr.htmlUtilities.updateMoleculeView = function() {
+pqr.init = function() {
+	$(document).ready(function() {
+		if(pqr.debug) console.log("Loading PQR Web App...."); 
 
-	//Check the localStorage for the moleculeLayout using modernizer
-	if (Modernizr.localstorage) {
+		//All page initializer 
+		pqr.checkFeatures(); 
+		bootstrapUtilities.FullToolTipOptIn();
+		pqr.htmlUtilities.initFontSize(); 
+		pqr.bindevents.bindFontSwitchers();
 
-		//Update the 
-		if (localStorage.getItem("moleculeLayout") == "detailed") $("#molecule-details table .detailed").removeClass("hidden"); //Probably not necessary 
-		else $("#molecule-details table .detailed").addClass("hidden");
-
-		//Update style of the viewer
-		var moleculeLayoutStyle = localStorage.getItem("moleculeViewerlayout");
-		if (false) { //Not yet working 
-			if (moleculeLayoutStyle = "spheres") {
-				pqr.threeDMole.changeStyle("sphere");
-			} else if (moleculeViewerlayout = "lines") {
-				pqr.threeDMole.changeStyle("line");
-			} else if (moleculeViewerlayout = "sticks") {
-				pqr.threeDMole.changeStyle("stick");
-			} else if (moleculeViewerlayout == "crosses") {
-				pqr.threeDMole.changeStyle("cross");
-			}
+		if ($("#main").hasClass("page-home")) {
+			pqr.threeDMole.initViewers();
+			pqr.bindevents.moleculeReset('#reset-molecule');
+			pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
 		}
 
-	}
 
-}
+		if ($("#main").hasClass("page-molecule")) {
+			pqr.threeDMole.initViewers();
+			pqr.htmlUtilities.updatePropertiesViewer();
 
-/** 
- *	Get the INCHI key. Used to generate the QR Code
- *	
- *	
- */
-pqr.htmlUtilities.getINCHIKey = function() {
-	var key = "";
-	if ($(".molecule-inchikey").length) {
-		var key = $(".molecule-inchikey").children().next().html();
-	}
-	return $.trim(key)
-}
+			pqr.bindevents.propertiesViewerHandler();
+			pqr.bindevents.moleculeStyleChanger();
+			pqr.bindevents.moleculeReset('#reset-molecule');
+			pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
+			pqr.bindevents.moleculeToggleSurface('#surfaceSwitch');
+			pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
 
-/**
- *	Activate bootstrap tooltips. 
- *		-Only do this on pages that tooltips exist for performance 
- */
-pqr.htmlUtilities.toolTipOptIn = function() {
-	$('[data-toggle="tooltip"]').on("click", function(event) {
-		event.preventDefault();
+		}
+
+		if(pqr.debug) console.log("Finished loading PQR Web App!"); 
 	});
-	$(function() {
-		$('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips 
-	});
-
-}
-
+}();
+;
 /**
- * Activate bootstrap popovers plugin
- * 	-Limit this to only pages that require popovers 
+ * @fileoverview QR code related functions  
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
  */
-pqr.htmlUtilities.popOverOptIn = function() {
-	$('[data-toggle="popover"]').popover();
-}
 
-
-/**
- * 	Allows you to increase or decrease the body font size  
- *		Only should be used when pixels are the unit. 
- * 	@param {int} type either 0 = "init", 1 = "increase", -1 = "decrease", 2 = default
- * 	
- */
-pqr.htmlUtilities.fontSizeChanger = function(type) {
-	var DEFAULTSIZE = "16px";
-	var localstore = false; //Is localstorage avaiable 
-	var currentBaseSize, newBaseSize;
-
-	if (Modernizr.localstorage) localstore = true;
-
-	if (type == 0) { //Initizliaze by restoring the users settings  
-		//Check the localStorage for the value 
-		if (localstore) {
-			if (localStorage.getItem("baseFontSize") !== null) { //If set
-				newBaseSize = localStorage.getItem("baseFontSize"); //Store the whole value e.g. = "14px" 
-			}
-		}
-	} else {
-		currentBaseSize = $("body").css("font-size");
-		if (type == 1) { //Increasing font
-			newBaseSize = (parseInt(currentBaseSize) + 2).toString() + "px"; //Add two and concat "px"
-		} else if (type == -1) { //Decreasing font
-			if (parseInt(currentBaseSize) >= 2) {
-				newBaseSize = (parseInt(currentBaseSize) - 2).toString() + "px"; //Subtract two and concat "px"
-			}
-		} else if (type == 2) { //Default Value 
-			newBaseSize = DEFAULTSIZE;
-		}
-	}
-
-
-	//Change the fontsize of the body tag
-	$("body").css("font-size", newBaseSize);
-
-	//Add the new value to the localstorage if avaiable 
-	if (localstore) {
-		localStorage.setItem("baseFontSize", newBaseSize)
-	}
-}
-
-/**
- *	Returns true if webGl is avaiable otherwise false
- *
- *	@return boolean 
- */
-pqr.htmlUtilities.checkWebGL = function() {
-	if (!Modernizr.webgl) {
-		var msg = "<div class='alert alert-danger' role='alert'> <strong> <a href='http://get.webgl.org/'>WebGL</a> </strong> is not supported on your device! </div";
-		$("#main").prepend(msg);
-
-		//Currently sending them to get web gl page 
-		window.location.replace("https://get.webgl.org/");
-	} else {
-		if (pqr.debug) console.log("WebGL Supported");
-	}
-
+pqr.qrgen = { //Config
+    element: null,
+    default_options: {
+        render: 'image',
+        minVersion: 1,
+        maxVersion: 5,
+        ecLevel: 'M',
+        fill: '#000',
+        mode: 2, //Show the label 
+        label: 'PQR',
+        fontname: '"Source Sans Pro","Helvetica Neue",Helvetica, Arial,sans-serif',
+        fontcolor: '#f16b1d' //Primary Orange Color
+    }
 };
-/**
- *	Large list of keywords that typeahead is going to attempt to get 
- *	it will contain all of the words 
- *
- */
-;
-//Namespaces
-var pqr = pqr || {};
-pqr.htmlUtilities = pqr.htmlUtilities || {}; //General DOM maniplating and such mostly using jquery 
-pqr.bindevents = pqr.bindevents || {}; //Any event binding should be done here if possible 
-pqr.propertiesFormatter = pqr.propertiesFormatter || {}; //Functions to properly format various ascpets of the molecules  
-pqr.threeDMole = pqr.threeDMole || {}; //Everything relating to 3dmol FILE: pqr.threedmol.js
-pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin 
-
-pqr.qrgen = pqr.qrgen || {
-	element: null, 
-	default_options: {
-		render: 'image', 
-		minVersion: 1,
-    	maxVersion: 5, 
-    	ecLevel: 'M',
-    	fill: '#000', 
-    	mode: 2, //Show the label 
-    	label: 'PQR',
-    	fontname: '"Source Sans Pro","Helvetica Neue",Helvetica, Arial,sans-serif',
-    	fontcolor: '#f16b1d'//Primary Orange 
-	}
-}; //QR Code generator 
 
 /**
- *	Add a QR code to a html element with a jquery selector
- *		-Currently creates an image AND a canvas
+ * Add a QR code to a html element with a jquery selector
+ * @param {String} selector The selector the element to place the generated QR Code
+ * @param {String} url      The end of the URL to send to
  */
-pqr.qrgen.addQRCode = function(selector, url){
-	//Properly set the origin 
-	if (!location.origin) location.origin = location.protocol + "//" + location.host;
-	
-	if($(selector).length){
-		this.default_options.text = location.origin + "/mol/" + url;
-		$(selector).qrcode(this.default_options); 
-	}
-	else{
-		console.log("Couldn't find the selector", selector); 
-	}
+pqr.qrgen.addQRCode = function(selector, url) {
+    var baseURL = htmlutilities.getRootURL();
 
-
-// 	new QRCode(document.getElementById(selector), {
-
-//     text: location.origin + "/mol/" + url,
-//     colorDark : "#f16b1d", //Primary Orange
-//     colorLight : "#fff"
-// });  
-
-
-
-
-
-
-}
-
-
-;
-//Namespaces
-var pqr = pqr || {};
-
-pqr.htmlUtilities = pqr.htmlUtilities || {}; //General DOM maniplating and such mostly using jquery 
-pqr.bindevents = pqr.bindevents || {}; //Any event binding should be done here if possible 
-pqr.propertiesFormatter = pqr.propertiesFormatter || {}; //Functions to properly format various ascpets of the molecules  
-pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin 
+    if ($(selector).length) {
+        this.default_options.text = baseURL + "/mol/" + url;
+        $(selector).qrcode(this.default_options);
+    } else {
+        console.log("Couldn't find the selector", selector);
+    }
+};;
+/**
+ * @fileoverview PQR related 3Dmol manipulations
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
+ */
 
 pqr.threeDMole = {
 	all_viewers: [],
@@ -21269,21 +21166,20 @@ pqr.threeDMole = {
 	showSurface: true
 };
 
-
 /**
  * Update viewers
  *
  * @param  {Object} config optional config to override default settings
  */
-pqr.threeDMole.initializeViewers = function(config) {
+pqr.threeDMole.initViewers = function(config) {
 	this.all_viewers = $3Dmol.viewers;
 
 	$.each(this.all_viewers, function(index, viewer) {
 		pqr.threeDMole.clearBackgrounds(viewer);
 		// pqr.threeDMole.rotate(viewer);
 	});
-
 };
+
 
 /**
  * Set all of the background color alpha channel to 0. Cannot be done
@@ -21297,7 +21193,7 @@ pqr.threeDMole.clearBackgrounds = function(viewer) {
 	viewer.render();
 
 	if (pqr.debug) console.log("Clearing Background: ", viewer);
-}
+};
 
 /**
  * Rotate a molecule viewer
@@ -21314,7 +21210,7 @@ pqr.threeDMole.rotate = function(viewer) {
 	this.rotation_timers.push(rotation_timers);
 
 	if (pqr.debug) console.log("Adding Rotation: ", viewer);
-}
+};
 
 /**
  * Toggle the rotation of the viewer. Only hanldes one viewer.
@@ -21331,7 +21227,7 @@ pqr.threeDMole.toggleRotation = function(viewer) {
 		if (pqr.debug) console.log("Rotation timer is null. Restarting rotation");
 		this.rotate(this.all_viewers[0]);
 	}
-}
+};
 
 /**
  * Update the surface color to the correct value 
@@ -21340,7 +21236,7 @@ pqr.threeDMole.toggleRotation = function(viewer) {
  */
 pqr.threeDMole.setSurfaceColor = function(viewer) {
 
-}
+};
 
 /**
  * Toggle the surface of this viewer.
@@ -21353,7 +21249,7 @@ pqr.threeDMole.toggleSurface = function(viewer) {
 	if (pqr.debug) console.log("Toggling the surface of ", viewer);
 
 	this.removeSurface(viewer);
-}
+};
 
 /**
  * Remove all of the surfaces for this viewere
@@ -21364,7 +21260,7 @@ pqr.threeDMole.removeSurface = function(viewer) {
 	viewer.removeAllSurfaces();
 	viewer.render();
 	if (pqr.debug) console.log("Surface Removed");
-}
+};
 
 /**
  * Reset the viewer to the default zoom level
@@ -21373,7 +21269,7 @@ pqr.threeDMole.removeSurface = function(viewer) {
  */
 pqr.threeDMole.resetView = function(viewer) {
 	pqr.threeDMole.all_viewers[0].zoomTo();
-}
+};
 
 
 /**
@@ -21405,59 +21301,98 @@ pqr.threeDMole.changeStyle = function(newStyle) {
 		viewer.render();
 	}
 };;
+/**
+ * @fileoverview PQR related misc JS functions 
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
+ */
+pqr.htmlUtilities = {};
 
-//Namespaces
-var pqr = pqr || {};
-pqr.htmlUtilities = pqr.htmlUtilities || {}; //General DOM maniplating and such mostly using jquery 
-pqr.bindevents = pqr.bindevents || {}; //Any event binding should be done here if possible 
-pqr.propertiesFormatter = pqr.propertiesFormatter || {}; //Functions to properly format various ascpets of the molecules  
-pqr.threeDMole = pqr.threeDMole || {}; //Everything relating to 3dmol FILE: pqr.threedmol.js
-pqr.typeahead = pqr.typeahead || {}; //Everything relating to typeahead plugin 
-
-pqr.typeahead.data  = ['Methyl 2-Hydroxybenzoate', '3-methylbutyl acetate', 'ethyl heptanoate', 'octyl acetate', 'ethyl formate', 'ethyl pentanoate', 'pentyl acetate', 'ethyl nonanoate'];
-
-pqr.typeahead.substringmatcher = function(strs) {
-  return function findMatches(q, cb) {
-    var matches, substrRegex;
- 
-    // an array that will be populated with substring matches
-    matches = [];
- 
-    // regex used to determine if a string contains the substring `q`
-    substrRegex = new RegExp(q, 'i');
- 
-    // iterate through the pool of strings and for any string that
-    // contains the substring `q`, add it to the `matches` array
-    $.each(strs, function(i, str) {
-      if (substrRegex.test(str)) {
-        // the typeahead jQuery plugin expects suggestions to a
-        // JavaScript object, refer to typeahead docs for more info
-        matches.push({ value: str });
-      }
-    });
- 
-    cb(matches);
-  };
+/**
+ * Get the INCHI key. Used to generate the QR Code
+ * 
+ * @return {String} The INCHI key value in the properties table
+ */
+pqr.htmlUtilities.getINCHIKey = function() {
+	var key = "";
+	if ($(".molecule-inchikey").length) {
+		var key = $(".molecule-inchikey").children().next().html();
+	}
+	return $.trim(key)
 };
 
-pqr.typeahead.activateNoBs = function(inputSelector){
-
-  $(inputSelector).typeahead({
-    hint: true,
-    highlight: true,
-    minLength: 2
-  },
-  {
-    name: 'molecules',
-    displayKey: 'value',
-      source: pqr.typeahead.substringmatcher(pqr.typeahead.data)
-  });
-
-  $('.tt-query').css('background-color','#fff');
-
+/**
+ * Attempt to restore the users last font size.
+ * 
+ * @return {String} Font size 
+ */
+pqr.htmlUtilities.initFontSize = function() {
+	accessibility.changeFontSize(pqr.htmlUtilities.getCurrentFontSize());
 };
 
-//Bootstrap-typeahead
-pqr.typeahead.activate = function(inputSelector){
-  $(inputSelector).typeahead({source: pqr.typeahead.data});
+/**
+ * Increase or decrease the base font size.
+ * 
+ * @param {int} type either 1 = increase, 0 = default, -1 = decrease 
+ */
+pqr.htmlUtilities.updateFont = function(type) {
+	if (type === -1) {
+		var newBaseSize = accessibility.fontSizeChanger(-1, pqr.htmlUtilities.getCurrentFontSize());
+	} else if (type === 0) {
+		var newBaseSize = accessibility.changeFontSize(accessibility.defaultFontSize);
+	} else if (type === 1) {
+		var newBaseSize = accessibility.fontSizeChanger(1, pqr.htmlUtilities.getCurrentFontSize());
+	}
+
+	if (pqr.features.localstorage) localStorage.setItem("baseFontSize", newBaseSize);
+};
+
+
+/**
+ * Get the current font size 
+ * @return {String} The current font size 
+ */
+pqr.htmlUtilities.getCurrentFontSize = function() {
+	if (pqr.features.localstorage) {
+		var fontSize = localStorage.getItem("baseFontSize");
+		if (fontSize !== null) {
+			return fontSize;
+		} else {
+			localStorage.setItem("baseFontSize", accessibility.defaultFontSize);
+			return accessibility.defaultFontSize;
+		}
+	} else {
+		return accessibility.defaultFontSize;
+	}
+}
+
+
+/**
+ * If there is no WebGL redirect the user. 
+ */
+pqr.htmlUtilities.redirectNoWebGL = function() {
+	if (!pqr.features.webGL) {
+		var msg = "<div class='alert alert-danger' role='alert'> <strong> <a href='http://get.webgl.org/'>WebGL</a> </strong> is not supported on your device! </div";
+		$("#main").prepend(msg);
+
+		//Currently sending them to get web gl page 
+		window.location.replace("https://get.webgl.org/");
+	} else {
+		if (pqr.debug) console.log("WebGL Supported");
+	}
+}
+
+
+/**
+ * Updates the property viewer if there was a pervious value in localstorage 
+ * 
+ */
+pqr.htmlUtilities.updatePropertiesViewer = function() {
+	if (pqr.features.localstorage) {
+		if (localStorage.getItem("moleculeLayout") == "detailed") {
+			$("#molecule-details table .detailed").removeClass("hidden"); //Probably not necessary 
+		} else {
+			$("#molecule-details table .detailed").addClass("hidden");
+		}
+	}
 };
