@@ -21,7 +21,7 @@ import json
 import markdown
 from datetime import datetime
 
-cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
+cache = Cache(pqr, config={'CACHE_TYPE': 'redis'})
 cache.init_app(pqr)
 
 redirect_table = {}
@@ -33,7 +33,7 @@ WEEKLY_MOL_NAME = None
 @pqr.route('/')
 @pqr.route('/home')
 @pqr.route('/home/')
-# @cache.cached(timeout=86400)
+@cache.cached(timeout=86400)
 def index():
     page = {'id': "page-home"}
     articles = [os.path.splitext(article)[0]
@@ -48,7 +48,7 @@ def index():
 @pqr.route('/mol/<key>/')
 @pqr.route('/mol/')  # if no key lets default to the molecule of the day
 @pqr.route('/mol')  # if no key lets default to the molecule of the day
-# @cache.cached(timeout=86400)
+@cache.cached(timeout=43200)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
