@@ -3,7 +3,7 @@
     <div class="row" id="splash-search">
         <div class="jumbotron text-center">
             <h2>Welcome to Pitt Quantum Repository!</h2>
-            <p>Search for <span class='font-red'>{{ "{:,}".format(amount_mol) }}</span> molecules by name, InChI, category, etc. </p>
+            <p>Search for <span class='font-red'>{{ "{:,}".format(amount_mol) }}</span> molecules by name, InChIKey, category, etc. </p>
                 {% import '/macros/forms.html' as forms %} {{ forms.banner_search('btn-default', 'molecule-search-group') }}
         </div>
     </div>
