@@ -73,7 +73,11 @@ pqr/secret_key.py
 pqr/secret_config.py
 
 # Random files that pop out of nowhere
-output.txt
+*output.txt
 
 # Data
 pqr/static/data/**
+
+#Node Modules - Including Grunt
+node_modules/
+
