@@ -20,6 +20,7 @@ import os
 import json
 import markdown
 from datetime import datetime
+from difflib import SequenceMatcher as SM
 
 cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
 cache.init_app(pqr)
@@ -176,6 +177,9 @@ def browse(page_num="-1"):
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
             results.append(i)
+    print i.keys()
+
+    results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
 
     # Split the reults array into chunks of 10 each for search pagination
     tempArr = list(chunks(results, 10))
@@ -311,6 +315,13 @@ def send_email(form):
                              name=form['name'], email=form['email'], subject=form['subject'], message=form['message']),
     )
     flash("Message has been sent!", 'sent')
+
+def similar(x, query):
+    if x in query:
+	score = 10 + SM(None, x, query).ratio()
+    else:
+        score = SM(None, x, query).ratio()
+    return score
 
 if __name__ == '__main__':
     pqr.run()
