@@ -1,7 +1,9 @@
 Flask
 pymongo
 Flask-Cache
-tornado
 flask-mandrill
 Flask-Markdown
 redis
+uwsgi
+
+

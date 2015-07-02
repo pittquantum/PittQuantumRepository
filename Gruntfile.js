@@ -5,9 +5,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-postcss');
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('prod', ['less', 'concat:css', 'postcss', 'uglify']);
-    grunt.registerTask('dev', ['less', 'concat:css', 'postcss']);
-
+    grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss', 'uglify']);
+    grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss']);
     grunt.initConfig({
         //Less Comilation Options 
         less: {
@@ -24,9 +23,10 @@ module.exports = function(grunt) {
         postcss: {
             options: {
                 map: {
-                    inline: false,
-                    annotation: 'assets/css/maps/'
+                    inline: false, // save all sourcemaps as separate files...
+                    annotation: 'assets/css/maps' // ...to the specified directory
                 },
+                // safe: true,
                 processors: [
                     require('pixrem')(), // add fallbacks for rem units
                     require('autoprefixer-core')({
@@ -37,9 +37,8 @@ module.exports = function(grunt) {
                 ]
             },
             dist: {
-            	
-            	files: {
-                    "pqr/static/css/pqr.min.css": ['assets/css/stylesheet.css']
+                files: {
+                    "pqr/static/css/pqr.min.css": ['assets/css/pqr.css']
                 }
             }
         },
@@ -57,12 +56,12 @@ module.exports = function(grunt) {
             css: {
                 // 
                 src: ['assets/css/bootstrap.css', 'assets/css/**/*.css'],
-                // the location of the resulting JS file
-                dest: 'pqr/static/css/style.css'
+                // the location of the resulting CSS file
+                dest: 'assets/css/pqr.css'
             }
         },
         uglify: {
-            options: { 
+            options: {
                 // define a string to put between each file in the concatenated output
                 banner: '/*! PQR JavaScript Combined and minified on <%= grunt.template.today("dd-mm-yyyy") %> */\n'
             },
@@ -73,7 +72,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-
         watch: {
             styles: {
                 files: ['assets/less/**/*.less'],

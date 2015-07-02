@@ -2389,7 +2389,7 @@ bootstrapUtilities.FullToolTipOptIn = function() {
  * @author JoshJRogan@gmail.com (Josh Rogan)
  */
 
-var htmlutilities = htmlutilities || {}; 
+var htmlutilities = htmlutilities || {};
 
 /**
  * Get the base URL of the current page. If you are on 'http://melwood.jcubedworld.com/baseball/?type=dog'
@@ -2397,13 +2397,29 @@ var htmlutilities = htmlutilities || {};
  * 
  * @return {String} The base URL of the current page including the protocal. 
  */
-htmlutilities.getRootURL = function(){
+htmlutilities.getRootURL = function() {
 	if (!location.origin) location.origin = location.protocol + "//" + location.host;
-	return location.origin; 
+	return location.origin;
 };
 
+/**
+ * When using anchors have smooth scrolling
+ * 
+ */
+htmlutilities.smoothScrollingAnchors = function() {
+	$('a[href^="#"]').on('click', function(e) {
+		e.preventDefault();
 
-;
+		var target = this.hash;
+		var $target = $(target);
+
+		$('html, body').stop().animate({
+			'scrollTop': $target.offset().top
+		}, 900, 'swing', function() {
+			window.location.hash = target;
+		});
+	});
+};;
 /**
  * @fileoverview Initialize all JS for the website. Must be the 
  * first file concated in the pqr folder. 

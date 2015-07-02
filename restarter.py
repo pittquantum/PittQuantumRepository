@@ -38,4 +38,5 @@ if pid != -1:
 	print "Trying to kill process with pid = " + pid
 	os.kill(int(pid), signal.SIGKILL)
 
-call(AFTER)
+if len(sys.argv) == 3:
+	call(AFTER)
