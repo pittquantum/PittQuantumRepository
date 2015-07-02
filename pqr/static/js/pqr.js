@@ -2429,7 +2429,7 @@ htmlutilities.smoothScrollingAnchors = function() {
  */
 
 var pqr = pqr || {
-	debug: true 
+	debug: false 
 };
 
 pqr.features = { //Default to false 
