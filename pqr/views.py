@@ -317,11 +317,15 @@ def send_email(form):
     flash("Message has been sent!", 'sent')
 
 def similar(x, query):
-    if x in query:
-	score = 10 + SM(None, x, query).ratio()
+    if isinstance(x, list):
+        score_list = map(lambda y: similar(y, query), x)
+        return sum(score_list)
     else:
-        score = SM(None, x, query).ratio()
-    return score
+        if x in query:
+	    score = 10 + SM(None, x, query).ratio()
+        else:
+            score = SM(None, x, query).ratio()
+        return score
 
 if __name__ == '__main__':
     pqr.run()
