@@ -10,7 +10,7 @@ pqr = Flask(__name__)
 # Frozen-Flask
 pqr.config['FREEZER_DESTINATION'] = os.path.dirname(
     os.path.abspath(__file__)) + '/../build'
-pqr.config['MANDRILL_API_KEY'] = 'NtXopXkrJBX6ikLlWywo2g'
+pqr.config['MANDRILL_API_KEY'] = 'NtXopXkrJBX6ikLlWywo2g' #move to hidden config file
 
 
 # Function to easily find your assets
@@ -45,13 +45,21 @@ pqr.jinja_env.globals['csrf_token'] = generate_csrf_token
 
 ##########################################################################
 # Custom Filters
-
+print "Adding Filters"
 # Auto Subscript any sequence of digits
 def subnumbers_filter(input):
     return re.sub("\d+", lambda val: "<sub>" + val.group(0) + "</sub>", input)
 
+#Aubscript digits after ~characters removing the ~character
+def supnumbers_iupac_filter(input):
+	# return re.sub("\d+", lambda val: "<sup>" + val.group(0) + "</sup>", input)
+	return re.sub("~(.*?)~", lambda val: "<sup>" + val.group(0).replace('~', ' ') + "</sup>", input)
+	# return input
+
 # Adding the filters to the environment
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
+pqr.jinja_env.filters['supnumbersiupac'] = supnumbers_iupac_filter
+print "Done Adding Filters"
 ##########################################################################
 
 from pqr import views
