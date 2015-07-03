@@ -72,6 +72,7 @@ venv/
 pqr/secret_key.py
 pqr/secret_config.py
 pqr.ini
+ngnix.conf
 
 # Random files that pop out of nowhere
 *output.txt
