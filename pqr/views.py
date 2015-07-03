@@ -22,8 +22,8 @@ import markdown
 from datetime import datetime
 from difflib import SequenceMatcher as SM
 
-cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
-cache.init_app(pqr)
+# cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
+# cache.init_app(pqr)
 
 redirect_table = {}
 amount_mol = None
