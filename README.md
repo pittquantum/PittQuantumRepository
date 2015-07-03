@@ -44,6 +44,19 @@ The command `grunt dev` will perform the same tasks as watch.
 ### Production
 Since minifying the js takes additional time and makes it harder to debug this is only done for production. The command `grunt prod` will re-run all of the compilation and minifies for less/css but it will also run the uglify task to minify the js. If debug mode is off in Flask it will automatically use the **pqr.min.js** otherwise it will use **pqr.js**. 
 
+## API Calls
+
+### /api/json/\{INCHIKEY\}  
+**_GET_**  
+Returns a JSON file with mimetype `application/json` containing the data for the molecule indicated by `\{INCHIKEY\}`  
+
+### /api/mol2/\{INCHIKEY\}
+**_GET_**
+Returns a MOL2 file with mimetype `chemical/mol2` containing the structure for the molecule indicated by `\{INCHIKEY\}`
+
+### /api/inchikeys
+**_GET_**
+Returns a plain-text response with mimetype `text/plain` containing every single InChIKey PQR has.
 
 
 

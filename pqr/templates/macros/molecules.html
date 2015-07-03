@@ -167,7 +167,7 @@
                             {%if jsonDict["pubchem_cid"] %}
                             <tr class="molecule-data detailed">
                                 <td>JSON<sup><a href="#" data-container="body" data-toggle="tooltip" title="Get the data for this molecule in JSON format"><i class="fa fa-question"></i></a></sup></td>
-                                <td> <a href="{{ url_for('data', key=jsonDict['inchikey']) }}"> Get JSON data </a></td>
+                                <td> <a href="{{ url_for('jsonAPI', key=jsonDict['inchikey']) }}"> Get JSON data </a></td>
                             </tr>
                             {%endif%} {%if jsonDict["tags"] %}
                             <tr class="molecule-tags">

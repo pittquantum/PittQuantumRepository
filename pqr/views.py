@@ -1,7 +1,7 @@
 #!./venv/bin/python
 
 # Flask specific imports
-from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request, Markup
+from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request, Markup, Response
 from flask.ext.cache import Cache
 
 # mandrill emailing
@@ -13,7 +13,7 @@ from pymongo import MongoClient
 # PQR specific imports
 from pqr import pqr, secret_config
 
-from settings import APP_JSON, APP_ARTICLES
+from settings import APP_JSON, APP_MOL2, APP_ARTICLES
 
 # Python library imports
 import os
@@ -219,9 +219,9 @@ def browse(page_num="-1"):
     return render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
 
 
-@pqr.route('/data')
-@pqr.route('/data/<key>')
-def data(key):
+@pqr.route('/api/json')
+@pqr.route('/api/json/<key>')
+def jsonAPI(key):
 
     # Open the relevant JSON file
     with open(os.path.join(APP_JSON, key[:2] + '/' + key + '.json')) as j:
@@ -230,6 +230,29 @@ def data(key):
     # Return a JSON request with proper MIME type
     return jsonify(json_dict)
 
+@pqr.route('/api/mol2')
+@pqr.route('/api/mol2/<key>')
+def molAPI(key):
+
+    mol2 = None
+    # Open the relevant mol2 file
+    with open(os.path.join(APP_MOL2, key[:2] + '/' + key + '.mol2')) as m:
+        mol2 = m
+
+    return Response(mol2, mimetype='chemical/mol2')
+
+@pqr.route('/api/inchikeys')
+@pqr.route('/api/inchikeys/')
+def inchiAPI():
+
+    root = APP_JSON
+    file_list = []
+
+    for folder, subs, files in os.walk(root):
+        for fn in files:
+            file_list.append(fn.replace('.json', ''))
+
+    return Response("\n".join(file_list), mimetype='text/plain')
 ##########################################################################
 @pqr.route('/contact', methods=['POST', 'GET'])
 @pqr.route('/contact/', methods=['POST', 'GET'])
