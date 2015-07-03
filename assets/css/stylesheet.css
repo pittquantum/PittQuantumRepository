@@ -58,7 +58,7 @@
  *
  */
 h1 {
-  font-size: 32.800000000000004px;
+  font-size: 32.8px;
   /* Small devices (tablets, 768px and up) */
   /* Medium devices (desktops, 992px and up) */
   /* Large devices (large desktops, 1200px and up) */
@@ -70,7 +70,7 @@ h1 {
 }
 @media (min-width: 992px) {
   h1 {
-    font-size: 38.949999999999996px;
+    font-size: 38.95px;
   }
 }
 @media (min-width: 1200px) {
@@ -79,7 +79,7 @@ h1 {
   }
 }
 h2 {
-  font-size: 27.200000000000003px;
+  font-size: 27.2px;
   /* Small devices (tablets, 768px and up) */
   /* Medium devices (desktops, 992px and up) */
   /* Large devices (large desktops, 1200px and up) */
@@ -100,7 +100,7 @@ h2 {
   }
 }
 h3 {
-  font-size: 22.400000000000002px;
+  font-size: 22.4px;
   /* Small devices (tablets, 768px and up) */
   /* Medium devices (desktops, 992px and up) */
   /* Large devices (large desktops, 1200px and up) */
@@ -112,7 +112,7 @@ h3 {
 }
 @media (min-width: 992px) {
   h3 {
-    font-size: 26.599999999999998px;
+    font-size: 26.6px;
   }
 }
 @media (min-width: 1200px) {
