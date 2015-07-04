@@ -50,17 +50,14 @@ Since minifying the js takes additional time and makes it harder to debug this i
 **_GET_**  
 Returns a JSON file with mimetype `application/json` containing the data for the molecule indicated by `\{INCHIKEY\}`  
 
-### /api/mol2/\{INCHIKEY\}
+### /api/mol2/\{INCHIKEY\}  
 **_GET_**
 Returns a MOL2 file with mimetype `chemical/mol2` containing the structure for the molecule indicated by `\{INCHIKEY\}`
 
-### /api/inchikeys
+### /api/inchikeys  
 **_GET_**
 Returns a plain-text response with mimetype `text/plain` containing every single InChIKey PQR has.
 
-
-
-
-
-
-
+### /api/status  
+**_GET_**  
+Returns a JSON file with information about the application
