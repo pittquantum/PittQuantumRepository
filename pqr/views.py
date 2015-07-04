@@ -180,7 +180,9 @@ def browse(page_num="-1"):
     print i.keys()
 
     results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
-
+    
+    if len(results) == 1:
+        return redirect(url_for('molecule', key=results[0]["inchikey"]))
     # Split the reults array into chunks of 10 each for search pagination
     tempArr = list(chunks(results, 10))
 
