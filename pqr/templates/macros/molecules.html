@@ -73,7 +73,7 @@
                             {%endif%} {%if jsonDict["iupac_name"]%}
                             <tr class="molecule-iupac-name">
                                 <td>IUPAC Name<sup><a href="#" data-container="body" data-toggle="tooltip" title="The standard name of this molecule"><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ jsonDict["iupac_name"].title() }}</td>
+                                <td>{{ jsonDict["iupac_name"]|title|supnumbersiupac|safe|lower }}</td>
                             </tr>
                             {%endif%} {%if jsonDict["molecular mass"]%}
                             <tr class="molecule-molecular-mass">
@@ -175,7 +175,7 @@
                                 <td>
                                     {% for i in jsonDict["tags"] %}
                                     <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
-                                    <a href="/browse/?query={{i|urlencode}}&amp;type=keyword">
+                                    <a href="/browse/?query={{i|urlencode}}&amp;type=tag&amp;type=keyword">
                                         <span class="label label-primary">{{ i }}</span>
                                     </a>
                                     <!-- </a> -->

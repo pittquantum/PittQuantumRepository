@@ -180,7 +180,11 @@ def browse(page_num="-1"):
     print i.keys()
 
     results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
-
+    
+    # If there is only one result, show that molecule page directly
+    if len(results) == 1:
+        return redirect(url_for('molecule', key=results[0]["inchikey"]))
+    
     # Split the reults array into chunks of 10 each for search pagination
     tempArr = list(chunks(results, 10))
 
@@ -218,6 +222,19 @@ def browse(page_num="-1"):
 
     return render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
 
+@pqr.route('/api/status')
+@pqr.route('/api/status/')
+def getStatus():
+    import os.path, time
+    stuff_to_print = {}
+
+    git_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".git/")
+    data_path = os.path.join(os.path.dirname(__file__), "static/data/")
+    stuff_to_print['last_server_update'] = time.ctime(os.path.getmtime(git_path))
+    stuff_to_print['last_data_update'] = time.ctime(os.path.getmtime(data_path))
+    stuff_to_print['amount_of_molecules'] = amount_mol
+
+    return jsonify(stuff_to_print)
 
 @pqr.route('/api/json')
 @pqr.route('/api/json/<key>')
@@ -239,8 +256,10 @@ def molAPI(key):
     with open(os.path.join(APP_MOL2, key[:2] + '/' + key + '.mol2')) as m:
         mol2 = m
 
+    # Return a MOL2 request with the proper MIME type
     return Response(mol2, mimetype='chemical/mol2')
 
+# Return a webpage with a list of all the InChIKeys
 @pqr.route('/api/inchikeys')
 @pqr.route('/api/inchikeys/')
 def inchiAPI():
