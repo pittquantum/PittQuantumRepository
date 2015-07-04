@@ -177,7 +177,6 @@ def browse(page_num="-1"):
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
             results.append(i)
-    print i.keys()
 
     results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
     
