@@ -181,7 +181,8 @@ def browse(page_num="-1"):
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
             results.append(i)
-    print i.keys()
+    
+    #print i.keys()
     
     # Find lightest molecule to normalize mass-based search
     lightest = 1e12
@@ -199,6 +200,7 @@ def browse(page_num="-1"):
     #return string
 
     results = sorted(results, key=lambda x: similar(x[searchType], x['formula'], lightest, str(query)), reverse=True)
+    #results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
     
     # If there is only one result, show that molecule page directly
     if len(results) == 1:

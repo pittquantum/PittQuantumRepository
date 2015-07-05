@@ -45,7 +45,6 @@ pqr.jinja_env.globals['csrf_token'] = generate_csrf_token
 
 ##########################################################################
 # Custom Filters
-print "Adding Filters"
 # Auto Subscript any sequence of digits
 def subnumbers_filter(input):
     return re.sub("\d+", lambda val: "<sub>" + val.group(0) + "</sub>", input)
@@ -59,7 +58,7 @@ def supnumbers_iupac_filter(input):
 # Adding the filters to the environment
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
 pqr.jinja_env.filters['supnumbersiupac'] = supnumbers_iupac_filter
-print "Done Adding Filters"
+assert pqr.jinja_env.filters['subnumbers']
 ##########################################################################
 
 from pqr import views
