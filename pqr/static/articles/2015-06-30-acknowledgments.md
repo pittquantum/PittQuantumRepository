@@ -15,17 +15,17 @@ PQR has received financial support from multiple sources, including:
 Molecules in the PQR are systematically generated, but also come from many open databases, including:
 
 * **[NIH PubChem](https://pubchem.ncbi.nlm.nih.gov/)** - Including all compounds on the [CID-MeSH](ftp://anonymous@ftp.ncbi.nlm.nih.gov/pubchem/Compound/Extras/CID-MeSH) list
-* **[St. Olaf Cool Molecules](http://www.stolaf.edu/depts/chemistry/mo/struc/)**
-* **[Protein Databank Ligand Expo](http://ligand-expo.rcsb.org/ld-download.html)**
 * **[MMFF94 Validation Set](http://ccl.net/cca/data/MMFF94/)**
+* **[Protein Databank Ligand Expo](http://ligand-expo.rcsb.org/ld-download.html)**
+* **[St. Olaf Cool Molecules](http://www.stolaf.edu/depts/chemistry/mo/struc/)**
 
 Multiple programs and web services are used in processing and displaying the molecules, including:
 
-* **[Open Babel](http://openbabel.org/)** - For batch processing and cheminformatics
+* **[3Dmol.js](http://3dmol.csb.pitt.edu/)** - To visualize molecular data
 * **[MOPAC 2012](http://openmopac.net/)** - For PM7 semiempirical quantum calculations
+* **[Open Babel](http://openbabel.org/)** - For batch processing and cheminformatics
 * **[OpenEye Lexichem TK](http://www.eyesopen.com/lexichem-tk)** - For systematic naming
 * **[EZID](http://ezid.cdlib.org)** - To generate Digital Object Identifiers (DOIs)
-* **[3Dmol.js](http://3dmol.csb.pitt.edu/)** - To visualize molecular data
 
 The backend is largely written in [Python](https://python.org/) using several key modules:
 * **[ChemSpiPy](http://chemspipy.readthedocs.org/)** - To access the [ChemSpider](http://chemspider.com/) webservice
