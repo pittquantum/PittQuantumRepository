@@ -22,6 +22,9 @@ import markdown
 from datetime import datetime
 from difflib import SequenceMatcher as SM
 
+# Regular expressions for chemical formula parsing
+import re
+
 # cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
 # cache.init_app(pqr)
 
@@ -142,7 +145,7 @@ def browse(page_num="-1"):
     db = client.test
 
     
-    # return searchType
+    #return searchType
 
     # Make sure the index exists
     # temp = db.molecules.ensure_index([
@@ -172,13 +175,32 @@ def browse(page_num="-1"):
         i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
         results.append(i)
 
+
     if len(results) == 0:
         cursor = db.molecules.find({"$text": {"$search": str(query)}})
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
             results.append(i)
+    
+    #print i.keys()
+    
+    # Find lightest molecule to normalize mass-based search
+    lightest = 1e12
+    for x in results:
+        formula = x["formula"]
+        mass = formula2mass(formula)
+        if mass < lightest:
+            lightest = mass
+    #   Debug code:
+    #    name = x["name"]
+    #    string += "Name = " + name + "<br>"
+    #    for key in x:
+    #        string += key + ":   " + str(x[key]) + "<br>"
+    #    string += "Mass = " + str(mass) + "<br><br>"
+    #return string
 
-    results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
+    results = sorted(results, key=lambda x: similar(x[searchType], x['formula'], lightest, str(query)), reverse=True)
+    #results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
     
     # If there is only one result, show that molecule page directly
     if len(results) == 1:
@@ -357,16 +379,77 @@ def send_email(form):
     )
     flash("Message has been sent!", 'sent')
 
-def similar(x, query):
+def similar(x, f, m0, query):
     if isinstance(x, list):
-        score_list = map(lambda y: similar(y, query), x)
+        score_list = map(lambda z: similar(z, f, m0, query), x)
         return sum(score_list)
     else:
-        if x in query:
-	    score = 10 + SM(None, x, query).ratio()
+        #if x in query:
+        if query in x:
+	        score = 10 + SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity & mass
+	        #score = 10 + SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity
+	        #score = 10 + m0/formula2mass(f) # Sort by increasing mass
         else:
-            score = SM(None, x, query).ratio()
+            score = SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity & mass
+            #score = SM(None, x, query).ratio() # Sort by similarity
+            #score = m0/formula2mass(f) # Sort by increasing mass
         return score
+
+def formula2mass(f):
+    Masses = dict(H=1.01, He=4.00, Li=6.94, Be=9.01, B=10.81, C=12.01,
+                  N=14.01, O=16.00, F=19.00, Ne=20.18, Na=22.99, Mg=24.31,
+                  Al=26.98, Si=28.09, P=30.97, S=32.07, Cl=35.45, Ar=39.95,
+                  K=39.10, Ca=40.08, Sc=44.96, Ti=47.87, V=50.94, Cr=52.00,
+                  Mn=54.94, Fe=55.85, Co=58.93, Ni=58.69, Cu=63.55, Zn=65.39,
+                  Ga=69.72, Ge=72.61, As=74.92, Se=78.96, Br=79.90, Kr=83.80,
+                  Rb=85.47, Sr=87.62, Y=88.91, Zr=91.22, Nb=92.91, Mo=95.94,
+                  Tc=98.00, Ru=101.07, Rh=102.91, Pd=106.42, Ag=107.87,
+                  Cd=112.41, In=114.82, Sn=118.71, Sb=121.76, Te=127.60,
+                  I=126.90, Xe=131.29, Cs=132.91, Ba=137.33, La=138.91,
+                  Ce=140.12, Pr=140.91, Nd=144.24, Pm=145.00, Sm=150.36,
+                  Eu=151.96, Gd=157.25, Tb=158.93, Dy=162.50, Ho=164.93,
+                  Er=167.26, Tm=168.93, Yb=173.04, Lu=174.97, Hf=178.49,
+                  Ta=180.95, W=183.84, Re=186.21, Os=190.23, Ir=192.22,
+                  Pt=195.08, Au=196.97, Hg=200.59, Tl=204.38, Pb=207.2,
+                  Bi=208.98, Po=209.00, At=210.00, Rn=222.00, Fr=223.00,
+                  Ra=226.00, Ac=227.00, Th=232.04, Pa=231.04, U=238.03,
+                  Np=237.00, Pu=244.00, Am=243.00, Cm=247.00, Bk=247.00,
+                  Cf=251.00, Es=252.00, Fm=257.00, Md=258.00, No=259.00,
+                  Lr=262.00, Rf=261.00, Db=262.00, Sg=266.00, Bh=264.00,
+                  Hs=269.00, Mt=268.00)
+
+    # Makes an array that counts the number of each element
+    atom = re.findall('[A-Z][a-z]?|[0-9]+', f)
+    consistent = False
+    #string = ""
+    while not consistent: 
+        ok = True
+        for i in range(0, len(atom), 2):
+            try:
+                num = int(atom[i+1])
+                #string += "  i = " + str(i) + "   atom[i] = " + atom[i] + "   atom[i+1] = " + str(num) + "<br>"
+            except:
+                #string += "  exception caught <br>"
+                ok = False
+                atom.insert(i+1, 1)
+                #string += "    i = " + str(i) + "   atom[i] = " + str(atom[i]) + "   atom[i+1] = " + str(atom[i+1]) + "<br>"
+                break
+        consistent = ok        
+   
+    mass = 1e-6
+    for i in range(0, len(atom), 2):
+        #string += "  m = Masses[" + str(atom[i]) + "] <br>"
+        #string += "  n = " + str(atom[i+1]) + " <br>"
+        try:
+          m = Masses[atom[i]] 
+          n = float(atom[i+1])
+          mass += n * m
+        except:
+            #return string
+            continue
+
+    #return string
+    return mass
 
 if __name__ == '__main__':
     pqr.run()
