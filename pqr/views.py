@@ -40,8 +40,8 @@ WEEKLY_MOL_NAME = None
 # @cache.cached(timeout=86400)
 def index():
     page = {'id': "page-home"}
-    articles = [os.path.splitext(article)[0]
-                for article in next(os.walk(APP_ARTICLES))[2]]
+    articles = sorted([os.path.splitext(article)[0]
+                for article in next(os.walk(APP_ARTICLES))[2]], reverse=True)
     week_mol=(MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
     return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, week_mol=week_mol, week_mol_name=WEEKLY_MOL_NAME)
