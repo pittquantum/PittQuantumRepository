@@ -91,11 +91,7 @@
                                 <td>{{ '%8.2f' % jsonDict["pm7"]["dipoleMoment"] }} &plusmn; 1.08 D</td>
                             </tr>
                             {%endif%}
-                            <tr class="molecule-doi hidden">
-                                <td>DOI<sup><a href="#" data-container="body" data-toggle="tooltip" title="Digital Object Identifier"><i class="fa fa-question"></i></a></sup></td>
-                                <td><a href="#"> dx.doi.org/10.1234/pqr-mlfhjehsliiphl-uhfffaoysa-n</a></td>
-                            </tr>
-                            
+                                                       
                             <!-- Begin Detailed Section -->
                             {%if jsonDict["synonyms"] %}
                             <tr class="molecule-alt-names detailed">
@@ -164,6 +160,11 @@
                                 <td>QR Code<sup><a href="#" data-container="body" data-toggle="tooltip" title="Generate a QR code for this molecule"><i class="fa fa-question"></i></a></sup></td>
                                 <td> <a href="#" data-toggle="modal" data-target="#qrcodemodal"> Generate QR Code </a></td>
                             </tr>
+                             <tr class="molecule-doi">
+                                <td>DOI<sup><a href="#" data-container="body" data-toggle="tooltip" title="Digital Object Identifier"><i class="fa fa-question"></i></a></sup></td>
+                                <td><a href="http://doi.org/{{ jsonDict["doi"] }}">DOI</a></td>
+                            </tr>
+
                             {%if jsonDict["pubchem_cid"] %}
                             <tr class="molecule-data detailed">
                                 <td>JSON<sup><a href="#" data-container="body" data-toggle="tooltip" title="Get the data for this molecule in JSON format"><i class="fa fa-question"></i></a></sup></td>
