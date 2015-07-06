@@ -182,26 +182,12 @@ def browse(page_num="-1"):
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
             results.append(i)
     
-    #print i.keys()
-    
     # Find lightest molecule to normalize mass-based search
-    lightest = 1e12
-    for x in results:
-        formula = x["formula"]
-        mass = formula2mass(formula)
-        if mass < lightest:
-            lightest = mass
-    #   Debug code:
-    #    name = x["name"]
-    #    string += "Name = " + name + "<br>"
-    #    for key in x:
-    #        string += key + ":   " + str(x[key]) + "<br>"
-    #    string += "Mass = " + str(mass) + "<br><br>"
-    #return string
+    temp = sorted(map(lambda x: x["formula"], results), key=lambda x: formula2mass(x))
+    lightest = formula2mass(temp[0]) if temp else 1e12
 
     results = sorted(results, key=lambda x: similar(x[searchType], x['formula'], lightest, str(query)), reverse=True)
-    #results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
-    
+
     # If there is only one result, show that molecule page directly
     if len(results) == 1:
         return redirect(url_for('molecule', key=results[0]["inchikey"]))
@@ -428,7 +414,7 @@ def formula2mass(f):
             try:
                 num = int(atom[i+1])
                 #string += "  i = " + str(i) + "   atom[i] = " + atom[i] + "   atom[i+1] = " + str(num) + "<br>"
-            except:
+            except (IndexError, ValueError) as e:
                 #string += "  exception caught <br>"
                 ok = False
                 atom.insert(i+1, 1)
@@ -444,7 +430,7 @@ def formula2mass(f):
           m = Masses[atom[i]] 
           n = float(atom[i+1])
           mass += n * m
-        except:
+        except (KeyError, ValueError) as e:
             #return string
             continue
 
