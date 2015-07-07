@@ -5,5 +5,3 @@ flask-mandrill
 Flask-Markdown
 redis
 uwsgi
-
-
