@@ -53,15 +53,15 @@ Since minifying the js takes additional time and makes it harder to debug this i
 
 ### /api/browse/\{QUERY\}/\{SEARCHTYPE\}  
 **_GET_**  
-Returns a JSON file with mimetype `application/json` containing all the results for `\{QUERY\}` given `\{SEARCHTYPE\}`. Valid SEARCTYPES are `name`, `formula`, `inchi`, `tag`, or `synonym`.
+Returns a JSON file with mimetype `application/json` containing all the results for `QUERY` given `SEARCHTYPE`. Valid SEARCHTYPEs are `name`, `formula`, `inchi`, `tag`, or `synonym`.  
 
 ### /api/json/\{INCHIKEY\}  
 **_GET_**  
-Returns a JSON file with mimetype `application/json` containing the data for the molecule indicated by `\{INCHIKEY\}`  
+Returns a JSON file with mimetype `application/json` containing the data for the molecule indicated by `INCHIKEY`  
 
 ### /api/mol2/\{INCHIKEY\}  
 **_GET_**  
-Returns a MOL2 file with mimetype `chemical/mol2` containing the structure for the molecule indicated by `\{INCHIKEY\}`
+Returns a MOL2 file with mimetype `chemical/mol2` containing the structure for the molecule indicated by `INCHIKEY`  
 
 ### /api/inchikeys  
 **_GET_**
