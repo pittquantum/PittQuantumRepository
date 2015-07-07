@@ -114,8 +114,6 @@ def news(title="-1"):
 ##########################################################################
 @pqr.route('/browse')
 @pqr.route('/browse/')
-@pqr.route('/browse/')
-@pqr.route('/browse/')
 @pqr.route('/browse/<page_num>')
 @pqr.route('/browse/<page_num>/')
 def browse(page_num="-1"):
@@ -228,6 +226,59 @@ def browse(page_num="-1"):
             active = page_num
 
     return render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
+
+#################################################
+
+@pqr.route('/api/browse/<query>/<searchType>')
+def browseAPI(query, searchType):
+
+    # Set the query string
+    query = query.lower()
+
+    # Initialize the Mongo client
+    client = MongoClient()
+    db = client.test
+
+    results = []
+
+    # Do a text search for the passed in query
+    if searchType == 'formula':
+        query = query.upper()
+    elif searchType == 'tag':
+        searchType = 'tags'
+    elif searchType == 'synonym':
+        searchType = 'synonym'
+    elif searchType == 'inchi':
+        searchType = 'inchikey'
+        query = query.upper()
+    else:
+        searchType = 'name'
+
+    cursor = db.molecules.find({str(searchType): str(query)})
+
+    # Append all dicts in the cursor to a results array
+    for i in cursor:
+        i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
+        results.append(i)
+
+    if len(results) == 0:
+        cursor = db.molecules.find({"$text": {"$search": str(query)}})
+        for i in cursor:
+            i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
+            results.append(i)
+    
+    # Find lightest molecule to normalize mass-based search
+    # temp = sorted(map(lambda x: x["formula"], results), key=lambda x: formula2mass(x))
+    # lightest = formula2mass(temp[0]) if temp else 1e12
+
+    # results = sorted(results, key=lambda x: similar(x[searchType], x['formula'], lightest, str(query)), reverse=True)
+
+    for x in results:
+        x["last_updated"] = x["last_updated"].isoformat()
+	x.pop("_id", None)
+        x.pop("properties_id", None)
+
+    return Response(json.dumps(results), mimetype='application/json')
 
 @pqr.route('/api/status')
 @pqr.route('/api/status/')
