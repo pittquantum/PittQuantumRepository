@@ -51,6 +51,10 @@ Since minifying the js takes additional time and makes it harder to debug this i
 
 ## API Calls
 
+### /api/weeekly  
+**_GET_**  
+Returns a plain-text response with mimetype `text/plain` containing all previous molecules of the week.  
+
 ### /api/browse/\{QUERY\}/\{SEARCHTYPE\}  
 **_GET_**  
 Returns a JSON file with mimetype `application/json` containing all the results for `QUERY` given `SEARCHTYPE`. Valid SEARCHTYPEs are `name`, `formula`, `inchi`, `tag`, or `synonym`.  
