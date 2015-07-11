@@ -40,8 +40,8 @@ WEEKLY_MOL_NAME = None
 # @cache.cached(timeout=86400)
 def index():
     page = {'id': "page-home"}
-    articles = [os.path.splitext(article)[0]
-                for article in next(os.walk(APP_ARTICLES))[2]]
+    articles = sorted([os.path.splitext(article)[0]
+                for article in next(os.walk(APP_ARTICLES))[2]], reverse=True)
     week_mol=(MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
     return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, week_mol=week_mol, week_mol_name=WEEKLY_MOL_NAME)
@@ -114,8 +114,6 @@ def news(title="-1"):
 ##########################################################################
 @pqr.route('/browse')
 @pqr.route('/browse/')
-@pqr.route('/browse/')
-@pqr.route('/browse/')
 @pqr.route('/browse/<page_num>')
 @pqr.route('/browse/<page_num>/')
 def browse(page_num="-1"):
@@ -168,7 +166,7 @@ def browse(page_num="-1"):
     elif searchType == 'inchi':
         searchType = 'inchikey'
         query = query.upper()
-    cursor = db.molecules.find({str(searchType): str(query)})
+    cursor = db.molecules.find({str(searchType): str(query)}).limit(500)
 
     # Append all dicts in the cursor to a results array
     for i in cursor:
@@ -182,26 +180,12 @@ def browse(page_num="-1"):
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
             results.append(i)
     
-    #print i.keys()
-    
     # Find lightest molecule to normalize mass-based search
-    lightest = 1e12
-    for x in results:
-        formula = x["formula"]
-        mass = formula2mass(formula)
-        if mass < lightest:
-            lightest = mass
-    #   Debug code:
-    #    name = x["name"]
-    #    string += "Name = " + name + "<br>"
-    #    for key in x:
-    #        string += key + ":   " + str(x[key]) + "<br>"
-    #    string += "Mass = " + str(mass) + "<br><br>"
-    #return string
+    temp = sorted(map(lambda x: x["formula"], results), key=lambda x: formula2mass(x))
+    lightest = formula2mass(temp[0]) if temp else 1e12
 
     results = sorted(results, key=lambda x: similar(x[searchType], x['formula'], lightest, str(query)), reverse=True)
-    #results = sorted(results, key=lambda x: similar(x[searchType], str(query)), reverse=True)
-    
+
     # If there is only one result, show that molecule page directly
     if len(results) == 1:
         return redirect(url_for('molecule', key=results[0]["inchikey"]))
@@ -242,6 +226,59 @@ def browse(page_num="-1"):
             active = page_num
 
     return render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
+
+#################################################
+
+@pqr.route('/api/browse/<query>/<searchType>')
+def browseAPI(query, searchType):
+
+    # Set the query string
+    query = query.lower()
+
+    # Initialize the Mongo client
+    client = MongoClient()
+    db = client.test
+
+    results = []
+
+    # Do a text search for the passed in query
+    if searchType == 'formula':
+        query = query.upper()
+    elif searchType == 'tag':
+        searchType = 'tags'
+    elif searchType == 'synonym':
+        searchType = 'synonym'
+    elif searchType == 'inchi':
+        searchType = 'inchikey'
+        query = query.upper()
+    else:
+        searchType = 'name'
+
+    cursor = db.molecules.find({str(searchType): str(query)})
+
+    # Append all dicts in the cursor to a results array
+    for i in cursor:
+        i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
+        results.append(i)
+
+    if len(results) == 0:
+        cursor = db.molecules.find({"$text": {"$search": str(query)}})
+        for i in cursor:
+            i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
+            results.append(i)
+    
+    # Find lightest molecule to normalize mass-based search
+    # temp = sorted(map(lambda x: x["formula"], results), key=lambda x: formula2mass(x))
+    # lightest = formula2mass(temp[0]) if temp else 1e12
+
+    # results = sorted(results, key=lambda x: similar(x[searchType], x['formula'], lightest, str(query)), reverse=True)
+
+    for x in results:
+        x["last_updated"] = x["last_updated"].isoformat()
+	x.pop("_id", None)
+        x.pop("properties_id", None)
+
+    return Response(json.dumps(results), mimetype='application/json')
 
 @pqr.route('/api/status')
 @pqr.route('/api/status/')
@@ -428,7 +465,7 @@ def formula2mass(f):
             try:
                 num = int(atom[i+1])
                 #string += "  i = " + str(i) + "   atom[i] = " + atom[i] + "   atom[i+1] = " + str(num) + "<br>"
-            except:
+            except (IndexError, ValueError) as e:
                 #string += "  exception caught <br>"
                 ok = False
                 atom.insert(i+1, 1)
@@ -444,7 +481,7 @@ def formula2mass(f):
           m = Masses[atom[i]] 
           n = float(atom[i+1])
           mass += n * m
-        except:
+        except (KeyError, ValueError) as e:
             #return string
             continue
 
