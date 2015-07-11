@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://pqr.pitt.edu/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
     {% for page in pages %}
     <url>
-        <loc>{{page[0]|safe}}</loc>
+        <loc>http://pqr.pitt.edu/{{page[0]|safe}}</loc>
     </url>
     {% endfor %}
 </urlset>
