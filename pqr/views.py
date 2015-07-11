@@ -345,6 +345,18 @@ def contact():
         return render_template("contact.html", page=page)
 
 ##########################################################################
+@pqr.route('/sitemap.xml', methods=['GET'])
+def sitemap():
+      pages=[]
+
+      for rule in pqr.url_map.iter_rules():
+        if "GET" in rule.methods and len(rule.arguments)==0:
+            pages.append([rule.rule])
+
+      return render_template('sitemap.html', pages=pages)
+
+##########################################################################
+##########################################################################
 # Properly handle the favicon
 
 
