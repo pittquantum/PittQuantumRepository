@@ -230,7 +230,7 @@ def browse(page_num="-1"):
 #################################################
 
 @pqr.route('/api/weekly')
-def weeklyAPI():
+def weekly_molAPI():
     import datetime
     # Gets todays date, then rewinds it to the last Sunday
     # (if today is Sunday it sticks with today)
