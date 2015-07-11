@@ -34,6 +34,8 @@ MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 WEEKLY_MOL_NAME = None
 
 ##########################################################################
+
+
 @pqr.route('/')
 @pqr.route('/home')
 @pqr.route('/home/')
@@ -41,8 +43,8 @@ WEEKLY_MOL_NAME = None
 def index():
     page = {'id': "page-home"}
     articles = sorted([os.path.splitext(article)[0]
-                for article in next(os.walk(APP_ARTICLES))[2]], reverse=True)
-    week_mol=(MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
+                       for article in next(os.walk(APP_ARTICLES))[2]], reverse=True)
+    week_mol = (MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
     return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, week_mol=week_mol, week_mol_name=WEEKLY_MOL_NAME)
 
@@ -112,6 +114,8 @@ def news(title="-1"):
     return render_template("news.html", output=output, page=page)
 
 ##########################################################################
+
+
 @pqr.route('/browse')
 @pqr.route('/browse/')
 @pqr.route('/browse/<page_num>')
@@ -129,7 +133,8 @@ def browse(page_num="-1"):
     # Set the query string
     query = request.args.get('query', '').lower()
 
-    #this is the get variable type accepted values name,inchi, keyword, formula
+    # this is the get variable type accepted values name,inchi, keyword,
+    # formula
     searchType = request.args.get('type', '')
 
     # If there was no query searched for, flash and go to home
@@ -142,8 +147,7 @@ def browse(page_num="-1"):
     client = MongoClient()
     db = client.test
 
-    
-    #return searchType
+    # return searchType
 
     # Make sure the index exists
     # temp = db.molecules.ensure_index([
@@ -173,23 +177,24 @@ def browse(page_num="-1"):
         i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
         results.append(i)
 
-
     if len(results) == 0:
         cursor = db.molecules.find({"$text": {"$search": str(query)}})
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
             results.append(i)
-    
+
     # Find lightest molecule to normalize mass-based search
-    temp = sorted(map(lambda x: x["formula"], results), key=lambda x: formula2mass(x))
+    temp = sorted(
+        map(lambda x: x["formula"], results), key=lambda x: formula2mass(x))
     lightest = formula2mass(temp[0]) if temp else 1e12
 
-    results = sorted(results, key=lambda x: similar(x[searchType], x['formula'], lightest, str(query)), reverse=True)
+    results = sorted(results, key=lambda x: similar(
+        x[searchType], x['formula'], lightest, str(query)), reverse=True)
 
     # If there is only one result, show that molecule page directly
     if len(results) == 1:
         return redirect(url_for('molecule', key=results[0]["inchikey"]))
-    
+
     # Split the reults array into chunks of 10 each for search pagination
     tempArr = list(chunks(results, 10))
 
@@ -229,6 +234,7 @@ def browse(page_num="-1"):
 
 #################################################
 
+
 @pqr.route('/api/weekly')
 def weekly_molAPI():
     import datetime
@@ -239,15 +245,17 @@ def weekly_molAPI():
     # Also, this thread is run once per day
     return_list = []
     today = datetime.date.toordinal(datetime.datetime.now())
-    sunday = today - ( today % 7)
+    sunday = today - (today % 7)
     sunday = datetime.date.fromordinal(sunday)
     sunday = datetime.date.isoformat(sunday)
     with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
         for line in molfile:
             if line.strip().split(",")[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
-                return_list.append(line.strip().split(",")[1] + "," + line.strip().split(",")[2].title())
+                return_list.append(
+                    line.strip().split(",")[1] + "," + line.strip().split(",")[2].title())
             if line.strip().split(",")[0] > datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
                 return Response("\n".join(return_list), mimetype='text/plain')
+
 
 @pqr.route('/api/browse/<query>/<searchType>')
 def browseAPI(query, searchType):
@@ -286,33 +294,40 @@ def browseAPI(query, searchType):
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
             results.append(i)
-    
+
     # Find lightest molecule to normalize mass-based search
     # temp = sorted(map(lambda x: x["formula"], results), key=lambda x: formula2mass(x))
     # lightest = formula2mass(temp[0]) if temp else 1e12
 
-    # results = sorted(results, key=lambda x: similar(x[searchType], x['formula'], lightest, str(query)), reverse=True)
+    # results = sorted(results, key=lambda x: similar(x[searchType],
+    # x['formula'], lightest, str(query)), reverse=True)
 
     for x in results:
         x["last_updated"] = x["last_updated"].isoformat()
-	x.pop("_id", None)
+        x.pop("_id", None)
         x.pop("properties_id", None)
 
     return Response(json.dumps(results), mimetype='application/json')
 
+
 @pqr.route('/api/status')
 @pqr.route('/api/status/')
 def getStatus():
-    import os.path, time
+    import os.path
+    import time
     stuff_to_print = {}
 
-    git_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".git/")
+    git_path = os.path.join(
+        os.path.dirname(os.path.dirname(__file__)), ".git/")
     data_path = os.path.join(os.path.dirname(__file__), "static/data/")
-    stuff_to_print['last_server_update'] = time.ctime(os.path.getmtime(git_path))
-    stuff_to_print['last_data_update'] = time.ctime(os.path.getmtime(data_path))
+    stuff_to_print['last_server_update'] = time.ctime(
+        os.path.getmtime(git_path))
+    stuff_to_print['last_data_update'] = time.ctime(
+        os.path.getmtime(data_path))
     stuff_to_print['amount_of_molecules'] = amount_mol
 
     return jsonify(stuff_to_print)
+
 
 @pqr.route('/api/json')
 @pqr.route('/api/json/<key>')
@@ -324,6 +339,7 @@ def jsonAPI(key):
 
     # Return a JSON request with proper MIME type
     return jsonify(json_dict)
+
 
 @pqr.route('/api/mol2')
 @pqr.route('/api/mol2/<key>')
@@ -338,6 +354,8 @@ def molAPI(key):
     return Response(mol2, mimetype='chemical/mol2')
 
 # Return a webpage with a list of all the InChIKeys
+
+
 @pqr.route('/api/inchikeys')
 @pqr.route('/api/inchikeys/')
 def inchiAPI():
@@ -351,6 +369,8 @@ def inchiAPI():
 
     return Response("\n".join(file_list), mimetype='text/plain')
 ##########################################################################
+
+
 @pqr.route('/contact', methods=['POST', 'GET'])
 @pqr.route('/contact/', methods=['POST', 'GET'])
 # @cache.cached(timeout=259200)
@@ -365,17 +385,33 @@ def contact():
         return render_template("contact.html", page=page)
 
 ##########################################################################
-@pqr.route('/sitemap.xml', methods=['GET'])
-def sitemap():
-      pages=[]
-
-      for rule in pqr.url_map.iter_rules():
-        if "GET" in rule.methods and len(rule.arguments)==0:
-            pages.append([rule.rule])
-
-      return render_template('sitemap.html', pages=pages)
+@pqr.route('/sitemap/<index>', methods=['GET'])
+@pqr.route('/sitemap/<index>/', methods=['GET'])
+def sitemap(index):
+    pages = []
+    if index == "0":
+        for rule in pqr.url_map.iter_rules():
+            if "GET" in rule.methods and len(rule.arguments) == 0:
+                pages.append([rule.rule])
+        return render_template('sitemap.html', pages=pages, inchi=False)
+    else:
+        list_of_keys = getINCHIkeys(index)
+        if(list_of_keys):
+            return render_template('sitemap.html', pages=list_of_keys, inchi=True)
+        else:
+            return "FALSE"
 
 ##########################################################################
+@pqr.route('/sitemap.xml', methods=['GET'])
+@pqr.route('/sitemap.xml/', methods=['GET'])
+def sitemapindex():
+    directories = getINCHIfolders()
+    return render_template('sitemapIndex.html', moldirs=directories)
+##########################################################################
+#
+##########################################################################
+#
+#
 ##########################################################################
 # Properly handle the favicon
 
@@ -387,20 +423,23 @@ def favicon():
 
 ##########################################################################
 
+
 @pqr.route('/3spooky5me')
 def clear_cache():
-	if(not pqr.debug):
-	    return "You're not supposed to be here o_0"
-	global cache
-	cache.clear()
-	cache = Cache(config={'CACHE_TYPE': 'null'})
-	cache.init_app(pqr)
-	print cache.config
-	print pqr.debug
-	flash('Cache cleared')
-	return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
+    if(not pqr.debug):
+        return "You're not supposed to be here o_0"
+    global cache
+    cache.clear()
+    cache = Cache(config={'CACHE_TYPE': 'null'})
+    cache.init_app(pqr)
+    print cache.config
+    print pqr.debug
+    flash('Cache cleared')
+    return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
 ##########################################################################
+
+
 @pqr.errorhandler(404)
 def page_not_found(e):
     flash("Page not found", 404)
@@ -436,33 +475,41 @@ def validate_contact_us(form):
         return False
 
 # Send an email using mandrill
+
+
 def send_email(form):
     mandrill = Mandrill(pqr)
     mandrill.send_email(
         from_email='webmaster@pqr.pitt.edu',
         subject=form['subject'],
-        to=[{'email': pqr.config['DEFAULT_EMAIL']}, {'email': 'jjr76@pitt.edu'}],
-        text=form['subject'] + "\n" + "From: " + form['email'] + "\n" + form['message'],
+        to=[{'email': pqr.config['DEFAULT_EMAIL']},
+            {'email': 'jjr76@pitt.edu'}],
+        text=form['subject'] + "\n" + "From: " +
+        form['email'] + "\n" + form['message'],
         html=render_template("email/contact.html", date=datetime.now().strftime('%Y/%m/%d %H:%M:%S'),
                              name=form['name'], email=form['email'], subject=form['subject'], message=form['message']),
     )
     flash("Message has been sent!", 'sent')
+
 
 def similar(x, f, m0, query):
     if isinstance(x, list):
         score_list = map(lambda z: similar(z, f, m0, query), x)
         return sum(score_list)
     else:
-        #if x in query:
+        # if x in query:
         if query in x:
-	        score = 10 + SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity & mass
-	        #score = 10 + SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity
-	        #score = 10 + m0/formula2mass(f) # Sort by increasing mass
+            # Sort by similarity & mass
+            score = 10 + SM(None, x, query).ratio() + m0 / formula2mass(f)
+            # score = 10 + SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity
+            # score = 10 + m0/formula2mass(f) # Sort by increasing mass
         else:
-            score = SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity & mass
-            #score = SM(None, x, query).ratio() # Sort by similarity
-            #score = m0/formula2mass(f) # Sort by increasing mass
+            # Sort by similarity & mass
+            score = SM(None, x, query).ratio() + m0 / formula2mass(f)
+            # score = SM(None, x, query).ratio() # Sort by similarity
+            # score = m0/formula2mass(f) # Sort by increasing mass
         return score
+
 
 def formula2mass(f):
     Masses = dict(H=1.01, He=4.00, Li=6.94, Be=9.01, B=10.81, C=12.01,
@@ -490,35 +537,58 @@ def formula2mass(f):
     # Makes an array that counts the number of each element
     atom = re.findall('[A-Z][a-z]?|[0-9]+', f)
     consistent = False
-    #string = ""
-    while not consistent: 
+    # string = ""
+    while not consistent:
         ok = True
         for i in range(0, len(atom), 2):
             try:
-                num = int(atom[i+1])
-                #string += "  i = " + str(i) + "   atom[i] = " + atom[i] + "   atom[i+1] = " + str(num) + "<br>"
+                num = int(atom[i + 1])
+                # string += "  i = " + str(i) + "   atom[i] = " + atom[i] + "
+                # atom[i+1] = " + str(num) + "<br>"
             except (IndexError, ValueError) as e:
-                #string += "  exception caught <br>"
+                # string += "  exception caught <br>"
                 ok = False
-                atom.insert(i+1, 1)
-                #string += "    i = " + str(i) + "   atom[i] = " + str(atom[i]) + "   atom[i+1] = " + str(atom[i+1]) + "<br>"
+                atom.insert(i + 1, 1)
+                # string += "    i = " + str(i) + "   atom[i] = " +
+                # str(atom[i]) + "   atom[i+1] = " + str(atom[i+1]) + "<br>"
                 break
-        consistent = ok        
-   
+        consistent = ok
+
     mass = 1e-6
     for i in range(0, len(atom), 2):
-        #string += "  m = Masses[" + str(atom[i]) + "] <br>"
-        #string += "  n = " + str(atom[i+1]) + " <br>"
+        # string += "  m = Masses[" + str(atom[i]) + "] <br>"
+        # string += "  n = " + str(atom[i+1]) + " <br>"
         try:
-          m = Masses[atom[i]] 
-          n = float(atom[i+1])
-          mass += n * m
+            m = Masses[atom[i]]
+            n = float(atom[i + 1])
+            mass += n * m
         except (KeyError, ValueError) as e:
-            #return string
+            # return string
             continue
 
-    #return string
+    # return string
     return mass
+
+# Get a list of inchi keys for a specific folder (i.e folder AA)
+
+
+def getINCHIkeys(folder):
+    root = APP_JSON
+    file_list = []
+    path = root + folder.upper()
+    if(os.path.isdir(path)):
+        for root, dirs, files in os.walk(path):
+            for fn in files:
+                file_list.append(fn.replace('.json', ''))
+        return file_list
+    else:
+        return False
+
+
+def getINCHIfolders():
+    root = APP_JSON
+    return os.listdir(APP_JSON)
+
 
 if __name__ == '__main__':
     pqr.run()
