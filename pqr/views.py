@@ -229,6 +229,26 @@ def browse(page_num="-1"):
 
 #################################################
 
+@pqr.route('/api/weekly')
+def weeklyAPI():
+    import datetime
+    # Gets todays date, then rewinds it to the last Sunday
+    # (if today is Sunday it sticks with today)
+    # Then it compares each line in the file to Sunday's date
+    # And when it finds a match, it changes MOLECULE_OF_THE_WEEK in views
+    # Also, this thread is run once per day
+    return_list = []
+    today = datetime.date.toordinal(datetime.datetime.now())
+    sunday = today - ( today % 7)
+    sunday = datetime.date.fromordinal(sunday)
+    sunday = datetime.date.isoformat(sunday)
+    with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
+        for line in molfile:
+            if line.strip().split(",")[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
+                return_list.append(line.strip().split(",")[1] + "," + line.strip().split(",")[2].title())
+            if line.strip().split(",")[0] > datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
+                return Response("\n".join(return_list), mimetype='text/plain')
+
 @pqr.route('/api/browse/<query>/<searchType>')
 def browseAPI(query, searchType):
 
