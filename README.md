@@ -51,7 +51,7 @@ Since minifying the js takes additional time and makes it harder to debug this i
 
 ## API Calls
 
-### /api/weeekly  
+### /api/weekly  
 **_GET_**  
 Returns a plain-text response with mimetype `text/plain` containing all previous molecules of the week.  
 
