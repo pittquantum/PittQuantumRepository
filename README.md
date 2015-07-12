@@ -63,7 +63,7 @@ Returns a JSON file with mimetype `application/json` containing all the results 
 **_GET_**  
 Returns a JSON file with mimetype `application/json` containing the data for the molecule indicated by `INCHIKEY`  
 
-### /api/mol2/\{INCHIKEY\}  
+### /api/mol/\{INCHIKEY\}  
 **_GET_**  
 Returns a MOL2 file with mimetype `chemical/mol2` containing the structure for the molecule indicated by `INCHIKEY`  
 

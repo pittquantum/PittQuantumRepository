@@ -236,6 +236,7 @@ def browse(page_num="-1"):
 
 
 @pqr.route('/api/weekly')
+@pqr.route('/api/weekly/')
 def weekly_molAPI():
     import datetime
     # Gets todays date, then rewinds it to the last Sunday
@@ -258,6 +259,7 @@ def weekly_molAPI():
 
 
 @pqr.route('/api/browse/<query>/<searchType>')
+@pqr.route('/api/browse/<query>/<searchType>/')
 def browseAPI(query, searchType):
 
     # Set the query string
@@ -328,9 +330,8 @@ def getStatus():
 
     return jsonify(stuff_to_print)
 
-
-@pqr.route('/api/json')
 @pqr.route('/api/json/<key>')
+@pqr.route('/api/json/<key>/')
 def jsonAPI(key):
 
     # Open the relevant JSON file
@@ -341,17 +342,18 @@ def jsonAPI(key):
     return jsonify(json_dict)
 
 
-@pqr.route('/api/mol2')
-@pqr.route('/api/mol2/<key>')
+@pqr.route('/api/mol/<key>')
+@pqr.route('/api/mol/<key>/')
 def molAPI(key):
 
-    mol2 = None
+    mol2 = []
     # Open the relevant mol2 file
     with open(os.path.join(APP_MOL2, key[:2] + '/' + key + '.mol2')) as m:
-        mol2 = m
+        for line in m:
+            mol2.append(line)
 
     # Return a MOL2 request with the proper MIME type
-    return Response(mol2, mimetype='chemical/mol2')
+    return Response("\n".join(mol2), mimetype='chemical/mol2')
 
 # Return a webpage with a list of all the InChIKeys
 
