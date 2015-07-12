@@ -62,7 +62,7 @@
         <div class="row alert alert-success" role="alert">
             <div class="col-xs-12">
                 <strong>Search Successful!</strong>
-                <samp>Number Pages Returned: {{num_pages}} {% if active != -1 %} Current Page {{active}}{% endif %} Your Query: "{{query}}" </samp>
+                <samp>Number Pages Returned: {{typenum_pages}} {% if active != -1 %} Current Page {{active}}{% endif %} Your Query: "{{query}}" </samp>
             </div>
         </div>
         {% for result in results %} {{ molecule.resultMolecule(result) }} {% endfor %} {% if active != -1 %}
