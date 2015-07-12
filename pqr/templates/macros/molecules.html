@@ -178,8 +178,8 @@
                                 <td>Links<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
                                 <td>
                                 	{%if jsonDict["pubchem_cid"] %}<a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}" target="_blank"> PubChem </a>{%endif%}
-                                	{%if jsonDict["wikipedia"] and jsonDict["wikipedia"]|length > 0 %}<a href="https://en.wikipedia.org/wiki/{{ jsonDict['wikipedia'] }}" target="_blank"> Wikipedia</a>{%endif%}
-                                	{%if jsonDict["chemspider"] and jsonDict["chemspider"]|length > 0 %}<a href="https://chemspider.com/{{ jsonDict['chemspider'] }}" target="_blank"> ChemSpider</a>{%endif%}
+                                	{%if jsonDict["wiki"] and jsonDict["wiki"]|length > 0 %}<a href="https://en.wikipedia.org/wiki/{{ jsonDict['wiki'] }}" target="_blank"> Wikipedia</a>{%endif%}
+                                	{%if jsonDict["chemspider_id"] and jsonDict["chemspider_id"]|length > 0 %}<a href="https://chemspider.com/{{ jsonDict['chemspider_id'] }}" target="_blank"> ChemSpider</a>{%endif%}
                                 </td>
                             </tr>
                              
