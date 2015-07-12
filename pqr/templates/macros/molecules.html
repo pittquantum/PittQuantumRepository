@@ -173,12 +173,16 @@
                                 <td> <a href="#" data-toggle="modal" data-target="#qrcodemodal"> Generate QR Code </a></td>
                             </tr>
 
-                            {%if jsonDict["pubchem_cid"] %}
-                            <tr class="molecule-pubchem-id detailed">
-                                <td>PubChem CID<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
-                                <td><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}"> {{ jsonDict['pubchem_cid'] }}</a></td>
+                            
+                            <tr class="molecule-links detailed">
+                                <td>Links<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
+                                <td>
+                                	{%if jsonDict["pubchem_cid"] %}<a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}" target="_blank"> PubChem </a>{%endif%}
+                                	{%if jsonDict["wikipedia"] and jsonDict["wikipedia"]|length > 0 %}<a href="https://en.wikipedia.org/wiki/{{ jsonDict['wikipedia'] }}" target="_blank"> Wikipedia</a>{%endif%}
+                                	{%if jsonDict["chemspider"] and jsonDict["chemspider"]|length > 0 %}<a href="https://chemspider.com/{{ jsonDict['chemspider'] }}" target="_blank"> ChemSpider</a>{%endif%}
+                                </td>
                             </tr>
-                            {%endif%} 
+                             
                             <!-- End Detailed Section -->
    
                              <tr class="molecule-doi hidden">
@@ -186,7 +190,7 @@
                                 <td><a href="//doi.org/{{ jsonDict["doi"] }}">{{ jsonDict["doi"] }}</a></td>
                             </tr>
 
-                            {%if jsonDict["pubchem_cid"] %}
+                            
                             <tr class="molecule-data detailed">
                                 <td>Downloads<sup><a href="#" data-container="body" data-toggle="tooltip" title="Get the data for this molecule in JSON format"><i class="fa fa-question"></i></a></sup></td>
                                 <td>
@@ -194,7 +198,9 @@
                                      <a href="{{ url_for('molAPI', key=jsonDict['inchikey']) }}"> Get MOL2 data </a>
                                 </td>
                             </tr>
-                            {%endif%} {%if jsonDict["tags"] %}
+
+
+                            {%if jsonDict["tags"] %}
                             <tr class="molecule-tags">
                                 <td> <i class="fa fa-tags"></i></td>
                                 <td>
