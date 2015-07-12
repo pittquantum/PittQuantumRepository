@@ -15,7 +15,7 @@ class PQRTestCase(unittest.TestCase):
         print "Done"
 
     def test_json_api(self):
-        rv = self.app.get('/api/json/' + self.mol)
+        rv = self.app.get('/api/json/' + self.mol + '/')
         assert rv.headers['content-type'] == 'application/json'
         print '### JSON API endpoint is OK'
     
@@ -30,9 +30,14 @@ class PQRTestCase(unittest.TestCase):
         print "### InChIKey search is OK and redirecting properly"
 
     def test_browse_api(self):
-        rv = self.app.get('/api/browse/water/name')
+        rv = self.app.get('/api/browse/water/name/')
         assert rv.headers['content-type'] == 'application/json'
         print '### Browse API endpoint is OK'
+
+    def test_status_api(self):
+        rv = self.app.get('/api/status/')
+        assert rv.headers['content-type'] == 'application/json'
+        print '### Status API endpoint is OK'
 
 if __name__ == '__main__':
     unittest.main()
