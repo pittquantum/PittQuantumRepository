@@ -51,13 +51,16 @@ def subnumbers_filter(input):
 
 #Aubscript digits after ~characters removing the ~character
 def supnumbers_iupac_filter(input):
-	# return re.sub("\d+", lambda val: "<sup>" + val.group(0) + "</sup>", input)
 	return re.sub("~(.*?)~", lambda val: "<sup>" + val.group(0).replace('~', ' ') + "</sup>", input)
-	# return input
+   
+# Greek String Replacement
+def replace_greek_filter(input):
+    return re.sub("(Alpha|Beta|Gamma|Delta)", lambda val: "&" + val.group(0).lower() + ";", input, flags=re.I)
 
 # Adding the filters to the environment
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
 pqr.jinja_env.filters['supnumbersiupac'] = supnumbers_iupac_filter
+pqr.jinja_env.filters['replacegreek'] = replace_greek_filter
 assert pqr.jinja_env.filters['subnumbers']
 ##########################################################################
 

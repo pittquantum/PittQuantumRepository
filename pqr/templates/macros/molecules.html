@@ -31,7 +31,7 @@
     {%if jsonDict["name"]%}
     <h1 id="molecule-name"><!-- Molecule name as h1 for SEO-->
     <a class="visible-xs-inline" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> 
-    {{ jsonDict["name"].title() }}
+    {{ jsonDict["name"].title()|replacegreek|safe }}
     <span class='pull-right'>
     <a href='#' id="rotationSwitch" data-container="body" data-toggle="tooltip" title="Toggle Molecule Rotation"><i class="fa fa-toggle-off"></i></a>
     <a href='#' id='reset-molecule' data-container="body" data-toggle="tooltip" title="Reset Zoom"><i class="fa fa-crosshairs"></i></a>
@@ -73,7 +73,7 @@
                             {%endif%} {%if jsonDict["iupac_name"]%}
                             <tr class="molecule-iupac-name">
                                 <td>IUPAC Name<sup><a href="#" data-container="body" data-toggle="tooltip" title="The standard name of this molecule"><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ jsonDict["iupac_name"]|title|supnumbersiupac|safe|lower }}</td>
+                                <td>{{ jsonDict["iupac_name"]|title|supnumbersiupac|replacegreek|lower|safe }}</td>
                             </tr>
                             {%endif%} {%if jsonDict["molecular mass"]%}
                             <tr class="molecule-molecular-mass">
