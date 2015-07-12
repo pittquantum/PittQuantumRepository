@@ -1,12 +1,5 @@
 module.exports = function(grunt) {
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-postcss');
-    grunt.registerTask('default', ['watch']);
-    grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss', 'uglify']);
-    grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss']);
+
     grunt.initConfig({
         //Less Comilation Options 
         less: {
@@ -28,7 +21,7 @@ module.exports = function(grunt) {
                 },
                 // safe: true,
                 processors: [
-                    require('pixrem')(), // add fallbacks for rem units
+                    require('pixrem')(),// add fallbacks for rem units
                     require('autoprefixer-core')({
                         browsers: 'last 2 versions'
                     }), // add vendor prefixes
@@ -55,7 +48,7 @@ module.exports = function(grunt) {
             },
             css: {
                 // 
-                src: ['assets/css/bootstrap.css', 'assets/css/**/*.css'],
+                src: ['assets/css/bootstrap.css', 'assets/css/**/*.css', '!assets/css/maps', '!assets/css/pqr.css'],
                 // the location of the resulting CSS file
                 dest: 'assets/css/pqr.css'
             }
@@ -86,4 +79,13 @@ module.exports = function(grunt) {
             }
         }
     });
+
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-postcss');
+    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss', 'uglify']);
+    grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss']);
 };
