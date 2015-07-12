@@ -29,7 +29,7 @@ Multiple programs and web services are used in processing and displaying the mol
 
 The backend is largely written in [Flask](http://flask.pocoo.org/).  
 
-Several key modules were used in generating the data:
+Several key modules are used to provide users with extra data on the molecules:  
 * **[ChemSpiPy](http://chemspipy.readthedocs.org/)** - To access the [ChemSpider](http://chemspider.com/) webservice
 * **[CIRPy](http://cirpy.readthedocs.org/)** - To access the [NIH Chemical Resolver](http://cactus.nci.nih.gov/chemical/structure) 
 * **[PubChemPy](http://pubchempy.readthedocs.org/)** - To access the [NIH PubChem REST](https://pubchem.ncbi.nlm.nih.gov) service
