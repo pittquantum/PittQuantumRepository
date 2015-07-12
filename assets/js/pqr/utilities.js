@@ -93,3 +93,17 @@ pqr.htmlUtilities.updatePropertiesViewer = function() {
 		}
 	}
 };
+
+/**
+ * Update the element name size to fit on the line 
+ * @param  String selector Jquery selector string 
+ * @param  Objet options  Contains the options for the quickfit plugin
+ */
+pqr.htmlUtilities.initQuickFit = function(selector, options) {
+	$(selector).quickfit(options);
+
+	//Update on window resize 
+	$(window).resize(function() {
+		$(selector).quickfit(options);
+	});
+};

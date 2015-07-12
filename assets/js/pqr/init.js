@@ -28,6 +28,7 @@ pqr.init = function() {
 		if ($("#main").hasClass("page-molecule")) {
 			pqr.threeDMole.initViewers();
 			pqr.htmlUtilities.updatePropertiesViewer();
+			pqr.htmlUtilities.initQuickFit("#molecule-name", {min: 12, max:36}); 
 
 			pqr.bindevents.propertiesViewerHandler();
 			pqr.bindevents.moleculeStyleChanger();
