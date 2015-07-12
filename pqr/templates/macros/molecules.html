@@ -199,17 +199,31 @@
                                 </td>
                             </tr>
 
+                            {%if jsonDict["elements"] %}
+                            <tr class="molecule-elements detailed">
+                                <td> Elements </td>
+                                <td>
+                                    {% for i in jsonDict["elements"] %}
+                                    <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
+                                    <!-- <a href="/browse/?query={{i|urlencode}}&amp;type=tag&amp;type=keyword"> -->
+                                    <span class="label label-info">{{ i }}</span>
+                                    <!-- </a> -->
+                                    <!-- </a> -->
+                                    {% endfor %}
+                                    <!-- <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a> -->
+                                </td>
+                            </tr>
+                            {%endif%}
+
 
                             {%if jsonDict["tags"] %}
                             <tr class="molecule-tags">
                                 <td> <i class="fa fa-tags"></i></td>
                                 <td>
                                     {% for i in jsonDict["tags"] %}
-                                    <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
                                     <a href="/browse/?query={{i|urlencode}}&amp;type=tag&amp;type=keyword">
                                         <span class="label label-primary">{{ i }}</span>
-                                    </a>
-                                    <!-- </a> -->
+
                                     {% endfor %}
                                     <!-- <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a> -->
                                 </td>
