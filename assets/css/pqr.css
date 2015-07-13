@@ -3012,9 +3012,8 @@ fieldset[disabled] .btn {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-  color: #333333;
-  background-color: #e6e6e6;
-  border-color: #adadad;
+  color: #ffffff;
+  background-color: white;
 }
 .btn-default:active,
 .btn-default.active,
@@ -3041,10 +3040,20 @@ fieldset[disabled] .btn-default:active,
 fieldset[disabled] .btn-default.active {
   background-color: #ffffff;
   border-color: #cccccc;
+  color: white;
 }
 .btn-default .badge {
   color: #ffffff;
   background-color: #333333;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-default.focus,
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  color: #333333;
+  background-color: white;
 }
 .btn-primary {
   color: #ffffff;
@@ -3057,9 +3066,8 @@ fieldset[disabled] .btn-default.active {
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-  color: #ffffff;
-  background-color: #ce540d;
-  border-color: #ad460b;
+  color: #f16b1d;
+  background-color: white;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -3086,6 +3094,7 @@ fieldset[disabled] .btn-primary:active,
 fieldset[disabled] .btn-primary.active {
   background-color: #f16b1d;
   border-color: #e65e0e;
+  color: white;
 }
 .btn-primary .badge {
   color: #f16b1d;
@@ -3102,9 +3111,8 @@ fieldset[disabled] .btn-primary.active {
 .btn-success:active,
 .btn-success.active,
 .open > .dropdown-toggle.btn-success {
-  color: #ffffff;
-  background-color: #449d44;
-  border-color: #398439;
+  color: #5cb85c;
+  background-color: white;
 }
 .btn-success:active,
 .btn-success.active,
@@ -3131,6 +3139,7 @@ fieldset[disabled] .btn-success:active,
 fieldset[disabled] .btn-success.active {
   background-color: #5cb85c;
   border-color: #4cae4c;
+  color: white;
 }
 .btn-success .badge {
   color: #5cb85c;
@@ -3147,9 +3156,8 @@ fieldset[disabled] .btn-success.active {
 .btn-info:active,
 .btn-info.active,
 .open > .dropdown-toggle.btn-info {
-  color: #ffffff;
-  background-color: #31b0d5;
-  border-color: #269abc;
+  color: #5bc0de;
+  background-color: white;
 }
 .btn-info:active,
 .btn-info.active,
@@ -3176,6 +3184,7 @@ fieldset[disabled] .btn-info:active,
 fieldset[disabled] .btn-info.active {
   background-color: #5bc0de;
   border-color: #46b8da;
+  color: white;
 }
 .btn-info .badge {
   color: #5bc0de;
@@ -3192,9 +3201,8 @@ fieldset[disabled] .btn-info.active {
 .btn-warning:active,
 .btn-warning.active,
 .open > .dropdown-toggle.btn-warning {
-  color: #ffffff;
-  background-color: #ec971f;
-  border-color: #d58512;
+  color: #f0ad4e;
+  background-color: white;
 }
 .btn-warning:active,
 .btn-warning.active,
@@ -3221,6 +3229,7 @@ fieldset[disabled] .btn-warning:active,
 fieldset[disabled] .btn-warning.active {
   background-color: #f0ad4e;
   border-color: #eea236;
+  color: white;
 }
 .btn-warning .badge {
   color: #f0ad4e;
@@ -3237,9 +3246,8 @@ fieldset[disabled] .btn-warning.active {
 .btn-danger:active,
 .btn-danger.active,
 .open > .dropdown-toggle.btn-danger {
-  color: #ffffff;
-  background-color: #c9302c;
-  border-color: #ac2925;
+  color: #d9534f;
+  background-color: white;
 }
 .btn-danger:active,
 .btn-danger.active,
@@ -3266,6 +3274,7 @@ fieldset[disabled] .btn-danger:active,
 fieldset[disabled] .btn-danger.active {
   background-color: #d9534f;
   border-color: #d43f3a;
+  color: white;
 }
 .btn-danger .badge {
   color: #d9534f;
@@ -6606,6 +6615,31 @@ button.close {
  *	Various transitions helpers
  *
  */
+#transition {
+  /**
+	 * Helper class to add transition based hides 
+	 */
+}
+#transition .default {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: all;
+  transition-timing-function: ease;
+}
+#transition .trans-hide {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+#transition .trans-hide:before,
+#transition .trans-hide:after {
+  content: " ";
+  display: table;
+}
+#transition .trans-hide:after {
+  clear: both;
+}
 h1 {
   font-size: 32.8px;
   /* Small devices (tablets, 768px and up) */
@@ -6723,6 +6757,19 @@ html,
 body {
   overflow-x: hidden;
 }
+body button.btn,
+body a.btn {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: background-color;
+  transition-timing-function: ease;
+}
+body a {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: color;
+  transition-timing-function: ease;
+}
 body nav .navbar-brand > img {
   margin-top: -10px;
   padding-left: 5px;
@@ -6813,6 +6860,24 @@ body .page-molecule h1#molecule-name {
 }
 body .page-molecule h1#molecule-name .small {
   padding-top: 5px;
+}
+body .page-molecule #molecule-properties .molecule-tags li {
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+body .page-molecule #molecule-properties .molecule-tags a span {
+  border: 1px solid #f16b1d;
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: background-color;
+  transition-timing-function: ease;
+}
+body .page-molecule #molecule-properties .molecule-tags a:hover {
+  text-decoration: none;
+}
+body .page-molecule #molecule-properties .molecule-tags a:hover span {
+  color: #f16b1d;
+  background-color: white;
 }
 body .page-molecule #molecule-properties .tooltip-inner {
   width: 150px;

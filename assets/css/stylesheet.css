@@ -57,6 +57,31 @@
  *	Various transitions helpers
  *
  */
+#transition {
+  /**
+	 * Helper class to add transition based hides 
+	 */
+}
+#transition .default {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: all;
+  transition-timing-function: ease;
+}
+#transition .trans-hide {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+#transition .trans-hide:before,
+#transition .trans-hide:after {
+  content: " ";
+  display: table;
+}
+#transition .trans-hide:after {
+  clear: both;
+}
 h1 {
   font-size: 32.8px;
   /* Small devices (tablets, 768px and up) */
@@ -174,6 +199,19 @@ html,
 body {
   overflow-x: hidden;
 }
+body button.btn,
+body a.btn {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: background-color;
+  transition-timing-function: ease;
+}
+body a {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: color;
+  transition-timing-function: ease;
+}
 body nav .navbar-brand > img {
   margin-top: -10px;
   padding-left: 5px;
@@ -264,6 +302,24 @@ body .page-molecule h1#molecule-name {
 }
 body .page-molecule h1#molecule-name .small {
   padding-top: 5px;
+}
+body .page-molecule #molecule-properties .molecule-tags li {
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+body .page-molecule #molecule-properties .molecule-tags a span {
+  border: 1px solid #f16b1d;
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: background-color;
+  transition-timing-function: ease;
+}
+body .page-molecule #molecule-properties .molecule-tags a:hover {
+  text-decoration: none;
+}
+body .page-molecule #molecule-properties .molecule-tags a:hover span {
+  color: #f16b1d;
+  background-color: white;
 }
 body .page-molecule #molecule-properties .tooltip-inner {
   width: 150px;

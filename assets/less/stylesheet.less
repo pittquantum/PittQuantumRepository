@@ -22,6 +22,19 @@ html, body {
 }
 body {
 
+	//Transitions 
+	button.btn, a.btn{
+		#transition .default-property(background-color);
+	}
+
+	a{
+		#transition .default-property(color);
+		&:hover{
+
+		}
+	}
+
+
 	nav {
 		//Logo Placement in the navbar 
 		.navbar-brand > img {
@@ -128,6 +141,29 @@ body {
 			}
 		}
 		#molecule-properties {
+			.molecule-tags{
+				li{
+					margin-bottom: 2px; 
+					margin-top: 2px; 
+				}
+
+				a{
+					span{
+						border: 1px solid @brand-primary; 
+						#transition .default-property(background-color);
+					}
+				}
+
+				a:hover{
+					text-decoration: none; 
+					span{
+						color: @brand-primary; 
+						background-color: white; 
+					}
+					 
+				}
+			}
+
 			//Workaround tooltip size
 			.tooltip-inner {
 				width: 150px;

@@ -5,3 +5,45 @@
 
 @custom-trans-type: cubic-bezier(0.68, -0.55, 0.27, 1.55);
 @custom-trans-speed: 0.3s;
+
+#transition{
+	@default-delay: 0s;
+	@default-duration: 0.25s;
+	@default-property: all; 
+	@default-timing-function: ease; 
+
+
+	.default{
+		.abstract(@default-delay, @default-duration, @default-property, @default-timing-function);
+	}
+
+	.default-property(@item){
+		.abstract(@default-delay, @default-duration, @item, @default-timing-function);
+	}
+
+	.off(){
+		transition: none; 
+	}
+
+	.abstract(@delay, @duration, @property, @timing-function){
+		transition-delay: @delay;
+		transition-duration: @duration;
+		transition-property: @property;
+		transition-timing-function: @timing-function;
+	}
+
+
+
+
+
+	/**
+	 * Helper class to add transition based hides 
+	 */
+	.trans-hide{
+		opacity: 0;
+		height: 0;
+		margin: 0; 
+		padding: 0; 
+		.clearfix();
+	}
+}

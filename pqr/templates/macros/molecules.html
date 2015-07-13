@@ -175,7 +175,7 @@
 
                             
                             <tr class="molecule-links detailed">
-                                <td>Links<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
+                                <td>Links<sup><a href="#" data-container="body" data-toggle="tooltip" title="External links to PubChem, Wikipedia, and ChemSpider."><i class="fa fa-question"></i></a></sup></td>
                                 <td>
                                 	{%if jsonDict["pubchem_cid"] %}<a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}" target="_blank"> PubChem </a>{%endif%}
                                 	{%if jsonDict["wiki"] and jsonDict["wiki"]|length > 0 %}<a href="https://en.wikipedia.org/wiki/{{ jsonDict['wiki'] }}" target="_blank"> Wikipedia</a>{%endif%}
@@ -220,11 +220,15 @@
                             <tr class="molecule-tags">
                                 <td> <i class="fa fa-tags"></i></td>
                                 <td>
+                                    <ul class='list-unstyled list-inline'> 
                                     {% for i in jsonDict["tags"] %}
-                                    <a href="/browse/?query={{i|urlencode}}&amp;type=tag&amp;type=keyword">
-                                        <span class="label label-primary">{{ i }}</span>
-
+                                        <li>
+                                            <a href="/browse/?query={{i|urlencode}}&amp;type=tag&amp;type=keyword">
+                                                 <span class="label label-primary">{{ i }}</span>
+                                             </a>
+                                        </li>
                                     {% endfor %}
+                                    </ul>
                                     <!-- <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a> -->
                                 </td>
                             </tr>
