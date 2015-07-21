@@ -1,6 +1,6 @@
 # Pitt Quantum Repository
 This is the code for the Pitt Quantum Repository maintained by @RitwikGupta and @JoshuaRogan.
-The Pitt Quantum Repository is developed by the Hutchison and Lambrecht labs at the University of Pittsburgh Chemistry Department.
+The Pitt Quantum Repository is developed by the Hutchison and Lambrecht labs at the University of Pittsburgh Chemistry Department. Please see [here](http://pqr.pitt.edu/news/2015-07-01-open-data) for how to cite PQR.
 
 ## How to install
 PQR is built upon Flask, a lightweight MVC in Python. PQR also uses MongoDB. We assume that the user has MongoDB already installed and running.
@@ -19,7 +19,7 @@ Start the server by running `uwsgi pqr.ini`. Use `sudo nohup uwsgi pqr.ini &` to
 If you are running for the first time, follow the steps below instead!
 
 ###Development
-Start the server by running `./server.py` on Linux systems. On Windows, run `.\venv\Scripts\python .\server.py`. 
+Start the server by running `./server.py [PORT NUMBER] [dev/prod]` on Linux systems. On Windows, run `.\venv\Scripts\python .\server.py [PORT NUMBER] [dev/prod]`. 
 
 ## First run/Data update
 The first time you run the server, or any time you update the data in the folders, you'll have to perform the following steps:  
