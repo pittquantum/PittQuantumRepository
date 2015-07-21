@@ -348,12 +348,12 @@ def molAPI(key):
 
     mol2 = []
     # Open the relevant mol2 file
-    with open(os.path.join(APP_MOL2, key[:2] + '/' + key + '.mol2')) as m:
-        for line in m:
-            mol2.append(line)
+    f = open(os.path.join(APP_MOL2, key[:2] + '/' + key + '.mol2'))
 
     # Return a MOL2 request with the proper MIME type
-    return Response("\n".join(mol2), mimetype='chemical/mol2')
+    response =  Response(f.read(), mimetype='chemical/mol2')
+    response.content_disposition = 'attachment; filename=' + key + '.mol2'
+    return response
 
 # Return a webpage with a list of all the InChIKeys
 
