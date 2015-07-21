@@ -401,7 +401,7 @@ def sitemap(index):
         if(list_of_keys):
             return render_template('sitemap.html', pages=list_of_keys, inchi=True)
         else:
-            return "FALSE"
+            return ""
 
 ##########################################################################
 @pqr.route('/sitemap.xml', methods=['GET'])
@@ -422,6 +422,17 @@ def sitemapindex():
 def favicon():
     return send_from_directory(os.path.join(pqr.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+# SEO
+@pqr.route('/BingSiteAuth.xml')
+def BingSiteAuth():
+    return send_from_directory(os.path.join(pqr.root_path, 'static'),
+                               'BingSiteAuth.xml', mimetype='text/xml')
+@pqr.route('/robots.txt')
+def RobotsTxt():
+    return send_from_directory(os.path.join(pqr.root_path, 'static'),
+                               'robots.txt', mimetype='text/plain')
+
 
 ##########################################################################
 
