@@ -351,7 +351,7 @@ def molAPI(key):
     f = open(os.path.join(APP_MOL2, key[:2] + '/' + key + '.mol2'))
 
     # Return a MOL2 request with the proper MIME type
-    response =  Response(f.read(), mimetype='chemical/mol2')
+    response =  Response(f.read().strip(), mimetype='chemical/mol2')
     response.content_disposition = 'attachment; filename=' + key + '.mol2'
     return response
 
