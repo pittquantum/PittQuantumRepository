@@ -26,7 +26,7 @@ class PQRTestCase(unittest.TestCase):
 
     def test_search_inchi(self):
         rv = self.app.get('/browse?query=GNBHRKFJIUUOQI-UHFFFAOYSA-N&type=inchi')
-        assert rv.status_code == 301
+        assert rv.status_code == 302
         print "### InChIKey search is OK and redirecting properly"
 
     def test_browse_api(self):

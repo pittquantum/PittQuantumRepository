@@ -37,8 +37,7 @@ WEEKLY_MOL_NAME = None
 
 
 @pqr.route('/')
-@pqr.route('/home')
-@pqr.route('/home/')
+@pqr.route('/home', strict_slashes=False)
 # @cache.cached(timeout=86400)
 def index():
     page = {'id': "page-home"}
@@ -50,10 +49,8 @@ def index():
 
 
 ##########################################################################
-@pqr.route('/mol/<key>')
-@pqr.route('/mol/<key>/')
-@pqr.route('/mol/')  # if no key lets default to the molecule of the day
-@pqr.route('/mol')  # if no key lets default to the molecule of the day
+@pqr.route('/mol/<key>', strict_slashes=False)
+@pqr.route('/mol', strict_slashes=False)  # if no key lets default to the molecule of the day
 # @cache.cached(timeout=43200)
 def molecule(key="-1"):
     if key == "-1":
@@ -89,10 +86,8 @@ def molecule(key="-1"):
 
 
 ##########################################################################
-@pqr.route('/news')
-@pqr.route('/news/')
-@pqr.route('/news/<title>')
-@pqr.route('/news/<title>/')
+@pqr.route('/news', strict_slashes=False)
+@pqr.route('/news/<title>', strict_slashes=False)
 # @cache.cached(timeout=86400)
 def news(title="-1"):
     page = {'id': "page-news"}
@@ -116,10 +111,8 @@ def news(title="-1"):
 ##########################################################################
 
 
-@pqr.route('/browse')
-@pqr.route('/browse/')
-@pqr.route('/browse/<page_num>')
-@pqr.route('/browse/<page_num>/')
+@pqr.route('/browse', strict_slashes=False)
+@pqr.route('/browse/<page_num>', strict_slashes=False)
 def browse(page_num="-1"):
 
     # Get the page number that is passed in
@@ -235,8 +228,7 @@ def browse(page_num="-1"):
 #################################################
 
 
-@pqr.route('/api/weekly')
-@pqr.route('/api/weekly/')
+@pqr.route('/api/weekly', strict_slashes=False)
 def weekly_molAPI():
     import datetime
     # Gets todays date, then rewinds it to the last Sunday
@@ -258,8 +250,7 @@ def weekly_molAPI():
                 return Response("\n".join(return_list), mimetype='text/plain')
 
 
-@pqr.route('/api/browse/<query>/<searchType>')
-@pqr.route('/api/browse/<query>/<searchType>/')
+@pqr.route('/api/browse/<query>/<searchType>', strict_slashes=False)
 def browseAPI(query, searchType):
 
     # Set the query string
@@ -312,8 +303,7 @@ def browseAPI(query, searchType):
     return Response(json.dumps(results), mimetype='application/json')
 
 
-@pqr.route('/api/status')
-@pqr.route('/api/status/')
+@pqr.route('/api/status', strict_slashes=False)
 def getStatus():
     import os.path
     import time
@@ -330,8 +320,7 @@ def getStatus():
 
     return jsonify(stuff_to_print)
 
-@pqr.route('/api/json/<key>')
-@pqr.route('/api/json/<key>/')
+@pqr.route('/api/json/<key>', strict_slashes=False)
 def jsonAPI(key):
 
     # Open the relevant JSON file
@@ -342,8 +331,7 @@ def jsonAPI(key):
     return jsonify(json_dict)
 
 
-@pqr.route('/api/mol/<key>')
-@pqr.route('/api/mol/<key>/')
+@pqr.route('/api/mol/<key>', strict_slashes=False)
 def molAPI(key):
 
     mol2 = []
@@ -352,14 +340,13 @@ def molAPI(key):
 
     # Return a MOL2 request with the proper MIME type
     response =  Response(f.read().strip(), mimetype='chemical/mol2')
-    response.content_disposition = 'attachment; filename=' + key + '.mol2'
+    response.content_disposition = 'attachment; filename=%s' % (key + '.mol2')
     return response
 
 # Return a webpage with a list of all the InChIKeys
 
 
-@pqr.route('/api/inchikeys')
-@pqr.route('/api/inchikeys/')
+@pqr.route('/api/inchikeys', strict_slashes=False)
 def inchiAPI():
 
     root = APP_JSON
@@ -373,8 +360,7 @@ def inchiAPI():
 ##########################################################################
 
 
-@pqr.route('/contact', methods=['POST', 'GET'])
-@pqr.route('/contact/', methods=['POST', 'GET'])
+@pqr.route('/contact', methods=['POST', 'GET'], strict_slashes=False)
 # @cache.cached(timeout=259200)
 def contact():
     page = {'id': "page-contact"}
@@ -387,8 +373,7 @@ def contact():
         return render_template("contact.html", page=page)
 
 ##########################################################################
-@pqr.route('/sitemap/<index>', methods=['GET'])
-@pqr.route('/sitemap/<index>/', methods=['GET'])
+@pqr.route('/sitemap/<index>', methods=['GET'], strict_slashes=False)
 def sitemap(index):
     pages = []
     if index == "0":
@@ -404,8 +389,7 @@ def sitemap(index):
             return ""
 
 ##########################################################################
-@pqr.route('/sitemap.xml', methods=['GET'])
-@pqr.route('/sitemap.xml/', methods=['GET'])
+@pqr.route('/sitemap.xml', methods=['GET'], strict_slashes=False)
 def sitemapindex():
     directories = getINCHIfolders()
     return render_template('sitemapIndex.html', moldirs=directories)
@@ -418,17 +402,17 @@ def sitemapindex():
 # Properly handle the favicon
 
 
-@pqr.route('/favicon.ico')
+@pqr.route('/favicon.ico', strict_slashes=False)
 def favicon():
     return send_from_directory(os.path.join(pqr.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # SEO
-@pqr.route('/BingSiteAuth.xml')
+@pqr.route('/BingSiteAuth.xml', strict_slashes=False)
 def BingSiteAuth():
     return send_from_directory(os.path.join(pqr.root_path, 'static'),
                                'BingSiteAuth.xml', mimetype='text/xml')
-@pqr.route('/robots.txt')
+@pqr.route('/robots.txt', strict_slashes=False)
 def RobotsTxt():
     return send_from_directory(os.path.join(pqr.root_path, 'static'),
                                'robots.txt', mimetype='text/plain')
