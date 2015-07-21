@@ -340,7 +340,7 @@ def molAPI(key):
 
     # Return a MOL2 request with the proper MIME type
     response =  Response(f.read().strip(), mimetype='chemical/mol2')
-    response.content_disposition = 'attachment; filename=%s' % (key + '.mol2')
+    response.headers['Content-Disposition'] = 'attachment; filename=%s' % (key + '.mol2')
     return response
 
 # Return a webpage with a list of all the InChIKeys
