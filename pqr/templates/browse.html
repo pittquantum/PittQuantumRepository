@@ -38,11 +38,8 @@
     <div class="clearfix" id="splash-search">
         <div id='browse-banner'>
             <div class="jumbotron text-center row">
-                <h2>Pitt Quantum Repository</h2>
-                <p>Search Results for
-                    <samp>{{query}}</samp>
-                </p>
-                {% import '/macros/forms.html' as forms %} {{ forms.banner_search('btn-default', 'molecule-search-group') }}
+                <h2>Pitt Quantum Repository</h2> 
+                {% import '/macros/forms.html' as forms %} {{ forms.banner_search('btn-default', 'molecule-search-group', query=query) }}
                 <!-- <p id="num-compounds"><strong>PQR currently includes <span class="number">55,000</span> compounds in <span class="number">25</span> categories!</strong></p> -->
             </div>
         </div>
@@ -61,8 +58,7 @@
         {% import '/macros/molecules.html' as molecule %} {% if results %}
         <div class="row alert alert-success" role="alert">
             <div class="col-xs-12">
-                <strong>Search Successful!</strong>
-                <samp>Number Pages Returned: {{typenum_pages}} {% if active != -1 %} Current Page {{active}}{% endif %} Your Query: "{{query}}" </samp>
+               <samp>Page {{active}} out of {{typenum_pages}}</samp>
             </div>
         </div>
         {% for result in results %} {{ molecule.resultMolecule(result) }} {% endfor %} {% if active != -1 %}
