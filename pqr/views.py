@@ -163,6 +163,8 @@ def browse(page_num="-1"):
     elif searchType == 'inchi':
         searchType = 'inchikey'
         query = query.upper()
+        if query in redirect_table.keys():
+            query = redirect_table[query]
     cursor = db.molecules.find({str(searchType): str(query)}).limit(500)
 
     # Append all dicts in the cursor to a results array

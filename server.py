@@ -15,7 +15,7 @@ if(not sys.argv[1]):
 # dictionary in the views.py file
 with open("./pqr/server_start/redirect_file", "r") as redir:
     for line in redir:
-        lineArr = line.strip().split(',')
+        lineArr = line.strip().split(' ')
         key = lineArr[0]
         value = lineArr[1].strip()
         pqv.redirect_table[key] = value
