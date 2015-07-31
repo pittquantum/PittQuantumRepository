@@ -55,17 +55,23 @@ def supnumbers_iupac_filter(input):
    
 # Greek String Replacement
 def replace_greek_filter(input):
+    choice = ""
     try:
-        choice = re.match(r"(Alpha|Beta|Gamma)", input).group(0)
-    except AttributeError:
+        choice = re.findall(r"(Alpha|Beta|Gamma)", input)[0]
+    except IndexError:
         pass
-    return re.sub("(Alpha|Beta|Gamma)[^\w\s]", lambda val: "&" + choice.lower() + ";", input, flags=re.I)
+    if len(re.findall("(Alpha|Beta|Gamma)[^\w\s]", input)) > 0:
+        return input.replace(choice, '&{};'.format(choice.lower()))
+    else:
+        return input
+    #return re.sub("(Alpha|Beta|Gamma)[^\w\s]", lambda val: "&{};{}".format(choice.lower(), val.group(0)[-1]), input, flags=re.I)
 
 # Adding the filters to the environment
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
 pqr.jinja_env.filters['supnumbersiupac'] = supnumbers_iupac_filter
 pqr.jinja_env.filters['replacegreek'] = replace_greek_filter
 assert pqr.jinja_env.filters['subnumbers']
+assert pqr.jinja_env.filters['replacegreek']
 ##########################################################################
 
 from pqr import views
