@@ -178,7 +178,7 @@
                                 <td>Links<sup><a href="#" data-container="body" data-toggle="tooltip" title="External links to PubChem, Wikipedia, and ChemSpider."><i class="fa fa-question"></i></a></sup></td>
                                 <td>
                                 	{%if jsonDict["pubchem_cid"] %}<a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}" target="_blank"> PubChem </a>{%endif%}
-                                	{%if jsonDict["wiki"] and jsonDict["wiki"]|length > 0 %}<a href="https://en.wikipedia.org/wiki/{{ jsonDict['wiki'] }}" target="_blank"> Wikipedia</a>{%endif%}
+                                	{%if jsonDict["wiki"] and jsonDict["wiki"]|length > 0 %}<a href="{{ jsonDict['wiki'] }}" target="_blank"> Wikipedia</a>{%endif%}
                                 	{%if jsonDict["chemspider_id"] and jsonDict["chemspider_id"] > 0 %}<a href="https://chemspider.com/{{ jsonDict['chemspider_id'] }}" target="_blank"> ChemSpider</a>{%endif%}
                                 </td>
                             </tr>
