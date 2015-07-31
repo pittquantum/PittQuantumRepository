@@ -59,7 +59,7 @@ def replace_greek_filter(input):
         choice = re.match(r"(Alpha|Beta|Gamma)", input).group(0)
     except AttributeError:
         pass
-    return re.sub("((([0-9]-?|\(\+\)-?)|(\(\-\)-?))(Alpha|Beta|Gamma))|((Alpha|Beta|Gamma)\-)", lambda val: "&" + choice.lower() + ";", input, flags=re.I)
+    return re.sub("(Alpha|Beta|Gamma)[^\w\s]", lambda val: "&" + choice.lower() + ";", input, flags=re.I)
 
 # Adding the filters to the environment
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
