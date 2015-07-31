@@ -55,7 +55,11 @@ def supnumbers_iupac_filter(input):
    
 # Greek String Replacement
 def replace_greek_filter(input):
-    return re.sub("((([0-9]-?|\(\+\)-?)|(\(\-\)-?))(Alpha|Beta|Gamma))|((Alpha|Beta|Gamma)\-)", lambda val: "&" + val.group(0).lower() + ";", input, flags=re.I)
+    try:
+        choice = re.match(r"(Alpha|Beta|Gamma)", input).group(0)
+    except AttributeError:
+        pass
+    return re.sub("((([0-9]-?|\(\+\)-?)|(\(\-\)-?))(Alpha|Beta|Gamma))|((Alpha|Beta|Gamma)\-)", lambda val: "&" + choice.lower() + ";", input, flags=re.I)
 
 # Adding the filters to the environment
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
