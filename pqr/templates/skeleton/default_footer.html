@@ -13,7 +13,7 @@
 
         <p class="font-light" id="copyright"> Copyright © 2015 <a href="//www.pitt.edu/">University of Pittsburgh</a> <a href="http://www.chem.pitt.edu/">Department of Chemistry</a></a><br/>
         Made available under the <a href="/news/2015-07-01-open-data/">Open Database License</a>.<br/>
-        <a href="https://github.com/pittquantum/PittQuantumRepository/issues/new?title=Missing Molecule Data for Molecule &amp;body=Please submit the molecule INCHI Key." target="_blank">Report Missing Molecule Data</a>
+        <a href="#" onclick="reportClick()" target="_blank" id="report">Report Missing Molecule Data</a>
         </p>
       </div>
     </div>
@@ -30,4 +30,13 @@
   </div>
 
   </div>
+  <script>
+    function reportClick(){
+      var mol = window.location.pathname.split("/")[2];
+      var pathToGo = "https://github.com/pittquantum/PittQuantumRepository/issues/new?title=Missing Molecule Data for Molecule &body=" + mol.toString();
+      var win = window.open(pathToGo, '_blank');
+      win.focus();
+      return false;
+    }
+  </script>
 </footer>
