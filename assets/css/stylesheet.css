@@ -262,7 +262,8 @@ h5 {
   header,
   footer,
   [data-toggle*=tooltip],
-  img:after {
+  img:after,
+  .notifications {
     display: none;
   }
   .page-molecule h1#molecule-name {
