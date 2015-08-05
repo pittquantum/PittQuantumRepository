@@ -6842,7 +6842,10 @@ h5 {
   .page-molecule #molecule-properties .tooltip-inner,
   .page-molecule #molecule-properties .molecule-switchview,
   .page-molecule #molecule-properties .properties-view-options,
-  .page-molecule #molecule-properties .panel-body {
+  .page-molecule #molecule-properties .panel-body,
+  .page-molecule #molecule-properties .molecule-links,
+  .page-molecule #molecule-properties .molecule-qr-code,
+  .page-molecule #molecule-properties .molecule-data {
     display: none;
   }
   .page-molecule #molecule-properties a:link:after,
