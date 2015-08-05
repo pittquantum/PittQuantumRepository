@@ -1,0 +1,16 @@
+{
+  "name": "PQR",
+  "version": "1.0.0",
+  "description": "Some front end PQR dependencies",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lesshat": "~3.0.2"
+  }
+}

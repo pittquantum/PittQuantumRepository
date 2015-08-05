@@ -111,6 +111,28 @@ module.exports = function(grunt) {
                 include: ['styles_prod', 'scripts_prod', 'configFiles']
             }
         },
+        bower_concat: {
+            all: {
+                dest: 'assets/_bower.js',
+                cssDest: 'assets/css/_bower.css',
+                exclude: ['lesshat'],
+            }
+        },
+        "bower-install-simple": {
+            options: {
+                color: true
+            },
+            "prod": {
+                options: {
+                    production: true
+                }
+            },
+            "dev": {
+                options: {
+                    production: false
+                }
+            }
+        },
         watch: { //Which folders to watch for changes and run only the tasks required
             styles_prod: {
                 files: ['assets/less/**/*.less'],
@@ -152,5 +174,5 @@ module.exports = function(grunt) {
     grunt.registerTask('prod_watch', ['focus:prod']);
     grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss:dev', 'uglify:dev']);
     grunt.registerTask('dev_watch', ['focus:dev']);
-    grunt.registerTask('dev_watch_fast', ['focus:dev_fast']); //Must use the pqr.js
+    grunt.registerTask('dev_watch_fast', ['focus:dev_fast']); 
 };
