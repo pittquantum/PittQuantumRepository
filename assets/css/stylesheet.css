@@ -191,21 +191,19 @@ h5 {
  *  Bootstrap Overrides 
  */
 .alert-feedback {
-  background-color: #64b5f6;
-  border-color: #0d47a1;
-  color: #e3f2fd;
-  background-color: #009688;
   border-color: #b2dfdb;
+  background-color: #5f9ea0;
+  border-color: #7fb1b3;
   color: #e0f2f1;
 }
 .alert-feedback hr {
-  border-top-color: #0b3d89;
+  border-top-color: #a0d8d3;
 }
 .alert-feedback .alert-link {
-  color: #b3dcfa;
+  color: #bce3e1;
 }
 .alert-feedback hr {
-  border-top-color: #a0d8d3;
+  border-top-color: #6fa8a9;
 }
 .alert-feedback .alert-link {
   color: #bce3e1;
@@ -232,19 +230,19 @@ h5 {
 /* Positioning */
 .notifications.top-right {
   right: 10px;
-  top: 25px;
+  top: 50px;
 }
 .notifications.top-left {
   left: 10px;
-  top: 25px;
+  top: 50px;
 }
 .notifications.bottom-left {
   left: 10px;
-  bottom: 25px;
+  bottom: 50px;
 }
 .notifications.bottom-right {
   right: 10px;
-  bottom: 25px;
+  bottom: 50px;
 }
 /* Notification Element */
 .notifications > div {

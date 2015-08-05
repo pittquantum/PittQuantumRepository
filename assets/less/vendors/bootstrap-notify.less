@@ -3,6 +3,9 @@
  * 
  * @site https://github.com/goodybag/bootstrap-notify
  */
+@notifications-y-offset: 50px;
+@notifications-x-offset: 10px; 
+
 .notifications {
 	position: fixed;
 	z-index: 9999;
@@ -21,20 +24,20 @@
 
 /* Positioning */
 .notifications.top-right {
-	right: 10px;
-	top: 25px;
+	right: @notifications-x-offset;
+	top: @notifications-y-offset;
 }
 .notifications.top-left {
-	left: 10px;
-	top: 25px;
+	left: @notifications-x-offset;
+	top: @notifications-y-offset;
 }
 .notifications.bottom-left {
-	left: 10px;
-	bottom: 25px;
+	left: @notifications-x-offset;
+	bottom: @notifications-y-offset;
 }
 .notifications.bottom-right {
-	right: 10px;
-	bottom: 25px;
+	right: @notifications-x-offset;
+	bottom: @notifications-y-offset
 }
 
 /* Notification Element */
