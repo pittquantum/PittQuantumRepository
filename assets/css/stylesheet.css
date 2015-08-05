@@ -210,16 +210,6 @@ h5 {
 .alert-feedback .alert-link {
   color: #bce3e1;
 }
-.alert-feedback .fa-times {
-  color: #fff;
-  opacity: 1;
-}
-.alert-feedback .close {
-  padding-left: 10px;
-  padding-top: 1px;
-  opacity: 1.0;
-  font-size: 20px;
-}
 /**
  * Bootstrap Notify Styles 
  * 
