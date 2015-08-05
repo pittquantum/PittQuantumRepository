@@ -187,6 +187,80 @@ h5 {
     font-size: 16px;
   }
 }
+/**
+ *  Bootstrap Overrides 
+ */
+.alert-feedback {
+  background-color: #64b5f6;
+  border-color: #0d47a1;
+  color: #e3f2fd;
+  background-color: #009688;
+  border-color: #b2dfdb;
+  color: #e0f2f1;
+}
+.alert-feedback hr {
+  border-top-color: #0b3d89;
+}
+.alert-feedback .alert-link {
+  color: #b3dcfa;
+}
+.alert-feedback hr {
+  border-top-color: #a0d8d3;
+}
+.alert-feedback .alert-link {
+  color: #bce3e1;
+}
+.alert-feedback .fa-times {
+  color: #fff;
+  opacity: 1;
+}
+.alert-feedback .close {
+  padding-left: 10px;
+  padding-top: 1px;
+  opacity: 1.0;
+  font-size: 20px;
+}
+/**
+ * Bootstrap Notify Styles 
+ * 
+ * @site https://github.com/goodybag/bootstrap-notify
+ */
+.notifications {
+  position: fixed;
+  z-index: 9999;
+}
+.notifications .fa-times {
+  color: #fff;
+  opacity: 1;
+}
+.notifications .close {
+  padding-left: 10px;
+  padding-top: 1px;
+  opacity: 1.0;
+  font-size: 20px;
+}
+/* Positioning */
+.notifications.top-right {
+  right: 10px;
+  top: 25px;
+}
+.notifications.top-left {
+  left: 10px;
+  top: 25px;
+}
+.notifications.bottom-left {
+  left: 10px;
+  bottom: 25px;
+}
+.notifications.bottom-right {
+  right: 10px;
+  bottom: 25px;
+}
+/* Notification Element */
+.notifications > div {
+  position: relative;
+  margin: 5px 0px;
+}
 color::-moz-selection {
   background: #3498db;
   color: white;
@@ -514,6 +588,9 @@ body footer .footer-social .fa:hover {
   color: #b3b3b3;
 }
 /*****GLOBAL ELEMENTS ****/
+.feedback-messages-container {
+  margin-bottom: 22px;
+}
 #qrcodemodal #qrcode img {
   max-width: 100%;
   height: auto;

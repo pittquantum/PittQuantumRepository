@@ -65,7 +65,17 @@
         <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
     {% block header %} {% endblock %}
-    <!-- -->
+    
+    <!-- Container for feedback messages-->
+    <div id="feedback-messages" class='container'> 
+
+    </div>
+
+    <div class='notifications top-right'> 
+
+    </div>
+
+
     {% with messages = get_flashed_messages(with_categories=true) %}
     <!-- -->
     {% if messages %}

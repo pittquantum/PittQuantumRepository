@@ -35,13 +35,22 @@ pqr.htmlUtilities.initFontSize = function() {
 pqr.htmlUtilities.updateFont = function(type) {
 	if (type === -1) {
 		var newBaseSize = accessibility.fontSizeChanger(-1, pqr.htmlUtilities.getCurrentFontSize());
+		htmlutilities.bootstrapFeedback("Decrease Font Size to " + newBaseSize, "feedback", "fa-font");
 	} else if (type === 0) {
 		var newBaseSize = accessibility.changeFontSize(accessibility.defaultFontSize);
+		htmlutilities.bootstrapFeedback("Reset Font Size to " + newBaseSize, "feedback", "fa-font");
 	} else if (type === 1) {
 		var newBaseSize = accessibility.fontSizeChanger(1, pqr.htmlUtilities.getCurrentFontSize());
+		htmlutilities.bootstrapFeedback("Increased Font Size to " + newBaseSize, "feedback", "fa-font");
 	}
 
-	if (pqr.features.localstorage) localStorage.setItem("baseFontSize", newBaseSize);
+	if (pqr.features.localstorage) {
+		localStorage.setItem("baseFontSize", newBaseSize);
+	}
+
+	//Send PQR Message 
+	 
+	
 };
 
 

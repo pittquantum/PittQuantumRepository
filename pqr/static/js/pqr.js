@@ -2535,6 +2535,8 @@ accessibility.changeFontSize = function(size){
 	return size;
 };
 
+
+
 ;
 /**
  * @fileoverview Misc. boostrap helper functions
@@ -2560,9 +2562,11 @@ bootstrapUtilities.FullToolTipOptIn = function() {
  * @fileoverview Misc. DOM manipulation utilites
  * @author JoshJRogan@gmail.com (Josh Rogan)
  */
-
-var htmlutilities = htmlutilities || {};
-
+var htmlutilities = htmlutilities || {
+    feedback_num: 0, //Counter for the number of feedback items
+    feedback_timeout: 1500, //Time for the feedback message to stay up
+    active_feedback_closer: false, //Flag to turn on or off the feedback closer event
+};
 /**
  * Get the base URL of the current page. If you are on 'http://melwood.jcubedworld.com/baseball/?type=dog'
  * 	'http://melwood.jcubedworld.com' will be returned. The protocal and domain will be returned. 
@@ -2570,28 +2574,49 @@ var htmlutilities = htmlutilities || {};
  * @return {String} The base URL of the current page including the protocal. 
  */
 htmlutilities.getRootURL = function() {
-	if (!location.origin) location.origin = location.protocol + "//" + location.host;
-	return location.origin;
+    if (!location.origin) location.origin = location.protocol + "//" + location.host;
+    return location.origin;
 };
-
 /**
  * When using anchors have smooth scrolling
  * 
  */
 htmlutilities.smoothScrollingAnchors = function() {
-	$('a[href^="#"]').on('click', function(e) {
-		e.preventDefault();
+    $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
+        var target = this.hash;
+        var $target = $(target);
+        $('html, body').stop().animate({
+            'scrollTop': $target.offset().top
+        }, 900, 'swing', function() {
+            window.location.hash = target;
+        });
+    });
+};
+/**
+ * Display bootstrap like notificaitons for a brief amount of time
+ * @param  String message The message for the bootstrap feedback
+ * @param  String type The Type/Style of the message
+ * @param  Selector selector JQuery selector for the html message to be added
+ * @param  String icon_class A font awesome icon class
+ * 
+ * @return String the resulting html feedback
+ */
+htmlutilities.bootstrapFeedback = function(message, type, icon_class) {
 
-		var target = this.hash;
-		var $target = $(target);
+    var html = '<i class="fa ' + icon_class + '"></i> ' + message; 
 
-		$('html, body').stop().animate({
-			'scrollTop': $target.offset().top
-		}, 900, 'swing', function() {
-			window.location.hash = target;
-		});
-	});
-};;
+    $('.top-right').notify({
+        message: {
+            html: html
+        },
+        type: type, 
+        fadeOut: { enabled: true, delay: this.feedback_timeout}
+
+    }).show();
+
+};
+;
 /**
  * @fileoverview Initialize all JS for the website. Must be the 
  * first file concated in the pqr folder. 
@@ -18842,7 +18867,7 @@ function QRCode(text, level, version, quiet) {
     var quietModuleCount = qr.getModuleCount() + 2*quiet;
 
     function isDark(row, col) {
-
+        
         row -= quiet;
         col -= quiet;
 
@@ -21152,6 +21177,7 @@ pqr.bindevents.moleculeReset = function(selector) {
 		$(selector).on("click", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.resetView();
+			htmlutilities.bootstrapFeedback("Molecule viewer reset", "feedback", "fa-crosshairs");
 		});
 	}
 };
@@ -21171,9 +21197,11 @@ pqr.bindevents.moleculeToggleRotation = function(selector) {
 			if (toggle.hasClass('fa-toggle-on')) {
 				toggle.removeClass('fa-toggle-on');
 				toggle.addClass('fa-toggle-off');
+				htmlutilities.bootstrapFeedback("Rotation deactivated", "feedback", "fa-refresh");
 			} else {
 				toggle.removeClass('fa-toggle-off');
 				toggle.addClass('fa-toggle-on');
+				htmlutilities.bootstrapFeedback("Rotation activated", "feedback", "fa-refresh");
 			}
 		});
 	}
@@ -21189,12 +21217,14 @@ pqr.bindevents.propertiesViewerHandler = function() {
 		event.preventDefault();
 		$("#molecule-details table .detailed").addClass("hidden");
 		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "simple");
+			htmlutilities.bootstrapFeedback("Switched to simple view", "feedback", "fa-desktop");
 	});
 
 	$("#detailedView").on("click", function(event) {
 		event.preventDefault();
 		$("#molecule-details table .detailed").removeClass("hidden");
 		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "detailed");
+			htmlutilities.bootstrapFeedback("Switched to detailed view ", "feedback", "fa-desktop");
 	});
 };
 
@@ -21210,6 +21240,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("sphere");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
+			htmlutilities.bootstrapFeedback("Switched to sphere display ", "feedback", "fa-desktop");
 		});
 	}
 
@@ -21219,6 +21250,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("line");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
+			htmlutilities.bootstrapFeedback("Switched to line display ", "feedback", "fa-desktop");
 		});
 	}
 
@@ -21227,6 +21259,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("cross");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
+			htmlutilities.bootstrapFeedback("Switched to cross display ", "feedback", "fa-desktop");
 		});
 	}
 
@@ -21235,6 +21268,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("stick");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
+			htmlutilities.bootstrapFeedback("Switched to stick display ", "feedback", "fa-desktop");
 		});
 	}
 };
@@ -21252,6 +21286,7 @@ pqr.bindevents.moleculeToggleSurface = function(selector) {
 			$(this).addClass('disabled btn-success');
 			$(this).removeClass('btn-danger');
 			$(this).html('Surface Removed');
+			htmlutilities.bootstrapFeedback("Surface removed. Reload to add surface ", "feedback", "fa-desktop");
 		});
 	}
 };;
@@ -21267,7 +21302,7 @@ pqr.bindevents.moleculeToggleSurface = function(selector) {
  */
 pqr.init = function() {
 	$(document).ready(function() {
-		if(pqr.debug) console.log("Loading PQR Web App...."); 
+		if(pqr.debug) console.log("Loading PQR Web App....");  
 
 		//All page initializer 
 		pqr.checkFeatures(); 
@@ -21527,13 +21562,22 @@ pqr.htmlUtilities.initFontSize = function() {
 pqr.htmlUtilities.updateFont = function(type) {
 	if (type === -1) {
 		var newBaseSize = accessibility.fontSizeChanger(-1, pqr.htmlUtilities.getCurrentFontSize());
+		htmlutilities.bootstrapFeedback("Decrease Font Size to " + newBaseSize, "feedback", "fa-font");
 	} else if (type === 0) {
 		var newBaseSize = accessibility.changeFontSize(accessibility.defaultFontSize);
+		htmlutilities.bootstrapFeedback("Reset Font Size to " + newBaseSize, "feedback", "fa-font");
 	} else if (type === 1) {
 		var newBaseSize = accessibility.fontSizeChanger(1, pqr.htmlUtilities.getCurrentFontSize());
+		htmlutilities.bootstrapFeedback("Increased Font Size to " + newBaseSize, "feedback", "fa-font");
 	}
 
-	if (pqr.features.localstorage) localStorage.setItem("baseFontSize", newBaseSize);
+	if (pqr.features.localstorage) {
+		localStorage.setItem("baseFontSize", newBaseSize);
+	}
+
+	//Send PQR Message 
+	 
+	
 };
 
 
@@ -21598,4 +21642,101 @@ pqr.htmlUtilities.initQuickFit = function(selector, options) {
 	$(window).resize(function() {
 		$(selector).quickfit(options);
 	});
-};
+};;
+/**
+ * bootstrap-notify.js v1.0
+ * --
+  * Copyright 2012 Goodybag, Inc.
+ * --
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+(function ($) {
+  var Notification = function (element, options) {
+    // Element collection
+    this.$element = $(element);
+    this.$note    = $('<div class="alert"></div>');
+    this.options  = $.extend(true, {}, $.fn.notify.defaults, options);
+
+    // Setup from options
+    if(this.options.transition) {
+      if(this.options.transition == 'fade')
+        this.$note.addClass('in').addClass(this.options.transition);
+      else
+        this.$note.addClass(this.options.transition);
+    } else
+      this.$note.addClass('fade').addClass('in');
+
+    if(this.options.type)
+      this.$note.addClass('alert-' + this.options.type);
+    else
+      this.$note.addClass('alert-success');
+
+    if(!this.options.message && this.$element.data("message") !== '') // dom text
+      this.$note.html(this.$element.data("message"));
+    else
+      if(typeof this.options.message === 'object') {
+        if(this.options.message.html)
+          this.$note.html(this.options.message.html);
+        else if(this.options.message.text)
+          this.$note.text(this.options.message.text);
+      } else
+        this.$note.html(this.options.message);
+
+    if(this.options.closable) {
+      var link = $('<a class="close pull-right" href="#"><i class="fa fa-times"></i></a>');
+      $(link).on('click', $.proxy(onClose, this));
+      this.$note.prepend(link);
+    }
+
+    return this;
+  };
+
+  var onClose = function() {
+    this.options.onClose();
+    $(this.$note).remove();
+    this.options.onClosed();
+    return false;
+  };
+
+  Notification.prototype.show = function () {
+    if(this.options.fadeOut.enabled)
+      this.$note.delay(this.options.fadeOut.delay || 3000).fadeOut('slow', $.proxy(onClose, this));
+
+    this.$element.append(this.$note);
+    this.$note.alert();
+  };
+
+  Notification.prototype.hide = function () {
+    if(this.options.fadeOut.enabled)
+      this.$note.delay(this.options.fadeOut.delay || 3000).fadeOut('slow', $.proxy(onClose, this));
+    else onClose.call(this);
+  };
+
+  $.fn.notify = function (options) {
+    return new Notification(this, options);
+  };
+
+  $.fn.notify.defaults = {
+    type: 'success',
+    closable: true,
+    transition: 'fade',
+    fadeOut: {
+      enabled: true,
+      delay: 3000
+    },
+    message: null,
+    onClose: function () {},
+    onClosed: function () {}
+  }
+})(window.jQuery);

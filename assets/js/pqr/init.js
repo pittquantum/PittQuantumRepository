@@ -10,7 +10,7 @@
  */
 pqr.init = function() {
 	$(document).ready(function() {
-		if(pqr.debug) console.log("Loading PQR Web App...."); 
+		if(pqr.debug) console.log("Loading PQR Web App....");  
 
 		//All page initializer 
 		pqr.checkFeatures(); 

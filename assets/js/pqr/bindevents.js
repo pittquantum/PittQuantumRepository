@@ -41,6 +41,7 @@ pqr.bindevents.moleculeReset = function(selector) {
 		$(selector).on("click", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.resetView();
+			htmlutilities.bootstrapFeedback("Molecule viewer reset", "feedback", "fa-crosshairs");
 		});
 	}
 };
@@ -60,9 +61,11 @@ pqr.bindevents.moleculeToggleRotation = function(selector) {
 			if (toggle.hasClass('fa-toggle-on')) {
 				toggle.removeClass('fa-toggle-on');
 				toggle.addClass('fa-toggle-off');
+				htmlutilities.bootstrapFeedback("Rotation deactivated", "feedback", "fa-refresh");
 			} else {
 				toggle.removeClass('fa-toggle-off');
 				toggle.addClass('fa-toggle-on');
+				htmlutilities.bootstrapFeedback("Rotation activated", "feedback", "fa-refresh");
 			}
 		});
 	}
@@ -78,12 +81,14 @@ pqr.bindevents.propertiesViewerHandler = function() {
 		event.preventDefault();
 		$("#molecule-details table .detailed").addClass("hidden");
 		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "simple");
+			htmlutilities.bootstrapFeedback("Switched to simple view", "feedback", "fa-desktop");
 	});
 
 	$("#detailedView").on("click", function(event) {
 		event.preventDefault();
 		$("#molecule-details table .detailed").removeClass("hidden");
 		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "detailed");
+			htmlutilities.bootstrapFeedback("Switched to detailed view ", "feedback", "fa-desktop");
 	});
 };
 
@@ -99,6 +104,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("sphere");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
+			htmlutilities.bootstrapFeedback("Switched to sphere display ", "feedback", "fa-desktop");
 		});
 	}
 
@@ -108,6 +114,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("line");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
+			htmlutilities.bootstrapFeedback("Switched to line display ", "feedback", "fa-desktop");
 		});
 	}
 
@@ -116,6 +123,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("cross");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
+			htmlutilities.bootstrapFeedback("Switched to cross display ", "feedback", "fa-desktop");
 		});
 	}
 
@@ -124,6 +132,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("stick");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
+			htmlutilities.bootstrapFeedback("Switched to stick display ", "feedback", "fa-desktop");
 		});
 	}
 };
@@ -141,6 +150,7 @@ pqr.bindevents.moleculeToggleSurface = function(selector) {
 			$(this).addClass('disabled btn-success');
 			$(this).removeClass('btn-danger');
 			$(this).html('Surface Removed');
+			htmlutilities.bootstrapFeedback("Surface removed. Reload to add surface ", "feedback", "fa-desktop");
 		});
 	}
 };

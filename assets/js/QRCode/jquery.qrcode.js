@@ -19,7 +19,7 @@ function QRCode(text, level, version, quiet) {
     var quietModuleCount = qr.getModuleCount() + 2*quiet;
 
     function isDark(row, col) {
-
+        
         row -= quiet;
         col -= quiet;
 
