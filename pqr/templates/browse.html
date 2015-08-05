@@ -55,7 +55,8 @@
   <div class="container">
     <!-- Molecule Browser -->
     <div class="row clearfix" id="molecule-browser">
-        {% import '/macros/molecules.html' as molecule %} {% if results %}
+        {% import '/macros/molecules.html' as molecule %} 
+        {% if results %}
         <div class="row alert alert-success" role="alert">
             <div class="col-xs-12">
                <samp>Page {{active}} out of {{typenum_pages}}</samp>

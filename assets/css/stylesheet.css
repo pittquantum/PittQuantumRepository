@@ -512,6 +512,10 @@ body .page-browse #molecule-browser .molecule-viwer .molecule-formula {
     font-size: 45px;
   }
 }
+body .page-browse #molecule-browser .molecule-viwer .svg_viewer {
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
 body .page-contact address {
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
   border-radius: 2px;
