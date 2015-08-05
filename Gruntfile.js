@@ -1,5 +1,4 @@
 module.exports = function(grunt) {
-
     grunt.initConfig({
         //Less Comilation Options 
         less: {
@@ -21,7 +20,7 @@ module.exports = function(grunt) {
                 },
                 // safe: true,
                 processors: [
-                    require('pixrem')(),// add fallbacks for rem units
+                    require('pixrem')(), // add fallbacks for rem units
                     require('autoprefixer-core')({
                         browsers: 'last 2 versions'
                     }), // add vendor prefixes
@@ -54,35 +53,79 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
-            options: {
-                // define a string to put between each file in the concatenated output
-                banner: '/*! PQR JavaScript Combined and minified on <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+            prod: {
+                options: {
+                    // define a string to put between each file in the concatenated output
+                    banner: '/*! PQR PROD JavaScript Combined and minified on <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+                    compress: {
+                        drop_console: true, //Don't display any console output for production 
+                    }
+                },
+                files: {
+                    "pqr/static/js/pqr.min.js": ['pqr/static/js/pqr.js']
+                }
             },
-            dist: {
-                // the files to concatenate
+            dev: {
+                options: {
+                    // define a string to put between each file in the concatenated output
+                    banner: '/*! PQR DEV JavaScript Combined and minified on <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+                    compress: {},
+                    beautify: true
+                },
                 files: {
                     "pqr/static/js/pqr.min.js": ['pqr/static/js/pqr.js']
                 }
             }
         },
-        watch: {
-            styles: {
+        focus:{ //Only Run a subset of watch events for production or dev
+            dev:{
+                include: ['styles_dev', 'scripts_dev', 'configFiles']
+            },
+            prod:{
+                include: ['styles_prod', 'scripts_prod', 'configFiles']
+            }
+        },
+        watch: { //Which folders to watch for changes and run only the tasks required
+            styles_prod: {
                 files: ['assets/less/**/*.less'],
                 tasks: ['less', 'concat:css', 'postcss'],
                 options: {
                     nospawn: true
                 }
             },
-            scripts: {
+            styles_dev: {
+                files: ['assets/less/**/*.less'],
+                tasks: ['less', 'concat:css', 'postcss'],
+                options: {
+                    nospawn: true
+                }
+            },
+            scripts_prod: {
                 files: ['assets/js/**/*.js'],
-                tasks: ['concat:js', 'uglify']
+                tasks: ['concat:js', 'uglify:prod']
+            },
+            styles_dev: {
+                files: ['assets/js/**/*.js'],
+                tasks: ['concat:js', 'uglify:dev']
+            },
+            configFiles: {
+                files: ['Gruntfile.js', 'package.json'],
+                options: {
+                    reload: true
+                }
             }
         }
     });
 
     require('load-grunt-tasks')(grunt);
+    grunt.registerTask('default', ['focus:prod']);
 
-    grunt.registerTask('default', ['watch']);
-    grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss', 'uglify']);
-    grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss']);
+    grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss', 'uglify:prod']);
+    grunt.registerTask('prod_watch', ['focus:prod']);
+
+    grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss', 'uglify:dev']);
+    grunt.registerTask('dev_watch', ['focus:dev']);
+
+
+
 };
