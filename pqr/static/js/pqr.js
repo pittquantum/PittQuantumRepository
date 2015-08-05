@@ -2593,6 +2593,7 @@ htmlutilities.smoothScrollingAnchors = function() {
         });
     });
 };
+
 /**
  * Display bootstrap like notificaitons for a brief amount of time
  * @param  String message The message for the bootstrap feedback
@@ -21328,6 +21329,7 @@ pqr.init = function() {
 			pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
 			pqr.bindevents.moleculeToggleSurface('#surfaceSwitch');
 			pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
+			pqr.qrgen.addQRCode("#qr-print-wrapper", pqr.htmlUtilities.getINCHIKey());
 
 		}
 

@@ -30,21 +30,39 @@
 <div class="molecule row">
     {%if jsonDict["name"]%}
     <h1 id="molecule-name"><!-- Molecule name as h1 for SEO-->
-    <a class="visible-xs-inline" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> 
+    <a class="visible-xs-inline qr-code-icon" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> 
     {{ jsonDict["name"].title()|replacegreek|safe }}
     <span class='pull-right'>
     <a href='#' id="rotationSwitch" data-container="body" data-toggle="tooltip" title="Toggle Molecule Rotation"><i class="fa fa-toggle-off"></i></a>
     <a href='#' id='reset-molecule' data-container="body" data-toggle="tooltip" title="Reset Zoom"><i class="fa fa-crosshairs"></i></a>
-
-
     </span>
     
     </h1> {%endif%}
     <!--3DMol Viewer Container-->
     <div id="molecule-viewer" class="col-sm-12 col-md-7 col-md-push-5">
-        <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-surface1='opacity:.8;color:white' data-style='{{style}}'></div>
+        <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-surface1='opacity:.8;color:white' data-style='{{style}}'></div>
     </div>
     <!--3DMol Viewer Container-->
+
+    <div class="media-wrapper">
+        <!-- QR Viewer for Print view  -->
+        <div id='qr-print-wrapper' class='visible-print-block col-xs-6 center-block'> 
+            
+        </div>
+        <!-- QR Viewer for Print view  -->
+
+        <!-- SVG Viewer for Print view  -->
+        <div class='svg-wrapper visible-print-block col-xs-6 center-block'> 
+            <div class='svg-container'>
+                <object type="image/svg+xml" data="/static/data/svg/{{mol2}}.svg" width="100%" height="100%" class="svg-content visible-print-inline">
+                </object>
+            </div>
+        </div>
+        <!-- SVG Viewer for Print view  -->
+    </div>
+
+    <div class="visible-print-block printer-clear clearfix row"></div>
+
     <section id="molecule-details" class='row'>
         <div id="molecule-properties" class="col-sm-12 col-md-5 col-md-pull-7">
             <div class="panel panel-default">

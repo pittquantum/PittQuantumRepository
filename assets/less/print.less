@@ -1,0 +1,135 @@
+/**
+ * 	Styles for printing  
+ * 
+ */
+@media print {
+	.container {
+		width: 100%;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	//Global Hides
+	header, footer, [data-toggle*=tooltip], img:after {
+		display: none;
+	}
+	//Molecule Page Styles 
+	.page-molecule {
+		h1#molecule-name {
+			font-size: 22px !important;
+			padding-left: 0 !important;
+
+			.small {
+				padding-top: 5px;
+				display: none;
+			}
+			#rotationSwitch, #reset-molecule {
+				display: none;
+			}
+			.qr-code-icon {
+				display: none !important;
+			}
+		}
+		#molecule-properties {
+			.tooltip-inner, .molecule-switchview, .properties-view-options, .panel-body {
+				display: none;
+			}
+			a:link:after, a:visited:after {
+				content: "";
+			}
+			.molecule-tags {
+				li {
+					margin-bottom: 2px;
+					margin-top: 2px;
+				}
+				a {
+					span {
+						border: none !important;
+					}
+				}
+				a:hover {
+					text-decoration: none;
+
+					span {
+						color: @brand-primary;
+						background-color: white;
+					}
+				}
+			}
+			.panel-default, .panel, .panel-heading {
+				border: none;
+				padding: 0;
+			}
+			h2 {
+				font-size: 21px;
+				margin-bottom: 0px;
+				padding-bottom: 0px;
+
+				.properties-view-options {
+					font-size: 12px;
+				}
+			}
+			//Table that holds all of the properties for the molecule 
+			table {
+				border: none;
+
+				tr td:first-of-type {
+					font-weight: bold;
+				}
+				tbody {
+					tr td {
+						text-overflow: ellipsis;
+						word-wrap: break-word;
+						padding: 4px;
+						font-size: 12px;
+					}
+					.molecule-alt-names ul {
+					}
+				}
+			}
+		}
+		//3Dmol viewer
+		#molecule-viewer {
+			div, canvas {
+				height: 250px;
+				display: none;
+			}
+		}
+		.media-wrapper {
+			@mediaHeight: 200px;
+			@mediaWidth: 200px;
+			height: @mediaHeight;
+
+			.svg-wrapper {
+				height: @mediaHeight;
+				width: @mediaWidth;
+
+				.svg-container {
+					height: @mediaHeight;
+					width: @mediaWidth;
+					display: inline-block !important;
+					position: relative;
+					padding-bottom: 100%;
+					vertical-align: middle;
+					overflow: hidden;
+
+					.svg-content {
+						display: inline-block;
+						position: absolute;
+						top: 0;
+						left: 0;
+					}
+				}
+			}
+			#qr-print-wrapper {
+				img {
+					height: 140px;
+					width: 140px;
+					display: block;
+					margin-left: auto;
+					margin-right: auto;
+					margin-top: 35px; 
+				}
+			}
+		}
+	}
+}

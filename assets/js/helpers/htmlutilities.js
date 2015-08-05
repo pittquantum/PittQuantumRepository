@@ -33,6 +33,7 @@ htmlutilities.smoothScrollingAnchors = function() {
         });
     });
 };
+
 /**
  * Display bootstrap like notificaitons for a brief amount of time
  * @param  String message The message for the bootstrap feedback

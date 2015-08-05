@@ -36,6 +36,7 @@ pqr.init = function() {
 			pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
 			pqr.bindevents.moleculeToggleSurface('#surfaceSwitch');
 			pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getINCHIKey());
+			pqr.qrgen.addQRCode("#qr-print-wrapper", pqr.htmlUtilities.getINCHIKey());
 
 		}
 

@@ -6807,6 +6807,123 @@ h5 {
   position: relative;
   margin: 5px 0px;
 }
+/**
+ * 	Styles for printing  
+ * 
+ */
+@media print {
+  .container {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  header,
+  footer,
+  [data-toggle*=tooltip],
+  img:after {
+    display: none;
+  }
+  .page-molecule h1#molecule-name {
+    font-size: 22px !important;
+    padding-left: 0 !important;
+  }
+  .page-molecule h1#molecule-name .small {
+    padding-top: 5px;
+    display: none;
+  }
+  .page-molecule h1#molecule-name #rotationSwitch,
+  .page-molecule h1#molecule-name #reset-molecule {
+    display: none;
+  }
+  .page-molecule h1#molecule-name .qr-code-icon {
+    display: none !important;
+  }
+  .page-molecule #molecule-properties .tooltip-inner,
+  .page-molecule #molecule-properties .molecule-switchview,
+  .page-molecule #molecule-properties .properties-view-options,
+  .page-molecule #molecule-properties .panel-body {
+    display: none;
+  }
+  .page-molecule #molecule-properties a:link:after,
+  .page-molecule #molecule-properties a:visited:after {
+    content: "";
+  }
+  .page-molecule #molecule-properties .molecule-tags li {
+    margin-bottom: 2px;
+    margin-top: 2px;
+  }
+  .page-molecule #molecule-properties .molecule-tags a span {
+    border: none !important;
+  }
+  .page-molecule #molecule-properties .molecule-tags a:hover {
+    text-decoration: none;
+  }
+  .page-molecule #molecule-properties .molecule-tags a:hover span {
+    color: #f16b1d;
+    background-color: white;
+  }
+  .page-molecule #molecule-properties .panel-default,
+  .page-molecule #molecule-properties .panel,
+  .page-molecule #molecule-properties .panel-heading {
+    border: none;
+    padding: 0;
+  }
+  .page-molecule #molecule-properties h2 {
+    font-size: 21px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+  }
+  .page-molecule #molecule-properties h2 .properties-view-options {
+    font-size: 12px;
+  }
+  .page-molecule #molecule-properties table {
+    border: none;
+  }
+  .page-molecule #molecule-properties table tr td:first-of-type {
+    font-weight: bold;
+  }
+  .page-molecule #molecule-properties table tbody tr td {
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    padding: 4px;
+    font-size: 12px;
+  }
+  .page-molecule #molecule-viewer div,
+  .page-molecule #molecule-viewer canvas {
+    height: 250px;
+    display: none;
+  }
+  .page-molecule .media-wrapper {
+    height: 200px;
+  }
+  .page-molecule .media-wrapper .svg-wrapper {
+    height: 200px;
+    width: 200px;
+  }
+  .page-molecule .media-wrapper .svg-wrapper .svg-container {
+    height: 200px;
+    width: 200px;
+    display: inline-block !important;
+    position: relative;
+    padding-bottom: 100%;
+    vertical-align: middle;
+    overflow: hidden;
+  }
+  .page-molecule .media-wrapper .svg-wrapper .svg-container .svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .page-molecule .media-wrapper #qr-print-wrapper img {
+    height: 140px;
+    width: 140px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35px;
+  }
+}
 color::-moz-selection {
   background: #3498db;
   color: white;
