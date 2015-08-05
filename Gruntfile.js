@@ -80,11 +80,8 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-postcss');
+    require('load-grunt-tasks')(grunt);
+
     grunt.registerTask('default', ['watch']);
     grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss', 'uglify']);
     grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss']);
