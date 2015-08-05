@@ -81,8 +81,9 @@ def molecule(key="-1"):
             "You entered a molecule that didn't exist, so you've been redirected to the molecule of the week!", 'redirect')
         return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
+    meta_description = "You are viewing a interactive 3D depiction of the molecule " + jsonDict["name"] + "(" + jsonDict["formula"] + ") from the PQR."
     # return the view
-    return render_template("molecule.html", page=page, jsonDict=json_dict)
+    return render_template("molecule.html", page=page, jsonDict=json_dict, metaDescription=meta_description)
 
 
 ##########################################################################
