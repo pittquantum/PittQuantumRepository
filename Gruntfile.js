@@ -150,15 +150,24 @@ module.exports = function(grunt) {
             },
             scripts_prod: {
                 files: ['assets/js/**/*.js'],
-                tasks: ['concat:js', 'uglify:prod']
+                tasks: ['concat:js', 'uglify:prod'],
+                options:{
+                    nospawn: true
+                }
             },
             scripts_dev: {
                 files: ['assets/js/**/*.js'],
-                tasks: ['concat:js', 'uglify:dev']
+                tasks: ['concat:js', 'uglify:dev'],
+                options:{
+                    nospawn: true
+                }
             },
             scripts_dev_fast: {
                 files: ['assets/js/**/*.js'],
-                tasks: ['concat:js', 'concat:dev_fast']
+                tasks: ['concat:js', 'concat:dev_fast'],
+                options:{
+                    nospawn: true
+                }
             },
             configFiles: {
                 files: ['Gruntfile.js', 'package.json'],

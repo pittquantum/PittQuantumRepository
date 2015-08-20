@@ -17,6 +17,7 @@ pqr.init = function() {
 		bootstrapUtilities.FullToolTipOptIn();
 		pqr.htmlUtilities.initFontSize(); 
 		pqr.bindevents.bindFontSwitchers();
+		htmlutilities.footerToBottom('footer', '#main');
 
 		if ($("#main").hasClass("page-home")) {
 			pqr.threeDMole.initViewers();

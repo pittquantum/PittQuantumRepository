@@ -2604,8 +2604,6 @@ htmlutilities.smoothScrollingAnchors = function() {
  * @param  String type The Type/Style of the message
  * @param  Selector selector JQuery selector for the html message to be added
  * @param  String icon_class A font awesome icon class
- * 
- * @return String the resulting html feedback
  */
 htmlutilities.bootstrapFeedback = function(message, type, icon_class) {
 
@@ -2621,7 +2619,48 @@ htmlutilities.bootstrapFeedback = function(message, type, icon_class) {
     }).show();
 
 };
-;
+
+/**
+ * Keep the footer at the bottom of the page regardless of the content size.
+ * @param  {Selector} footer_selector  JQuery Selector for the footer
+ * @param  {Selector} content_selector JQuery Selector for the main content
+ */
+htmlutilities.footerToBottom = function(footer_selector, content_selector){
+    if($(footer_selector).length && $(content_selector).length){
+
+       this.updateFooterHeight(footer_selector, content_selector);
+
+       setInterval(function(){ htmlutilities.updateFooterHeight(footer_selector, content_selector); }, 200);
+
+    }
+    else{
+        if(this.debug) console.log("Sectors not found - FooterToBottom"); 
+    }
+    
+};
+
+/**
+ * Update the margin above the footer to allow more space. Helper function for 
+ * footerToBottom
+ * @param  {Integer} window_height  Height of the window 
+ * @param  {Integer} footer_height  Height of the footer
+ * @param  {Integer} content_height Height of the content
+ */
+htmlutilities.updateFooterHeight = function(footer_selector, content_selector){
+    var window_height = $(window).height(); 
+    var footer_height = $(footer_selector).height();
+    var footer_top = $(footer_selector).position().top + footer_height;
+    var content_height = $(content_selector).height();
+
+    if(footer_top < window_height){ 
+        $(footer_selector).css('margin-top', 10 + (window_height - footer_top) + 'px');
+    }
+    else{ 
+        $(footer_selector).css('margin-top', '10px');
+    }
+
+
+};
 /**
  * @fileoverview Initialize all JS for the website. Must be the 
  * first file concated in the pqr folder. 
@@ -21330,6 +21369,7 @@ pqr.init = function() {
 		bootstrapUtilities.FullToolTipOptIn();
 		pqr.htmlUtilities.initFontSize(); 
 		pqr.bindevents.bindFontSwitchers();
+		htmlutilities.footerToBottom('footer', '#main');
 
 		if ($("#main").hasClass("page-home")) {
 			pqr.threeDMole.initViewers();
