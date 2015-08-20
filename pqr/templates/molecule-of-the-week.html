@@ -18,13 +18,13 @@
 	    <div class='table-responsive'>
 	        <table class='table table-striped'>
 	        	<tr> 
+	        		<th> Date </th>
 	        		<th> Molecule </th>
-	        		<th> InChIKey </th>
 	        	</tr>
 	            {% for molecule in week_molecules %}
 	            	<tr>
+	            		<th>{{ molecule[2] }}</th>
 	            		<td><a href='/mol/{{molecule[0]}}'>{{ molecule[1] }}</a></td>
-	            		<td>{{ molecule[0] }}</td>
 	            	</tr>
 	            {% endfor %}
 	        </table>
