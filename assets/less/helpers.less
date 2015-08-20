@@ -1,0 +1,169 @@
+/**
+ * Miscelleanous LESS helper mixins
+ * @author: Josh Rogan
+ */
+
+
+
+.fixed {
+	position: fixed;
+}
+
+.vertical-align {
+	position: relative;
+	top: 50%;
+	// transform: translateY(-50%);
+}
+.vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+
+/**
+ * Responsive utilities 
+ *  
+ * 
+ */
+
+//Factor to reduce each element by 
+@xs-reduction: .80; 
+@sm-reduction: .90; 
+@md-reduction: .95;
+@lg-reduction: 1.0;
+
+
+#responsive-helpers {
+	.responsive-abstract-manual(@property, @xs-value, @sm-value, @md-value, @lg-value){
+		@{property}: @xs-value;
+
+		/* Small devices (tablets, 768px and up) */
+		@media (min-width:@screen-sm-min) {
+			@{property}: @sm-value;
+		}
+
+		/* Medium devices (desktops, 992px and up) */
+		@media (min-width:@screen-md-min) {
+			@{property}: @md-value;
+		}
+
+		/* Large devices (large desktops, 1200px and up) */
+		@media (min-width:@screen-lg-min) {
+			@{property}: @lg-value;
+		}
+	}
+	
+	.responsive-abstract(@property, @size){
+		.responsive-abstract-manual(@property, @size * @xs-reduction, @size * @sm-reduction, @size * @md-reduction, @size * @lg-reduction);
+	}
+
+	.responsive-height(@size) {
+		.responsive-height-manual(@size * @xs-reduction, @size * @sm-reduction, @size * @md-reduction, @size * @lg-reduction);
+	}
+
+	/**
+	 * Mixin to allow to set all of the proper media sizes for a height
+	 * @param  {Height Size} @xs-size [The height you want for this size]
+	 * @param  {Height Size} @sm-size [The height you want for this size]
+	 * @param  {Height Size} @md-size [The height you want for this size]
+	 * @param  {Height Size} @lg-size [The height you want for this size]
+	 */
+	.responsive-height-manual(@xs-size, @sm-size, @md-size, @lg-size) {
+		.responsive-abstract-manual(height, @xs-size, @sm-size, @md-size, @lg-size);
+	}
+
+
+
+	
+
+}
+#scroll-arrow {
+	position: relative;
+	float: right;
+	line-height: 55px;
+	height: 55px;
+	width: 220px;
+	display: block;
+	padding: 0 15px;
+	margin-top: 25px;
+
+	.text {
+		position: absolute;
+		text-transform: uppercase;
+		vertical-align: middle;
+		color: #dbad6f;
+		display: inline-block;
+		font-size: 18px;
+		font-weight: 100;
+		z-index: 2;
+		text-decoration: underline;
+		-webkit-transition: color 300ms;
+		transition: color 300ms;
+	}
+	.block {
+		position: absolute;
+		z-index: 1;
+		right: 0;
+		padding-right: 15px;
+		width: 65px;
+		height: 55px;
+		vertical-align: middle;
+		display: inline-block;
+		background-color: #dbad6f;
+		color: white;
+		font-size: 30px;
+		text-align: center;
+		font-weight: 100;
+		text-align: right;
+		-webkit-transition: width 300ms;
+		transition: width 300ms;
+	}
+	&:hover {
+		.text {
+			color: white;
+			text-decoration: none;
+		}
+		.block {
+			width: 100%;
+		}
+	}
+}
+/**Arrow Icons **/
+.arrow-up {
+	width: 0; 
+	height: 0; 
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	
+	border-bottom: 5px solid red;
+}
+
+.arrow-down {
+	width: 0; 
+	height: 0; 
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	
+	border-top: 20px solid red;
+}
+
+.arrow-right {
+	width: 0; 
+	height: 0; 
+	border-top: 60px solid transparent;
+	border-bottom: 60px solid transparent;
+	
+	border-left: 60px solid red;
+}
+
+.arrow-left {
+	width: 0; 
+	height: 0; 
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	
+	border-right:10px solid red; 
+}

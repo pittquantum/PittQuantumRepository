@@ -6864,6 +6864,11 @@ h5 {
   .page-molecule h1#molecule-name {
     font-size: 22px !important;
     padding-left: 0 !important;
+    z-index: 10;
+    position: relative;
+  }
+  .page-molecule h1#molecule-name::before {
+    content: "Pitt Quantum Repository - ";
   }
   .page-molecule h1#molecule-name .small {
     padding-top: 5px;
@@ -6935,35 +6940,24 @@ h5 {
     height: 250px;
     display: none;
   }
-  .page-molecule print-molecule .media-wrapper {
-    height: 200px;
-  }
-  .page-molecule print-molecule .media-wrapper .svg-wrapper {
-    height: 200px;
-    width: 200px;
-  }
-  .page-molecule print-molecule .media-wrapper .svg-wrapper .svg-container {
-    height: 200px;
-    width: 200px;
-    display: inline-block !important;
+  .page-molecule .svg-wrapper {
     position: relative;
-    padding-bottom: 100%;
-    vertical-align: middle;
-    overflow: hidden;
+    margin-bottom: -75px;
+    margin-top: -75px;
+    padding: 0;
   }
-  .page-molecule print-molecule .media-wrapper .svg-wrapper .svg-container .svg-content {
-    display: inline-block;
+  .page-molecule .svg-wrapper img {
+    height: 500px;
+    z-index: -100;
+  }
+  .page-molecule #qr-print-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 65px;
+    left: 28px;
   }
-  .page-molecule print-molecule .media-wrapper #qr-print-wrapper img {
-    height: 140px;
-    width: 140px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 35px;
+  .page-molecule #qr-print-wrapper img {
+    height: 75px;
+    z-index: 10;
   }
 }
 color::-moz-selection {
@@ -7141,10 +7135,17 @@ body .page-molecule #molecule-properties table tbody tr td {
   text-overflow: ellipsis;
   word-wrap: break-word;
 }
+body .page-molecule #molecule-properties table tbody tr > td:first-child {
+  min-width: 150px;
+}
 body .page-molecule #molecule-properties table tbody .molecule-alt-names ul {
   max-height: 200px;
   overflow-y: scroll;
   overflow-x: scroll;
+}
+body .page-molecule #molecule-properties .molecule-switchview .mobile .btn {
+  width: 100%;
+  margin-bottom: 10px;
 }
 body .page-molecule #molecule-viewer div,
 body .page-molecule #molecule-viewer canvas {

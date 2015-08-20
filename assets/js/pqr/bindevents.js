@@ -100,8 +100,8 @@ pqr.bindevents.propertiesViewerHandler = function() {
  */
 pqr.bindevents.moleculeStyleChanger = function() {
 
-	if ($('#changeStyleSphere').length) {
-		$('#changeStyleSphere').on("vclick", function(event) {
+	if ($('.changeStyleSphere').length) {
+		$('.changeStyleSphere').on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("sphere");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
@@ -110,8 +110,8 @@ pqr.bindevents.moleculeStyleChanger = function() {
 	}
 
 
-	if ($('#changeStyleLine').length) {
-		$('#changeStyleLine').on("vclick", function(event) {
+	if ($('.changeStyleLine').length) {
+		$('.changeStyleLine').on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("line");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
@@ -119,8 +119,8 @@ pqr.bindevents.moleculeStyleChanger = function() {
 		});
 	}
 
-	if ($('#changeStyleCross').length) {
-		$('#changeStyleCross').on("vclick", function(event) {
+	if ($('.changeStyleCross').length) {
+		$('.changeStyleCross').on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("cross");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
@@ -128,8 +128,8 @@ pqr.bindevents.moleculeStyleChanger = function() {
 		});
 	}
 
-	if ($('#changeStyleStick').length) {
-		$('#changeStyleStick').on("vclick", function(event) {
+	if ($('.changeStyleStick').length) {
+		$('.changeStyleStick').on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("stick");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");

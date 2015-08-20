@@ -45,21 +45,20 @@
     </div>
     <!--3DMol Viewer Container-->
 
-    <div class="media-wrapper">
-        <!-- QR Viewer for Print view  -->
-        <div id='qr-print-wrapper' class='visible-print-block col-xs-6 center-block'> 
-            
-        </div>
-        <!-- QR Viewer for Print view  -->
+          
 
+    <div class="media-wrapper">
         <!-- SVG Viewer for Print view  -->
-        <div class='svg-wrapper visible-print-block col-xs-6 center-block'> 
-            <div class='svg-container'>
-                <img src="/static/data/svg/{{mol2}}.svg" alt='Molecule SVG Image'/>
-            </div>
+        <div class='svg-wrapper visible-print-block col-xs-12'> 
+            <img src="/static/data/svg/{{mol2}}.svg" alt='Molecule SVG Image' class='center-block'/>
         </div>
         <!-- SVG Viewer for Print view  -->
     </div>
+      <!-- QR Viewer for Print view  -->
+        <div id='qr-print-wrapper' class='visible-print-block'> 
+            
+        </div>
+        <!-- QR Viewer for Print view  -->
 
     <!-- Printing Clearing -->
     <div class="visible-print-block printer-clear clearfix row"></div>
@@ -265,13 +264,25 @@
                     </table>
                 </div>
                 <div class="panel-footer molecule-switchview block-center center-block text-center">
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-primary" id="changeStyleSphere">Spheres</button>
-                        <button type="button" class="btn btn-primary" id="changeStyleLine">Lines</button>
-                        <button type="button" class="btn btn-primary" id="changeStyleStick">Sticks</button>
-                        <button type="button" class="btn btn-danger" id="surfaceSwitch">Remove Surface</button>
-                        <!-- <button type="button" class="btn btn-info" id="rotationSwitch">Rotation <i class="fa fa-toggle-on"></i></button> -->
+                    <!-- Normal Screen Buttons  -->
+                    <div class="btn-group btn-group-sm hidden-xs hidden-sm" role="group">
+                        <button type="button" class="btn btn-primary changeStyleSphere">Spheres</button>
+                        <button type="button" class="btn btn-primary changeStyleLine">Lines</button>
+                        <button type="button" class="btn btn-primary changeStyleStick">Sticks</button>
+                        <button type="button" class="btn btn-danger surfaceSwitch">Remove Surface</button>
                     </div>
+                    <!-- Normal Screen Buttons  -->
+
+                    <!-- Small Screen Buttons  -->
+                     <div class="visible-xs visible-sm mobile">
+                        <button type="button" class="btn btn-primary changeStyleSphere">Spheres</button>
+                        <button type="button" class="btn btn-primary changeStyleLine">Lines</button>
+                        <button type="button" class="btn btn-primary changeStyleStick">Sticks</button>
+                        <button type="button" class="btn btn-danger surfaceSwitch">Remove Surface</button>
+                    </div>
+                    <!-- Small Screen Buttons  -->
+
+
                 </div>
             </div>
         </div>
