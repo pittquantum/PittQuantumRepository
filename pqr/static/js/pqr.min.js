@@ -21155,17 +21155,17 @@ pqr.bindevents.bindFontSwitchers = function() {
 	var decreaseButtonSelector = "#reducefont";
 	var resetButtonSelector = "#defaultfont";
 
-	$(increaseButtonSelector).on("click tap", function(event) {
+	$(increaseButtonSelector).on("vclick", function(event) {
 		event.preventDefault();
 		pqr.htmlUtilities.updateFont(1);
 	});
 
-	$(decreaseButtonSelector).on("click tap", function(event) {
+	$(decreaseButtonSelector).on("vclick", function(event) {
 		event.preventDefault();
 		pqr.htmlUtilities.updateFont(-1);
 	});
 
-	$(resetButtonSelector).on("click tap", function(event) {
+	$(resetButtonSelector).on("vclick", function(event) {
 		event.preventDefault();
 		pqr.htmlUtilities.updateFont(0);
 	});
@@ -21179,7 +21179,7 @@ pqr.bindevents.bindFontSwitchers = function() {
  */
 pqr.bindevents.moleculeReset = function(selector) {
 	if ($(selector).length) {
-		$(selector).on("click tap", function(event) {
+		$(selector).on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.resetView();
 			htmlutilities.bootstrapFeedback("Molecule viewer reset", "feedback", "fa-crosshairs");
@@ -21194,7 +21194,7 @@ pqr.bindevents.moleculeReset = function(selector) {
  */
 pqr.bindevents.moleculeToggleRotation = function(selector) {
 	if ($(selector).length) {
-		$(selector).on("click tap", function(event) {
+		$(selector).on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.toggleRotation();
 			var toggle = $(this).children();
@@ -21218,14 +21218,14 @@ pqr.bindevents.moleculeToggleRotation = function(selector) {
  * 	
  */
 pqr.bindevents.propertiesViewerHandler = function() {
-	$("#simpleView").on("click tap", function(event) {
+	$("#simpleView").on("vclick", function(event) {
 		event.preventDefault();
 		$("#molecule-details table .detailed").fadeOut('fast');
 		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "simple");
 			htmlutilities.bootstrapFeedback("Switched to simple view", "feedback", "fa-desktop");
 	});
 
-	$("#detailedView").on("click tap", function(event) {
+	$("#detailedView").on("vclick", function(event) {
 		event.preventDefault();
 		$("#molecule-details table .detailed").removeClass('hidden');
 		$("#molecule-details table .detailed").fadeIn('fast');
@@ -21242,7 +21242,7 @@ pqr.bindevents.propertiesViewerHandler = function() {
 pqr.bindevents.moleculeStyleChanger = function() {
 
 	if ($('#changeStyleSphere').length) {
-		$('#changeStyleSphere').on("click tap", function(event) {
+		$('#changeStyleSphere').on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("sphere");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
@@ -21252,7 +21252,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 
 
 	if ($('#changeStyleLine').length) {
-		$('#changeStyleLine').on("click tap", function(event) {
+		$('#changeStyleLine').on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("line");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
@@ -21261,7 +21261,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 	}
 
 	if ($('#changeStyleCross').length) {
-		$('#changeStyleCross').on("click tap", function(event) {
+		$('#changeStyleCross').on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("cross");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
@@ -21270,7 +21270,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
 	}
 
 	if ($('#changeStyleStick').length) {
-		$('#changeStyleStick').on("click tap", function(event) {
+		$('#changeStyleStick').on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.changeStyle("stick");
 			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
@@ -21286,7 +21286,7 @@ pqr.bindevents.moleculeStyleChanger = function() {
  */
 pqr.bindevents.moleculeToggleSurface = function(selector) {
 	if ($(selector).length) {
-		$(selector).on("click tap", function(event) {
+		$(selector).on("vclick", function(event) {
 			event.preventDefault();
 			pqr.threeDMole.toggleSurface();
 			$(this).addClass('disabled btn-success');
@@ -21304,7 +21304,7 @@ pqr.bindevents.moleculeToggleSurface = function(selector) {
  */
 pqr.bindevents.printButton = function(selector){
 	if ($(selector).length) {
-		$(selector).on("click tap", function(event) {
+		$(selector).on("vclick", function(event) {
 			event.preventDefault(); 
 			window.print(); 
 			htmlutilities.bootstrapFeedback("Printing molecule data", "feedback", "fa-print");
