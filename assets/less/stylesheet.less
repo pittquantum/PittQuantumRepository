@@ -3,12 +3,15 @@
 @import "bootstrap/mixins.less";
 @import '../../bower_components/lesshat/build/lesshat.less';
 @import "utils.less";
+@import "helpers.less"; 
 @import "font-helpers.less";
 @import "transitions.less";
 @import "typography.less";
-@import "_bootstrap.less";
 @import "vendors/bootstrap-notify.less";
 @import "print.less";
+
+@import "_bootstrap.less";
+@import "_masonary.less";
 
 //Highligther 	
 color::-moz-selection {
@@ -103,6 +106,12 @@ body {
 				@media (min-width:@screen-lg-min) {
 					height: 400px;
 				}
+			}
+		}
+
+		.the-news{
+			a.list-group-item, a.list-group-item{
+				.transition(background-color .2s ease-in-out);
 			}
 		}
 	}
@@ -300,6 +309,16 @@ body {
 				.svg_viewer {
 					background-position: center center !important;
 					background-repeat: no-repeat !important;
+				}
+			}
+
+			.molecule-results-masonary{
+				.transition(opacity 0.5s ease);
+
+				opacity: 1; 
+
+				&.translucent{
+					opacity: 0;
 				}
 			}
 		}

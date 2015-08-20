@@ -24,9 +24,7 @@ pqr.init = function() {
 			pqr.bindevents.moleculeReset('#reset-molecule');
 			pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
 		}
-
-
-		if ($("#main").hasClass("page-molecule")) {
+		else if ($("#main").hasClass("page-molecule")) {
 			pqr.threeDMole.initViewers();
 			pqr.htmlUtilities.updatePropertiesViewer();
 			pqr.htmlUtilities.initQuickFit("#molecule-name", {min: 12, max:36}); 
@@ -40,7 +38,10 @@ pqr.init = function() {
 
 			pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getQRURL());
 			pqr.qrgen.addQRCode("#qr-print-wrapper", pqr.htmlUtilities.getQRURL());
-
+		}
+		else if($("#main").hasClass("page-browse")){
+			pqr.masonary.init(); 
+			$('.molecule-results-masonary').removeClass('translucent'); 
 		}
 
 		if(pqr.debug) console.log("Finished loading PQR Web App!"); 

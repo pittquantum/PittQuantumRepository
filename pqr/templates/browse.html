@@ -54,7 +54,7 @@
 <div class="container">
     <!-- Molecule Browser -->
     <div class="row clearfix" id="molecule-browser">
-        {% if results %}
+        {% if not results %}
 
         <!-- Page Results -->
         <div class="row alert alert-success" role="alert">
@@ -66,10 +66,24 @@
 
 
         <!-- Molecule Search Results -->
-        {% for result in results %} 
-            {{ molecule.resultMolecule(result) }} 
-        {% endfor %} 
+        {# 
+            {% for result in results %} 
+                {{ molecule.resultMolecule(result) }} 
+            {% endfor %} 
+        #}
         <!-- /Molecule Search Results -->
+
+        <!-- Masonary Search Results -->
+        <div class="clearfix"></div>
+        <div class='row molecule-results-masonary translucent'> 
+            <div class="grid text-center center-block">
+                <div class="grid-sizer"></div>
+                {% for n in range(15) %}
+                    {{ molecule.resultMoleculeMasonary(n) }} 
+                {% endfor %} 
+            </div>
+        </div>
+        <!-- /Masonary Search Results  -->
 
         <!-- Simple Pagination  -->
         {% if active != -1 %}
@@ -116,7 +130,7 @@
         {% endif %}
         <!-- /No Results Found  -->
 
-        
+
     </div>
     <!-- /Molecule Browser -->
 </div>
