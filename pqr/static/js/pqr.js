@@ -21216,14 +21216,14 @@ pqr.bindevents.moleculeToggleRotation = function(selector) {
 pqr.bindevents.propertiesViewerHandler = function() {
 	$("#simpleView").on("click", function(event) {
 		event.preventDefault();
-		$("#molecule-details table .detailed").addClass("hidden");
+		$("#molecule-details table .detailed").fadeOut('fast');
 		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "simple");
 			htmlutilities.bootstrapFeedback("Switched to simple view", "feedback", "fa-desktop");
 	});
 
 	$("#detailedView").on("click", function(event) {
 		event.preventDefault();
-		$("#molecule-details table .detailed").removeClass("hidden");
+		$("#molecule-details table .detailed").fadeIn('fast');
 		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "detailed");
 			htmlutilities.bootstrapFeedback("Switched to detailed view ", "feedback", "fa-desktop");
 	});

@@ -19,7 +19,7 @@ from settings import APP_JSON, APP_MOL2, APP_ARTICLES
 import os
 import json
 import markdown
-from datetime import datetime
+from datetime import datetime, timedelta
 from difflib import SequenceMatcher as SM
 
 # Regular expressions for chemical formula parsing
@@ -41,11 +41,14 @@ WEEKLY_MOL_NAME = None
 # @cache.cached(timeout=86400)
 def index():
     page = {'id': "page-home"}
-    articles = sorted([os.path.splitext(article)[0]
-                       for article in next(os.walk(APP_ARTICLES))[2]], reverse=True)
+    articles = [os.path.splitext(article)[0]
+                       for article in next(os.walk(APP_ARTICLES))[2]]
+    new_articles = sorted(get_new_articles(articles, 14), reverse=True)
+    articles = sorted(list(set(articles) - set(new_articles)), reverse=True)
+
     week_mol = (MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
-    return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, week_mol=week_mol, week_mol_name=WEEKLY_MOL_NAME)
+    return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, new_articles=new_articles, week_mol=week_mol, week_mol_name=WEEKLY_MOL_NAME)
 
 
 ##########################################################################
@@ -588,6 +591,20 @@ def getINCHIkeys(folder):
 def getINCHIfolders():
     root = APP_JSON
     return os.listdir(APP_JSON)
+
+#Create a new list of 'new' articles based on how many days passed 
+def get_new_articles(articles, days):
+    new_articles = []
+    for article in articles:
+        date = article[:10]
+        try: 
+            dt = datetime.strptime(date, "%Y-%m-%d")
+            if dt > datetime.now()-timedelta(days=days):
+                new_articles.append(article)
+        except ValueError: 
+            print "Invalid Date Format"
+    return new_articles
+
 
 
 if __name__ == '__main__':

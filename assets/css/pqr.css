@@ -6611,6 +6611,42 @@ button.close {
 .font-concrete {
   color: #95a5a6;
 }
+.background-p {
+  background-color: #333333;
+}
+.background-primary {
+  background-color: #f16b1d;
+}
+.background-white {
+  background-color: #fff;
+}
+.background-off-white {
+  background-color: #ecf0f1;
+}
+.background-blue {
+  background-color: #3498db;
+}
+.background-yellow {
+  background-color: #f1c40f;
+}
+.background-purple {
+  background-color: #9b59b6;
+}
+.background-green {
+  background-color: #2ecc71;
+}
+.background-blue-green {
+  background-color: #1abc9c;
+}
+.background-red {
+  background-color: #e74c3c;
+}
+.background-orange {
+  background-color: #e67e22;
+}
+.background-concrete {
+  background-color: #95a5a6;
+}
 /**
  *	Various transitions helpers
  *
@@ -7043,6 +7079,9 @@ body .page-molecule h1#molecule-name {
 }
 body .page-molecule h1#molecule-name .small {
   padding-top: 5px;
+}
+body .page-molecule #molecule-properties .panel {
+  transition: all 0.2s linear;
 }
 body .page-molecule #molecule-properties .molecule-tags li {
   margin-bottom: 2px;

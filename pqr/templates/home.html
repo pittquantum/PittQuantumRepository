@@ -27,8 +27,12 @@
         <div class="col-md-6">
             <h2> News </h2>
             <div class="list-group other-content">
+                {% for article in new_articles %}
+                    <a href="/news/{{article}}" target="_blank" class="list-group-item"><span class="badge background-primary">New</span><i class="fa fa-newspaper-o"></i> {{article|title}}</a> 
+                {% endfor %}
+
                 {% for article in articles %}
-                    <a href="/news/{{article}}" target="_blank" class="list-group-item"><span class="badge">New</span><i class="fa fa-newspaper-o"></i> {{article|title}}</a> 
+                    <a href="/news/{{article}}" target="_blank" class="list-group-item"><i class="fa fa-newspaper-o"></i> {{article|title}}</a> 
                 {% endfor %}
             </div>
         </div>
