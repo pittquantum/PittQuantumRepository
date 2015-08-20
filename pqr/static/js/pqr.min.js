@@ -21223,6 +21223,7 @@ pqr.bindevents.propertiesViewerHandler = function() {
 
 	$("#detailedView").on("click", function(event) {
 		event.preventDefault();
+		$("#molecule-details table .detailed").removeClass('hidden');
 		$("#molecule-details table .detailed").fadeIn('fast');
 		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "detailed");
 			htmlutilities.bootstrapFeedback("Switched to detailed view ", "feedback", "fa-desktop");
