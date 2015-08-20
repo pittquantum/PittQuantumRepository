@@ -15,7 +15,37 @@ pqr.htmlUtilities.getINCHIKey = function() {
 	if ($(".molecule-inchikey").length) {
 		var key = $(".molecule-inchikey").children().next().html();
 	}
+	else{
+		return false; 
+	}
 	return $.trim(key)
+};
+
+/**
+ * Reterieve the QR code url. Try to get the short URL first, then 
+ * the long url, finally by the base INCHI key. If all fails redirect
+ * to the home page. 
+ * 
+ * @return {String} The entire URL for the QR Code
+ */
+pqr.htmlUtilities.getQRURL = function(){
+	var DOI_BASE = "http://doi.org/";
+
+	if ($(".molecule-doi-short").length) {
+		var url = DOI_BASE + $(".molecule-doi-short").text();
+	}
+	else if($(".molecule-doi-long").length){
+		var url = DOI_BASE + $(".molecule-doi-long").text();
+	}
+	else if(this.getINCHIKey()){
+		var url = htmlutilities.getRootURL();
+		url += "/mol/" + this.getINCHIKey(); 
+	}
+	else{
+		return htmlutilities.getRootURL(); //Default to home page 
+	}
+
+	return $.trim(url);
 };
 
 /**

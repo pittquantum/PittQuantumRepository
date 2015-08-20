@@ -25,10 +25,10 @@ pqr.qrgen = { //Config
  * @param {String} url      The end of the URL to send to
  */
 pqr.qrgen.addQRCode = function(selector, url) {
-    var baseURL = htmlutilities.getRootURL();
+    // var baseURL = htmlutilities.getRootURL();
 
     if ($(selector).length) {
-        this.default_options.text = baseURL + "/mol/" + url;
+        this.default_options.text = url;
         $(selector).qrcode(this.default_options);
     } else {
         console.log("Couldn't find the selector", selector);
