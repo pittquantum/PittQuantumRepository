@@ -619,10 +619,15 @@ def get_weekly_molecule_list():
     sunday = datetime.date.isoformat(sunday)
     with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
         for line in molfile:
-            if line.strip().split(",")[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
-                return_list.append(
-                    line.strip().split(",")[1] + "," + line.strip().split(",")[2].title())
-            if line.strip().split(",")[0] > datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
+            if line[0] == '#':
+                continue
+            tokens = line.strip().split(",")
+            if len(tokens) < 3:
+                continue
+            if tokens[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
+                return_list.append( # inchikey, title, date
+                    tokens[1] + "," + tokens[2].title() + "," + tokens[0][0:4] + '-' + tokens[0][4:6] + '-' + tokens[0][6:])
+            else: # past the current date, don't show them yet
                 return return_list
 
 
