@@ -299,8 +299,9 @@ h5 {
   footer,
   [data-toggle*=tooltip],
   img:after,
-  .notifications {
-    display: none;
+  .notifications,
+  .tooltip {
+    display: none !important;
   }
   .page-molecule h1#molecule-name {
     font-size: 22px !important;
@@ -311,7 +312,8 @@ h5 {
     display: none;
   }
   .page-molecule h1#molecule-name #rotationSwitch,
-  .page-molecule h1#molecule-name #reset-molecule {
+  .page-molecule h1#molecule-name #reset-molecule,
+  .page-molecule h1#molecule-name #print-molecule {
     display: none;
   }
   .page-molecule h1#molecule-name .qr-code-icon {
@@ -324,7 +326,7 @@ h5 {
   .page-molecule #molecule-properties .molecule-links,
   .page-molecule #molecule-properties .molecule-qr-code,
   .page-molecule #molecule-properties .molecule-data {
-    display: none;
+    display: none !important;
   }
   .page-molecule #molecule-properties a:link:after,
   .page-molecule #molecule-properties a:visited:after {
@@ -368,21 +370,21 @@ h5 {
     text-overflow: ellipsis;
     word-wrap: break-word;
     padding: 4px;
-    font-size: 12px;
+    font-size: 16px;
   }
   .page-molecule #molecule-viewer div,
   .page-molecule #molecule-viewer canvas {
     height: 250px;
     display: none;
   }
-  .page-molecule .media-wrapper {
+  .page-molecule print-molecule .media-wrapper {
     height: 200px;
   }
-  .page-molecule .media-wrapper .svg-wrapper {
+  .page-molecule print-molecule .media-wrapper .svg-wrapper {
     height: 200px;
     width: 200px;
   }
-  .page-molecule .media-wrapper .svg-wrapper .svg-container {
+  .page-molecule print-molecule .media-wrapper .svg-wrapper .svg-container {
     height: 200px;
     width: 200px;
     display: inline-block !important;
@@ -391,13 +393,13 @@ h5 {
     vertical-align: middle;
     overflow: hidden;
   }
-  .page-molecule .media-wrapper .svg-wrapper .svg-container .svg-content {
+  .page-molecule print-molecule .media-wrapper .svg-wrapper .svg-container .svg-content {
     display: inline-block;
     position: absolute;
     top: 0;
     left: 0;
   }
-  .page-molecule .media-wrapper #qr-print-wrapper img {
+  .page-molecule print-molecule .media-wrapper #qr-print-wrapper img {
     height: 140px;
     width: 140px;
     display: block;

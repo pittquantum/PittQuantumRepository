@@ -6,6 +6,7 @@ var htmlutilities = htmlutilities || {
     feedback_num: 0, //Counter for the number of feedback items
     feedback_timeout: 1500, //Time for the feedback message to stay up
     active_feedback_closer: false, //Flag to turn on or off the feedback closer event
+    debug: true,
 };
 /**
  * Get the base URL of the current page. If you are on 'http://melwood.jcubedworld.com/baseball/?type=dog'

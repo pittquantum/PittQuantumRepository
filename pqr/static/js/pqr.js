@@ -2566,6 +2566,7 @@ var htmlutilities = htmlutilities || {
     feedback_num: 0, //Counter for the number of feedback items
     feedback_timeout: 1500, //Time for the feedback message to stay up
     active_feedback_closer: false, //Flag to turn on or off the feedback closer event
+    debug: true,
 };
 /**
  * Get the base URL of the current page. If you are on 'http://melwood.jcubedworld.com/baseball/?type=dog'
@@ -21291,6 +21292,21 @@ pqr.bindevents.moleculeToggleSurface = function(selector) {
 			htmlutilities.bootstrapFeedback("Surface removed. Reload to add surface ", "feedback", "fa-desktop");
 		});
 	}
+};
+
+/**
+ * Bind an event to print on click 
+ * @param  {[type]} selector [description]
+ * @return {[type]}          [description]
+ */
+pqr.bindevents.printButton = function(selector){
+	if ($(selector).length) {
+		$(selector).on("click", function(event) {
+			event.preventDefault(); 
+			window.print(); 
+			htmlutilities.bootstrapFeedback("Printing molecule data", "feedback", "fa-print");
+		});
+	}
 };;
 /**
  * @fileoverview Initialize the app on document ready. Should be the last file. 
@@ -21329,6 +21345,8 @@ pqr.init = function() {
 			pqr.bindevents.moleculeReset('#reset-molecule');
 			pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
 			pqr.bindevents.moleculeToggleSurface('#surfaceSwitch');
+			pqr.bindevents.printButton('#print-molecule');
+
 			pqr.qrgen.addQRCode("#qrcode", pqr.htmlUtilities.getQRURL());
 			pqr.qrgen.addQRCode("#qr-print-wrapper", pqr.htmlUtilities.getQRURL());
 

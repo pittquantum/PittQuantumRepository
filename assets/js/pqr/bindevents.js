@@ -155,3 +155,18 @@ pqr.bindevents.moleculeToggleSurface = function(selector) {
 		});
 	}
 };
+
+/**
+ * Bind an event to print on click 
+ * @param  {[type]} selector [description]
+ * @return {[type]}          [description]
+ */
+pqr.bindevents.printButton = function(selector){
+	if ($(selector).length) {
+		$(selector).on("click", function(event) {
+			event.preventDefault(); 
+			window.print(); 
+			htmlutilities.bootstrapFeedback("Printing molecule data", "feedback", "fa-print");
+		});
+	}
+};

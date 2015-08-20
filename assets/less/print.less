@@ -9,8 +9,8 @@
 		margin-right: 10px;
 	}
 	//Global Hides
-	header, footer, [data-toggle*=tooltip], img:after, .notifications {
-		display: none;
+	header, footer, [data-toggle*=tooltip], img:after, .notifications, .tooltip {
+		display: none !important; 
 	}
 	//Molecule Page Styles 
 	.page-molecule {
@@ -22,16 +22,17 @@
 				padding-top: 5px;
 				display: none;
 			}
-			#rotationSwitch, #reset-molecule {
+			#rotationSwitch, #reset-molecule, #print-molecule {
 				display: none;
 			}
 			.qr-code-icon {
 				display: none !important;
 			}
+			
 		}
 		#molecule-properties {
 			.tooltip-inner, .molecule-switchview, .properties-view-options, .panel-body, .molecule-links, .molecule-qr-code, .molecule-data{
-				display: none;
+				display: none !important;
 			}
 
 
@@ -86,7 +87,7 @@
 						text-overflow: ellipsis;
 						word-wrap: break-word;
 						padding: 4px;
-						font-size: 12px;
+						font-size: 16px;
 					}
 					.molecule-alt-names ul {
 					}
@@ -99,7 +100,7 @@
 				height: 250px;
 				display: none;
 			}
-		}
+		}print-molecule
 		.media-wrapper {
 			@mediaHeight: 200px;
 			@mediaWidth: 200px;
