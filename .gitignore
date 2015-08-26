@@ -88,7 +88,6 @@ bower_components
 
 #Vagrant
 .vagrant/
-Vagrantfile
 
 #Vim temp files
 *.swp
