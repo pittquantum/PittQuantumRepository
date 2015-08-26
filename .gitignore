@@ -83,3 +83,13 @@ pqr/static/data/**
 #Node Modules - Including Grunt
 node_modules/
 
+#Bower Modules
+bower_components
+
+#Vagrant
+.vagrant/
+Vagrantfile
+
+#Vim temp files
+*.swp
+*.swo
