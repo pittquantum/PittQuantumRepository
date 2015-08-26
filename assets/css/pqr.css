@@ -7214,6 +7214,13 @@ h5 {
   height: 90%;
   margin: 10% 5% 0;
 }
+.page-browse a .grid-item .more-info h3,
+.page-browse a .grid-item .more-info h4 {
+  color: white;
+}
+.page-browse a .grid-item .more-info table {
+  padding: 5px;
+}
 color::-moz-selection {
   background: #3498db;
   color: white;
