@@ -18,7 +18,7 @@ sudo virtualenv venv
 . venv/bin/activate
 pip install -r requirements.txt
 
-#Setup secret key file
+#Setup secret key file (Add check so it only runs if it isn't there)
 echo "from pqr import pqr" >> pqr/secret_config.py
 echo "pqr.config['SECRET_KEY'] = \"gasdfebzaasdf234sdasdff543asdfl\"" >> pqr/secret_config.py
 
