@@ -8,10 +8,7 @@ pqr = Flask(__name__)
 
 # Determines the destination of the build. Only usefull if you're using
 # Frozen-Flask
-pqr.config['FREEZER_DESTINATION'] = os.path.dirname(
-    os.path.abspath(__file__)) + '/../build'
-pqr.config['MANDRILL_API_KEY'] = 'NtXopXkrJBX6ikLlWywo2g' #move to hidden config file
-
+pqr.config['FREEZER_DESTINATION'] = os.path.dirname(os.path.abspath(__file__)) + '/../build'
 
 # Function to easily find your assets
 # In your template use <link rel=stylesheet href="{{ static('filename') }}">
