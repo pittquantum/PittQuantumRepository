@@ -1,8 +1,11 @@
 #!./venv/bin/python
 
 # Flask specific imports
-from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request, Markup, Response
+from flask import render_template, url_for, redirect, flash, send_from_directory, jsonify, request, Markup, Response, make_response
 from flask.ext.cache import Cache
+
+#HTML Minifier
+from htmlmin.minify import html_minify
 
 # mandrill emailing
 from flask.ext.mandrill import Mandrill
@@ -32,6 +35,8 @@ redirect_table = {}
 amount_mol = None
 MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 WEEKLY_MOL_NAME = None
+pqr.debug = True
+
 
 ##########################################################################
 
@@ -48,7 +53,9 @@ def index():
 
     week_mol = (MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
-    return render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, new_articles=new_articles, week_mol=week_mol, week_mol_name=WEEKLY_MOL_NAME)
+    rendered_html = render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, new_articles=new_articles, week_mol=week_mol, week_mol_name=WEEKLY_MOL_NAME)
+    min_html = html_minify(rendered_html.encode('utf8'))
+    return min_html
 
 
 ##########################################################################
@@ -85,9 +92,11 @@ def molecule(key="-1"):
         return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
     meta_description = "You are viewing an interactive 3D depiction of the molecule " + json_dict["name"] + " (" + json_dict["formula"] + ") from the PQR."
+    
     # return the view
-    return render_template("molecule.html", page=page, jsonDict=json_dict, metaDescription=meta_description)
-
+    rendered_html = render_template("molecule.html", page=page, jsonDict=json_dict, metaDescription=meta_description)
+    min_html = html_minify(rendered_html.encode('utf8'))
+    return min_html
 
 ##########################################################################
 @pqr.route('/news', strict_slashes=False)
@@ -445,16 +454,16 @@ def clear_cache():
 ##########################################################################
 
 
-@pqr.errorhandler(404)
-def page_not_found(e):
-    flash("Page not found", 404)
-    return redirect(url_for('index'))
+# @pqr.errorhandler(404)
+# def page_not_found(e):
+#     flash("Page not found", 404)
+#     return redirect(url_for('index'))
 
 
-@pqr.errorhandler(500)
-def page_not_found(e):
-    flash("Page not found", 500)
-    return redirect(url_for('index'))
+# @pqr.errorhandler(500)
+# def page_not_found(e):
+    # flash("Page not found", 500)
+    # return redirect(url_for('index'))
 ##########################################################################
 
 
