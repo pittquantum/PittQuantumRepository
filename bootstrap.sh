@@ -24,7 +24,7 @@ echo "from pqr import pqr" >> pqr/secret_config.py
 PQR_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 export PQR_KEY
 
-echo "pqr.config['SECRET_KEY'] = $KEY" >> pqr/secret_config.py
+echo "pqr.config['SECRET_KEY'] = $PQR_KEY" >> pqr/secret_config.py
 
 #Get some data for the JSON files
 
