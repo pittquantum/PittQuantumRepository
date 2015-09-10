@@ -18,6 +18,8 @@ pqr.init = function() {
 		pqr.htmlUtilities.initFontSize(); 
 		pqr.bindevents.bindFontSwitchers();
 		htmlutilities.footerToBottom('footer', '#main');
+		loadCSS("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+		loadCSS("//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700");
 
 		if ($("#main").hasClass("page-home")) {
 			pqr.threeDMole.initViewers();

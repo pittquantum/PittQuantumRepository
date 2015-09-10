@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         concat: {
             options: {
                 // define a string to put between each file in the concatenated output
-                separator: ';\n'
+                separator: '\n'
             },
             js: {
                 // the files to concatenate (modernizr, then jquery, then bootstrap, then everythign else)

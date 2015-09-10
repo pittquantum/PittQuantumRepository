@@ -95,6 +95,4 @@ htmlutilities.updateFooterHeight = function(footer_selector, content_selector){
     else{ 
         $(footer_selector).css('margin-top', '10px');
     }
-
-
-}
+};
