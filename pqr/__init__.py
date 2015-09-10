@@ -67,7 +67,9 @@ def replace_greek_filter(input):
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
 pqr.jinja_env.filters['supnumbersiupac'] = supnumbers_iupac_filter
 pqr.jinja_env.filters['replacegreek'] = replace_greek_filter
+
 assert pqr.jinja_env.filters['subnumbers']
+assert pqr.jinja_env.filters['supnumbersiupac']
 assert pqr.jinja_env.filters['replacegreek']
 ##########################################################################
 
