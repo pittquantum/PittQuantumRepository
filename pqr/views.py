@@ -119,7 +119,9 @@ def news(title="-1"):
 
     output = Markup(html)
 
-    return render_template("news.html", output=output, page=page)
+    rendered_html = render_template("news.html", output=output, page=page)
+    min_html = html_minify(rendered_html.encode('utf8'))
+    return min_html
 
 ##########################################################################
 
@@ -229,8 +231,9 @@ def browse(page_num="-1"):
         else:
             active = page_num
 
-    print len(results)
-    return render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
+    rendered_html = render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
+    min_html = html_minify(rendered_html.encode('utf8'))
+    return min_html
 
 #################################################
 
@@ -357,11 +360,15 @@ def contact():
     page = {'id': "page-contact"}
 
     if request.method == 'GET':
-        return render_template("contact.html", page=page)
+            rendered_html = render_template("contact.html", page=page)
+            min_html = html_minify(rendered_html.encode('utf8'))
+            return min_html
     else:
         if(validate_contact_us(request.form)):
             send_email(request.form)
-        return render_template("contact.html", page=page)
+            rendered_html = render_template("contact.html", page=page)
+            min_html = html_minify(rendered_html.encode('utf8'))
+            return min_html
 
 ##########################################################################
 @pqr.route('/sitemap/<index>', methods=['GET'], strict_slashes=False)
@@ -389,8 +396,9 @@ def molecule_of_the_week():
         week_molecules.append(week_molecule.split(','))
 
     print week_molecules
-    return render_template('molecule-of-the-week.html', page=page, week_molecules=week_molecules)
-
+    rendered_html = render_template('molecule-of-the-week.html', page=page, week_molecules=week_molecules)
+    min_html = html_minify(rendered_html.encode('utf8'))
+    return min_html
 
 ##########################################################################
 
