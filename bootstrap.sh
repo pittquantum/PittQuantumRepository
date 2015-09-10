@@ -21,7 +21,7 @@ pip install -r requirements.txt
 #Setup secret key file (Add check so it only runs if it isn't there)
 echo "from pqr import pqr" >> pqr/secret_config.py
 
-PQR_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+PQR_KEY=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 128 | head -n 1)
 export PQR_KEY
 
 echo "pqr.config['SECRET_KEY'] = $PQR_KEY" >> pqr/secret_config.py
