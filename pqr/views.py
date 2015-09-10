@@ -174,12 +174,14 @@ def browse(page_num="-1"):
     # Append all dicts in the cursor to a results array
     for i in cursor:
         i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
+        i["json_data"] = get_json_data_file(i["inchikey"][:2], i["inchikey"])
         results.append(i)
 
     if len(results) == 0:
         cursor = db.molecules.find({"$text": {"$search": str(query)}})
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
+            i["json_data"] = get_json_data_file(i["inchikey"][:2], i["inchikey"])
             results.append(i)
 
     # Find lightest molecule to normalize mass-based search
@@ -229,6 +231,7 @@ def browse(page_num="-1"):
         else:
             active = page_num
 
+    print len(results)
     return render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
 
 #################################################
@@ -624,6 +627,21 @@ def get_weekly_molecule_list():
                     line.strip().split(",")[1] + "," + line.strip().split(",")[2].title())
             if line.strip().split(",")[0] > datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
                 return return_list
+def get_json_data_file(key_first_two, key):
+    try:
+        # Loads the JSON file relevant to the InChI key requested
+        with open(os.path.join(APP_JSON, key_first_two + '/' + key + '.json')) as j:
+            return json.load(j)
+    except IOError:
+        # If we don't have the key, flash
+        return False
+
+# Return suggestions for autocomplete search
+# db.molecules.find( { name: { $regex: /^meth/i } } )
+def get_autocomplete_suggestion(partial):
+    return ''
+    client = MongoClient()
+    db = client.test
 
 
 

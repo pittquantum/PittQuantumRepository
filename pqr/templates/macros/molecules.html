@@ -27,42 +27,53 @@
 <!-- View of a molecule in search results or browsing   -->
 
 <!-- Masonary View of a molecule in search results or browsing   -->
-{% macro resultMoleculeMasonary(n) -%}
-<a href="#"> 
+{% macro resultMoleculeMasonary(result) -%}
+<a href="/mol/{{result.inchikey}}"> 
     <div class="grid-item center-block"> 
             
-        <img src="http://pqr.pitt.edu/static/data/svg/IJ/IJJLRUSZMLMXCN-SLPGGIOYSA-N.svg">
-        <h3> 5-Thio-D-Glucose {{n}} </h3>
-        <h4> C<sub>6</sub>H<sub>12</sub>O<sub>5</sub>S </h4>
+        <img src="/static/data/svg/{{result.mol2url}}.svg">
+        <h3> {%if result.json_data%} {{result.json_data["name"]|title|truncate(16,True)}}  {% endif %}</h3>
+        <h4> {{result.formula|subnumbers|safe}} </h4>
 
         <div class='more-info'> 
-            <h3> 5-Thio-D-Glucose </h3>
-            <h4> C<sub>6</sub>H<sub>12</sub>O<sub>5</sub>S </h4>
+            <h3> {%if result.json_data%} {{result.json_data["name"]|title|truncate(32,True)}}  {% endif %} </h3>
+            <h4> {{result.formula|subnumbers|safe}}</h4>
 
             <div class="table-responsive">
-                <table class="table"> 
-                    <tr> 
-                        <td><strong>Molecular Mass</strong></td>
-                        <td></strong>196.221 g·mol<sup>−1</sup></td>
-                    </tr>
-                    <tr> 
-                        <td><strong>Heat of Formation</strong></td>
-                        <td>-914.1 ± 16.7 kJ·mol<sup>−1</sup></td>
-                    </tr>
-                    <tr> 
-                        <td><strong>Dipole Moment</strong></td>
-                        <td>2.00 ± 1.08 D></td>
-                    </tr>
-                    <tr> 
-                        <td><strong>Volume</strong></td>
-                        <td>218.93 &#8491; <sup>3</sup></td>
-                    </tr>
+                <table class="table">
+                    {%if result.json_data%} 
+                        {%if result.json_data["molecular mass"]%}
+                        <tr> 
+                            <td><strong>Molecular Mass</strong></td>
+                            <td>{{ '%10.3f' % result.json_data["molecular mass"] }} g·mol<sup>−1</sup></td>
+                        </tr>
+                        {% endif %}
+                        {%if result.json_data["pm7"]["heatOfFormation"]%}
+                        <tr> 
+                            <td><strong>Heat of Formation</strong></td>
+                            <td>{{ '%8.1f' % result.json_data["pm7"]["heatOfFormation"] }} &plusmn; 16.7 kJ·mol<sup>−1</sup></td>
+                        </tr>
+                        {% endif %}
+                        {%if result.json_data["pm7"]["dipoleMoment"]%}
+                        <tr> 
+                            <td><strong>Dipole Moment</strong></td>
+                            <td>{{ '%8.2f' % result.json_data["pm7"]["dipoleMoment"] }} &plusmn; 1.08 D</td>
+                        </tr>
+                        {% endif %}
+                        {%if result.json_data["pm7"]["volume"]%}
+                        <tr> 
+                            <td><strong>Volume</strong></td>
+                            <td>{{ result.json_data["pm7"]["volume"] }} &#8491; <sup>3</sup></td>
+                        </tr>
+                        {% endif %}
+                    {% endif %} 
                 </table>
             </div>
             
         </div>
     </div>
-<a href="#"> 
+</a> 
+<!-- <pre> {{result}} </pre> -->
 {%- endmacro %}
 <!-- /Masonary View of a molecule in search results or browsing   -->
 
