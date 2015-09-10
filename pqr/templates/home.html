@@ -1,4 +1,23 @@
-{% extends "skeleton/base.html" %} {% block header %} {% include 'skeleton/default_header.html' %} {% endblock %} {% block footer %} {% include 'skeleton/default_footer.html' %} {% endblock %} {% block title %}PQR | Home{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block lazyScripts %} {{ super() }} {% endblock %} {% block content %}
+{% extends "skeleton/base.html" %}
+{% block header %}
+    {% include 'skeleton/default_header.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'skeleton/default_footer.html' %}
+{% endblock %}
+
+{% block title %}PQR | Home{% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block lazyScripts %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
 <div id='home-banner'>
     <div class="row" id="splash-search">
         <div class="jumbotron text-center">

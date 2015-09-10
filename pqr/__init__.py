@@ -8,10 +8,7 @@ pqr = Flask(__name__)
 
 # Determines the destination of the build. Only usefull if you're using
 # Frozen-Flask
-pqr.config['FREEZER_DESTINATION'] = os.path.dirname(
-    os.path.abspath(__file__)) + '/../build'
-pqr.config['MANDRILL_API_KEY'] = 'NtXopXkrJBX6ikLlWywo2g' #move to hidden config file
-
+pqr.config['FREEZER_DESTINATION'] = os.path.dirname(os.path.abspath(__file__)) + '/../build'
 
 # Function to easily find your assets
 # In your template use <link rel=stylesheet href="{{ static('filename') }}">
@@ -70,7 +67,9 @@ def replace_greek_filter(input):
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
 pqr.jinja_env.filters['supnumbersiupac'] = supnumbers_iupac_filter
 pqr.jinja_env.filters['replacegreek'] = replace_greek_filter
+
 assert pqr.jinja_env.filters['subnumbers']
+assert pqr.jinja_env.filters['supnumbersiupac']
 assert pqr.jinja_env.filters['replacegreek']
 ##########################################################################
 
