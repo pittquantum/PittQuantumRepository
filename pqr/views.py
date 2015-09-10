@@ -92,7 +92,7 @@ def molecule(key="-1"):
         return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
     meta_description = "You are viewing an interactive 3D depiction of the molecule " + json_dict["name"] + " (" + json_dict["formula"] + ") from the PQR."
-    
+
     # return the view
     rendered_html = render_template("molecule.html", page=page, jsonDict=json_dict, metaDescription=meta_description)
     min_html = html_minify(rendered_html.encode('utf8'))
@@ -594,16 +594,16 @@ def getINCHIkeys(folder):
 def getINCHIfolders():
     return os.listdir(APP_JSON)
 
-#Create a new list of 'new' articles based on how many days passed 
+#Create a new list of 'new' articles based on how many days passed
 def get_new_articles(articles, days):
     new_articles = []
     for article in articles:
         date = article[:10]
-        try: 
+        try:
             dt = datetime.strptime(date, "%Y-%m-%d")
             if dt > datetime.now()-timedelta(days=days):
                 new_articles.append(article)
-        except ValueError: 
+        except ValueError:
             print "Invalid Date Format"
     return new_articles
 
@@ -622,7 +622,7 @@ def get_weekly_molecule_list():
     sunday = datetime.date.isoformat(sunday)
     with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
         for line in molfile:
-            
+
             # Skips the header
             if line[0] == '#':
                 continue
