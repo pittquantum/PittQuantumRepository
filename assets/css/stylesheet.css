@@ -8,6 +8,116 @@
   border-radius: 2px;
 }
 /**
+ * Miscelleanous LESS helper mixins
+ * @author: Josh Rogan
+ */
+.fixed {
+  position: fixed;
+}
+.vertical-align {
+  position: relative;
+  top: 50%;
+}
+.vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+/**
+ * Responsive utilities 
+ *  
+ * 
+ */
+#responsive-helpers {
+  /**
+	 * Mixin to allow to set all of the proper media sizes for a height
+	 * @param  {Height Size} @xs-size [The height you want for this size]
+	 * @param  {Height Size} @sm-size [The height you want for this size]
+	 * @param  {Height Size} @md-size [The height you want for this size]
+	 * @param  {Height Size} @lg-size [The height you want for this size]
+	 */
+  /* Small devices (mobile, 768px and down) */
+}
+#scroll-arrow {
+  position: relative;
+  float: right;
+  line-height: 55px;
+  height: 55px;
+  width: 220px;
+  display: block;
+  padding: 0 15px;
+  margin-top: 25px;
+}
+#scroll-arrow .text {
+  position: absolute;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: #dbad6f;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 100;
+  z-index: 2;
+  text-decoration: underline;
+  -webkit-transition: color 300ms;
+  transition: color 300ms;
+}
+#scroll-arrow .block {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  padding-right: 15px;
+  width: 65px;
+  height: 55px;
+  vertical-align: middle;
+  display: inline-block;
+  background-color: #dbad6f;
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  font-weight: 100;
+  text-align: right;
+  -webkit-transition: width 300ms;
+  transition: width 300ms;
+}
+#scroll-arrow:hover .text {
+  color: white;
+  text-decoration: none;
+}
+#scroll-arrow:hover .block {
+  width: 100%;
+}
+/**Arrow Icons **/
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid red;
+}
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid red;
+}
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-left: 60px solid red;
+}
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid red;
+}
+/**
  *	Various font helper classes for colors and more
  *
  */
@@ -224,27 +334,6 @@ h5 {
   }
 }
 /**
- *  Bootstrap Overrides 
- */
-.alert-feedback {
-  border-color: #b2dfdb;
-  background-color: #5f9ea0;
-  border-color: #7fb1b3;
-  color: #e0f2f1;
-}
-.alert-feedback hr {
-  border-top-color: #a0d8d3;
-}
-.alert-feedback .alert-link {
-  color: #bce3e1;
-}
-.alert-feedback hr {
-  border-top-color: #6fa8a9;
-}
-.alert-feedback .alert-link {
-  color: #bce3e1;
-}
-/**
  * Bootstrap Notify Styles 
  * 
  * @site https://github.com/goodybag/bootstrap-notify
@@ -402,6 +491,178 @@ h5 {
     z-index: 10;
   }
 }
+/**
+ *  Bootstrap Overrides 
+ */
+.alert-feedback {
+  border-color: #b2dfdb;
+  background-color: #5f9ea0;
+  border-color: #7fb1b3;
+  color: #e0f2f1;
+}
+.alert-feedback hr {
+  border-top-color: #a0d8d3;
+}
+.alert-feedback .alert-link {
+  color: #bce3e1;
+}
+.alert-feedback hr {
+  border-top-color: #6fa8a9;
+}
+.alert-feedback .alert-link {
+  color: #bce3e1;
+}
+/**
+ * Masonary Styles and Overrides 
+ * 
+ */
+.page-browse .grid-sizer,
+.page-browse .grid-item {
+  width: 100%;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+}
+@media (min-width: 768px) {
+  .page-browse .grid-sizer,
+  .page-browse .grid-item {
+    width: 50%;
+  }
+}
+@media (min-width: 992px) {
+  .page-browse .grid-sizer,
+  .page-browse .grid-item {
+    width: 33%;
+  }
+}
+@media (min-width: 1200px) {
+  .page-browse .grid-sizer,
+  .page-browse .grid-item {
+    width: 25%;
+  }
+}
+.page-browse a .grid-item {
+  -webkit-transition: font-size 0.5s ease;
+  -moz-transition: font-size 0.5s ease;
+  -o-transition: font-size 0.5s ease;
+  transition: font-size 0.5s ease;
+  -webkit-transition: transform 0.2s ease-in-out;
+  -o-transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  -moz-transition: -moz-transform 0.2s ease-in-out;
+  -o-transition: -o-transform 0.2s ease-in-out;
+  transition: -webkit-transform 0.2s ease-in-out,-moz-transform 0.2s ease-in-out,-o-transform 0.2s ease-in-out,transform 0.2s ease-in-out;
+}
+.page-browse a .grid-item:hover {
+  transform: scale(1.1);
+}
+@media (max-width: 767px) {
+  .page-browse a .grid-item:hover {
+    transform: scale(1);
+  }
+}
+.page-browse a .grid-item:hover .more-info {
+  opacity: 1;
+}
+.page-browse a .grid-item h3 {
+  font-size: 20px;
+  /* Smallerer devices (tablets, 200px and up) */
+  /* Smaller devices (tablets, 568px and up) */
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+  position: relative;
+  z-index: 10;
+}
+@media (min-width: 200px) {
+  .page-browse a .grid-item h3 {
+    font-size: 25px;
+  }
+}
+@media (min-width: 568px) {
+  .page-browse a .grid-item h3 {
+    font-size: 35px;
+  }
+}
+@media (min-width: 768px) {
+  .page-browse a .grid-item h3 {
+    font-size: 30px;
+  }
+}
+@media (min-width: 992px) {
+  .page-browse a .grid-item h3 {
+    font-size: 26px;
+  }
+}
+@media (min-width: 1200px) {
+  .page-browse a .grid-item h3 {
+    font-size: 28px;
+  }
+}
+.page-browse a .grid-item h4 {
+  font-size: 15px;
+  /* Smallerer devices (tablets, 200px and up) */
+  /* Smaller devices (tablets, 568px and up) */
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+  position: relative;
+  z-index: 10;
+  color: black;
+}
+@media (min-width: 200px) {
+  .page-browse a .grid-item h4 {
+    font-size: 20px;
+  }
+}
+@media (min-width: 568px) {
+  .page-browse a .grid-item h4 {
+    font-size: 28px;
+  }
+}
+@media (min-width: 768px) {
+  .page-browse a .grid-item h4 {
+    font-size: 22px;
+  }
+}
+@media (min-width: 992px) {
+  .page-browse a .grid-item h4 {
+    font-size: 18px;
+  }
+}
+@media (min-width: 1200px) {
+  .page-browse a .grid-item h4 {
+    font-size: 20px;
+  }
+}
+.page-browse a .grid-item img {
+  position: relative;
+  z-index: -100;
+  width: 100%;
+}
+.page-browse a .grid-item .more-info {
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  background-color: #f16b1d;
+  color: white;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 90%;
+  height: 90%;
+  margin: 10% 5% 0;
+}
+.page-browse a .grid-item .more-info h3,
+.page-browse a .grid-item .more-info h4 {
+  color: white;
+}
+.page-browse a .grid-item .more-info table {
+  padding: 5px;
+}
 color::-moz-selection {
   background: #3498db;
   color: white;
@@ -492,6 +753,13 @@ body .page-home #molecule-viewer canvas {
   body .page-home #molecule-viewer canvas {
     height: 400px;
   }
+}
+body .page-home .the-news a.list-group-item,
+body .page-home .the-news a.list-group-item {
+  -webkit-transition: background-color 0.2s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out;
+  -o-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 }
 body .page-molecule h1#molecule-name {
   font-size: 23px;
@@ -678,6 +946,16 @@ body .page-browse #molecule-browser .molecule-viwer .molecule-formula {
 body .page-browse #molecule-browser .molecule-viwer .svg_viewer {
   background-position: center center !important;
   background-repeat: no-repeat !important;
+}
+body .page-browse #molecule-browser .molecule-results-masonary {
+  -webkit-transition: opacity 0.5s ease;
+  -moz-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+body .page-browse #molecule-browser .molecule-results-masonary.translucent {
+  opacity: 0;
 }
 body .page-contact address {
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);

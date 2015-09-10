@@ -65,11 +65,17 @@
         <!-- /Page Results -->
 
 
-        <!-- Molecule Search Results -->
-        {% for result in results %} 
-            {{ molecule.resultMolecule(result) }} 
-        {% endfor %} 
-        <!-- /Molecule Search Results -->
+        <!-- Masonary Search Results -->
+        <div class="clearfix"></div>
+        <div class='row molecule-results-masonary translucent'> 
+            <div class="grid text-center center-block">
+                <div class="grid-sizer"></div>
+                {% for result in results  %}
+                    {{ molecule.resultMoleculeMasonary(result) }} 
+                {% endfor %} 
+            </div>
+        </div>
+        <!-- /Masonary Search Results  -->
 
         <!-- Simple Pagination  -->
         {% if active != -1 %}
@@ -116,7 +122,7 @@
         {% endif %}
         <!-- /No Results Found  -->
 
-        
+
     </div>
     <!-- /Molecule Browser -->
 </div>

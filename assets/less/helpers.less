@@ -36,9 +36,42 @@
 @lg-reduction: 1.0;
 
 
+//Extra Sizes 
+@screen-xs-min: (@screen-sm-min - 200px);
+@screen-xxs-min: 200px;
+
 #responsive-helpers {
 	.responsive-abstract-manual(@property, @xs-value, @sm-value, @md-value, @lg-value){
 		@{property}: @xs-value;
+
+		/* Small devices (tablets, 768px and up) */
+		@media (min-width:@screen-sm-min) {
+			@{property}: @sm-value;
+		}
+
+		/* Medium devices (desktops, 992px and up) */
+		@media (min-width:@screen-md-min) {
+			@{property}: @md-value;
+		}
+
+		/* Large devices (large desktops, 1200px and up) */
+		@media (min-width:@screen-lg-min) {
+			@{property}: @lg-value;
+		}
+	}
+
+	.responsive-abstract-manual-extra(@property, @xxxs-value, @xxs-value, @xs-value, @sm-value, @md-value, @lg-value){
+		@{property}: @xxxs-value;
+
+		/* Smallerer devices (tablets, 200px and up) */
+		@media (min-width: @screen-xxs-min) {
+			@{property}: @xxs-value;
+		}
+
+		/* Smaller devices (tablets, 568px and up) */
+		@media (min-width: @screen-xs-min) {
+			@{property}: @xs-value;
+		}
 
 		/* Small devices (tablets, 768px and up) */
 		@media (min-width:@screen-sm-min) {
@@ -74,6 +107,16 @@
 	.responsive-height-manual(@xs-size, @sm-size, @md-size, @lg-size) {
 		.responsive-abstract-manual(height, @xs-size, @sm-size, @md-size, @lg-size);
 	}
+
+
+	/* Small devices (mobile, 768px and down) */
+	.responsive-less-xs(@property, @value){
+		@media (max-width:@screen-xs-max) {
+			@{property}: @value;
+		}
+	}
+
+
 
 
 
