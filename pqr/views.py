@@ -144,17 +144,6 @@ def browse(page_num="-1"):
     client = MongoClient()
     db = client.test
 
-    # return searchType
-
-    # Make sure the index exists
-    # temp = db.molecules.ensure_index([
-    #    ("name", "text"),
-    #    ("inchikey", "text"),
-    #    ("formula", "text"),
-    #    ("tags", "text"),
-    #    ("synonyms", "text")
-    #])
-
     results = []
 
     # Do a text search for the passed in query
@@ -402,14 +391,8 @@ def sitemapindex():
     directories = getINCHIfolders()
     return render_template('sitemapIndex.html', moldirs=directories)
 ##########################################################################
-#
-##########################################################################
-#
-#
-##########################################################################
+
 # Properly handle the favicon
-
-
 @pqr.route('/favicon.ico', strict_slashes=False)
 def favicon():
     return send_from_directory(os.path.join(pqr.root_path, 'static'),
@@ -420,6 +403,7 @@ def favicon():
 def BingSiteAuth():
     return send_from_directory(os.path.join(pqr.root_path, 'static'),
                                'BingSiteAuth.xml', mimetype='text/xml')
+
 @pqr.route('/robots.txt', strict_slashes=False)
 def RobotsTxt():
     return send_from_directory(os.path.join(pqr.root_path, 'static'),
@@ -591,7 +575,6 @@ def getINCHIkeys(folder):
 
 
 def getINCHIfolders():
-    root = APP_JSON
     return os.listdir(APP_JSON)
 
 #Create a new list of 'new' articles based on how many days passed 
@@ -622,16 +605,22 @@ def get_weekly_molecule_list():
     sunday = datetime.date.isoformat(sunday)
     with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
         for line in molfile:
+            
+            # Skips the header
             if line[0] == '#':
                 continue
+
             tokens = line.strip().split(",")
             if len(tokens) < 3:
                 continue
             if tokens[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
                 return_list.append( # inchikey, title, date
-                    tokens[1] + "," + tokens[2].title() + "," + tokens[0][0:4] + '-' + tokens[0][4:6] + '-' + tokens[0][6:])
-            else: # past the current date, don't show them yet
+                    tokens[1] + "," + tokens[2].title() + "," + tokens[0][0:4] + '-' + tokens[0][4:6] + '-' + tokens[0][6:]
+                )
+
+            else: # We are now past the current date, don't show them yet
                 return return_list
+
 def get_json_data_file(key_first_two, key):
     try:
         # Loads the JSON file relevant to the InChI key requested
@@ -647,8 +636,6 @@ def get_autocomplete_suggestion(partial):
     return ''
     client = MongoClient()
     db = client.test
-
-
 
 if __name__ == '__main__':
     pqr.run()
