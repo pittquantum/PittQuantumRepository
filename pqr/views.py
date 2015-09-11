@@ -94,9 +94,9 @@ def molecule(key="-1"):
     meta_description = "You are viewing an interactive 3D depiction of the molecule " + json_dict["name"] + " (" + json_dict["formula"] + ") from the PQR."
 
     # return the view
-    rendered_html = render_template("molecule.html", page=page, jsonDict=json_dict, metaDescription=meta_description)
-    min_html = html_minify(rendered_html.encode('utf8'))
-    return min_html
+    return render_template("molecule.html", page=page, jsonDict=json_dict, metaDescription=meta_description)
+    #min_html = html_minify(rendered_html.encode('utf8'))
+    #return min_html
 
 ##########################################################################
 @pqr.route('/news', strict_slashes=False)
