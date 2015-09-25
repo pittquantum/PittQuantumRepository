@@ -1,0 +1,47 @@
+/**
+ * Bootstrap Notify Styles 
+ * 
+ * @site https://github.com/goodybag/bootstrap-notify
+ */
+@notifications-y-offset: 50px;
+@notifications-x-offset: 10px; 
+
+.notifications {
+	position: fixed;
+	z-index: 9999;
+
+	.fa-times {
+		color: #fff;
+		opacity: 1;
+	}
+	.close {
+		padding-left: 10px;
+		padding-top: 1px;
+		opacity: 1.0;
+		font-size: 20px;
+	}
+}
+
+/* Positioning */
+.notifications.top-right {
+	right: @notifications-x-offset;
+	top: @notifications-y-offset;
+}
+.notifications.top-left {
+	left: @notifications-x-offset;
+	top: @notifications-y-offset;
+}
+.notifications.bottom-left {
+	left: @notifications-x-offset;
+	bottom: @notifications-y-offset;
+}
+.notifications.bottom-right {
+	right: @notifications-x-offset;
+	bottom: @notifications-y-offset
+}
+
+/* Notification Element */
+.notifications > div {
+	position: relative;
+	margin: 5px 0px;
+}

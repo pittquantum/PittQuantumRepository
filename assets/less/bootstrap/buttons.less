@@ -59,6 +59,15 @@
 
 .btn-default {
   .button-variant(@btn-default-color; @btn-default-bg; @btn-default-border);
+    &:hover,
+  &:focus,
+  &.focus,
+  &:active,
+  &.active,
+  .open > .dropdown-toggle& {
+    color: @btn-default-color;
+    background-color: white;
+  }
 }
 .btn-primary {
   .button-variant(@btn-primary-color; @btn-primary-bg; @btn-primary-border);

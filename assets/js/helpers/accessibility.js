@@ -36,3 +36,5 @@ accessibility.changeFontSize = function(size){
 	return size;
 };
 
+
+

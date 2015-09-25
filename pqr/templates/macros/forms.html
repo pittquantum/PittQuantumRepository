@@ -20,11 +20,15 @@
 </form>
 {%- endmacro %} 
 
-{% macro banner_search(style='btn-primary', id='home-molecule-search') -%}
+{% macro banner_search(style='btn-primary', id='home-molecule-search', query='Enter Query') -%}
 <form id="{{id}}" class="text-center form-inline" role="form" action="/browse" method="GET">
 
     <div class="input-group">
-        <input type="text" class="form-control typeahead query" autocomplete="off" name="query" placeholder="Enter Query">
+        {% if query != 'Enter Query' %}
+        <input type="text" class="form-control typeahead query" autocomplete="off" name="query" value="{{query}}">
+        {% else %}
+         <input type="text" class="form-control typeahead query" autocomplete="off" name="query" placeholder="{{query}}">
+        {% endif %}
         <span class="input-group-btn">
         <button type="submit" class="btn {{style}}" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search"></i></button>
       </span>

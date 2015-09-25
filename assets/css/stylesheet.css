@@ -8,6 +8,116 @@
   border-radius: 2px;
 }
 /**
+ * Miscelleanous LESS helper mixins
+ * @author: Josh Rogan
+ */
+.fixed {
+  position: fixed;
+}
+.vertical-align {
+  position: relative;
+  top: 50%;
+}
+.vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+/**
+ * Responsive utilities 
+ *  
+ * 
+ */
+#responsive-helpers {
+  /**
+	 * Mixin to allow to set all of the proper media sizes for a height
+	 * @param  {Height Size} @xs-size [The height you want for this size]
+	 * @param  {Height Size} @sm-size [The height you want for this size]
+	 * @param  {Height Size} @md-size [The height you want for this size]
+	 * @param  {Height Size} @lg-size [The height you want for this size]
+	 */
+  /* Small devices (mobile, 768px and down) */
+}
+#scroll-arrow {
+  position: relative;
+  float: right;
+  line-height: 55px;
+  height: 55px;
+  width: 220px;
+  display: block;
+  padding: 0 15px;
+  margin-top: 25px;
+}
+#scroll-arrow .text {
+  position: absolute;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: #dbad6f;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 100;
+  z-index: 2;
+  text-decoration: underline;
+  -webkit-transition: color 300ms;
+  transition: color 300ms;
+}
+#scroll-arrow .block {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  padding-right: 15px;
+  width: 65px;
+  height: 55px;
+  vertical-align: middle;
+  display: inline-block;
+  background-color: #dbad6f;
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  font-weight: 100;
+  text-align: right;
+  -webkit-transition: width 300ms;
+  transition: width 300ms;
+}
+#scroll-arrow:hover .text {
+  color: white;
+  text-decoration: none;
+}
+#scroll-arrow:hover .block {
+  width: 100%;
+}
+/**Arrow Icons **/
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid red;
+}
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid red;
+}
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-left: 60px solid red;
+}
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid red;
+}
+/**
  *	Various font helper classes for colors and more
  *
  */
@@ -53,10 +163,71 @@
 .font-concrete {
   color: #95a5a6;
 }
+.background-p {
+  background-color: #333333;
+}
+.background-primary {
+  background-color: #f16b1d;
+}
+.background-white {
+  background-color: #fff;
+}
+.background-off-white {
+  background-color: #ecf0f1;
+}
+.background-blue {
+  background-color: #3498db;
+}
+.background-yellow {
+  background-color: #f1c40f;
+}
+.background-purple {
+  background-color: #9b59b6;
+}
+.background-green {
+  background-color: #2ecc71;
+}
+.background-blue-green {
+  background-color: #1abc9c;
+}
+.background-red {
+  background-color: #e74c3c;
+}
+.background-orange {
+  background-color: #e67e22;
+}
+.background-concrete {
+  background-color: #95a5a6;
+}
 /**
  *	Various transitions helpers
  *
  */
+#transition {
+  /**
+	 * Helper class to add transition based hides 
+	 */
+}
+#transition .default {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: all;
+  transition-timing-function: ease;
+}
+#transition .trans-hide {
+  opacity: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+#transition .trans-hide:before,
+#transition .trans-hide:after {
+  content: " ";
+  display: table;
+}
+#transition .trans-hide:after {
+  clear: both;
+}
 h1 {
   font-size: 32.8px;
   /* Small devices (tablets, 768px and up) */
@@ -162,6 +333,336 @@ h5 {
     font-size: 16px;
   }
 }
+/**
+ * Bootstrap Notify Styles 
+ * 
+ * @site https://github.com/goodybag/bootstrap-notify
+ */
+.notifications {
+  position: fixed;
+  z-index: 9999;
+}
+.notifications .fa-times {
+  color: #fff;
+  opacity: 1;
+}
+.notifications .close {
+  padding-left: 10px;
+  padding-top: 1px;
+  opacity: 1.0;
+  font-size: 20px;
+}
+/* Positioning */
+.notifications.top-right {
+  right: 10px;
+  top: 50px;
+}
+.notifications.top-left {
+  left: 10px;
+  top: 50px;
+}
+.notifications.bottom-left {
+  left: 10px;
+  bottom: 50px;
+}
+.notifications.bottom-right {
+  right: 10px;
+  bottom: 50px;
+}
+/* Notification Element */
+.notifications > div {
+  position: relative;
+  margin: 5px 0px;
+}
+/**
+ * 	Styles for printing  
+ * 
+ */
+@media print {
+  .container {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  header,
+  footer,
+  [data-toggle*=tooltip],
+  img:after,
+  .notifications,
+  .tooltip {
+    display: none !important;
+  }
+  .page-molecule h1#molecule-name {
+    font-size: 22px !important;
+    padding-left: 0 !important;
+    z-index: 10;
+    position: relative;
+  }
+  .page-molecule h1#molecule-name::before {
+    content: "Pitt Quantum Repository - ";
+  }
+  .page-molecule h1#molecule-name .small {
+    padding-top: 5px;
+    display: none;
+  }
+  .page-molecule h1#molecule-name #rotationSwitch,
+  .page-molecule h1#molecule-name #reset-molecule,
+  .page-molecule h1#molecule-name #print-molecule {
+    display: none;
+  }
+  .page-molecule h1#molecule-name .qr-code-icon {
+    display: none !important;
+  }
+  .page-molecule #molecule-properties .tooltip-inner,
+  .page-molecule #molecule-properties .molecule-switchview,
+  .page-molecule #molecule-properties .properties-view-options,
+  .page-molecule #molecule-properties .panel-body,
+  .page-molecule #molecule-properties .molecule-links,
+  .page-molecule #molecule-properties .molecule-qr-code,
+  .page-molecule #molecule-properties .molecule-data {
+    display: none !important;
+  }
+  .page-molecule #molecule-properties a:link:after,
+  .page-molecule #molecule-properties a:visited:after {
+    content: "";
+  }
+  .page-molecule #molecule-properties .molecule-tags li {
+    margin-bottom: 2px;
+    margin-top: 2px;
+  }
+  .page-molecule #molecule-properties .molecule-tags a span {
+    border: none !important;
+  }
+  .page-molecule #molecule-properties .molecule-tags a:hover {
+    text-decoration: none;
+  }
+  .page-molecule #molecule-properties .molecule-tags a:hover span {
+    color: #f16b1d;
+    background-color: white;
+  }
+  .page-molecule #molecule-properties .panel-default,
+  .page-molecule #molecule-properties .panel,
+  .page-molecule #molecule-properties .panel-heading {
+    border: none;
+    padding: 0;
+  }
+  .page-molecule #molecule-properties h2 {
+    font-size: 21px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+  }
+  .page-molecule #molecule-properties h2 .properties-view-options {
+    font-size: 12px;
+  }
+  .page-molecule #molecule-properties table {
+    border: none;
+  }
+  .page-molecule #molecule-properties table tr td:first-of-type {
+    font-weight: bold;
+  }
+  .page-molecule #molecule-properties table tbody tr td {
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    padding: 4px;
+    font-size: 16px;
+  }
+  .page-molecule #molecule-viewer div,
+  .page-molecule #molecule-viewer canvas {
+    height: 250px;
+    display: none;
+  }
+  .page-molecule .svg-wrapper {
+    position: relative;
+    margin-bottom: -75px;
+    margin-top: -75px;
+    padding: 0;
+  }
+  .page-molecule .svg-wrapper img {
+    height: 500px;
+    z-index: -100;
+  }
+  .page-molecule #qr-print-wrapper {
+    position: absolute;
+    top: 65px;
+    left: 28px;
+  }
+  .page-molecule #qr-print-wrapper img {
+    height: 75px;
+    z-index: 10;
+  }
+}
+/**
+ *  Bootstrap Overrides 
+ */
+.alert-feedback {
+  border-color: #b2dfdb;
+  background-color: #5f9ea0;
+  border-color: #7fb1b3;
+  color: #e0f2f1;
+}
+.alert-feedback hr {
+  border-top-color: #a0d8d3;
+}
+.alert-feedback .alert-link {
+  color: #bce3e1;
+}
+.alert-feedback hr {
+  border-top-color: #6fa8a9;
+}
+.alert-feedback .alert-link {
+  color: #bce3e1;
+}
+/**
+ * Masonary Styles and Overrides 
+ * 
+ */
+.page-browse .grid-sizer,
+.page-browse .grid-item {
+  width: 100%;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+}
+@media (min-width: 768px) {
+  .page-browse .grid-sizer,
+  .page-browse .grid-item {
+    width: 50%;
+  }
+}
+@media (min-width: 992px) {
+  .page-browse .grid-sizer,
+  .page-browse .grid-item {
+    width: 33%;
+  }
+}
+@media (min-width: 1200px) {
+  .page-browse .grid-sizer,
+  .page-browse .grid-item {
+    width: 25%;
+  }
+}
+.page-browse a .grid-item {
+  -webkit-transition: font-size 0.5s ease;
+  -moz-transition: font-size 0.5s ease;
+  -o-transition: font-size 0.5s ease;
+  transition: font-size 0.5s ease;
+  -webkit-transition: transform 0.2s ease-in-out;
+  -o-transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
+  -moz-transition: -moz-transform 0.2s ease-in-out;
+  -o-transition: -o-transform 0.2s ease-in-out;
+  transition: -webkit-transform 0.2s ease-in-out,-moz-transform 0.2s ease-in-out,-o-transform 0.2s ease-in-out,transform 0.2s ease-in-out;
+}
+.page-browse a .grid-item:hover {
+  transform: scale(1.1);
+}
+@media (max-width: 767px) {
+  .page-browse a .grid-item:hover {
+    transform: scale(1);
+  }
+}
+.page-browse a .grid-item:hover .more-info {
+  opacity: 1;
+}
+.page-browse a .grid-item h3 {
+  font-size: 20px;
+  /* Smallerer devices (tablets, 200px and up) */
+  /* Smaller devices (tablets, 568px and up) */
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+  position: relative;
+  z-index: 10;
+}
+@media (min-width: 200px) {
+  .page-browse a .grid-item h3 {
+    font-size: 25px;
+  }
+}
+@media (min-width: 568px) {
+  .page-browse a .grid-item h3 {
+    font-size: 35px;
+  }
+}
+@media (min-width: 768px) {
+  .page-browse a .grid-item h3 {
+    font-size: 30px;
+  }
+}
+@media (min-width: 992px) {
+  .page-browse a .grid-item h3 {
+    font-size: 26px;
+  }
+}
+@media (min-width: 1200px) {
+  .page-browse a .grid-item h3 {
+    font-size: 28px;
+  }
+}
+.page-browse a .grid-item h4 {
+  font-size: 15px;
+  /* Smallerer devices (tablets, 200px and up) */
+  /* Smaller devices (tablets, 568px and up) */
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */
+  position: relative;
+  z-index: 10;
+  color: black;
+}
+@media (min-width: 200px) {
+  .page-browse a .grid-item h4 {
+    font-size: 20px;
+  }
+}
+@media (min-width: 568px) {
+  .page-browse a .grid-item h4 {
+    font-size: 28px;
+  }
+}
+@media (min-width: 768px) {
+  .page-browse a .grid-item h4 {
+    font-size: 22px;
+  }
+}
+@media (min-width: 992px) {
+  .page-browse a .grid-item h4 {
+    font-size: 18px;
+  }
+}
+@media (min-width: 1200px) {
+  .page-browse a .grid-item h4 {
+    font-size: 20px;
+  }
+}
+.page-browse a .grid-item img {
+  position: relative;
+  z-index: -100;
+  width: 100%;
+}
+.page-browse a .grid-item .more-info {
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  background-color: #f16b1d;
+  color: white;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 90%;
+  height: 90%;
+  margin: 10% 5% 0;
+}
+.page-browse a .grid-item .more-info h3,
+.page-browse a .grid-item .more-info h4 {
+  color: white;
+}
+.page-browse a .grid-item .more-info table {
+  padding: 5px;
+}
 color::-moz-selection {
   background: #3498db;
   color: white;
@@ -173,6 +674,19 @@ color::-moz-selection {
 html,
 body {
   overflow-x: hidden;
+}
+body button.btn,
+body a.btn {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: background-color;
+  transition-timing-function: ease;
+}
+body a {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: color;
+  transition-timing-function: ease;
 }
 body nav .navbar-brand > img {
   margin-top: -10px;
@@ -240,6 +754,13 @@ body .page-home #molecule-viewer canvas {
     height: 400px;
   }
 }
+body .page-home .the-news a.list-group-item,
+body .page-home .the-news a.list-group-item {
+  -webkit-transition: background-color 0.2s ease-in-out;
+  -moz-transition: background-color 0.2s ease-in-out;
+  -o-transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
+}
 body .page-molecule h1#molecule-name {
   font-size: 23px;
   padding-left: 10px;
@@ -264,6 +785,27 @@ body .page-molecule h1#molecule-name {
 }
 body .page-molecule h1#molecule-name .small {
   padding-top: 5px;
+}
+body .page-molecule #molecule-properties .panel {
+  transition: all 0.2s linear;
+}
+body .page-molecule #molecule-properties .molecule-tags li {
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+body .page-molecule #molecule-properties .molecule-tags a span {
+  border: 1px solid #f16b1d;
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: background-color;
+  transition-timing-function: ease;
+}
+body .page-molecule #molecule-properties .molecule-tags a:hover {
+  text-decoration: none;
+}
+body .page-molecule #molecule-properties .molecule-tags a:hover span {
+  color: #f16b1d;
+  background-color: white;
 }
 body .page-molecule #molecule-properties .tooltip-inner {
   width: 150px;
@@ -303,10 +845,17 @@ body .page-molecule #molecule-properties table tbody tr td {
   text-overflow: ellipsis;
   word-wrap: break-word;
 }
+body .page-molecule #molecule-properties table tbody tr > td:first-child {
+  min-width: 150px;
+}
 body .page-molecule #molecule-properties table tbody .molecule-alt-names ul {
   max-height: 200px;
   overflow-y: scroll;
   overflow-x: scroll;
+}
+body .page-molecule #molecule-properties .molecule-switchview .mobile .btn {
+  width: 100%;
+  margin-bottom: 10px;
 }
 body .page-molecule #molecule-viewer div,
 body .page-molecule #molecule-viewer canvas {
@@ -394,6 +943,20 @@ body .page-browse #molecule-browser .molecule-viwer .molecule-formula {
     font-size: 45px;
   }
 }
+body .page-browse #molecule-browser .molecule-viwer .svg_viewer {
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+}
+body .page-browse #molecule-browser .molecule-results-masonary {
+  -webkit-transition: opacity 0.5s ease;
+  -moz-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+body .page-browse #molecule-browser .molecule-results-masonary.translucent {
+  opacity: 0;
+}
 body .page-contact address {
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
   border-radius: 2px;
@@ -458,6 +1021,9 @@ body footer .footer-social .fa:hover {
   color: #b3b3b3;
 }
 /*****GLOBAL ELEMENTS ****/
+.feedback-messages-container {
+  margin-bottom: 22px;
+}
 #qrcodemodal #qrcode img {
   max-width: 100%;
   height: auto;

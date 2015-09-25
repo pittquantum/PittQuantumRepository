@@ -27,9 +27,11 @@ Multiple programs and web services are used in processing and displaying the mol
 * **[OpenEye Lexichem TK](http://www.eyesopen.com/lexichem-tk)** - For systematic naming
 * **[EZID](http://ezid.cdlib.org)** - To generate Digital Object Identifiers (DOIs)
 
-The backend is largely written in [Python](https://python.org/) using several key modules:
-* **[ChemSpiPy](http://chemspipy.readthedocs.org/)** - To access the [ChemSpider](http://chemspider.com/) webservice
-* **[CIRPy](http://cirpy.readthedocs.org/)** - To access the [NIH Chemical Resolver](http://cactus.nci.nih.gov/chemical/structure) 
-* **[PubChemPy](http://pubchempy.readthedocs.org/)** - To access the [NIH PubChem REST](https://pubchem.ncbi.nlm.nih.gov) service
-* **[mwclient](https://github.com/mwclient/mwclient)** - To search [Wikipedia](https://en.wikipedia.org/) for molecules
+The backend is largely written in [Flask](http://flask.pocoo.org/).  
+
+Several key modules are used to provide users with extra data on the molecules:  
+* **[ChemSpiPy](http://chemspipy.readthedocs.org/)** - To access the [ChemSpider](http://chemspider.com/) webservice  
+* **[CIRPy](http://cirpy.readthedocs.org/)** - To access the [NIH Chemical Resolver](http://cactus.nci.nih.gov/chemical/structure)  
+* **[PubChemPy](http://pubchempy.readthedocs.org/)** - To access the [NIH PubChem REST](https://pubchem.ncbi.nlm.nih.gov) service  
+* **[mwclient](https://github.com/mwclient/mwclient)** - To search [Wikipedia](https://en.wikipedia.org/) for molecules  
 

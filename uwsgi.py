@@ -8,7 +8,7 @@ import pqr.views as pqv
 # dictionary in the views.py file
 with open("./pqr/server_start/redirect_file", "r") as redir:
     for line in redir:
-        lineArr = line.strip().split(',')
+        lineArr = line.strip().split(' ')
         key = lineArr[0]
         value = lineArr[1].strip()
         pqv.redirect_table[key] = value
@@ -43,4 +43,4 @@ pqv.amount_mol = db.molecules.count()
 client.close()
 
 if __name__ == '__main__':
-    pqr.run()
+    pqr.run(debug=True)

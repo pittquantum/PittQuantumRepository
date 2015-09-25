@@ -1,4 +1,23 @@
-{% extends "skeleton/base.html" %} {% block header %} {% include 'skeleton/default_header.html' %} {% endblock %} {% block footer %} {% include 'skeleton/default_footer.html' %} {% endblock %} {% block title %}PQR | Home{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block lazyScripts %} {{ super() }} {% endblock %} {% block content %}
+{% extends "skeleton/base.html" %}
+{% block header %}
+    {% include 'skeleton/default_header.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'skeleton/default_footer.html' %}
+{% endblock %}
+
+{% block title %}PQR | Home{% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block lazyScripts %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
 <div id='home-banner'>
     <div class="row" id="splash-search">
         <div class="jumbotron text-center">
@@ -11,7 +30,7 @@
 <div class="container">
     <div id="molecule-of-the-week" class="row">
         <div class="col-md-6">
-            <h2> Molecule of the Week </h2>
+            <a href="/motw"><h2> Molecule of the Week </h2></a>
             <p> Click the molecule name to get more information. </p>
             <h3> <a href="/mol/{{ week_mol[3:] }}"> {{ week_mol_name }} </a> 
                <span class='pull-right'>
@@ -26,9 +45,13 @@
         </div>
         <div class="col-md-6">
             <h2> News </h2>
-            <div class="list-group other-content">
+            <div class="list-group other-content the-news">
+                {% for article in new_articles %}
+                    <a href="/news/{{article}}" target="_blank" class="list-group-item"><span class="badge background-primary">New</span><i class="fa fa-newspaper-o"></i> {{article|title}}</a> 
+                {% endfor %}
+
                 {% for article in articles %}
-                    <a href="/news/{{article}}" target="_blank" class="list-group-item"><span class="badge">New</span><i class="fa fa-newspaper-o"></i> {{article|title}}</a> 
+                    <a href="/news/{{article}}" target="_blank" class="list-group-item"><i class="fa fa-newspaper-o"></i> {{article|title}}</a> 
                 {% endfor %}
             </div>
         </div>

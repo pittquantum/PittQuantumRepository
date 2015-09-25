@@ -15,7 +15,37 @@ pqr.htmlUtilities.getINCHIKey = function() {
 	if ($(".molecule-inchikey").length) {
 		var key = $(".molecule-inchikey").children().next().html();
 	}
+	else{
+		return false; 
+	}
 	return $.trim(key)
+};
+
+/**
+ * Reterieve the QR code url. Try to get the short URL first, then 
+ * the long url, finally by the base INCHI key. If all fails redirect
+ * to the home page. 
+ * 
+ * @return {String} The entire URL for the QR Code
+ */
+pqr.htmlUtilities.getQRURL = function(){
+	var DOI_BASE = "http://doi.org/";
+
+	if ($(".molecule-doi-short").length) {
+		var url = DOI_BASE + $(".molecule-doi-short").text();
+	}
+	else if($(".molecule-doi-long").length){
+		var url = DOI_BASE + $(".molecule-doi-long").text();
+	}
+	else if(this.getINCHIKey()){
+		var url = htmlutilities.getRootURL();
+		url += "/mol/" + this.getINCHIKey(); 
+	}
+	else{
+		return htmlutilities.getRootURL(); //Default to home page 
+	}
+
+	return $.trim(url);
 };
 
 /**
@@ -35,13 +65,22 @@ pqr.htmlUtilities.initFontSize = function() {
 pqr.htmlUtilities.updateFont = function(type) {
 	if (type === -1) {
 		var newBaseSize = accessibility.fontSizeChanger(-1, pqr.htmlUtilities.getCurrentFontSize());
+		htmlutilities.bootstrapFeedback("Decrease Font Size to " + newBaseSize, "feedback", "fa-font");
 	} else if (type === 0) {
 		var newBaseSize = accessibility.changeFontSize(accessibility.defaultFontSize);
+		htmlutilities.bootstrapFeedback("Reset Font Size to " + newBaseSize, "feedback", "fa-font");
 	} else if (type === 1) {
 		var newBaseSize = accessibility.fontSizeChanger(1, pqr.htmlUtilities.getCurrentFontSize());
+		htmlutilities.bootstrapFeedback("Increased Font Size to " + newBaseSize, "feedback", "fa-font");
 	}
 
-	if (pqr.features.localstorage) localStorage.setItem("baseFontSize", newBaseSize);
+	if (pqr.features.localstorage) {
+		localStorage.setItem("baseFontSize", newBaseSize);
+	}
+
+	//Send PQR Message 
+	 
+	
 };
 
 
@@ -92,4 +131,18 @@ pqr.htmlUtilities.updatePropertiesViewer = function() {
 			$("#molecule-details table .detailed").addClass("hidden");
 		}
 	}
+};
+
+/**
+ * Update the element name size to fit on the line 
+ * @param  String selector Jquery selector string 
+ * @param  Objet options  Contains the options for the quickfit plugin
+ */
+pqr.htmlUtilities.initQuickFit = function(selector, options) {
+	$(selector).quickfit(options);
+
+	//Update on window resize 
+	$(window).resize(function() {
+		$(selector).quickfit(options);
+	});
 };

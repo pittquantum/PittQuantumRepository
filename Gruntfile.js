@@ -1,12 +1,4 @@
 module.exports = function(grunt) {
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-postcss');
-    grunt.registerTask('default', ['watch']);
-    grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss', 'uglify']);
-    grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss']);
     grunt.initConfig({
         //Less Comilation Options 
         less: {
@@ -21,22 +13,41 @@ module.exports = function(grunt) {
             }
         },
         postcss: {
-            options: {
-                map: {
-                    inline: false, // save all sourcemaps as separate files...
-                    annotation: 'assets/css/maps' // ...to the specified directory
+            prod: {
+                options: {
+                    map: {
+                        inline: false, // save all sourcemaps as separate files...
+                        annotation: 'assets/css/maps' // ...to the specified directory
+                    },
+                    // safe: true,
+                    processors: [
+                        // require('pixrem')(), // add fallbacks for rem units
+                        require('autoprefixer-core')({
+                            browsers: 'last 2 versions'
+                        }), // add vendor prefixes
+                        require('cssnano')(), // minify the result
+                        require('cssnext')() // Plugins to use future CSS features now by adding backwards compatibility css processing
+                    ]
                 },
-                // safe: true,
-                processors: [
-                    require('pixrem')(), // add fallbacks for rem units
-                    require('autoprefixer-core')({
-                        browsers: 'last 2 versions'
-                    }), // add vendor prefixes
-                    require('cssnano')(), // minify the result
-                    require('cssnext')() // Plugins to use future CSS features now by adding backwards compatibility css processing
-                ]
+                files: {
+                    "pqr/static/css/pqr.min.css": ['assets/css/pqr.css']
+                }
             },
-            dist: {
+            dev: {
+                options: {
+                    map: {
+                        inline: false, // save all sourcemaps as separate files...
+                        annotation: 'assets/css/maps' // ...to the specified directory
+                    },
+                    // safe: true,
+                    processors: [
+                        // require('pixrem')(), // add fallbacks for rem units
+                        require('autoprefixer-core')({
+                            browsers: 'last 2 versions'
+                        }), // add vendor prefixes
+                        require('cssnext')() // Plugins to use future CSS features now by adding backwards compatibility css processing
+                    ]
+                },
                 files: {
                     "pqr/static/css/pqr.min.css": ['assets/css/pqr.css']
                 }
@@ -45,7 +56,7 @@ module.exports = function(grunt) {
         concat: {
             options: {
                 // define a string to put between each file in the concatenated output
-                separator: ';\n'
+                separator: '\n'
             },
             js: {
                 // the files to concatenate (modernizr, then jquery, then bootstrap, then everythign else)
@@ -55,35 +66,122 @@ module.exports = function(grunt) {
             },
             css: {
                 // 
-                src: ['assets/css/bootstrap.css', 'assets/css/**/*.css'],
+                src: ['assets/css/bootstrap.css', 'assets/css/**/*.css', '!assets/css/maps', '!assets/css/pqr.css'],
                 // the location of the resulting CSS file
                 dest: 'assets/css/pqr.css'
+            },
+            dev_fast: { //Just use the pqr.js file not minified as the min file
+                src: ['pqr/static/js/pqr.js'],
+                dest: 'pqr/static/js/pqr.min.js'
             }
         },
         uglify: {
-            options: {
-                // define a string to put between each file in the concatenated output
-                banner: '/*! PQR JavaScript Combined and minified on <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+            prod: {
+                options: {
+                    // define a string to put between each file in the concatenated output
+                    banner: '/*! PQR PROD JavaScript Combined and minified on <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+                    compress: {
+                        drop_console: true, //Don't display any console output for production 
+                    }
+                },
+                files: {
+                    "pqr/static/js/pqr.min.js": ['pqr/static/js/pqr.js']
+                }
             },
-            dist: {
-                // the files to concatenate
+            dev: {
+                options: {
+                    // define a string to put between each file in the concatenated output
+                    banner: '/*! PQR DEV JavaScript Combined and minified on <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+                    compress: {},
+                    beautify: true
+                },
                 files: {
                     "pqr/static/js/pqr.min.js": ['pqr/static/js/pqr.js']
                 }
             }
         },
-        watch: {
-            styles: {
+        focus: { //Only Run a subset of watch events for production or dev
+            dev: {
+                include: ['styles_dev', 'scripts_dev', 'configFiles']
+            },
+            dev_fast: {
+                include: ['styles_dev', 'scripts_dev_fast', 'configFiles']
+            },
+            prod: {
+                include: ['styles_prod', 'scripts_prod', 'configFiles']
+            }
+        },
+        bower_concat: {
+            all: {
+                dest: 'assets/_bower.js',
+                cssDest: 'assets/css/_bower.css',
+                exclude: ['lesshat'],
+            }
+        },
+        "bower-install-simple": {
+            options: {
+                color: true
+            },
+            "prod": {
+                options: {
+                    production: true
+                }
+            },
+            "dev": {
+                options: {
+                    production: false
+                }
+            }
+        },
+        watch: { //Which folders to watch for changes and run only the tasks required
+            styles_prod: {
                 files: ['assets/less/**/*.less'],
-                tasks: ['less', 'concat:css', 'postcss'],
+                tasks: ['less', 'concat:css', 'postcss:prod'],
                 options: {
                     nospawn: true
                 }
             },
-            scripts: {
+            styles_dev: {
+                files: ['assets/less/**/*.less'],
+                tasks: ['less', 'concat:css', 'postcss:dev'],
+                options: {
+                    nospawn: true
+                }
+            },
+            scripts_prod: {
                 files: ['assets/js/**/*.js'],
-                tasks: ['concat:js']
+                tasks: ['concat:js', 'uglify:prod'],
+                options:{
+                    nospawn: true
+                }
+            },
+            scripts_dev: {
+                files: ['assets/js/**/*.js'],
+                tasks: ['concat:js', 'uglify:dev'],
+                options:{
+                    nospawn: true
+                }
+            },
+            scripts_dev_fast: {
+                files: ['assets/js/**/*.js'],
+                tasks: ['concat:js', 'concat:dev_fast'],
+                options:{
+                    nospawn: true
+                }
+            },
+            configFiles: {
+                files: ['Gruntfile.js', 'package.json'],
+                options: {
+                    reload: true
+                }
             }
         }
     });
+    require('load-grunt-tasks')(grunt);
+    grunt.registerTask('default', ['focus:prod']);
+    grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss:prod', 'uglify:prod']);
+    grunt.registerTask('prod_watch', ['focus:prod']);
+    grunt.registerTask('dev', ['less', 'concat:css', 'concat:js', 'postcss:dev', 'uglify:dev']);
+    grunt.registerTask('dev_watch', ['focus:dev']);
+    grunt.registerTask('dev_watch_fast', ['focus:dev_fast']); 
 };

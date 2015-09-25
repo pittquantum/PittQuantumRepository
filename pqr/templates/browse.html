@@ -14,6 +14,9 @@
 {% block lazyScripts %} {{ super() }} {% endblock %}
 <!-- -->
 {% block content %}
+<!-- -->
+{% import '/macros/molecules.html' as molecule %} 
+
 <!-- QR CODE MODAL-->
 <div class="modal fade" id="qrcodemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -34,91 +37,93 @@
     </div>
 </div>
 <!-- QR CODE MODAL -->
+
+<!-- Search Banner -->
 <div>
     <div class="clearfix" id="splash-search">
         <div id='browse-banner'>
             <div class="jumbotron text-center row">
-                <h2>Pitt Quantum Repository</h2>
-                <p>Search Results for
-                    <samp>{{query}}</samp>
-                </p>
-                {% import '/macros/forms.html' as forms %} {{ forms.banner_search('btn-default', 'molecule-search-group') }}
-                <!-- <p id="num-compounds"><strong>PQR currently includes <span class="number">55,000</span> compounds in <span class="number">25</span> categories!</strong></p> -->
+                <h2>Pitt Quantum Repository</h2> 
+                {% import '/macros/forms.html' as forms %} {{ forms.banner_search('btn-default', 'molecule-search-group', query=query) }}
             </div>
         </div>
     </div>
 </div>
+<!-- /Search Banner -->
 
-
-
-
-
-
-
-  <div class="container">
+<div class="container">
     <!-- Molecule Browser -->
     <div class="row clearfix" id="molecule-browser">
-        {% import '/macros/molecules.html' as molecule %} {% if results %}
+        {% if results %}
+
+        <!-- Page Results -->
         <div class="row alert alert-success" role="alert">
             <div class="col-xs-12">
-                <strong>Search Successful!</strong>
-                <samp>Number Pages Returned: {{num_pages}} {% if active != -1 %} Current Page {{active}}{% endif %} Your Query: "{{query}}" </samp>
+               <samp>Page {{active}} out of {{typenum_pages}}</samp>
             </div>
         </div>
-        {% for result in results %} {{ molecule.resultMolecule(result) }} {% endfor %} {% if active != -1 %}
-        <div class="text-center">
-            <nav>
-                <ul class="pagination">
-                    <li>
-                        {% if active == 1 %}
-                        <a href="/browse/{{query}}/{{active}}" aria-label="Previous">
-
-                {% else %}
-
-                <a href="/browse/{{active-1}}/?query={{query}}&amp;type={{searchType}}" aria-label="Previous">
+        <!-- /Page Results -->
 
 
-                {% endif %}
-
-                  <span aria-hidden="true"><i class="fa fa-arrow-left"></i></span>
-
-                </a>
-                    </li>
-                    {% for i in range(0,0) %} {% if i == active %}
-                    <!-- <li class="active"><a href="/browse/{{query}}/{{i}}">{{i}}</a></li> -->
-                    {% else %}
-                    <!-- <li><a href="/browse/{{query}}/{{i}}">{{i}}</a></li> -->
-                    {% endif %} {% endfor %}
-                    <li>
-                        {% if active == (num_pages) %}
-                        <a href="/browse/{{active}}/?query={{query}}&amp;type={{searchType}}" aria-label="Next">
-
-                {% else %}
-
-                <!-- <a href="/browse/{{query}}/{{active+1}}" aria-label="Next"> -->
-                <a href="/browse/{{active+1}}/?query={{query}}&amp;type={{searchType}}" aria-label="Next">
-
-                {% endif %}
-
-                  <span aria-hidden="true"><i class="fa fa-arrow-right"></i></span>
-
-                </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        {% endif %} {% else %}
-        <div class="alert alert-warning row" role="alert">
-            <div class="col-sm-2">
-                <p><i class="fa fa-exclamation-triangle fa-5x"></i></p>
-            </div>
-            <div class="col-sm-8">
-                <h2>
-            <strong> Your query returned 0 results! </strong>
-          </h2>
+        <!-- Masonary Search Results -->
+        <div class="clearfix"></div>
+        <div class='row molecule-results-masonary translucent'> 
+            <div class="grid text-center center-block">
+                <div class="grid-sizer"></div>
+                {% for result in results  %}
+                    {{ molecule.resultMoleculeMasonary(result) }} 
+                {% endfor %} 
             </div>
         </div>
+        <!-- /Masonary Search Results  -->
+
+        <!-- Simple Pagination  -->
+        {% if active != -1 %}
+            <div class="text-center">
+                <nav>
+                    <ul class="pagination">
+                        <li>
+                            {% if active == 1 %}
+                                <a href="/browse/{{query}}/{{active}}" aria-label="Previous">
+                            {% else %}
+                                <a href="/browse/{{active-1}}/?query={{query}}&amp;type={{searchType}}" aria-label="Previous">
+                            {% endif %}
+                                    <span aria-hidden="true"><i class="fa fa-arrow-left"></i></span>
+                                </a>
+                        </li>
+                        <li>
+                            {% if active == (num_pages) %}
+                                <a href="/browse/{{active}}/?query={{query}}&amp;type={{searchType}}" aria-label="Next">
+                            {% else %}
+                                <a href="/browse/{{active+1}}/?query={{query}}&amp;type={{searchType}}" aria-label="Next">
+                            {% endif %}
+                                    <span aria-hidden="true"><i class="fa fa-arrow-right"></i></span>
+                                </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+        {% endif %} <!--  End if active != -1 -->
+        <!-- /Simple Pagination  -->
+
+        <!-- No Results Found  -->
+        {% else %} 
+            <div class="alert alert-warning row text-center" role="alert">
+                <div class="col-sm-2">
+                    <p><i class="fa fa-exclamation-triangle fa-5x"></i></p>
+                </div>
+                <div class="col-sm-8 ">
+                    <h2>
+                <strong> Your query returned 0 results! </strong>
+              </h2>
+                </div>
+            </div>
         {% endif %}
+        <!-- /No Results Found  -->
+
+
     </div>
+    <!-- /Molecule Browser -->
 </div>
 {% endblock %}

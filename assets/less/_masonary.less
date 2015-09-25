@@ -1,0 +1,63 @@
+/**
+ * Masonary Styles and Overrides 
+ * 
+ */
+.page-browse {
+	.grid-sizer, .grid-item {
+		#responsive-helpers .responsive-abstract-manual(width, 100%, 50%, 33%, 25%);
+	}
+	a {
+		.grid-item {
+			.transition(font-size 0.5s ease);
+			.transition(transform .2s ease-in-out);
+
+			&:hover {
+				transform: scale(1.1);
+				#responsive-helpers .responsive-less-xs(transform, scale(1.0));
+				
+				.more-info{
+					opacity: 1; 
+				}
+			}
+			h3 {
+				//Will need to have the quickfit plugin on it 
+				#responsive-helpers .responsive-abstract-manual-extra(font-size, 20px, 25px, 35px, 30px, 26px, 28px);
+				position: relative;
+				z-index: 10; 
+			}
+			h4 {
+				#responsive-helpers .responsive-abstract-manual-extra(font-size, 15px, 20px, 28px, 22px, 18px, 20px);
+				position: relative;
+				z-index: 10; 
+				color: black;
+			}
+			img {
+				position: relative;
+				z-index: -100;
+				width: 100%;
+			}
+
+			.more-info{
+				.transition(opacity .2s ease-in-out);
+				opacity: 0; 
+				background-color: @brand-primary; 
+				color: white; 
+				position: absolute;
+				top: 0; 
+				z-index: 10;
+				width: 90%; 
+				height: 90%; 
+				margin: 10% 5% 0;
+
+				h3, h4{
+					color: white; 
+				}
+
+				table{
+					padding: 5px; 
+				}
+
+			}
+		}
+	}
+}

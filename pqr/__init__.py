@@ -8,10 +8,7 @@ pqr = Flask(__name__)
 
 # Determines the destination of the build. Only usefull if you're using
 # Frozen-Flask
-pqr.config['FREEZER_DESTINATION'] = os.path.dirname(
-    os.path.abspath(__file__)) + '/../build'
-pqr.config['MANDRILL_API_KEY'] = 'NtXopXkrJBX6ikLlWywo2g' #move to hidden config file
-
+pqr.config['FREEZER_DESTINATION'] = os.path.dirname(os.path.abspath(__file__)) + '/../build'
 
 # Function to easily find your assets
 # In your template use <link rel=stylesheet href="{{ static('filename') }}">
@@ -51,14 +48,29 @@ def subnumbers_filter(input):
 
 #Aubscript digits after ~characters removing the ~character
 def supnumbers_iupac_filter(input):
-	# return re.sub("\d+", lambda val: "<sup>" + val.group(0) + "</sup>", input)
 	return re.sub("~(.*?)~", lambda val: "<sup>" + val.group(0).replace('~', ' ') + "</sup>", input)
-	# return input
+   
+# Greek String Replacement
+def replace_greek_filter(input):
+    choice = ""
+    try:
+        choice = re.findall(r"(Alpha|Beta|Gamma)", input)[0]
+    except IndexError:
+        pass
+    if len(re.findall("(Alpha|Beta|Gamma)[^\w\s]", input)) > 0:
+        return input.replace(choice, '&{};'.format(choice.lower()))
+    else:
+        return input
+    #return re.sub("(Alpha|Beta|Gamma)[^\w\s]", lambda val: "&{};{}".format(choice.lower(), val.group(0)[-1]), input, flags=re.I)
 
 # Adding the filters to the environment
 pqr.jinja_env.filters['subnumbers'] = subnumbers_filter
 pqr.jinja_env.filters['supnumbersiupac'] = supnumbers_iupac_filter
+pqr.jinja_env.filters['replacegreek'] = replace_greek_filter
+
 assert pqr.jinja_env.filters['subnumbers']
+assert pqr.jinja_env.filters['supnumbersiupac']
+assert pqr.jinja_env.filters['replacegreek']
 ##########################################################################
 
 from pqr import views

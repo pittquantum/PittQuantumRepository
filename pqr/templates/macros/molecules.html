@@ -9,7 +9,7 @@
 {% macro resultMolecule(data, style='stick') -%}
 <div class="molecule-viwer row">
     <div class="col-md-4 hidden-sm hidden-xs">
-        <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{data.mol2url}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-surface1='opacity:.7;color:white' data-style='{{style}}'></div>
+        <div class='svg_viewer' style='background: url(/static/data/svg/{{data.mol2url}}.svg)'> </div>
     </div>
     <div class="col-md-8 properties">
         <h3><a href="/mol/{{data.inchikey}}">{{data.name|title|truncate(32,True)}}</a>
@@ -26,25 +26,95 @@
 {%- endmacro %}
 <!-- View of a molecule in search results or browsing   -->
 
+<!-- Masonary View of a molecule in search results or browsing   -->
+{% macro resultMoleculeMasonary(result) -%}
+<a href="/mol/{{result.inchikey}}"> 
+    <div class="grid-item center-block"> 
+            
+        <img src="/static/data/svg/{{result.mol2url}}.svg">
+        <h3> {%if result.json_data%} {{result.json_data["name"]|title|truncate(16,True)}}  {% endif %}</h3>
+        <h4> {{result.formula|subnumbers|safe}} </h4>
+
+        <div class='more-info'> 
+            <h3> {%if result.json_data%} {{result.json_data["name"]|title|truncate(32,True)}}  {% endif %} </h3>
+            <h4> {{result.formula|subnumbers|safe}}</h4>
+
+            <div class="table-responsive">
+                <table class="table">
+                    {%if result.json_data%} 
+                        {%if result.json_data["molecular mass"]%}
+                        <tr> 
+                            <td><strong>Molecular Mass</strong></td>
+                            <td>{{ '%10.3f' % result.json_data["molecular mass"] }} g·mol<sup>−1</sup></td>
+                        </tr>
+                        {% endif %}
+                        {%if result.json_data["pm7"]["heatOfFormation"]%}
+                        <tr> 
+                            <td><strong>Heat of Formation</strong></td>
+                            <td>{{ '%8.1f' % result.json_data["pm7"]["heatOfFormation"] }} &plusmn; 16.7 kJ·mol<sup>−1</sup></td>
+                        </tr>
+                        {% endif %}
+                        {%if result.json_data["pm7"]["dipoleMoment"]%}
+                        <tr> 
+                            <td><strong>Dipole Moment</strong></td>
+                            <td>{{ '%8.2f' % result.json_data["pm7"]["dipoleMoment"] }} &plusmn; 1.08 D</td>
+                        </tr>
+                        {% endif %}
+                        {%if result.json_data["pm7"]["volume"]%}
+                        <tr> 
+                            <td><strong>Volume</strong></td>
+                            <td>{{ result.json_data["pm7"]["volume"] }} &#8491; <sup>3</sup></td>
+                        </tr>
+                        {% endif %}
+                    {% endif %} 
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</a> 
+<!-- <pre> {{result}} </pre> -->
+{%- endmacro %}
+<!-- /Masonary View of a molecule in search results or browsing   -->
+
 {% macro moleculeMainView(mol2, jsonDict, style='stick') -%}
 <div class="molecule row">
     {%if jsonDict["name"]%}
     <h1 id="molecule-name"><!-- Molecule name as h1 for SEO-->
-    <a class="visible-xs-inline" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> 
-    {{ jsonDict["name"].title()|truncate(32,True) }}
+    <a class="visible-xs-inline qr-code-icon" href="#" data-toggle="modal" data-target="#qrcodemodal"><i class="fa fa-qrcode"></i></a> 
+    {{ jsonDict["name"].title()|replacegreek|safe }}
     <span class='pull-right'>
     <a href='#' id="rotationSwitch" data-container="body" data-toggle="tooltip" title="Toggle Molecule Rotation"><i class="fa fa-toggle-off"></i></a>
     <a href='#' id='reset-molecule' data-container="body" data-toggle="tooltip" title="Reset Zoom"><i class="fa fa-crosshairs"></i></a>
-
-
+    <a href='#' id='print-molecule' data-container="body" data-toggle="tooltip" title="Print Molecule" class='hidden-xs hidden-sm'><i class="fa fa-print"></i></a>
     </span>
     
     </h1> {%endif%}
     <!--3DMol Viewer Container-->
     <div id="molecule-viewer" class="col-sm-12 col-md-7 col-md-push-5">
-        <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}' data-type='mol2' data-backgroundcolor='0xffffff' data-surface1='opacity:.8;color:white' data-style='{{style}}'></div>
+        <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-surface1='opacity:.8;color:white' data-style='{{style}}'></div>
     </div>
     <!--3DMol Viewer Container-->
+
+          
+
+    <div class="media-wrapper">
+        <!-- SVG Viewer for Print view  -->
+        <div class='svg-wrapper visible-print-block col-xs-12'> 
+            <img src="/static/data/svg/{{mol2}}.svg" alt='Molecule SVG Image' class='center-block'/>
+        </div>
+        <!-- SVG Viewer for Print view  -->
+    </div>
+      <!-- QR Viewer for Print view  -->
+        <div id='qr-print-wrapper' class='visible-print-block'> 
+            
+        </div>
+        <!-- QR Viewer for Print view  -->
+
+    <!-- Printing Clearing -->
+    <div class="visible-print-block printer-clear clearfix row"></div>
+    <!-- Printing Clearing -->
+
     <section id="molecule-details" class='row'>
         <div id="molecule-properties" class="col-sm-12 col-md-5 col-md-pull-7">
             <div class="panel panel-default">
@@ -73,7 +143,7 @@
                             {%endif%} {%if jsonDict["iupac_name"]%}
                             <tr class="molecule-iupac-name">
                                 <td>IUPAC Name<sup><a href="#" data-container="body" data-toggle="tooltip" title="The standard name of this molecule"><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ jsonDict["iupac_name"]|title|supnumbersiupac|safe|lower }}</td>
+                                <td>{{ jsonDict["iupac_name"]|title|supnumbersiupac|replacegreek|lower|safe }}</td>
                             </tr>
                             {%endif%} {%if jsonDict["molecular mass"]%}
                             <tr class="molecule-molecular-mass">
@@ -91,7 +161,44 @@
                                 <td>{{ '%8.2f' % jsonDict["pm7"]["dipoleMoment"] }} &plusmn; 1.08 D</td>
                             </tr>
                             {%endif%}
-                                                       
+
+
+                            {%if jsonDict["pm7"]["volume"] %}
+                            <tr class="molecule-volume detailed">
+                                <td>Volume<sup><a href="#" data-container="body" data-toggle="tooltip" title="Volume of a molecule."><i class="fa fa-question"></i></a></sup></td>
+                                <td>{{ jsonDict["pm7"]["volume"] }} &#8491; <sup>3</sup></td>
+                            </tr>
+                            {%endif%}
+
+                            {%if jsonDict["pm7"]["surfaceArea"] %}
+                            <tr class="molecule-surface-area detailed">
+                                <td>Surface Area<sup><a href="#" data-container="body" data-toggle="tooltip" title="The total surface area of a molecule."><i class="fa fa-question"></i></a></sup></td>
+                                <td>{{ jsonDict["pm7"]["surfaceArea"] }} &#8491; <sup>2</sup></td>
+                            </tr>
+                            {%endif%} 
+
+                            {%if jsonDict["pm7"]["homo"] %}
+                            <tr class="molecule-homo-energy detailed">
+                                <td>HOMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Highest occupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
+                                <td>{{ '%8.2f' % jsonDict["pm7"]["homo"] }} &plusmn; 0.55 eV</td>
+                            </tr>
+                            {%endif%} {%if jsonDict["pm7"]["lumo"] %}
+                            <tr class="molecule-lumo-energy detailed">
+                                <td>LUMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Lowest unoccupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
+                                <td>{{ '%8.2f' % jsonDict["pm7"]["lumo"] }} &plusmn; eV</td>
+                            </tr>
+                            {%endif%}
+
+
+                            {%if jsonDict["pointGroup"] %}
+                            <tr class="molecule-pg-symmetry detailed">
+                                <td>Point Group Symmetry<sup><a href="#" data-container="body" data-toggle="tooltip" title="Group of geometric symmetries that keep one point fixed."><i class="fa fa-question"></i></a></sup></td>
+                                <td>{{ jsonDict["pointGroup"]|truncate(1, true, '') }}<sub>{{jsonDict["pointGroup"]|replace(jsonDict["pointGroup"]|truncate(1, true, ''), '') }}</sub>
+                                </td>
+                            </tr>
+                            {%endif%}  
+
+               
                             <!-- Begin Detailed Section -->
                             {%if jsonDict["synonyms"] %}
                             <tr class="molecule-alt-names detailed">
@@ -105,7 +212,9 @@
                                     </ul>
                                 </td>
                             </tr>
-                            {%endif%} {%if jsonDict["cas"] %}
+                            {%endif%} 
+
+                            {%if jsonDict["cas"] %}
                             <tr class="molecule-cas-numbers detailed">
                                 <td>CAS Number(s)<sup><a href="#" data-container="body" data-toggle="tooltip" title="Chemical Abstracts Service registry number(s)"><i class="fa fa-question"></i></a></sup></td>
                                 <td>
@@ -118,69 +227,86 @@
                                     </ul>
                                 </td>
                             </tr>
-                            {%endif%} {%if jsonDict["pubchem_cid"] %}
-                            <tr class="molecule-pubchem-id detailed">
-                                <td>PubChem CID<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
-                                <td><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}"> {{ jsonDict['pubchem_cid'] }}</a></td>
-                            </tr>
-                            {%endif%} {%if jsonDict["inchikey"] %}
+                            {%endif%} 
+
+
+                            {%if jsonDict["inchikey"] %}
                             <tr class="molecule-inchikey detailed">
                                 <td>InChIKey<sup><a href="#" data-container="body" data-toggle="tooltip" title="Standardized InChI with SHA-256"><i class="fa fa-question"></i></a></sup></td>
                                 <td>{{ jsonDict["inchikey"] }}</td>
                             </tr>
-                            {%endif%} {%if jsonDict["pointGroup"] %}
-                            <tr class="molecule-pg-symmetry detailed">
-                                <td>Point Group Symmetry<sup><a href="#" data-container="body" data-toggle="tooltip" title="Group of geometric symmetries that keep one point fixed."><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ jsonDict["pointGroup"]|truncate(1, true, '') }}<sub>{{jsonDict["pointGroup"]|replace(jsonDict["pointGroup"]|truncate(1, true, ''), '') }}</sub>
-                                </td>
-                            </tr>
-                            {%endif%} {%if jsonDict["pm7"]["volume"] %}
-                            <tr class="molecule-volume detailed">
-                                <td>Volume<sup><a href="#" data-container="body" data-toggle="tooltip" title="Volume of a molecule."><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ jsonDict["pm7"]["volume"] }} &#8491; <sup>3</sup></td>
-                            </tr>
-                            {%endif%} {%if jsonDict["pm7"]["surfaceArea"] %}
-                            <tr class="molecule-surface-area detailed">
-                                <td>Surface Area<sup><a href="#" data-container="body" data-toggle="tooltip" title="The total surface area of a molecule."><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ jsonDict["pm7"]["surfaceArea"] }} &#8491; <sup>2</sup></td>
-                            </tr>
-                            {%endif%} {%if jsonDict["pm7"]["homo"] %}
-                            <tr class="molecule-homo-energy detailed">
-                                <td>HOMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Highest occupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ '%8.2f' % jsonDict["pm7"]["homo"] }} &plusmn; 0.55 eV</td>
-                            </tr>
-                            {%endif%} {%if jsonDict["pm7"]["lumo"] %}
-                            <tr class="molecule-lumo-energy detailed">
-                                <td>LUMO Energy<sup><a href="#" data-container="body" data-toggle="tooltip" title="Lowest unoccupied molecular orbital energy"><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ '%8.2f' % jsonDict["pm7"]["lumo"] }} &plusmn; eV</td>
-                            </tr>
-                            {%endif%}
-                            <!-- End Detailed Section -->
+                            {%endif%} 
+
+
                             <tr class="molecule-qr-code">
                                 <td>QR Code<sup><a href="#" data-container="body" data-toggle="tooltip" title="Generate a QR code for this molecule"><i class="fa fa-question"></i></a></sup></td>
                                 <td> <a href="#" data-toggle="modal" data-target="#qrcodemodal"> Generate QR Code </a></td>
                             </tr>
+
+                            
+                            <tr class="molecule-links detailed">
+                                <td>Links<sup><a href="#" data-container="body" data-toggle="tooltip" title="External links to PubChem, Wikipedia, and ChemSpider."><i class="fa fa-question"></i></a></sup></td>
+                                <td>
+                                	{%if jsonDict["pubchem_cid"] %}<a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{ jsonDict['pubchem_cid'] }}" target="_blank"> PubChem </a>{%endif%}
+                                	{%if jsonDict["wiki"] and jsonDict["wiki"]|length > 0 %}<a href="{{ jsonDict['wiki'] }}" target="_blank"> Wikipedia</a>{%endif%}
+                                	{%if jsonDict["chemspider_id"] and jsonDict["chemspider_id"] > 0 %}<a href="https://chemspider.com/{{ jsonDict['chemspider_id'] }}" target="_blank"> ChemSpider</a>{%endif%}
+                                </td>
+                            </tr>
+                             
+                            <!-- End Detailed Section -->
+   
                              <tr class="molecule-doi">
                                 <td>DOI<sup><a href="#" data-container="body" data-toggle="tooltip" title="Digital Object Identifier"><i class="fa fa-question"></i></a></sup></td>
-                                <td><a href="//doi.org/{{ jsonDict["doi"] }}">{{ jsonDict["doi"] }}</a></td>
+                                <td>
+                                    <ul class='list-unstyled'> 
+                                        {%if jsonDict["doi"] %}<li><a href="//doi.org/{{ jsonDict["doi"] }}" class='molecule-doi-long'>{{ jsonDict["doi"] }}</a></li>{%endif%}
+                                        {%if jsonDict["shortdoi"] %}<li><a href="//doi.org/{{ jsonDict["shortdoi"] }}" class='molecule-doi-short'>{{ jsonDict["shortdoi"] }}</a></li>{%endif%}
+                                    </ul>
+                                </td>
                             </tr>
 
-                            {%if jsonDict["pubchem_cid"] %}
+
+
+                            
                             <tr class="molecule-data detailed">
-                                <td>JSON<sup><a href="#" data-container="body" data-toggle="tooltip" title="Get the data for this molecule in JSON format"><i class="fa fa-question"></i></a></sup></td>
-                                <td> <a href="{{ url_for('jsonAPI', key=jsonDict['inchikey']) }}"> Get JSON data </a></td>
+                                <td>Downloads<sup><a href="#" data-container="body" data-toggle="tooltip" title="Get the data for this molecule various formats"><i class="fa fa-question"></i></a></sup></td>
+                                <td>
+                                     <a href="{{ url_for('jsonAPI', key=jsonDict['inchikey']) }}" target="_blank"> Get JSON data </a>
+                                     <a href="{{ url_for('molAPI', key=jsonDict['inchikey']) }}" target="_blank"> Get MOL2 data </a>
+                                     <a href="/static/data/svg/{{mol2}}.svg" target="_blank"> Get SVG Image </a>
+                                </td>
                             </tr>
-                            {%endif%} {%if jsonDict["tags"] %}
+
+                            {%if jsonDict["elements"] %}
+                            <tr class="molecule-elements detailed">
+                                <td> Elements </td>
+                                <td>
+                                    {% for i in jsonDict["elements"] %}
+                                    <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
+                                    <!-- <a href="/browse/?query={{i|urlencode}}&amp;type=tag&amp;type=keyword"> -->
+                                    <span class="label label-info">{{ i }}</span>
+                                    <!-- </a> -->
+                                    <!-- </a> -->
+                                    {% endfor %}
+                                    <!-- <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a> -->
+                                </td>
+                            </tr>
+                            {%endif%}
+
+
+                            {%if jsonDict["tags"] %}
                             <tr class="molecule-tags">
                                 <td> <i class="fa fa-tags"></i></td>
                                 <td>
+                                    <ul class='list-unstyled list-inline'> 
                                     {% for i in jsonDict["tags"] %}
-                                    <!--  <a href="#"> MAKE THEM CLICK TO THE SEARCH WHEN IMPLEMENTED-->
-                                    <a href="/browse/?query={{i|urlencode}}&amp;type=tag&amp;type=keyword">
-                                        <span class="label label-primary">{{ i }}</span>
-                                    </a>
-                                    <!-- </a> -->
+                                        <li>
+                                            <a href="/browse/?query={{i|urlencode}}&amp;type=tag&amp;type=keyword">
+                                                 <span class="label label-primary">{{ i }}</span>
+                                             </a>
+                                        </li>
                                     {% endfor %}
+                                    </ul>
                                     <!-- <a href="#"><span class="label label-warning"><i class="fa fa-plus-square-o"></i></span></a> -->
                                 </td>
                             </tr>
@@ -189,13 +315,25 @@
                     </table>
                 </div>
                 <div class="panel-footer molecule-switchview block-center center-block text-center">
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-primary" id="changeStyleSphere">Spheres</button>
-                        <button type="button" class="btn btn-primary" id="changeStyleLine">Lines</button>
-                        <button type="button" class="btn btn-primary" id="changeStyleStick">Sticks</button>
-                        <button type="button" class="btn btn-danger" id="surfaceSwitch">Remove Surface</button>
-                        <!-- <button type="button" class="btn btn-info" id="rotationSwitch">Rotation <i class="fa fa-toggle-on"></i></button> -->
+                    <!-- Normal Screen Buttons  -->
+                    <div class="btn-group btn-group-sm hidden-xs hidden-sm" role="group">
+                        <button type="button" class="btn btn-primary changeStyleSphere">Spheres</button>
+                        <button type="button" class="btn btn-primary changeStyleLine">Lines</button>
+                        <button type="button" class="btn btn-primary changeStyleStick">Sticks</button>
+                        <button type="button" class="btn btn-danger surfaceSwitch">Remove Surface</button>
                     </div>
+                    <!-- Normal Screen Buttons  -->
+
+                    <!-- Small Screen Buttons  -->
+                     <div class="visible-xs visible-sm mobile">
+                        <button type="button" class="btn btn-primary changeStyleSphere">Spheres</button>
+                        <button type="button" class="btn btn-primary changeStyleLine">Lines</button>
+                        <button type="button" class="btn btn-primary changeStyleStick">Sticks</button>
+                        <button type="button" class="btn btn-danger surfaceSwitch">Remove Surface</button>
+                    </div>
+                    <!-- Small Screen Buttons  -->
+
+
                 </div>
             </div>
         </div>
