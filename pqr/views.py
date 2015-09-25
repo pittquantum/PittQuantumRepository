@@ -230,10 +230,13 @@ def browse(page_num="-1"):
             active = 1
         else:
             active = page_num
-    
-    rendered_html = render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
-    min_html = html_minify(rendered_html.encode('utf8'))
-    return min_html
+            
+    if request.args.get('ajax'):
+        return render_template("browse_ajax.html", results=results)
+    else:
+        rendered_html = render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
+        min_html = html_minify(rendered_html.encode('utf8'))
+        return min_html
 
 #################################################
 

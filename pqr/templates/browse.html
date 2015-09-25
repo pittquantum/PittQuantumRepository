@@ -53,13 +53,13 @@
 
 <div class="container">
     <!-- Molecule Browser -->
-    <div class="row clearfix" id="molecule-browser">
+    <div class="row clearfix" id="molecule-browser" data-query='{{query}}' data-type='{{searchType}}'>
         {% if results %}
 
         <!-- Page Results -->
         <div class="row alert alert-success" role="alert">
             <div class="col-xs-12">
-               <samp>Page {{active}} out of {{typenum_pages}}</samp>
+               <samp>Page {{active}} out of <span id='max_num_pages'>{{typenum_pages}}</span></samp>
             </div>
         </div>
         <!-- /Page Results -->
@@ -81,26 +81,7 @@
         {% if active != -1 %}
             <div class="text-center">
                 <nav>
-                    <ul class="pagination">
-                        <li>
-                            {% if active == 1 %}
-                                <a href="/browse/{{query}}/{{active}}" aria-label="Previous">
-                            {% else %}
-                                <a href="/browse/{{active-1}}/?query={{query}}&amp;type={{searchType}}" aria-label="Previous">
-                            {% endif %}
-                                    <span aria-hidden="true"><i class="fa fa-arrow-left"></i></span>
-                                </a>
-                        </li>
-                        <li>
-                            {% if active == (num_pages) %}
-                                <a href="/browse/{{active}}/?query={{query}}&amp;type={{searchType}}" aria-label="Next">
-                            {% else %}
-                                <a href="/browse/{{active+1}}/?query={{query}}&amp;type={{searchType}}" aria-label="Next">
-                            {% endif %}
-                                    <span aria-hidden="true"><i class="fa fa-arrow-right"></i></span>
-                                </a>
-                        </li>
-                    </ul>
+                    <a id='molecule-ajax-loader' class="pagination btn btn-primary">Load More</a>
                 </nav>
             </div>
             

@@ -2659,6 +2659,7 @@ htmlutilities.updateFooterHeight = function(footer_selector, content_selector){
         $(footer_selector).css('margin-top', '10px');
     }
 };
+
 /**
  * @fileoverview Initialize all JS for the website. Must be the 
  * first file concated in the pqr folder. 
@@ -21182,171 +21183,196 @@ var qrcode = function() {
  * @author JoshJRogan@gmail.com (Josh Rogan)
  * @author ritwikg2004@live.com (Ritwik Gupta)
  */
-
 /**
  * Bind the events to the proper font switching buttons for web accessibility. 
  * 
  */
 pqr.bindevents.bindFontSwitchers = function() {
-	var increaseButtonSelector = "#increasefont";
-	var decreaseButtonSelector = "#reducefont";
-	var resetButtonSelector = "#defaultfont";
-
-	$(increaseButtonSelector).on("vclick", function(event) {
-		event.preventDefault();
-		pqr.htmlUtilities.updateFont(1);
-	});
-
-	$(decreaseButtonSelector).on("vclick", function(event) {
-		event.preventDefault();
-		pqr.htmlUtilities.updateFont(-1);
-	});
-
-	$(resetButtonSelector).on("vclick", function(event) {
-		event.preventDefault();
-		pqr.htmlUtilities.updateFont(0);
-	});
+    var increaseButtonSelector = "#increasefont";
+    var decreaseButtonSelector = "#reducefont";
+    var resetButtonSelector = "#defaultfont";
+    $(increaseButtonSelector).on("vclick", function(event) {
+        event.preventDefault();
+        pqr.htmlUtilities.updateFont(1);
+    });
+    $(decreaseButtonSelector).on("vclick", function(event) {
+        event.preventDefault();
+        pqr.htmlUtilities.updateFont(-1);
+    });
+    $(resetButtonSelector).on("vclick", function(event) {
+        event.preventDefault();
+        pqr.htmlUtilities.updateFont(0);
+    });
 };
-
-
 /**
  * Reset the zoom level of the viewer
  *
  * @param  {String} selector an html selector to bind the reset button
  */
 pqr.bindevents.moleculeReset = function(selector) {
-	if ($(selector).length) {
-		$(selector).on("vclick", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.resetView();
-			htmlutilities.bootstrapFeedback("Molecule viewer reset", "feedback", "fa-crosshairs");
-		});
-	}
+    if ($(selector).length) {
+        $(selector).on("vclick", function(event) {
+            event.preventDefault();
+            pqr.threeDMole.resetView();
+            htmlutilities.bootstrapFeedback("Molecule viewer reset", "feedback", "fa-crosshairs");
+        });
+    }
 };
-
 /**
  * Toggle rotation of the current viewer
  *
  * @param  {String} selector an html selector to bind to a toggle rotation button
  */
 pqr.bindevents.moleculeToggleRotation = function(selector) {
-	if ($(selector).length) {
-		$(selector).on("vclick", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.toggleRotation();
-			var toggle = $(this).children();
-
-			if (toggle.hasClass('fa-toggle-on')) {
-				toggle.removeClass('fa-toggle-on');
-				toggle.addClass('fa-toggle-off');
-				htmlutilities.bootstrapFeedback("Rotation deactivated", "feedback", "fa-refresh");
-			} else {
-				toggle.removeClass('fa-toggle-off');
-				toggle.addClass('fa-toggle-on');
-				htmlutilities.bootstrapFeedback("Rotation activated", "feedback", "fa-refresh");
-			}
-		});
-	}
+    if ($(selector).length) {
+        $(selector).on("vclick", function(event) {
+            event.preventDefault();
+            pqr.threeDMole.toggleRotation();
+            var toggle = $(this).children();
+            if (toggle.hasClass('fa-toggle-on')) {
+                toggle.removeClass('fa-toggle-on');
+                toggle.addClass('fa-toggle-off');
+                htmlutilities.bootstrapFeedback("Rotation deactivated", "feedback", "fa-refresh");
+            } else {
+                toggle.removeClass('fa-toggle-off');
+                toggle.addClass('fa-toggle-on');
+                htmlutilities.bootstrapFeedback("Rotation activated", "feedback", "fa-refresh");
+            }
+        });
+    }
 };
-
 /**
  *	Handle the clickng of detailed and simple layouts and update
  * 	the local storate to reflect the changes. 
  * 	
  */
 pqr.bindevents.propertiesViewerHandler = function() {
-	$("#simpleView").on("vclick", function(event) {
-		event.preventDefault();
-		$("#molecule-details table .detailed").fadeOut('fast');
-		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "simple");
-			htmlutilities.bootstrapFeedback("Switched to simple view", "feedback", "fa-desktop");
-	});
-
-	$("#detailedView").on("vclick", function(event) {
-		event.preventDefault();
-		$("#molecule-details table .detailed").removeClass('hidden');
-		$("#molecule-details table .detailed").fadeIn('fast');
-		if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "detailed");
-			htmlutilities.bootstrapFeedback("Switched to detailed view ", "feedback", "fa-desktop");
-	});
+    $("#simpleView").on("vclick", function(event) {
+        event.preventDefault();
+        $("#molecule-details table .detailed").fadeOut('fast');
+        if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "simple");
+        htmlutilities.bootstrapFeedback("Switched to simple view", "feedback", "fa-desktop");
+    });
+    $("#detailedView").on("vclick", function(event) {
+        event.preventDefault();
+        $("#molecule-details table .detailed").removeClass('hidden');
+        $("#molecule-details table .detailed").fadeIn('fast');
+        if (pqr.features.localstorage) localStorage.setItem("moleculeLayout", "detailed");
+        htmlutilities.bootstrapFeedback("Switched to detailed view ", "feedback", "fa-desktop");
+    });
 };
-
-
 /**
  * Binds the buttons to change the style of the molecule beeweten spheres, lines or crosses. 
  * 
  */
 pqr.bindevents.moleculeStyleChanger = function() {
-
-	if ($('.changeStyleSphere').length) {
-		$('.changeStyleSphere').on("vclick", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.changeStyle("sphere");
-			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
-			htmlutilities.bootstrapFeedback("Switched to sphere display ", "feedback", "fa-desktop");
-		});
-	}
-
-
-	if ($('.changeStyleLine').length) {
-		$('.changeStyleLine').on("vclick", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.changeStyle("line");
-			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
-			htmlutilities.bootstrapFeedback("Switched to line display ", "feedback", "fa-desktop");
-		});
-	}
-
-	if ($('.changeStyleCross').length) {
-		$('.changeStyleCross').on("vclick", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.changeStyle("cross");
-			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
-			htmlutilities.bootstrapFeedback("Switched to cross display ", "feedback", "fa-desktop");
-		});
-	}
-
-	if ($('.changeStyleStick').length) {
-		$('.changeStyleStick').on("vclick", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.changeStyle("stick");
-			// if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
-			htmlutilities.bootstrapFeedback("Switched to stick display ", "feedback", "fa-desktop");
-		});
-	}
+    if ($('.changeStyleSphere').length) {
+        $('.changeStyleSphere').on("vclick", function(event) {
+            event.preventDefault();
+            pqr.threeDMole.changeStyle("sphere");
+            // if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "spheres");
+            htmlutilities.bootstrapFeedback("Switched to sphere display ", "feedback", "fa-desktop");
+        });
+    }
+    if ($('.changeStyleLine').length) {
+        $('.changeStyleLine').on("vclick", function(event) {
+            event.preventDefault();
+            pqr.threeDMole.changeStyle("line");
+            // if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "lines");
+            htmlutilities.bootstrapFeedback("Switched to line display ", "feedback", "fa-desktop");
+        });
+    }
+    if ($('.changeStyleCross').length) {
+        $('.changeStyleCross').on("vclick", function(event) {
+            event.preventDefault();
+            pqr.threeDMole.changeStyle("cross");
+            // if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "crosses");
+            htmlutilities.bootstrapFeedback("Switched to cross display ", "feedback", "fa-desktop");
+        });
+    }
+    if ($('.changeStyleStick').length) {
+        $('.changeStyleStick').on("vclick", function(event) {
+            event.preventDefault();
+            pqr.threeDMole.changeStyle("stick");
+            // if (pqr.features.localstorage) localStorage.setItem("moleculeViewerlayout", "sticks");
+            htmlutilities.bootstrapFeedback("Switched to stick display ", "feedback", "fa-desktop");
+        });
+    }
 };
-
 /**
  * Deactive the surface of the viewer.
  *
  * @param  {String} selector an html selector to bind to a toggle surface button
  */
 pqr.bindevents.moleculeToggleSurface = function(selector) {
-	if ($(selector).length) {
-		$(selector).on("vclick", function(event) {
-			event.preventDefault();
-			pqr.threeDMole.toggleSurface();
-			$(this).addClass('disabled btn-success');
-			$(this).removeClass('btn-danger');
-			$(this).html('Surface Removed');
-			htmlutilities.bootstrapFeedback("Surface removed. Reload to add surface ", "feedback", "fa-desktop");
-		});
-	}
+    if ($(selector).length) {
+        $(selector).on("vclick", function(event) {
+            event.preventDefault();
+            pqr.threeDMole.toggleSurface();
+            $(this).addClass('disabled btn-success');
+            $(this).removeClass('btn-danger');
+            $(this).html('Surface Removed');
+            htmlutilities.bootstrapFeedback("Surface removed. Reload to add surface ", "feedback", "fa-desktop");
+        });
+    }
 };
-
 /**
  * Bind an event to print on click 
  * @param  {[type]} selector [description]
  * @return {[type]}          [description]
  */
-pqr.bindevents.printButton = function(selector){
-	if ($(selector).length) {
-		$(selector).on("vclick", function(event) {
-			event.preventDefault(); 
-			window.print(); 
-			htmlutilities.bootstrapFeedback("Printing molecule data", "feedback", "fa-print");
-		});
-	}
+pqr.bindevents.printButton = function(selector) {
+    if ($(selector).length) {
+        $(selector).on("vclick", function(event) {
+            event.preventDefault();
+            window.print();
+            htmlutilities.bootstrapFeedback("Printing molecule data", "feedback", "fa-print");
+        });
+    }
+};
+
+pqr.bindevents.ajax_load_button = function(){
+	$('#molecule-ajax-loader').on('click', function(){
+		pqr.molecules.show_results(1);
+	});
+};
+
+/**
+ *	When the bottom of the page hits the pagination add more with jquery 
+ * @return {[type]} [description]
+ */
+pqr.bindevents.on_scoll_load_molecules = function() {
+    var waypoints = $('.pagination, footer').waypoint({
+        handler: function(direction) {
+            if(pqr.molecules.request_to_load()){
+            	pqr.molecules.ajax_search();
+            }
+            pqr.molecules.show_results(1);
+        },
+        offset: 'bottom-in-view'
+    })
+};
+
+/**
+ * Load more items the longer the person is on the browse page
+ * 
+ */
+pqr.bindevents.ajax_timer = function(){
+	//Load two to start
+	pqr.molecules.ajax_search();
+	pqr.molecules.ajax_search();
+
+
+	var ajax_loader = setInterval(function(){
+		//Only maintain up to ten
+		
+		//Limit the number of active requests to five and stored 10
+		if(pqr.molecules.request_to_load()){
+			if(!pqr.molecules.ajax_search()){
+				clearInterval(ajax_loader);
+			}
+		}
+	}, 1000);
 };
 /**
  * @fileoverview Initialize the app on document ready. Should be the last file. 
@@ -21394,6 +21420,10 @@ pqr.init = function() {
 		else if($("#main").hasClass("page-browse")){
 			pqr.masonary.init(); 
 			$('.molecule-results-masonary').removeClass('translucent'); 
+			pqr.bindevents.ajax_timer();
+			pqr.bindevents.on_scoll_load_molecules();
+			pqr.bindevents.ajax_load_button();
+
 		}
 
 		if(pqr.debug) console.log("Finished loading PQR Web App!"); 
@@ -21442,6 +21472,97 @@ pqr.masonary.imagesLoadedInit = function(){
 
 
 
+/**
+ * @fileoverview Molecule related functions 
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
+ */
+pqr.molecules = { //Config
+    debug: false,
+    next_page_num: 2, //Page number for the next query 
+    max_page_num: -1, //Max number of searches to perform
+    active_requests: 0, 
+    max_active_requests: 5, 
+    results: [], 
+    max_loaded_results: 5,
+    query: null
+};
+/**
+ * Ajax Search Function 
+ * @param  String query_string Query String for molecule search
+ * @param  {integer} page_num     [description]
+ * @return {[type]}              [description]
+ */
+pqr.molecules.ajax_search = function() {
+    if (this.max_page_num == -1) {
+        this.max_page_num = parseInt($('#max_num_pages').html());
+    }
+    if (this.next_page_num < this.max_page_num) {
+        query_object = this.getQuery();
+        this.active_requests++;
+        $.ajax({
+            method: "GET",
+            url: "/browse/" + this.next_page_num + "/",
+            data: query_object
+        }).done(function(response) {
+            if (pqr.masonary.grid) {
+                if (pqr.debug || pqr.molecules.debug) console.log("Trying to add Items");
+                pqr.molecules.results.push(response);
+            } else {
+                if (pqr.debug || pqr.molecules.debug) console.log("No Masonary");
+            }
+            pqr.molecules.active_requests--;
+        });
+        this.next_page_num++;
+        
+        return true;
+    } else {
+        //Show end of results output 
+        if (pqr.debug || pqr.molecules.debug) console.log("No More");
+        return false;
+    }
+};
+/**
+ * Show the results saved from ajax searches
+ * @return {[type]} [description]
+ */
+pqr.molecules.show_results = function(max_results) {
+    if (this.results.length > 0) {
+        $.each(this.results.splice(0, max_results), function(key, value) {
+            $('.grid').append(value);
+            pqr.masonary.grid.masonry('reloadItems');
+            pqr.masonary.grid.masonry();
+        });
+    }
+    else{
+        if (pqr.debug || pqr.molecules.debug) console.log("No More Results");
+    }
+};
+
+/**
+ * Get the current query
+ * @return Object The query in an object 
+ */
+pqr.molecules.getQuery = function(){
+    if(this.query == null){
+        var element = $('#molecule-browser');
+        this.query = {
+            ajax: true, 
+            query: element.attr('data-query'),
+            type: element.attr('data-type')
+        };
+    }
+    if (pqr.debug || pqr.molecules.debug) console.log(this.query);
+    return this.query; 
+};
+
+/**
+ * Determine if it is a good time to load more 
+ * @return Boolean 
+ */
+pqr.molecules.request_to_load = function(){
+    return this.active_requests < this.max_active_requests && this.results.length < this.max_loaded_results; 
+}
 /**
  * @fileoverview QR code related functions  
  * @author JoshJRogan@gmail.com (Josh Rogan)
@@ -25133,3 +25254,653 @@ return Outlayer;
   return Masonry;
 
 }));
+
+/*!
+Waypoints - 4.0.0
+Copyright © 2011-2015 Caleb Troughton
+Licensed under the MIT license.
+https://github.com/imakewebthings/waypoints/blog/master/licenses.txt
+*/
+(function() {
+  'use strict'
+
+  var keyCounter = 0
+  var allWaypoints = {}
+
+  /* http://imakewebthings.com/waypoints/api/waypoint */
+  function Waypoint(options) {
+    if (!options) {
+      throw new Error('No options passed to Waypoint constructor')
+    }
+    if (!options.element) {
+      throw new Error('No element option passed to Waypoint constructor')
+    }
+    if (!options.handler) {
+      throw new Error('No handler option passed to Waypoint constructor')
+    }
+
+    this.key = 'waypoint-' + keyCounter
+    this.options = Waypoint.Adapter.extend({}, Waypoint.defaults, options)
+    this.element = this.options.element
+    this.adapter = new Waypoint.Adapter(this.element)
+    this.callback = options.handler
+    this.axis = this.options.horizontal ? 'horizontal' : 'vertical'
+    this.enabled = this.options.enabled
+    this.triggerPoint = null
+    this.group = Waypoint.Group.findOrCreate({
+      name: this.options.group,
+      axis: this.axis
+    })
+    this.context = Waypoint.Context.findOrCreateByElement(this.options.context)
+
+    if (Waypoint.offsetAliases[this.options.offset]) {
+      this.options.offset = Waypoint.offsetAliases[this.options.offset]
+    }
+    this.group.add(this)
+    this.context.add(this)
+    allWaypoints[this.key] = this
+    keyCounter += 1
+  }
+
+  /* Private */
+  Waypoint.prototype.queueTrigger = function(direction) {
+    this.group.queueTrigger(this, direction)
+  }
+
+  /* Private */
+  Waypoint.prototype.trigger = function(args) {
+    if (!this.enabled) {
+      return
+    }
+    if (this.callback) {
+      this.callback.apply(this, args)
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/destroy */
+  Waypoint.prototype.destroy = function() {
+    this.context.remove(this)
+    this.group.remove(this)
+    delete allWaypoints[this.key]
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/disable */
+  Waypoint.prototype.disable = function() {
+    this.enabled = false
+    return this
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/enable */
+  Waypoint.prototype.enable = function() {
+    this.context.refresh()
+    this.enabled = true
+    return this
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/next */
+  Waypoint.prototype.next = function() {
+    return this.group.next(this)
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/previous */
+  Waypoint.prototype.previous = function() {
+    return this.group.previous(this)
+  }
+
+  /* Private */
+  Waypoint.invokeAll = function(method) {
+    var allWaypointsArray = []
+    for (var waypointKey in allWaypoints) {
+      allWaypointsArray.push(allWaypoints[waypointKey])
+    }
+    for (var i = 0, end = allWaypointsArray.length; i < end; i++) {
+      allWaypointsArray[i][method]()
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/destroy-all */
+  Waypoint.destroyAll = function() {
+    Waypoint.invokeAll('destroy')
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/disable-all */
+  Waypoint.disableAll = function() {
+    Waypoint.invokeAll('disable')
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/enable-all */
+  Waypoint.enableAll = function() {
+    Waypoint.invokeAll('enable')
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/refresh-all */
+  Waypoint.refreshAll = function() {
+    Waypoint.Context.refreshAll()
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/viewport-height */
+  Waypoint.viewportHeight = function() {
+    return window.innerHeight || document.documentElement.clientHeight
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/viewport-width */
+  Waypoint.viewportWidth = function() {
+    return document.documentElement.clientWidth
+  }
+
+  Waypoint.adapters = []
+
+  Waypoint.defaults = {
+    context: window,
+    continuous: true,
+    enabled: true,
+    group: 'default',
+    horizontal: false,
+    offset: 0
+  }
+
+  Waypoint.offsetAliases = {
+    'bottom-in-view': function() {
+      return this.context.innerHeight() - this.adapter.outerHeight()
+    },
+    'right-in-view': function() {
+      return this.context.innerWidth() - this.adapter.outerWidth()
+    }
+  }
+
+  window.Waypoint = Waypoint
+}())
+;(function() {
+  'use strict'
+
+  function requestAnimationFrameShim(callback) {
+    window.setTimeout(callback, 1000 / 60)
+  }
+
+  var keyCounter = 0
+  var contexts = {}
+  var Waypoint = window.Waypoint
+  var oldWindowLoad = window.onload
+
+  /* http://imakewebthings.com/waypoints/api/context */
+  function Context(element) {
+    this.element = element
+    this.Adapter = Waypoint.Adapter
+    this.adapter = new this.Adapter(element)
+    this.key = 'waypoint-context-' + keyCounter
+    this.didScroll = false
+    this.didResize = false
+    this.oldScroll = {
+      x: this.adapter.scrollLeft(),
+      y: this.adapter.scrollTop()
+    }
+    this.waypoints = {
+      vertical: {},
+      horizontal: {}
+    }
+
+    element.waypointContextKey = this.key
+    contexts[element.waypointContextKey] = this
+    keyCounter += 1
+
+    this.createThrottledScrollHandler()
+    this.createThrottledResizeHandler()
+  }
+
+  /* Private */
+  Context.prototype.add = function(waypoint) {
+    var axis = waypoint.options.horizontal ? 'horizontal' : 'vertical'
+    this.waypoints[axis][waypoint.key] = waypoint
+    this.refresh()
+  }
+
+  /* Private */
+  Context.prototype.checkEmpty = function() {
+    var horizontalEmpty = this.Adapter.isEmptyObject(this.waypoints.horizontal)
+    var verticalEmpty = this.Adapter.isEmptyObject(this.waypoints.vertical)
+    if (horizontalEmpty && verticalEmpty) {
+      this.adapter.off('.waypoints')
+      delete contexts[this.key]
+    }
+  }
+
+  /* Private */
+  Context.prototype.createThrottledResizeHandler = function() {
+    var self = this
+
+    function resizeHandler() {
+      self.handleResize()
+      self.didResize = false
+    }
+
+    this.adapter.on('resize.waypoints', function() {
+      if (!self.didResize) {
+        self.didResize = true
+        Waypoint.requestAnimationFrame(resizeHandler)
+      }
+    })
+  }
+
+  /* Private */
+  Context.prototype.createThrottledScrollHandler = function() {
+    var self = this
+    function scrollHandler() {
+      self.handleScroll()
+      self.didScroll = false
+    }
+
+    this.adapter.on('scroll.waypoints', function() {
+      if (!self.didScroll || Waypoint.isTouch) {
+        self.didScroll = true
+        Waypoint.requestAnimationFrame(scrollHandler)
+      }
+    })
+  }
+
+  /* Private */
+  Context.prototype.handleResize = function() {
+    Waypoint.Context.refreshAll()
+  }
+
+  /* Private */
+  Context.prototype.handleScroll = function() {
+    var triggeredGroups = {}
+    var axes = {
+      horizontal: {
+        newScroll: this.adapter.scrollLeft(),
+        oldScroll: this.oldScroll.x,
+        forward: 'right',
+        backward: 'left'
+      },
+      vertical: {
+        newScroll: this.adapter.scrollTop(),
+        oldScroll: this.oldScroll.y,
+        forward: 'down',
+        backward: 'up'
+      }
+    }
+
+    for (var axisKey in axes) {
+      var axis = axes[axisKey]
+      var isForward = axis.newScroll > axis.oldScroll
+      var direction = isForward ? axis.forward : axis.backward
+
+      for (var waypointKey in this.waypoints[axisKey]) {
+        var waypoint = this.waypoints[axisKey][waypointKey]
+        var wasBeforeTriggerPoint = axis.oldScroll < waypoint.triggerPoint
+        var nowAfterTriggerPoint = axis.newScroll >= waypoint.triggerPoint
+        var crossedForward = wasBeforeTriggerPoint && nowAfterTriggerPoint
+        var crossedBackward = !wasBeforeTriggerPoint && !nowAfterTriggerPoint
+        if (crossedForward || crossedBackward) {
+          waypoint.queueTrigger(direction)
+          triggeredGroups[waypoint.group.id] = waypoint.group
+        }
+      }
+    }
+
+    for (var groupKey in triggeredGroups) {
+      triggeredGroups[groupKey].flushTriggers()
+    }
+
+    this.oldScroll = {
+      x: axes.horizontal.newScroll,
+      y: axes.vertical.newScroll
+    }
+  }
+
+  /* Private */
+  Context.prototype.innerHeight = function() {
+    /*eslint-disable eqeqeq */
+    if (this.element == this.element.window) {
+      return Waypoint.viewportHeight()
+    }
+    /*eslint-enable eqeqeq */
+    return this.adapter.innerHeight()
+  }
+
+  /* Private */
+  Context.prototype.remove = function(waypoint) {
+    delete this.waypoints[waypoint.axis][waypoint.key]
+    this.checkEmpty()
+  }
+
+  /* Private */
+  Context.prototype.innerWidth = function() {
+    /*eslint-disable eqeqeq */
+    if (this.element == this.element.window) {
+      return Waypoint.viewportWidth()
+    }
+    /*eslint-enable eqeqeq */
+    return this.adapter.innerWidth()
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/context-destroy */
+  Context.prototype.destroy = function() {
+    var allWaypoints = []
+    for (var axis in this.waypoints) {
+      for (var waypointKey in this.waypoints[axis]) {
+        allWaypoints.push(this.waypoints[axis][waypointKey])
+      }
+    }
+    for (var i = 0, end = allWaypoints.length; i < end; i++) {
+      allWaypoints[i].destroy()
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/context-refresh */
+  Context.prototype.refresh = function() {
+    /*eslint-disable eqeqeq */
+    var isWindow = this.element == this.element.window
+    /*eslint-enable eqeqeq */
+    var contextOffset = isWindow ? undefined : this.adapter.offset()
+    var triggeredGroups = {}
+    var axes
+
+    this.handleScroll()
+    axes = {
+      horizontal: {
+        contextOffset: isWindow ? 0 : contextOffset.left,
+        contextScroll: isWindow ? 0 : this.oldScroll.x,
+        contextDimension: this.innerWidth(),
+        oldScroll: this.oldScroll.x,
+        forward: 'right',
+        backward: 'left',
+        offsetProp: 'left'
+      },
+      vertical: {
+        contextOffset: isWindow ? 0 : contextOffset.top,
+        contextScroll: isWindow ? 0 : this.oldScroll.y,
+        contextDimension: this.innerHeight(),
+        oldScroll: this.oldScroll.y,
+        forward: 'down',
+        backward: 'up',
+        offsetProp: 'top'
+      }
+    }
+
+    for (var axisKey in axes) {
+      var axis = axes[axisKey]
+      for (var waypointKey in this.waypoints[axisKey]) {
+        var waypoint = this.waypoints[axisKey][waypointKey]
+        var adjustment = waypoint.options.offset
+        var oldTriggerPoint = waypoint.triggerPoint
+        var elementOffset = 0
+        var freshWaypoint = oldTriggerPoint == null
+        var contextModifier, wasBeforeScroll, nowAfterScroll
+        var triggeredBackward, triggeredForward
+
+        if (waypoint.element !== waypoint.element.window) {
+          elementOffset = waypoint.adapter.offset()[axis.offsetProp]
+        }
+
+        if (typeof adjustment === 'function') {
+          adjustment = adjustment.apply(waypoint)
+        }
+        else if (typeof adjustment === 'string') {
+          adjustment = parseFloat(adjustment)
+          if (waypoint.options.offset.indexOf('%') > - 1) {
+            adjustment = Math.ceil(axis.contextDimension * adjustment / 100)
+          }
+        }
+
+        contextModifier = axis.contextScroll - axis.contextOffset
+        waypoint.triggerPoint = elementOffset + contextModifier - adjustment
+        wasBeforeScroll = oldTriggerPoint < axis.oldScroll
+        nowAfterScroll = waypoint.triggerPoint >= axis.oldScroll
+        triggeredBackward = wasBeforeScroll && nowAfterScroll
+        triggeredForward = !wasBeforeScroll && !nowAfterScroll
+
+        if (!freshWaypoint && triggeredBackward) {
+          waypoint.queueTrigger(axis.backward)
+          triggeredGroups[waypoint.group.id] = waypoint.group
+        }
+        else if (!freshWaypoint && triggeredForward) {
+          waypoint.queueTrigger(axis.forward)
+          triggeredGroups[waypoint.group.id] = waypoint.group
+        }
+        else if (freshWaypoint && axis.oldScroll >= waypoint.triggerPoint) {
+          waypoint.queueTrigger(axis.forward)
+          triggeredGroups[waypoint.group.id] = waypoint.group
+        }
+      }
+    }
+
+    Waypoint.requestAnimationFrame(function() {
+      for (var groupKey in triggeredGroups) {
+        triggeredGroups[groupKey].flushTriggers()
+      }
+    })
+
+    return this
+  }
+
+  /* Private */
+  Context.findOrCreateByElement = function(element) {
+    return Context.findByElement(element) || new Context(element)
+  }
+
+  /* Private */
+  Context.refreshAll = function() {
+    for (var contextId in contexts) {
+      contexts[contextId].refresh()
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/context-find-by-element */
+  Context.findByElement = function(element) {
+    return contexts[element.waypointContextKey]
+  }
+
+  window.onload = function() {
+    if (oldWindowLoad) {
+      oldWindowLoad()
+    }
+    Context.refreshAll()
+  }
+
+  Waypoint.requestAnimationFrame = function(callback) {
+    var requestFn = window.requestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      requestAnimationFrameShim
+    requestFn.call(window, callback)
+  }
+  Waypoint.Context = Context
+}())
+;(function() {
+  'use strict'
+
+  function byTriggerPoint(a, b) {
+    return a.triggerPoint - b.triggerPoint
+  }
+
+  function byReverseTriggerPoint(a, b) {
+    return b.triggerPoint - a.triggerPoint
+  }
+
+  var groups = {
+    vertical: {},
+    horizontal: {}
+  }
+  var Waypoint = window.Waypoint
+
+  /* http://imakewebthings.com/waypoints/api/group */
+  function Group(options) {
+    this.name = options.name
+    this.axis = options.axis
+    this.id = this.name + '-' + this.axis
+    this.waypoints = []
+    this.clearTriggerQueues()
+    groups[this.axis][this.name] = this
+  }
+
+  /* Private */
+  Group.prototype.add = function(waypoint) {
+    this.waypoints.push(waypoint)
+  }
+
+  /* Private */
+  Group.prototype.clearTriggerQueues = function() {
+    this.triggerQueues = {
+      up: [],
+      down: [],
+      left: [],
+      right: []
+    }
+  }
+
+  /* Private */
+  Group.prototype.flushTriggers = function() {
+    for (var direction in this.triggerQueues) {
+      var waypoints = this.triggerQueues[direction]
+      var reverse = direction === 'up' || direction === 'left'
+      waypoints.sort(reverse ? byReverseTriggerPoint : byTriggerPoint)
+      for (var i = 0, end = waypoints.length; i < end; i += 1) {
+        var waypoint = waypoints[i]
+        if (waypoint.options.continuous || i === waypoints.length - 1) {
+          waypoint.trigger([direction])
+        }
+      }
+    }
+    this.clearTriggerQueues()
+  }
+
+  /* Private */
+  Group.prototype.next = function(waypoint) {
+    this.waypoints.sort(byTriggerPoint)
+    var index = Waypoint.Adapter.inArray(waypoint, this.waypoints)
+    var isLast = index === this.waypoints.length - 1
+    return isLast ? null : this.waypoints[index + 1]
+  }
+
+  /* Private */
+  Group.prototype.previous = function(waypoint) {
+    this.waypoints.sort(byTriggerPoint)
+    var index = Waypoint.Adapter.inArray(waypoint, this.waypoints)
+    return index ? this.waypoints[index - 1] : null
+  }
+
+  /* Private */
+  Group.prototype.queueTrigger = function(waypoint, direction) {
+    this.triggerQueues[direction].push(waypoint)
+  }
+
+  /* Private */
+  Group.prototype.remove = function(waypoint) {
+    var index = Waypoint.Adapter.inArray(waypoint, this.waypoints)
+    if (index > -1) {
+      this.waypoints.splice(index, 1)
+    }
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/first */
+  Group.prototype.first = function() {
+    return this.waypoints[0]
+  }
+
+  /* Public */
+  /* http://imakewebthings.com/waypoints/api/last */
+  Group.prototype.last = function() {
+    return this.waypoints[this.waypoints.length - 1]
+  }
+
+  /* Private */
+  Group.findOrCreate = function(options) {
+    return groups[options.axis][options.name] || new Group(options)
+  }
+
+  Waypoint.Group = Group
+}())
+;(function() {
+  'use strict'
+
+  var $ = window.jQuery
+  var Waypoint = window.Waypoint
+
+  function JQueryAdapter(element) {
+    this.$element = $(element)
+  }
+
+  $.each([
+    'innerHeight',
+    'innerWidth',
+    'off',
+    'offset',
+    'on',
+    'outerHeight',
+    'outerWidth',
+    'scrollLeft',
+    'scrollTop'
+  ], function(i, method) {
+    JQueryAdapter.prototype[method] = function() {
+      var args = Array.prototype.slice.call(arguments)
+      return this.$element[method].apply(this.$element, args)
+    }
+  })
+
+  $.each([
+    'extend',
+    'inArray',
+    'isEmptyObject'
+  ], function(i, method) {
+    JQueryAdapter[method] = $[method]
+  })
+
+  Waypoint.adapters.push({
+    name: 'jquery',
+    Adapter: JQueryAdapter
+  })
+  Waypoint.Adapter = JQueryAdapter
+}())
+;(function() {
+  'use strict'
+
+  var Waypoint = window.Waypoint
+
+  function createExtension(framework) {
+    return function() {
+      var waypoints = []
+      var overrides = arguments[0]
+
+      if (framework.isFunction(arguments[0])) {
+        overrides = framework.extend({}, arguments[1])
+        overrides.handler = arguments[0]
+      }
+
+      this.each(function() {
+        var options = framework.extend({}, overrides, {
+          element: this
+        })
+        if (typeof options.context === 'string') {
+          options.context = framework(this).closest(options.context)[0]
+        }
+        waypoints.push(new Waypoint(options))
+      })
+
+      return waypoints
+    }
+  }
+
+  if (window.jQuery) {
+    window.jQuery.fn.waypoint = createExtension(window.jQuery)
+  }
+  if (window.Zepto) {
+    window.Zepto.fn.waypoint = createExtension(window.Zepto)
+  }
+}())
+;

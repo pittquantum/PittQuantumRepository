@@ -44,6 +44,10 @@ pqr.init = function() {
 		else if($("#main").hasClass("page-browse")){
 			pqr.masonary.init(); 
 			$('.molecule-results-masonary').removeClass('translucent'); 
+			pqr.bindevents.ajax_timer();
+			pqr.bindevents.on_scoll_load_molecules();
+			pqr.bindevents.ajax_load_button();
+
 		}
 
 		if(pqr.debug) console.log("Finished loading PQR Web App!"); 
