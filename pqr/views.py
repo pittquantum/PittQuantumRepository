@@ -197,8 +197,11 @@ def browse(page_num="-1"):
     if total_results == 1:
         return redirect(url_for('molecule', key=results[0]["inchikey"]))
 
-    # Split the reults array into chunks of 10 each for search pagination
-    tempArr = list(chunks(results, 10))
+    # Split the reults array into chunks of 50 each for search pagination - 50 for AJAX (May want to change)
+    if request.args.get('ajax'):
+        tempArr = list(chunks(results, 100)) 
+    else:
+        tempArr = list(chunks(results, 100))
 
     # The number of pages is just the total number of chunks
     num_pages = len(tempArr)

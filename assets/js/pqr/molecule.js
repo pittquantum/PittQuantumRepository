@@ -7,13 +7,35 @@ pqr.molecules = { //Config
     debug: true,
     next_page_num: 2, //Page number for the next query 
     max_page_num: -1, //Max number of searches to perform
-    active_requests: 0,
+    max_num_results: -1, //Total number of results
+    results_visible: 100, //Total number of results loaded to the DOM (100 from initial load)
+    active_requests: 0, 
     max_active_requests: 5, //Threshold of active requests 
     results: [], //Loaded reuslts (not displayed)
     max_loaded_results: 5, //Threshold of number of loaded results
     query: null,
-    scrollLimit: 5000, 
+    scrollLimit: 5000, //How much scrolling is left on the page allowed for additional loads
     total_requests: 0, //Total number of requests made (try to limit as much as possible)
+};
+
+/**
+ * Setup ajax search 
+ * 
+ */
+pqr.molecules.init_ajax_search = function(){
+    //Get the max page number to determine the limit of searches to perform
+    if (this.max_page_num === -1) {
+        this.max_page_num = parseInt($('.meta-data').attr('data-max-pages'));
+    }
+
+    //Get the total number of results we should try to retrieve 
+    if(this.max_num_results === -1){
+        this.max_num_results = parseInt($('.meta-data').attr('data-total-results'));
+    }
+
+    //Inital button state
+    $('#molecule-ajax-loader').show(300);
+    $('.pagination .cogs').hide(300);
 };
 
 /**
@@ -23,13 +45,7 @@ pqr.molecules = { //Config
  * @return {Boolean}             If results are sent
  */
 pqr.molecules.ajax_search = function() {
-
-    //Get the max page number to determine the limit of searches to perform
-    if (this.max_page_num == -1) {
-        this.max_page_num = parseInt($('.meta-data').attr('data-max-pages'));
-    }
-
-    if (this.next_page_num < this.max_page_num) {
+    if (this.results_visible < this.max_num_results) {
         query_object = this.getQuery();
         this.active_requests++;
         this.total_requests++;
@@ -45,10 +61,10 @@ pqr.molecules.ajax_search = function() {
             url: "/browse/" + this.next_page_num + "/",
             data: query_object
         }).done(function(response) {
-
             if (pqr.debug || pqr.molecules.debug) console.log("Trying to add Items");
             pqr.molecules.results.push(response);
             pqr.molecules.active_requests--;
+            pqr.molecules.results_visible += 100; //Should add 100 or less if last result
 
             //If there are not active requests show it as load more
             if(pqr.molecules.active_requests === 0){

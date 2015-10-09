@@ -45,6 +45,7 @@ pqr.init = function() {
 			
 			if($('#molecule-browser').attr('data-has-results') === "true"){
 				pqr.masonary.init(); 
+				pqr.molecules.init_ajax_search(); 
 				$('.molecule-results-masonary').removeClass('translucent'); 
 				pqr.bindevents.ajax_timer();
 				pqr.bindevents.on_scoll_load_molecules();

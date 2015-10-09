@@ -186,8 +186,7 @@ pqr.bindevents.on_scoll_load_molecules = function() {
  * 
  */
 pqr.bindevents.ajax_timer = function(){
-	//Load two to start
-	pqr.molecules.ajax_search();
+	//Fire a search on page load no matter what
 	pqr.molecules.ajax_search();
     
 	var ajax_loader = setInterval(function(){       
