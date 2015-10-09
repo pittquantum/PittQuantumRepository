@@ -19,9 +19,9 @@ pqr.masonary = { //Config
  * @return {[type]} [description]
  */
 pqr.masonary.init = function(container, itemSelector, columnWidth) {
-    var options = this.default_options;
-    options.columnWidth = '.grid-sizer';
-    options.percentPosition = true;
+    // var options = this.default_options;
+    // options.columnWidth = '.grid-sizer';
+    // options.percentPosition = true;
     // this.grid = $('.grid').masonry(options);
     // this.imagesLoadedInit();
     this.animateOnScroll();

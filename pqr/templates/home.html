@@ -23,7 +23,7 @@
         <div class="jumbotron text-center">
             <h2>Welcome to Pitt Quantum Repository!</h2>
             <p>Search for <span class='font-red'>{{ "{:,}".format(amount_mol) }}</span> molecules by name, InChIKey, category, etc. </p>
-                {% import '/macros/forms.html' as forms %} {{ forms.banner_search('btn-default', 'molecule-search-group') }}
+                {% import '/macros/forms.html' as forms %} {{ forms.banner_search_auto_complete('btn-default', 'molecule-search-group') }}
         </div>
     </div>
 </div>

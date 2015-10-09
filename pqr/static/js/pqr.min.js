@@ -21356,6 +21356,36 @@ var qrcode = function() {
 
 } )( window );
 /**
+ * @fileoverview Autocomplete search related functions 
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
+ */
+pqr.autocomplete = { //Config
+    debug: true, 
+
+};
+
+
+/**
+ * 
+ * @return {[type]} [description]
+ */
+pqr.autocomplete.init = function(){
+
+};
+
+/**
+ * Create an object to allow auto complete
+ * @return Object An object containing data to determine search results
+ */
+pqr.autocomplete.getAutoCompleteObject = function(){
+
+
+	return {};
+};
+
+
+/**
  * @fileoverview Any event binding functions.
  *  
  * @author JoshJRogan@gmail.com (Josh Rogan)
@@ -21732,9 +21762,9 @@ pqr.masonary = { //Config
  * @return {[type]} [description]
  */
 pqr.masonary.init = function(container, itemSelector, columnWidth) {
-    var options = this.default_options;
-    options.columnWidth = '.grid-sizer';
-    options.percentPosition = true;
+    // var options = this.default_options;
+    // options.columnWidth = '.grid-sizer';
+    // options.percentPosition = true;
     // this.grid = $('.grid').masonry(options);
     // this.imagesLoadedInit();
     this.animateOnScroll();

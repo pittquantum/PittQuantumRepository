@@ -47,3 +47,93 @@
 
 </form>
 {%- endmacro %}
+
+{% macro banner_search_auto_complete(style='btn-primary', id='home-molecule-search', query='Enter Query') -%}
+<form id="{{id}}" class="text-center form-inline autocomplete-search-form" role="form" action="/browse" method="GET">
+    
+    <div class="input-group search">
+            
+        <label for="query"><i class="fa fa-search"></i></label>
+        <input type="text" class="form-control typeahead query input-lg" autocomplete="off" name="query" placeholder="{{query}}">
+
+        <span class="input-group-btn">
+            <button class="btn btn-default btn-lg" type="button"><i class="fa fa-search"></i></button>
+        </span>
+
+        
+
+    </div>
+
+    <div class="form-group hidden"> 
+        <label for="type" class='control-label hide'>Query Type:</label>
+        <select class="form-control search-options" name="type">
+            <option value='name'>Name</option>
+            <option value='inchi'>InChIKey</option>
+            <option value='tag'>Tag</option>
+            <option value='synonym'>Synonym</option>
+            <option value='formula'>Formula</option>
+        </select>
+    </div>
+
+
+    <!-- Results from autocomplete search -->
+    <div class="autocomplete-wrapper">
+        <ul class="autocomplete-results">
+            <li> 
+                <a href="#">
+                <div class="col-xs-2">
+                    <img class='img-responsive' src="/static/data/svg/XG/XGZVUEUWXADBQD-UHFFFAOYSA-L.svg" alt="preview">
+                </div> 
+                <div class="col-xs-10">
+                    <h3>Carbon Dioxide</h3>
+                    <h4>CO<sub>2</sub></h4>
+                </div>
+                </a>
+            </li>
+
+            <li> 
+                <a href="#">
+                <div class="col-xs-2">
+                    <img class='img-responsive' src="/static/data/svg/CU/CURLTUGMZLYLDI-UHFFFAOYSA-N.svg" alt="preview">
+                </div> 
+                <div class="col-xs-10">
+                    <h3>Carbon Dioxide</h3>
+                    <h4>CO<sub>2</sub></h4>
+                </div>
+                </a>
+            </li>
+
+            <li> 
+                <a href="#">
+                <div class="col-xs-2">
+                    <img class='img-responsive' src="/static/data/svg/KM/KMTRUDSVKNLOMY-UHFFFAOYSA-N.svg" alt="preview">
+                </div> 
+                <div class="col-xs-10">
+                    <h3>Carbon Dioxide</h3>
+                    <h4>CO<sub>2</sub></h4>
+                </div>
+                </a>
+            </li>
+
+            <li> 
+                <a href="#">
+                <div class="col-xs-2">
+                    <img class='img-responsive' src="/static/data/svg/VZ/VZGDMQKNWNREIO-UHFFFAOYSA-N.svg" alt="preview">
+                </div> 
+                <div class="col-xs-10">
+                    <h3>Carbon Dioxide</h3>
+                    <h4>CO<sub>2</sub></h4>
+                </div>
+                </a>
+            </li>
+
+
+            
+        </ul>
+    </div>
+    <!-- Results from autocomplete search -->
+    
+    
+
+</form>
+{%- endmacro %}
