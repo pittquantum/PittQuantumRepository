@@ -152,9 +152,15 @@ pqr.bindevents.printButton = function(selector) {
     }
 };
 
+
+/**
+ * Force Loading of AJAX call
+ * 
+ */
 pqr.bindevents.ajax_load_button = function(){
 	$('#molecule-ajax-loader').on('click', function(){
-		pqr.molecules.show_results(1);
+		// pqr.molecules.show_results(10);
+        pqr.molecules.ajax_search();
 	});
 };
 
@@ -168,7 +174,8 @@ pqr.bindevents.on_scoll_load_molecules = function() {
             if(pqr.molecules.request_to_load()){
             	pqr.molecules.ajax_search();
             }
-            pqr.molecules.show_results(1);
+            pqr.molecules.show_results(10);
+
         },
         offset: 'bottom-in-view'
     })
@@ -182,11 +189,8 @@ pqr.bindevents.ajax_timer = function(){
 	//Load two to start
 	pqr.molecules.ajax_search();
 	pqr.molecules.ajax_search();
-
-
-	var ajax_loader = setInterval(function(){
-		//Only maintain up to ten
-		
+    
+	var ajax_loader = setInterval(function(){       
 		//Limit the number of active requests to five and stored 10
 		if(pqr.molecules.request_to_load()){
 			if(!pqr.molecules.ajax_search()){
@@ -194,4 +198,16 @@ pqr.bindevents.ajax_timer = function(){
 			}
 		}
 	}, 1000);
+};
+
+/**
+ * Fire a click if a user taps a result molecule
+ *
+ */
+pqr.bindevents.result_touch_helper = function(){
+    if($('.result').length){
+        $('.result').on('tap', function(){
+            console.log($(this));
+        });
+    }
 };

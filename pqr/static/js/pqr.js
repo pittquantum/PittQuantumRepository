@@ -21178,6 +21178,184 @@ var qrcode = function() {
 }());
 
 /**
+ * animOnScroll.js v1.0.0
+ * http://www.codrops.com
+ *
+ * Licensed under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ * 
+ * Copyright 2013, Codrops
+ * http://www.codrops.com
+ */
+;( function( window ) {
+	
+	'use strict';
+	
+	var docElem = window.document.documentElement;
+
+	function getViewportH() {
+		var client = docElem['clientHeight'],
+			inner = window['innerHeight'];
+		
+		if( client < inner )
+			return inner;
+		else
+			return client;
+	}
+
+	function scrollY() {
+		return window.pageYOffset || docElem.scrollTop;
+	}
+
+	// http://stackoverflow.com/a/5598797/989439
+	function getOffset( el ) {
+		var offsetTop = 0, offsetLeft = 0;
+		do {
+			if ( !isNaN( el.offsetTop ) ) {
+				offsetTop += el.offsetTop;
+			}
+			if ( !isNaN( el.offsetLeft ) ) {
+				offsetLeft += el.offsetLeft;
+			}
+		} while( el = el.offsetParent )
+
+		return {
+			top : offsetTop,
+			left : offsetLeft
+		}
+	}
+
+	function inViewport( el, h ) {
+		var elH = el.offsetHeight,
+			scrolled = scrollY(),
+			viewed = scrolled + getViewportH(),
+			elTop = getOffset(el).top,
+			elBottom = elTop + elH,
+			// if 0, the element is considered in the viewport as soon as it enters.
+			// if 1, the element is considered in the viewport only when it's fully inside
+			// value in percentage (1 >= h >= 0)
+			h = h || 0;
+
+		return (elTop + elH * h) <= viewed && (elBottom - elH * h) >= scrolled;
+	}
+
+	function extend( a, b ) {
+		for( var key in b ) { 
+			if( b.hasOwnProperty( key ) ) {
+				a[key] = b[key];
+			}
+		}
+		return a;
+	}
+
+	function AnimOnScroll( el, options ) {	
+		this.el = el;
+		this.options = extend( this.defaults, options );
+		this._init();
+	}
+
+	AnimOnScroll.prototype = {
+		defaults : {
+			// Minimum and a maximum duration of the animation (random value is chosen)
+			minDuration : 0,
+			maxDuration : 0,
+			// The viewportFactor defines how much of the appearing item has to be visible in order to trigger the animation
+			// if we'd use a value of 0, this would mean that it would add the animation class as soon as the item is in the viewport. 
+			// If we were to use the value of 1, the animation would only be triggered when we see all of the item in the viewport (100% of it)
+			viewportFactor : 0
+		},
+		_init : function() {
+			this.items = Array.prototype.slice.call( document.querySelectorAll( '#' + this.el.id + ' > li' ) );
+			this.itemsCount = this.items.length;
+			this.itemsRenderedCount = 0;
+			this.didScroll = false;
+
+			var self = this;
+
+			imagesLoaded( this.el, function() {
+				
+				// initialize masonry
+				new Masonry( self.el, {
+					itemSelector: 'li',
+					transitionDuration : 0
+				} );
+				
+				if( Modernizr.cssanimations ) {
+					// the items already shown...
+					self.items.forEach( function( el, i ) {
+						if( inViewport( el ) ) {
+							self._checkTotalRendered();
+							classie.add( el, 'shown' );
+						}
+					} );
+
+					// animate on scroll the items inside the viewport
+					window.addEventListener( 'scroll', function() {
+						self._onScrollFn();
+					}, false );
+					window.addEventListener( 'resize', function() {
+						self._resizeHandler();
+					}, false );
+				}
+
+			});
+		},
+		_onScrollFn : function() {
+			var self = this;
+			if( !this.didScroll ) {
+				this.didScroll = true;
+				setTimeout( function() { self._scrollPage(); }, 60 );
+			}
+		},
+		_scrollPage : function() {
+			var self = this;
+			this.items.forEach( function( el, i ) {
+				if( !classie.has( el, 'shown' ) && !classie.has( el, 'animate' ) && inViewport( el, self.options.viewportFactor ) ) {
+					setTimeout( function() {
+						var perspY = scrollY() + getViewportH() / 2;
+						self.el.style.WebkitPerspectiveOrigin = '50% ' + perspY + 'px';
+						self.el.style.MozPerspectiveOrigin = '50% ' + perspY + 'px';
+						self.el.style.perspectiveOrigin = '50% ' + perspY + 'px';
+
+						self._checkTotalRendered();
+
+						if( self.options.minDuration && self.options.maxDuration ) {
+							var randDuration = ( Math.random() * ( self.options.maxDuration - self.options.minDuration ) + self.options.minDuration ) + 's';
+							el.style.WebkitAnimationDuration = randDuration;
+							el.style.MozAnimationDuration = randDuration;
+							el.style.animationDuration = randDuration;
+						}
+						
+						classie.add( el, 'animate' );
+					}, 25 );
+				}
+			});
+			this.didScroll = false;
+		},
+		_resizeHandler : function() {
+			var self = this;
+			function delayed() {
+				self._scrollPage();
+				self.resizeTimeout = null;
+			}
+			if ( this.resizeTimeout ) {
+				clearTimeout( this.resizeTimeout );
+			}
+			this.resizeTimeout = setTimeout( delayed, 1000 );
+		},
+		_checkTotalRendered : function() {
+			++this.itemsRenderedCount;
+			if( this.itemsRenderedCount === this.itemsCount ) {
+				window.removeEventListener( 'scroll', this._onScrollFn );
+			}
+		}
+	}
+
+	// add to global namespace
+	window.AnimOnScroll = AnimOnScroll;
+
+} )( window );
+/**
  * @fileoverview Any event binding functions.
  *  
  * @author JoshJRogan@gmail.com (Josh Rogan)
@@ -21331,9 +21509,15 @@ pqr.bindevents.printButton = function(selector) {
     }
 };
 
+
+/**
+ * Force Loading of AJAX call
+ * 
+ */
 pqr.bindevents.ajax_load_button = function(){
 	$('#molecule-ajax-loader').on('click', function(){
-		pqr.molecules.show_results(1);
+		// pqr.molecules.show_results(10);
+        pqr.molecules.ajax_search();
 	});
 };
 
@@ -21347,7 +21531,8 @@ pqr.bindevents.on_scoll_load_molecules = function() {
             if(pqr.molecules.request_to_load()){
             	pqr.molecules.ajax_search();
             }
-            pqr.molecules.show_results(1);
+            pqr.molecules.show_results(10);
+
         },
         offset: 'bottom-in-view'
     })
@@ -21361,11 +21546,8 @@ pqr.bindevents.ajax_timer = function(){
 	//Load two to start
 	pqr.molecules.ajax_search();
 	pqr.molecules.ajax_search();
-
-
-	var ajax_loader = setInterval(function(){
-		//Only maintain up to ten
-		
+    
+	var ajax_loader = setInterval(function(){       
 		//Limit the number of active requests to five and stored 10
 		if(pqr.molecules.request_to_load()){
 			if(!pqr.molecules.ajax_search()){
@@ -21374,6 +21556,98 @@ pqr.bindevents.ajax_timer = function(){
 		}
 	}, 1000);
 };
+
+/**
+ * Fire a click if a user taps a result molecule
+ *
+ */
+pqr.bindevents.result_touch_helper = function(){
+    if($('.result').length){
+        $('.result').on('tap', function(){
+            console.log($(this));
+        });
+    }
+};
+/*!
+ * classie - class helper functions
+ * from bonzo https://github.com/ded/bonzo
+ * 
+ * classie.has( elem, 'my-class' ) -> true/false
+ * classie.add( elem, 'my-new-class' )
+ * classie.remove( elem, 'my-unwanted-class' )
+ * classie.toggle( elem, 'my-class' )
+ */
+
+/*jshint browser: true, strict: true, undef: true */
+/*global define: false */
+
+( function( window ) {
+
+'use strict';
+
+// class helper functions from bonzo https://github.com/ded/bonzo
+
+function classReg( className ) {
+  return new RegExp("(^|\\s+)" + className + "(\\s+|$)");
+}
+
+// classList support for class management
+// altho to be fair, the api sucks because it won't accept multiple classes at once
+var hasClass, addClass, removeClass;
+
+if ( 'classList' in document.documentElement ) {
+  hasClass = function( elem, c ) {
+    return elem.classList.contains( c );
+  };
+  addClass = function( elem, c ) {
+    elem.classList.add( c );
+  };
+  removeClass = function( elem, c ) {
+    elem.classList.remove( c );
+  };
+}
+else {
+  hasClass = function( elem, c ) {
+    return classReg( c ).test( elem.className );
+  };
+  addClass = function( elem, c ) {
+    if ( !hasClass( elem, c ) ) {
+      elem.className = elem.className + ' ' + c;
+    }
+  };
+  removeClass = function( elem, c ) {
+    elem.className = elem.className.replace( classReg( c ), ' ' );
+  };
+}
+
+function toggleClass( elem, c ) {
+  var fn = hasClass( elem, c ) ? removeClass : addClass;
+  fn( elem, c );
+}
+
+var classie = {
+  // full names
+  hasClass: hasClass,
+  addClass: addClass,
+  removeClass: removeClass,
+  toggleClass: toggleClass,
+  // short names
+  has: hasClass,
+  add: addClass,
+  remove: removeClass,
+  toggle: toggleClass
+};
+
+// transport
+if ( typeof define === 'function' && define.amd ) {
+  // AMD
+  define( classie );
+} else {
+  // browser global
+  window.classie = classie;
+}
+
+})( window );
 /**
  * @fileoverview Initialize the app on document ready. Should be the last file. 
  * @author JoshJRogan@gmail.com (Josh Rogan)
@@ -21393,7 +21667,7 @@ pqr.init = function() {
 		bootstrapUtilities.FullToolTipOptIn();
 		pqr.htmlUtilities.initFontSize(); 
 		pqr.bindevents.bindFontSwitchers();
-		htmlutilities.footerToBottom('footer', '#main');
+		// htmlutilities.footerToBottom('footer', '#main');
 		loadCSS("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 		// loadCSS("//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700");
 
@@ -21423,7 +21697,7 @@ pqr.init = function() {
 			pqr.bindevents.ajax_timer();
 			pqr.bindevents.on_scoll_load_molecules();
 			pqr.bindevents.ajax_load_button();
-
+			pqr.bindevents.result_touch_helper();
 		}
 
 		if(pqr.debug) console.log("Finished loading PQR Web App!"); 
@@ -21435,90 +21709,129 @@ pqr.init = function() {
  * @author JoshJRogan@gmail.com (Josh Rogan)
  * @author ritwikg2004@live.com (Ritwik Gupta)
  */
-
 pqr.masonary = { //Config
-	grid: null, 
+    grid: null,
     default_options: {
-        itemSelector: '.grid-item', 
-        columnWidth: 200,
+        itemSelector: '.grid-item',
+        columnWidth: '.grid-sizer',
         container: '.grid'
     }
 };
 
 /**
- * Initialize a masonary page 
+ * Initialize a masonary page. All items will be the same height. 
+ * Therefore we don't need masonary can just use bootsrap coulmns and 
+ * animate on scroll. 
  * @return {[type]} [description]
  */
 pqr.masonary.init = function(container, itemSelector, columnWidth) {
-	var options = this.default_options; 
-	options.columnWidth = '.grid-sizer';
-	options.percentPosition = true;
-
-	this.grid = $('.grid').masonry(options);
-	this.imagesLoadedInit(); 
+    var options = this.default_options;
+    options.columnWidth = '.grid-sizer';
+    options.percentPosition = true;
+    // this.grid = $('.grid').masonry(options);
+    // this.imagesLoadedInit();
+    this.animateOnScroll();
 };
-
 
 /**
- * Use the images loaded plugin 
+ * Use the images loaded plugin that doesn't load images until they are 
+ * official loaded into the browser
  */
-pqr.masonary.imagesLoadedInit = function(){
-	// layout Masonry after each image loads 
-	var $grid = this.grid; 
-	$grid.imagesLoaded().progress( function() {
-	  $grid.masonry('layout');
-	});
+pqr.masonary.imagesLoadedInit = function() {
+    // layout Masonry after each image loads 
+    this.grid.imagesLoaded().progress(function() {
+        pqr.masonary.grid.masonry('layout');
+    });
 };
 
-
-
+/**
+ * Activate animation when the user scrolls to the bottom 
+ * 
+ */
+pqr.masonary.animateOnScroll = function() {
+    new AnimOnScroll(document.getElementById('grid'), {
+        minDuration: 0.4,
+        maxDuration: 0.7,
+        viewportFactor: 0.2
+    });
+};
 /**
  * @fileoverview Molecule related functions 
  * @author JoshJRogan@gmail.com (Josh Rogan)
  * @author ritwikg2004@live.com (Ritwik Gupta)
  */
 pqr.molecules = { //Config
-    debug: false,
+    debug: true,
     next_page_num: 2, //Page number for the next query 
     max_page_num: -1, //Max number of searches to perform
-    active_requests: 0, 
-    max_active_requests: 5, 
-    results: [], 
-    max_loaded_results: 5,
-    query: null
+    active_requests: 0,
+    max_active_requests: 5, //Threshold of active requests 
+    results: [], //Loaded reuslts (not displayed)
+    max_loaded_results: 5, //Threshold of number of loaded results
+    query: null,
+    scrollLimit: 5000, 
+    total_requests: 0, //Total number of requests made (try to limit as much as possible)
 };
+
 /**
- * Ajax Search Function 
- * @param  String query_string Query String for molecule search
- * @param  {integer} page_num     [description]
- * @return {[type]}              [description]
+ * Ajax Search Function. As items are returned they are added to the results array
+ * and displayed as the user scrolls down. 
+ * 
+ * @return {Boolean}             If results are sent
  */
 pqr.molecules.ajax_search = function() {
+
+    //Get the max page number to determine the limit of searches to perform
     if (this.max_page_num == -1) {
-        this.max_page_num = parseInt($('#max_num_pages').html());
+        this.max_page_num = parseInt($('.meta-data').attr('data-max-pages'));
     }
+
     if (this.next_page_num < this.max_page_num) {
         query_object = this.getQuery();
         this.active_requests++;
+        this.total_requests++;
+
+        $('#molecule-ajax-loader').hide(300);
+        $('.pagination .cogs').show(300);
+        
+
+        if (pqr.debug || pqr.molecules.debug) console.log("Making Request");
+
         $.ajax({
             method: "GET",
             url: "/browse/" + this.next_page_num + "/",
             data: query_object
         }).done(function(response) {
-            if (pqr.masonary.grid) {
-                if (pqr.debug || pqr.molecules.debug) console.log("Trying to add Items");
-                pqr.molecules.results.push(response);
-            } else {
-                if (pqr.debug || pqr.molecules.debug) console.log("No Masonary");
-            }
+
+            if (pqr.debug || pqr.molecules.debug) console.log("Trying to add Items");
+            pqr.molecules.results.push(response);
             pqr.molecules.active_requests--;
+
+            //If there are not active requests show it as load more
+            if(pqr.molecules.active_requests === 0){
+                $('#molecule-ajax-loader').show(300);
+                $('.pagination .cogs').hide(300);
+            }
+
+            pqr.molecules.show_results(1);
+        }).fail(function() {
+            //If the search fails for some reason 
+            console.log("Search Results Failed"); //Always show this
+            return false;
         });
+
         this.next_page_num++;
-        
         return true;
+
     } else {
         //Show end of results output 
         if (pqr.debug || pqr.molecules.debug) console.log("No More");
+
+        //Deactive button and show message that all are loaded 
+        $('#molecule-ajax-loader').addClass('disabled').html('No More Results!');
+        $('.pagination .cogs').hide();
+
+
         return false;
     }
 };
@@ -21529,12 +21842,12 @@ pqr.molecules.ajax_search = function() {
 pqr.molecules.show_results = function(max_results) {
     if (this.results.length > 0) {
         $.each(this.results.splice(0, max_results), function(key, value) {
-            $('.grid').append(value);
-            pqr.masonary.grid.masonry('reloadItems');
-            pqr.masonary.grid.masonry();
+            // if (pqr.debug || pqr.molecules.debug) console.log("Adding item: ", value);
+            $('#grid').append(value);
+            pqr.masonary.animateOnScroll(); //Allow the new items to be animated 
+            pqr.bindevents.result_touch_helper(); //Add the event to the new items 
         });
-    }
-    else{
+    } else {
         if (pqr.debug || pqr.molecules.debug) console.log("No More Results");
     }
 };
@@ -21543,26 +21856,47 @@ pqr.molecules.show_results = function(max_results) {
  * Get the current query
  * @return Object The query in an object 
  */
-pqr.molecules.getQuery = function(){
-    if(this.query == null){
+pqr.molecules.getQuery = function() {
+    if (this.query == null) {
         var element = $('#molecule-browser');
         this.query = {
-            ajax: true, 
+            ajax: true,
             query: element.attr('data-query'),
             type: element.attr('data-type')
         };
     }
     if (pqr.debug || pqr.molecules.debug) console.log(this.query);
-    return this.query; 
+    return this.query;
 };
 
 /**
  * Determine if it is a good time to load more 
  * @return Boolean 
  */
-pqr.molecules.request_to_load = function(){
-    return this.active_requests < this.max_active_requests && this.results.length < this.max_loaded_results; 
-}
+pqr.molecules.request_to_load = function() {
+    //User hasn't scrolled enough 
+    if(($('body').height() - $(window).scrollTop()) > this.scrollLimit){
+        if (pqr.debug || pqr.molecules.debug) console.log("Not Scrolled Enough");
+        return false; 
+    }
+    
+
+    //To many simulatenous requests 
+    if(this.active_requests > this.max_active_requests){
+        if (pqr.debug || pqr.molecules.debug) console.log("Too many requests!");
+        return false; 
+    }
+
+    //Too many loaded results
+    if(this.results.length > this.max_loaded_results){
+        if (pqr.debug || pqr.molecules.debug) console.log("Backlog of results");
+        return false;
+    }
+
+
+    //Turn to false to disable ajax
+    return true; 
+};
 /**
  * @fileoverview QR code related functions  
  * @author JoshJRogan@gmail.com (Josh Rogan)
@@ -21901,6 +22235,184 @@ pqr.htmlUtilities.initQuickFit = function(selector, options) {
 		$(selector).quickfit(options);
 	});
 };
+/**
+ * animOnScroll.js v1.0.0
+ * http://www.codrops.com
+ *
+ * Licensed under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ * 
+ * Copyright 2013, Codrops
+ * http://www.codrops.com
+ */
+;( function( window ) {
+	
+	'use strict';
+	
+	var docElem = window.document.documentElement;
+
+	function getViewportH() {
+		var client = docElem['clientHeight'],
+			inner = window['innerHeight'];
+		
+		if( client < inner )
+			return inner;
+		else
+			return client;
+	}
+
+	function scrollY() {
+		return window.pageYOffset || docElem.scrollTop;
+	}
+
+	// http://stackoverflow.com/a/5598797/989439
+	function getOffset( el ) {
+		var offsetTop = 0, offsetLeft = 0;
+		do {
+			if ( !isNaN( el.offsetTop ) ) {
+				offsetTop += el.offsetTop;
+			}
+			if ( !isNaN( el.offsetLeft ) ) {
+				offsetLeft += el.offsetLeft;
+			}
+		} while( el = el.offsetParent )
+
+		return {
+			top : offsetTop,
+			left : offsetLeft
+		}
+	}
+
+	function inViewport( el, h ) {
+		var elH = el.offsetHeight,
+			scrolled = scrollY(),
+			viewed = scrolled + getViewportH(),
+			elTop = getOffset(el).top,
+			elBottom = elTop + elH,
+			// if 0, the element is considered in the viewport as soon as it enters.
+			// if 1, the element is considered in the viewport only when it's fully inside
+			// value in percentage (1 >= h >= 0)
+			h = h || 0;
+
+		return (elTop + elH * h) <= viewed && (elBottom - elH * h) >= scrolled;
+	}
+
+	function extend( a, b ) {
+		for( var key in b ) { 
+			if( b.hasOwnProperty( key ) ) {
+				a[key] = b[key];
+			}
+		}
+		return a;
+	}
+
+	function AnimOnScroll( el, options ) {	
+		this.el = el;
+		this.options = extend( this.defaults, options );
+		this._init();
+	}
+
+	AnimOnScroll.prototype = {
+		defaults : {
+			// Minimum and a maximum duration of the animation (random value is chosen)
+			minDuration : 0,
+			maxDuration : 0,
+			// The viewportFactor defines how much of the appearing item has to be visible in order to trigger the animation
+			// if we'd use a value of 0, this would mean that it would add the animation class as soon as the item is in the viewport. 
+			// If we were to use the value of 1, the animation would only be triggered when we see all of the item in the viewport (100% of it)
+			viewportFactor : 0
+		},
+		_init : function() {
+			this.items = Array.prototype.slice.call( document.querySelectorAll( '#' + this.el.id + ' > li' ) );
+			this.itemsCount = this.items.length;
+			this.itemsRenderedCount = 0;
+			this.didScroll = false;
+
+			var self = this;
+
+			imagesLoaded( this.el, function() {
+				
+				// initialize masonry
+				new Masonry( self.el, {
+					itemSelector: 'li',
+					transitionDuration : 0
+				} );
+				
+				if( Modernizr.cssanimations ) {
+					// the items already shown...
+					self.items.forEach( function( el, i ) {
+						if( inViewport( el ) ) {
+							self._checkTotalRendered();
+							classie.add( el, 'shown' );
+						}
+					} );
+
+					// animate on scroll the items inside the viewport
+					window.addEventListener( 'scroll', function() {
+						self._onScrollFn();
+					}, false );
+					window.addEventListener( 'resize', function() {
+						self._resizeHandler();
+					}, false );
+				}
+
+			});
+		},
+		_onScrollFn : function() {
+			var self = this;
+			if( !this.didScroll ) {
+				this.didScroll = true;
+				setTimeout( function() { self._scrollPage(); }, 60 );
+			}
+		},
+		_scrollPage : function() {
+			var self = this;
+			this.items.forEach( function( el, i ) {
+				if( !classie.has( el, 'shown' ) && !classie.has( el, 'animate' ) && inViewport( el, self.options.viewportFactor ) ) {
+					setTimeout( function() {
+						var perspY = scrollY() + getViewportH() / 2;
+						self.el.style.WebkitPerspectiveOrigin = '50% ' + perspY + 'px';
+						self.el.style.MozPerspectiveOrigin = '50% ' + perspY + 'px';
+						self.el.style.perspectiveOrigin = '50% ' + perspY + 'px';
+
+						self._checkTotalRendered();
+
+						if( self.options.minDuration && self.options.maxDuration ) {
+							var randDuration = ( Math.random() * ( self.options.maxDuration - self.options.minDuration ) + self.options.minDuration ) + 's';
+							el.style.WebkitAnimationDuration = randDuration;
+							el.style.MozAnimationDuration = randDuration;
+							el.style.animationDuration = randDuration;
+						}
+						
+						classie.add( el, 'animate' );
+					}, 25 );
+				}
+			});
+			this.didScroll = false;
+		},
+		_resizeHandler : function() {
+			var self = this;
+			function delayed() {
+				self._scrollPage();
+				self.resizeTimeout = null;
+			}
+			if ( this.resizeTimeout ) {
+				clearTimeout( this.resizeTimeout );
+			}
+			this.resizeTimeout = setTimeout( delayed, 1000 );
+		},
+		_checkTotalRendered : function() {
+			++this.itemsRenderedCount;
+			if( this.itemsRenderedCount === this.itemsCount ) {
+				window.removeEventListener( 'scroll', this._onScrollFn );
+			}
+		}
+	}
+
+	// add to global namespace
+	window.AnimOnScroll = AnimOnScroll;
+
+} )( window );
 /**
  * bootstrap-notify.js v1.0
  * --

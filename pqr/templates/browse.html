@@ -51,15 +51,16 @@
 </div>
 <!-- /Search Banner -->
 
-<div class="container">
+<div class="container-fluid">
     <!-- Molecule Browser -->
     <div class="row clearfix" id="molecule-browser" data-query='{{query}}' data-type='{{searchType}}'>
         {% if results %}
 
         <!-- Page Results -->
-        <div class="row alert alert-success" role="alert">
-            <div class="col-xs-12">
-               <samp>Page {{active}} out of <span id='max_num_pages'>{{typenum_pages}}</span></samp>
+        <div class="col-xs-12 alert alert-success" role="alert">
+            <div class='meta-data' data-max-pages='{{typenum_pages}}' data-total-results='{{total_results}}'>
+                <span id='max_num_pages' class='hidden'>{{typenum_pages}}</span>
+                <samp>Your query of <strong>{{query}}</strong> result in <strong class='font-red'>{{total_results}}</strong> results! </samp>
             </div>
         </div>
         <!-- /Page Results -->
@@ -68,20 +69,29 @@
         <!-- Masonary Search Results -->
         <div class="clearfix"></div>
         <div class='row molecule-results-masonary translucent'> 
-            <div class="grid text-center center-block">
+            <div class="grid center-block">
                 <div class="grid-sizer"></div>
+                <ul  class="grid effect-4" id="grid">
                 {% for result in results  %}
-                    {{ molecule.resultMoleculeMasonary(result) }} 
+                    {{ molecule.resultMoleculeGrid(result) }}
                 {% endfor %} 
+                </ul>
             </div>
+            
         </div>
         <!-- /Masonary Search Results  -->
 
         <!-- Simple Pagination  -->
         {% if active != -1 %}
             <div class="text-center">
-                <nav>
-                    <a id='molecule-ajax-loader' class="pagination btn btn-primary">Load More</a>
+                <nav class='pagination'>
+                    <a id='molecule-ajax-loader' class="btn btn-primary" role="button">Load More</a>
+
+                    <div class="cogs">
+                        <i class="fa fa-cog fa-spin"></i>
+                        <i class="fa fa-cog fa-spin"></i>
+                        <i class="fa fa-cog fa-spin"></i>
+                    </div>
                 </nav>
             </div>
             

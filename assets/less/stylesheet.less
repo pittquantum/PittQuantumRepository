@@ -8,10 +8,11 @@
 @import "transitions.less";
 @import "typography.less";
 @import "vendors/bootstrap-notify.less";
+@import "vendors/grid-layout.less";  
 @import "print.less";
 
 @import "_bootstrap.less";
-@import "_masonary.less";
+
 
 //Highligther 	
 color::-moz-selection {
@@ -260,68 +261,47 @@ body {
 					color: @brand-danger;
 				}
 			}
+			
+			
 		}
-		#molecule-browser {
-			//3Dmol viewer
-			.molecule-viwer {
-				#material .cards();
-				padding: 10px;
-				margin-bottom: 30px;
 
-				/* Small devices (tablets, 768px and up) */
-				@media (max-width:@screen-sm-max) {
-					padding-top: 0;
-				}
-				//Make the 3dmole somewhat responsive 
-				div, canvas {
-
-					/* Medium devices (desktops, 992px and up) */
-					@media (min-width:@screen-md-min) {
-						height: 150px;
-					}
-
-					/* Large devices (large desktops, 1200px and up) */
-					@media (min-width:@screen-lg-min) {
-						height: 200px;
-					}
-				}
-				//Displaying the formula in the browse window 
-				.molecule-formula {
-					text-align: center;
-					font-size: 25px;
-
-					/* Small devices (tablets, 768px and up) */
-					@media (min-width:@screen-sm-min) {
-						font-size: 30px;
-					}
-
-					/* Medium devices (desktops, 992px and up) */
-					@media (min-width:@screen-md-min) {
-						font-size: 35px;
-						padding-top: 30px;
-					}
-
-					/* Large devices (large desktops, 1200px and up) */
-					@media (min-width:@screen-lg-min) {
-						font-size: 45px;
-					}
-				}
-				.svg_viewer {
-					background-position: center center !important;
-					background-repeat: no-repeat !important;
-				}
+		//AJAX loading button for results 
+		nav.pagination{
+			width: 100%;
+			#molecule-ajax-loader{
+				width: 80%; 
 			}
 
-			.molecule-results-masonary{
-				.transition(opacity 0.5s ease);
+			.cogs{
+				width: 4.5em;
+  				height: 4.5em;
+  				position: relative;
+				.center-block();
 
-				opacity: 1; 
+				i{
+					font-size: 2em;
+					color: @brand-primary;
 
-				&.translucent{
-					opacity: 0;
+					&:nth-child(2){
+						font-size: 3em;
+						top: 0.2em;
+						left: 0.125em;
+						animation-direction: reverse;
+					}
+
+					&:nth-child(3){
+						font-size: 1.5em;
+						top: 0.1em;
+						left: 0.85em;
+					}
 				}
 			}
+			
+
+
+			
 		}
+
 	}
 	//Contact US Styling 
 	.page-contact {

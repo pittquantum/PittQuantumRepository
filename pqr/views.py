@@ -193,7 +193,8 @@ def browse(page_num="-1"):
         x[searchType], x['formula'], lightest, str(query)), reverse=True)
 
     # If there is only one result, show that molecule page directly
-    if len(results) == 1:
+    total_results = len(results)
+    if total_results == 1:
         return redirect(url_for('molecule', key=results[0]["inchikey"]))
 
     # Split the reults array into chunks of 10 each for search pagination
@@ -234,7 +235,7 @@ def browse(page_num="-1"):
     if request.args.get('ajax'):
         return render_template("browse_ajax.html", results=results)
     else:
-        rendered_html = render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
+        rendered_html = render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active, total_results=total_results)
         min_html = html_minify(rendered_html.encode('utf8'))
         return min_html
 
