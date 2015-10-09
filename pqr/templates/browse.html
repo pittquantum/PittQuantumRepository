@@ -53,7 +53,7 @@
 
 <div class="container-fluid">
     <!-- Molecule Browser -->
-    <div class="row clearfix" id="molecule-browser" data-query='{{query}}' data-type='{{searchType}}'>
+    <div class="row clearfix" id="molecule-browser" data-query='{{query}}' data-type='{{searchType}}' data-has-results='{% if results %}true{% else %}false{% endif %}'>
         {% if results %}
 
         <!-- Page Results -->
