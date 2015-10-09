@@ -25,6 +25,7 @@ pqr.init = function() {
 			pqr.threeDMole.initViewers();
 			pqr.bindevents.moleculeReset('#reset-molecule');
 			pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
+			pqr.autocomplete.init(); 
 		}
 		else if ($("#main").hasClass("page-molecule")) {
 			pqr.threeDMole.initViewers();
