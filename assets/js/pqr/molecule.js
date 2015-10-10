@@ -4,7 +4,7 @@
  * @author ritwikg2004@live.com (Ritwik Gupta)
  */
 pqr.molecules = { //Config
-    debug: true,
+    debug: false,
     next_page_num: 2, //Page number for the next query 
     max_page_num: -1, //Max number of searches to perform
     max_num_results: -1, //Total number of results

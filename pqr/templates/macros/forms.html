@@ -48,13 +48,13 @@
 </form>
 {%- endmacro %}
 
-{% macro banner_search_auto_complete(style='btn-primary', id='home-molecule-search', query='Enter Query') -%}
-<form id="{{id}}" class="text-center form-inline autocomplete-search-form" role="form" action="/browse" method="GET">
+{% macro banner_search_auto_complete(id='home-molecule-search') -%}
+<form id='molecule-search-group' class="text-center form-inline autocomplete-search-form" role="form" action="/browse" method="GET">
     
     <div class="input-group search">
             
         <label for="query"><i class="fa fa-search"></i></label>
-        <input type="text" class="form-control typeahead query input-lg" autocomplete="off" name="query" placeholder="{{query}}">
+        <input type="text" class="form-control typeahead query input-lg" autocomplete="off" name="query" placeholder="Enter Query">
 
         <span class="input-group-btn">
             <button class="btn btn-default btn-lg" type="button"><i class="fa fa-search"></i></button>
@@ -78,56 +78,7 @@
 
     <!-- Results from autocomplete search -->
     <div class="autocomplete-wrapper">
-        <ul class="autocomplete-results">
-            <li> 
-                <a href="#">
-                <div class="col-xs-2">
-                    <img class='img-responsive' src="/static/data/svg/XG/XGZVUEUWXADBQD-UHFFFAOYSA-L.svg" alt="preview">
-                </div> 
-                <div class="col-xs-10">
-                    <h3>Carbon Dioxide</h3>
-                    <h4>CO<sub>2</sub></h4>
-                </div>
-                </a>
-            </li>
-
-            <li> 
-                <a href="#">
-                <div class="col-xs-2">
-                    <img class='img-responsive' src="/static/data/svg/CU/CURLTUGMZLYLDI-UHFFFAOYSA-N.svg" alt="preview">
-                </div> 
-                <div class="col-xs-10">
-                    <h3>Carbon Dioxide</h3>
-                    <h4>CO<sub>2</sub></h4>
-                </div>
-                </a>
-            </li>
-
-            <li> 
-                <a href="#">
-                <div class="col-xs-2">
-                    <img class='img-responsive' src="/static/data/svg/KM/KMTRUDSVKNLOMY-UHFFFAOYSA-N.svg" alt="preview">
-                </div> 
-                <div class="col-xs-10">
-                    <h3>Carbon Dioxide</h3>
-                    <h4>CO<sub>2</sub></h4>
-                </div>
-                </a>
-            </li>
-
-            <li> 
-                <a href="#">
-                <div class="col-xs-2">
-                    <img class='img-responsive' src="/static/data/svg/VZ/VZGDMQKNWNREIO-UHFFFAOYSA-N.svg" alt="preview">
-                </div> 
-                <div class="col-xs-10">
-                    <h3>Carbon Dioxide</h3>
-                    <h4>CO<sub>2</sub></h4>
-                </div>
-                </a>
-            </li>
-
-
+        <ul class="autocomplete-results" style="display: none;">
             
         </ul>
     </div>

@@ -9070,9 +9070,16 @@ form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results::
   border-width: 9px;
   margin-left: -9px;
   left: 50px;
-  top: -16px;
+  top: -18px;
+}
+form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results.no-before::before {
+  content: none;
 }
 form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li {
+  transition-delay: 0s;
+  transition-duration: 0.25s;
+  transition-property: all;
+  transition-timing-function: ease;
   text-align: left;
   height: 75px;
   background-color: white;
@@ -9091,6 +9098,14 @@ form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results l
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li:hover {
+  background-color: #f16b1d;
+}
+form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li:hover h3,
+form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li:hover h4,
+form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li:hover i {
+  color: white;
 }
 color::-moz-selection {
   background: #3498db;

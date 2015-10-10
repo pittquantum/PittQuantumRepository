@@ -210,3 +210,35 @@ pqr.bindevents.result_touch_helper = function(){
         });
     }
 };
+
+/**
+ * Activate the auto complete checker when a user
+ * inputs on the selector. 
+ * @param {Selector input_selector The jquery selector of the input item to watch
+ * @return {[type]} [description]
+ */
+pqr.bindevents.check_autocomplete = function(input_selector){
+    $(input_selector).on('keyup', function(event){
+        
+        var input_value = $.trim($(this).val());
+        
+
+        //Run it again to make sure everything is cleared 
+        setTimeout(function() {
+            pqr.autocomplete.findMatches(input_value);
+
+            //Run it again to make sure everything is cleared 
+            setTimeout(function() {
+                pqr.autocomplete.findMatches(input_value);
+            }, 250);
+
+            
+        }, 50);
+
+        
+        
+    });
+
+    //Set timer to auto check 
+    
+};
