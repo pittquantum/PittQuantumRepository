@@ -12,7 +12,9 @@
   ],
   "dependencies": {
     "classie": "~1.0.1",
+    "handlebars": "~4.0.3",
     "lesshat": "~3.0.2",
+    "typeahead.js": "~0.11.1",
     "waypoints": "~4.0.0"
   }
 }
