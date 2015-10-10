@@ -9085,12 +9085,16 @@ form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion img 
   margin-left: auto;
   margin-right: auto;
 }
-form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover {
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover,
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion.tt-cursor {
   background-color: #f16b1d;
 }
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover h3,
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion.tt-cursor h3,
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover h4,
-form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover i {
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion.tt-cursor h4,
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover i,
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion.tt-cursor i {
   color: white;
 }
 color::-moz-selection {

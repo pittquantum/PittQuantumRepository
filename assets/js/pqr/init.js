@@ -54,6 +54,7 @@ pqr.init = function() {
 				pqr.bindevents.on_scoll_load_molecules();
 				pqr.bindevents.ajax_load_button();
 				pqr.bindevents.result_touch_helper();
+				pqr.autocomplete.init(); 
 			}
 			else{
 				if(pqr.debug) console.log("Search Resulted in no results");

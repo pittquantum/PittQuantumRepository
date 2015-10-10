@@ -61,14 +61,17 @@
         </span>
     </div>
 
-
-    <!-- Results from autocomplete search -->
-    <div class="autocomplete-wrapper">
-        <ul class="autocomplete-results" >
-            
-        </ul>
+    <div class="form-group hidden"> 
+        <label for="type" class='control-label hide'>Query Type:</label>
+        <select class="form-control search-options" name="type">
+            <option value='name'>Name</option>
+            <option value='inchi'>InChIKey</option>
+            <option value='tag'>Tag</option>
+            <option value='synonym'>Synonym</option>
+            <option value='formula'>Formula</option>
+        </select>
     </div>
-    <!-- Results from autocomplete search -->
+    
     
     
 
