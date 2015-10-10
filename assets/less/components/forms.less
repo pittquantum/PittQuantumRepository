@@ -8,6 +8,12 @@ form.autocomplete-search-form{
 		#responsive-helpers .responsive-abstract-manual(width, 100%, 90%, 90%, 90%);
 		max-width: 1000px;
 
+		span{
+			// #responsive-helpers .responsive-abstract-manual(width, 100%, 90%, 90%, 90%);
+			// max-width: 1000px;
+			width: 100%; 
+		}
+
 		label{
 			position: absolute;
 			z-index: 12;
@@ -16,29 +22,29 @@ form.autocomplete-search-form{
 		}
 
 		input{
+			width: 100%; 
 			padding-left: 50px;
-
 		}
 
 		.input-group-btn{
 			width: 1%; 
+			top: -3px;
 			button{
 				border-radius: 0px;
 			}
-			
 		}
 	}
 
 	//Auto Complete Results 
-	div.autocomplete-wrapper{
-		position: relative;
+	.tt-menu{
+		position: absolute !important;
+		top: 100%;
 		.center-block(); 
-		#responsive-helpers .responsive-abstract-manual(width, 100%, 90%, 90%, 90%) ;
+		width: 100%;
 		max-width: 1000px; 
 
 
-		ul.autocomplete-results{
-			.list-unstyled();
+		.autocomplete-results{
 			.center-block(); 
 			position: absolute;
 			// #responsive-helpers .responsive-abstract-manual(width, 100%, 90%, 90%, 90%);
@@ -70,7 +76,7 @@ form.autocomplete-search-form{
 				}
 			}
 
-			li{
+			div.suggestion{
 				#transition .default();
 				text-align: left; 
 

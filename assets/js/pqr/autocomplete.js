@@ -5,13 +5,12 @@
  */
 pqr.autocomplete = {
     debug: true, 
-    function_queue: [], //Array of arrays of function calls
-    last_input: '', 
-    input_selector: '.autocomplete-search-form .search input', 
+    input_selector: '#search-bar-auto', 
     results_selector: '.autocomplete-results', 
     results_size_max: 10, //The limit of how many results to show in the list
     results: [], //Hold the results that are currently displayed
     database: [],
+    has_results: false, 
     //Temporary database
     placeholder_database: [
     	{	
@@ -39,58 +38,42 @@ pqr.autocomplete = {
     		prefix: "UG", //Not neccessary
     	}
     ],
-    fast_suggestion_length: 2, //The max length to look for fast suggestions
-
     //Load some default suggestions to suggest on short inputs 
     fast_suggestion_db: [
     	{
-	    	input: ['c', 'ca'],
-	    	name: "Carbon Monoxide", 
-			formula: "CH2O",
-			InChIKey: "UGFAIXRIUMAVXCW-UHFFFAOYSA-N",
-			prefix: "UG", //Not neccessary
+	    	name: 'Ethyl Carbonate', 
+			formula: "C5H10O3",
+			InChIKey: "OIFBSDVPJOWBCH-UHFFFAOYSA-N",
 		},
 		{
-	    	input: ['c', 'ca'],
-	    	name: "Carbon Fuck", 
-			formula: "CH2O",
-			InChIKey: "UGFAIRIUMAVXDCW-UHFFFAOYSA-N",
-			prefix: "UG", //Not neccessary
+	    	name: "Iron Pentacarbonyl", 
+			formula: "C5FeO5",
+			InChIKey: "FYOFOKCECDGJBF-UHFFFAOYSA-N",
 		},
 		{
-	    	input: ['c', 'ca'],
 	    	name: "Carbon Dioxide", 
 			formula: "CH2O",
 			InChIKey: "UGFAIRIUMAVXCW-UHFFFAOYSA-N",
-			prefix: "UG", //Not neccessary
 		},
 		    	{
-	    	input: ['c', 'cd'],
-	    	name: "CDarbon Monoxide", 
-			formula: "CH2O",
-			InChIKey: "UGFeAIXRIUMAVXCW-UHFFFAdOYSA-N",
-			prefix: "UG", //Not neccessary
+	    	name: "Hydrofluoric Acid", 
+			formula: "FH",
+			InChIKey: "KRHYYFGTRYWZRS-UHFFFAOYSA-N",
 		},
 		{
-	    	input: ['c', 'cd'],
-	    	name: "CDarbon Fuck", 
-			formula: "CH2O",
-			InChIKey: "UGFAIRIUMAVXDCW-UHFFFAgOYSA-N",
-			prefix: "UG", //Not neccessary
+	    	name: "Boric Acid", 
+			formula: "BH3O3",
+			InChIKey: "KGBXLFKZBHKPEV-UHFFFAOYSA-N",
 		},
 		{
-	    	input: ['c', 'cb'],
-	    	name: "CBarbon Dioxide", 
-			formula: "CH2O",
-			InChIKey: "UGFAIRIfUMAVXCW-UHFFFAOYSA-N",
-			prefix: "UG", //Not neccessary
+	    	name: "Bta", 
+			formula: "C6H5N3",
+			InChIKey: "QRUDEWIWKLJBPS-UHFFFAOYSA-N",
 		},
 		{	
-    		input: ['d', 'di'],
-    		name: "Dimethyl Carbonate", 
-    		formula: "C3H6O3",
-    		InChIKey: "IEJIGPNLZYLLBP-UHFFFAOYSA-N",
-    		prefix: "IE", //Not neccessary
+    		name: "Almokalant",
+    		formula: "C18H28N2O3S",
+    		InChIKey: "ZMHOBBKJBYLXFR-MZNJEOGPSA-N",
     	}
     ]
 };
@@ -103,18 +86,81 @@ pqr.autocomplete = {
 pqr.autocomplete.init = function(input_selector){
 	$(this.results_selector).slideUp();
 	var input_selector = '.autocomplete-search-form .search input';
-
-	this.database = this.getAutoCompleteObject();
-	pqr.bindevents.check_autocomplete(this.input_selector);
-
-	return true; 
+	this.typeahead(); 
 };
 
+
 /**
- * Cancel everything for a new item
- * @return {[type]} [description]
+ * Tokenize a formula by breaking into it's molecular components
+ * @param  {String} formula string representing a formula
+ * @return {ARray}         tokenized results
  */
-pqr.autocomplete.interrupt = function(){
+pqr.autocomplete.formulaTokenizer = function(formula){
+	 formula = formula.toLowerCase();
+	 formula = formula.replace(/([a-z])/g, ' $1').trim()
+	 return formula ? formula.split(/\s+/) : [];
+};
+
+pqr.autocomplete.typeahead = function(){
+	var data = pqr.autocomplete.fast_suggestion_db;
+
+	this.engine = new Bloodhound({
+		datumTokenizer: function(data){
+			var nameTokens = Bloodhound.tokenizers.whitespace(data.name);
+			var formulaTokens = pqr.autocomplete.formulaTokenizer(data.formula);
+
+			return nameTokens.concat(formulaTokens);
+		},
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		local: pqr.autocomplete.fast_suggestion_db
+	});
+
+	this.TypeAhead = $(this.input_selector).typeahead({
+		hint: false,
+		minLength: 1,
+		classNames: {
+			dataset: 'autocomplete-results',
+			suggestion: 'suggestion',
+			// selectable: 'Typeahead-selectable'
+		}
+	}, {
+		name: 'name',
+		display: 'name',
+		limit: 1000,
+		source: this.engine.ttAdapter(),
+		templates: {
+			suggestion: function(data) { 
+				return pqr.autocomplete.renderHTML(data);
+				// return '<span class="hidden" data-inchi="' + data.InChIKey +'"></span>';
+			}
+		}
+
+	});
+
+	// $(this.input_selector).bind('typeahead:render', function() {
+	// 	var suggestions = Array.prototype.slice.call(arguments);
+	// 	suggestions.shift();
+	// 	pqr.autocomplete.checkMatches(suggestions);
+
+	// 	if(suggestions.length == 0){
+	// 		pqr.autocomplete.hideDropDown();
+	// 	}
+	// });
+
+	// $(this.input_selector).on('keyup', function() {
+	// 	if($(this).val().length == 0){
+	// 		pqr.autocomplete.hideDropDown();
+	// 	}
+	// });
+
+	//Watch the results changing
+	// $('.tt-dataset-results').contentChange(function(){
+		// console.log($(this).children('span').length);
+
+		// $.each($(this).children('span'))
+	// });
+
+	
 
 };
 
@@ -122,137 +168,11 @@ pqr.autocomplete.interrupt = function(){
  * Create an object to allow auto complete
  * @return Object An object containing data to determine search results
  */
-pqr.autocomplete.getAutoCompleteObject = function(){
+pqr.autocomplete.getData = function(){
 	var object = {}; 
 
 	// return object;
 	return this.placeholder_database;
-};
-
-/**
- * Find the best matches to suggest
- * @param  {String} input      String entered in the query so far
- * @param  {Integer} max_return Maximium amount of suggestions to return
- * @return {Array}            Array of objects to be updated on the dom 
- */
-pqr.autocomplete.findMatches = function(input, max_return){
-	//Don't run if the input is the same
-	input = input.toLowerCase();
-	if(this.last_input == input){
-		this.last_input = input;
-
-		if(!this.results.length){
-			this.hideDropDown();
-		}
-
-		return false; 
-	}
-	this.last_input = input; 
-
-	//If input contains a number 
-	var regex_has_number = /\d/;
-	var contains_number = regex_has_number.test(input); 
-
-	var matches = [];
-
-	//Quick Suggestions
-	if(!contains_number && input.length <= this.fast_suggestion_length){
-		//Use a predefined list of suggestion that match the first two charceters
-		// Array.prototype.push.apply(matches, this.find_fast_suggestions(input)); 
-		suggestions = this.find_fast_suggestions(input); 
-		matches = matches.concat(suggestions);  
-	}
-	else{
-		//Formula Match 
-		if(contains_number){
-			matches.concat(this.find_formula_matches(input));
-		}
-		
-		//Find matched text from the front
-		matches.concat(this.find_matches_order(input));
-
-
-		//Find matched text anywhere
-		matches.concat(this.find_matches_any(input));
-
-		//Look at tags
-		
-	}
-
-	//Sort matches or index (Must be very high performance)
-	var new_results = this.checkMatches(matches);
-	this.addNewItems(new_results); 
-
-
-
-	if(this.results.length > 0){
-		this.showDropDown();
-	}
-	else{
-		if(input.length == 0){
-			this.hideDropDown(true);
-		}
-		else{
-			this.hideDropDown();
-		}
-	}
-
-	//Special case
-	
-
-	
-
-	return true; 
-};
-
-/**
- * Find matches using the fast_suggestion_db array of objects 
- * @param  String input value in search box
- * @return Array       results
- */
-pqr.autocomplete.find_fast_suggestions = function(input){
-	var results = []; 
-	// if(this.debug || pqr.debug) console.log("Check the value [" + input + "]");
-	
-	//More efficient way (Consider Map and Reduce)
-	$.each(this.fast_suggestion_db, function(index, suggestion){
-		$.each(suggestion.input, function(index, value){
-			if(value == input){
-				suggestion.percent_match = -1; //Quick match
-				results.push(suggestion); 
-			}
-		});
-	});
-
-	return results;
-};
-
-
-/**
- * Find matches based on Formula
- * @param  String input value in search box
- * @return Array       results
- */
-pqr.autocomplete.find_formula_matches = function(input){
-
-};
-
-/**
- * Find matches from in order
- * @param  String input value in search box
- * @return Array       results
- */
-pqr.autocomplete.find_matches_order = function(input){
-
-};
-
-/**
- * Find matches anywhere
- * @param  String input value in search box
- * @return Array       results
- */
-pqr.autocomplete.find_matches_any = function(input){
-
 };
 
 
@@ -280,6 +200,7 @@ pqr.autocomplete.checkMatches = function(potential_matches){
 
 	this.removeItems(toRemove);
 	this.results = all_results; 
+	this.addNewItems(new_results);
 	return new_results; 
 };
 
@@ -311,6 +232,7 @@ pqr.autocomplete.removeItems = function(toRemove){
 	//All elements removed
 	if(toRemove.length == this.results.length){
 		pqr.autocomplete.hideDropDown();
+		this.has_results = false; 
 	}
 };
 
@@ -318,10 +240,16 @@ pqr.autocomplete.removeItems = function(toRemove){
  * Add new items to the DOM
  */
 pqr.autocomplete.addNewItems = function(new_results){
+	if(!this.has_results){
+		this.showDropDown(); 
+		this.has_results = true; 
+	}
+
 	$.each(new_results, function(index, value){
 		$(pqr.autocomplete.results_selector).append(pqr.autocomplete.renderHTML(value));
 	});
 };
+
 
 /**
  * Return a JQuery object in the DOM that has the data-inchi attribute
@@ -338,15 +266,7 @@ pqr.autocomplete.DOMFindByInchi = function(inchi){
 pqr.autocomplete.hideDropDown = function(empty){
 	$(pqr.autocomplete.results_selector).empty();
 	$(pqr.autocomplete.results_selector).hide(200);
-
-	// $(this.results_selector + ' li').fadeOut(200, function(){
-	// 	$(this).remove(); 
-
-	// 	$(pqr.autocomplete.results_selector).hide(200, function(){
- //        	$(pqr.autocomplete.results_selector).empty();
- //        });
-	// });
-
+	this.has_results = false;
 };
 
 
@@ -361,9 +281,7 @@ pqr.autocomplete.showDropDown = function(){
 
 
 
-pqr.autocomplete.typeahead = function(){
 
-};
 
 /**
  * Render the HTML for one result to be added to the DOM
@@ -373,17 +291,17 @@ pqr.autocomplete.typeahead = function(){
  * NOTE: this can be threaded
  */
 pqr.autocomplete.renderHTML = function(result){
-	var html = '<li data-inchi="' + result. InChIKey + '">' +  
-        '<a href="#">' +
+	var html = '<div data-inchi="' + result. InChIKey + '">' +  
+        '<a href="http://google.com">' +
             '<div class="col-xs-2">' +
                 '<img class="img-responsive" src="/static/data/svg/' + result.InChIKey.substring(0, 2) + '/' + result.InChIKey + '.svg" alt="preview">' +
             '</div> ' +
             '<div class="col-xs-9">' +
                 '<h3>' + result.name + '</h3>' +
-                '<h4>' + result.formula + '</h4>' +
+                '<h4>' + result.formula.replace(/(\d+)/g, "<sub>$1</sub>"); + '</h4>' +
             '</div>' +
         '</a>' +
-    '</li> ';
+    '</div> ';
 
 	return html; 
 };

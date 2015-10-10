@@ -54,31 +54,17 @@
     <div class="input-group search">
             
         <label for="query"><i class="fa fa-search"></i></label>
-        <input type="text" class="form-control typeahead query input-lg" autocomplete="off" name="query" placeholder="Enter Query">
+        <input id='search-bar-auto' type="text" class="form-control typeahead query input-lg" autocomplete="off" name="query" placeholder="Enter Query">
 
         <span class="input-group-btn">
             <button class="btn btn-default btn-lg" type="button"><i class="fa fa-search"></i></button>
         </span>
-
-        
-
-    </div>
-
-    <div class="form-group hidden"> 
-        <label for="type" class='control-label hide'>Query Type:</label>
-        <select class="form-control search-options" name="type">
-            <option value='name'>Name</option>
-            <option value='inchi'>InChIKey</option>
-            <option value='tag'>Tag</option>
-            <option value='synonym'>Synonym</option>
-            <option value='formula'>Formula</option>
-        </select>
     </div>
 
 
     <!-- Results from autocomplete search -->
     <div class="autocomplete-wrapper">
-        <ul class="autocomplete-results" style="display: none;">
+        <ul class="autocomplete-results" >
             
         </ul>
     </div>

@@ -21,6 +21,8 @@ pqr.init = function() {
 		loadCSS("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 		// loadCSS("//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700");
 
+		
+
 		if ($("#main").hasClass("page-home")) {
 			pqr.threeDMole.initViewers();
 			pqr.bindevents.moleculeReset('#reset-molecule');

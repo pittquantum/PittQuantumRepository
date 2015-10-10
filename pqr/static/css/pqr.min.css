@@ -8906,6 +8906,9 @@ form.autocomplete-search-form .search.input-group {
     width: 90%;
   }
 }
+form.autocomplete-search-form .search.input-group span {
+  width: 100%;
+}
 form.autocomplete-search-form .search.input-group label {
   position: absolute;
   z-index: 12;
@@ -8913,43 +8916,26 @@ form.autocomplete-search-form .search.input-group label {
   top: 12px;
 }
 form.autocomplete-search-form .search.input-group input {
+  width: 100%;
   padding-left: 50px;
 }
 form.autocomplete-search-form .search.input-group .input-group-btn {
   width: 1%;
+  top: -3px;
 }
 form.autocomplete-search-form .search.input-group .input-group-btn button {
   border-radius: 0px;
 }
-form.autocomplete-search-form div.autocomplete-wrapper {
-  position: relative;
+form.autocomplete-search-form .tt-menu {
+  position: absolute !important;
+  top: 100%;
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  /* Small devices (tablets, 768px and up) */
-  /* Medium devices (desktops, 992px and up) */
-  /* Large devices (large desktops, 1200px and up) */
   max-width: 1000px;
 }
-@media (min-width: 768px) {
-  form.autocomplete-search-form div.autocomplete-wrapper {
-    width: 90%;
-  }
-}
-@media (min-width: 992px) {
-  form.autocomplete-search-form div.autocomplete-wrapper {
-    width: 90%;
-  }
-}
-@media (min-width: 1200px) {
-  form.autocomplete-search-form div.autocomplete-wrapper {
-    width: 90%;
-  }
-}
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results {
-  padding-left: 0;
-  list-style: none;
+form.autocomplete-search-form .tt-menu .autocomplete-results {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -8960,7 +8946,7 @@ form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results {
   border: 1px solid #dcdcdc;
   box-shadow: 2px 2px 5px #f9f9f9;
 }
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results::before {
+form.autocomplete-search-form .tt-menu .autocomplete-results::before {
   position: absolute;
   pointer-events: none;
   border: solid transparent;
@@ -8974,10 +8960,10 @@ form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results::
   left: 50px;
   top: -18px;
 }
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results.no-before::before {
+form.autocomplete-search-form .tt-menu .autocomplete-results.no-before::before {
   content: none;
 }
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li {
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion {
   transition-delay: 0s;
   transition-duration: 0.25s;
   transition-property: all;
@@ -8987,26 +8973,26 @@ form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results l
   background-color: white;
   padding: 10px;
 }
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li h3,
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li h4 {
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion h3,
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion h4 {
   margin-top: 0;
   margin-bottom: 0;
 }
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li h4 {
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion h4 {
   color: black;
 }
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li img {
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion img {
   max-height: 50px;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li:hover {
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover {
   background-color: #f16b1d;
 }
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li:hover h3,
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li:hover h4,
-form.autocomplete-search-form div.autocomplete-wrapper ul.autocomplete-results li:hover i {
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover h3,
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover h4,
+form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover i {
   color: white;
 }
 color::-moz-selection {
