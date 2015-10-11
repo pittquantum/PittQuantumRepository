@@ -9000,7 +9000,7 @@ h5 {
   border: none;
   border-radius: 0;
   background: #f0f0f0;
-  color: #aaa;
+  color: #888;
   font-weight: 400;
   -webkit-appearance: none;
   /* for box shadows to show on iOS */
@@ -9049,6 +9049,7 @@ h5 {
 .pqr-form .input-wrapper .input-label .input-label-content .fa {
   font-size: 2em;
   margin-right: 10px;
+  color: #999;
 }
 .pqr-form .input-wrapper .input-label .input-label-content::after {
   content: attr(data-content);
@@ -9078,8 +9079,12 @@ h5 {
   border-color: #9ad2d1;
   padding-left: 1.25em;
 }
+.pqr-form .input--filled input::placeholder {
+  color: #ddd;
+}
 .pqr-form input::placeholder {
-  color: green;
+  transition: color 300ms ease;
+  color: #999;
 }
 form.autocomplete-search-form .input-wrapper {
   position: relative;
@@ -9099,7 +9104,7 @@ form.autocomplete-search-form .input-wrapper .input-field {
   border: none;
   border-radius: 0;
   background: #f0f0f0;
-  color: #aaa;
+  color: #888;
   font-weight: 400;
   -webkit-appearance: none;
   /* for box shadows to show on iOS */
@@ -9148,6 +9153,7 @@ form.autocomplete-search-form .input-wrapper .input-label .input-label-content {
 form.autocomplete-search-form .input-wrapper .input-label .input-label-content .fa {
   font-size: 2em;
   margin-right: 10px;
+  color: #999;
 }
 form.autocomplete-search-form .input-wrapper .input-label .input-label-content::after {
   content: attr(data-content);
@@ -9177,8 +9183,12 @@ form.autocomplete-search-form .input--filled .input-field {
   border-color: #9ad2d1;
   padding-left: 1.25em;
 }
+form.autocomplete-search-form .input--filled input::placeholder {
+  color: #ddd;
+}
 form.autocomplete-search-form input::placeholder {
-  color: green;
+  transition: color 300ms ease;
+  color: #999;
 }
 form.autocomplete-search-form .search.input-group {
   width: 100%;
@@ -9249,6 +9259,7 @@ form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion {
   transition-property: all;
   transition-timing-function: ease;
   text-align: left;
+  border-bottom: 1px solid #9ad2d1;
   height: 75px;
   background-color: white;
   padding: 10px;
@@ -9279,6 +9290,15 @@ form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion.tt-c
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover i,
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion.tt-cursor i {
   color: white;
+}
+@media (max-width: 991px) {
+  form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion {
+    height: 150px;
+    text-align: center;
+  }
+  form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion a:hover {
+    text-decoration: none;
+  }
 }
 color::-moz-selection {
   background: #3498db;

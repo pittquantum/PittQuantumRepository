@@ -146,3 +146,31 @@ pqr.htmlUtilities.initQuickFit = function(selector, options) {
 		$(selector).quickfit(options);
 	});
 };
+
+/**
+ * Add a fille effect to the forms on focus and remove on blur
+ * @return {[type]} [description]
+ */
+pqr.htmlUtilities.formStyleHelper = function() {
+	[].slice.call(document.querySelectorAll('input.input-field')).forEach(function(inputEl) {
+		// in case the input is already filled..
+		if (inputEl.value.trim() !== '') {
+			classie.add(inputEl.parentNode.parentNode, 'input--filled');
+		}
+
+		// events:
+		inputEl.addEventListener('focus', onInputFocus);
+		inputEl.addEventListener('blur', onInputBlur);
+	});
+
+	function onInputFocus(ev) {
+		classie.add(ev.target.parentNode.parentNode, 'input--filled');
+	}
+
+	function onInputBlur(ev) {
+		if (ev.target.value.trim() === '') {
+			classie.remove(ev.target.parentNode.parentNode, 'input--filled');
+		}
+	}
+	
+}();

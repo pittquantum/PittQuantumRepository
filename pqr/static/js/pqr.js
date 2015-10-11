@@ -23993,7 +23993,6 @@ pqr.autocomplete = {
 pqr.autocomplete.init = function(input_selector) {
 	$(this.results_selector).slideUp();
 	this.typeahead();
-	this.formStyleHelper();
 };
 
 
@@ -24081,10 +24080,10 @@ pqr.autocomplete.renderHTML = function(result) {
 
 	var html = '<div data-inchi="' + result.inchikey + '">' +
 		'<a href="/mol/' + result.inchikey + '">' +
-		'<div class="col-xs-2">' +
+		'<div class="col-md-2">' +
 		'<img class="img-responsive" src="/static/data/svg/' + result.inchikey.substring(0, 2) + '/' + result.inchikey + '.svg" alt="preview">' +
 		'</div> ' +
-		'<div class="col-xs-9">' +
+		'<div class="col-md-10">' +
 		'<h3>' + result.name.substring(0, 36) + '</h3>' +
 		'<h4>' +  formula + '</h4>' +
 	'</div>' +
@@ -24094,33 +24093,7 @@ pqr.autocomplete.renderHTML = function(result) {
 	return html;
 };
 
-/**
- * [formStyleHelper description]
- * @return {[type]} [description]
- */
-pqr.autocomplete.formStyleHelper = function() {
-	[].slice.call(document.querySelectorAll('input.input-field')).forEach(function(inputEl) {
-		// in case the input is already filled..
-		if (inputEl.value.trim() !== '') {
-			classie.add(inputEl.parentNode.parentNode, 'input--filled');
-		}
 
-		// events:
-		inputEl.addEventListener('focus', onInputFocus);
-		inputEl.addEventListener('blur', onInputBlur);
-	});
-
-	function onInputFocus(ev) {
-		classie.add(ev.target.parentNode.parentNode, 'input--filled');
-	}
-
-	function onInputBlur(ev) {
-		if (ev.target.value.trim() === '') {
-			classie.remove(ev.target.parentNode.parentNode, 'input--filled');
-		}
-	}
-	
-};
 /**
  * @fileoverview Any event binding functions.
  *  
@@ -25060,6 +25033,34 @@ pqr.htmlUtilities.initQuickFit = function(selector, options) {
 		$(selector).quickfit(options);
 	});
 };
+
+/**
+ * Add a fille effect to the forms on focus and remove on blur
+ * @return {[type]} [description]
+ */
+pqr.htmlUtilities.formStyleHelper = function() {
+	[].slice.call(document.querySelectorAll('input.input-field')).forEach(function(inputEl) {
+		// in case the input is already filled..
+		if (inputEl.value.trim() !== '') {
+			classie.add(inputEl.parentNode.parentNode, 'input--filled');
+		}
+
+		// events:
+		inputEl.addEventListener('focus', onInputFocus);
+		inputEl.addEventListener('blur', onInputBlur);
+	});
+
+	function onInputFocus(ev) {
+		classie.add(ev.target.parentNode.parentNode, 'input--filled');
+	}
+
+	function onInputBlur(ev) {
+		if (ev.target.value.trim() === '') {
+			classie.remove(ev.target.parentNode.parentNode, 'input--filled');
+		}
+	}
+	
+}();
 /**
  * animOnScroll.js v1.0.0
  * http://www.codrops.com

@@ -23,7 +23,7 @@
 			border: none;
 			border-radius: 0;
 			background: #f0f0f0;
-			color: #aaa;
+			color: #888;
 			font-weight: 400;
 			-webkit-appearance: none; /* for box shadows to show on iOS */
 			width: 100%;
@@ -73,6 +73,7 @@
 				.fa {
 					font-size: 2em;
 					margin-right: 10px;
+					color: #999;
 				}
 				&::after {
 					content: attr(data-content);
@@ -90,6 +91,8 @@
 				}
 			}
 		}
+
+		
 	}
 	//Styles for focus
 	.input-field:focus + .input-label, .input--filled .input-label {
@@ -103,9 +106,16 @@
 		border-color: @theme-light-aqua;
 		padding-left: 1.25em;
 	}
+
+	.input--filled{
+		input::placeholder {
+			color: #ddd;
+		}
+	}
 	//Placeholder
 	input::placeholder {
-		color: green;
+		transition: color 300ms ease;
+		color: #999;
 	}
 }
 form.autocomplete-search-form {
@@ -140,6 +150,7 @@ form.autocomplete-search-form {
 			border: 1px solid #dcdcdc;
 			box-shadow: 2px 2px 5px #f9f9f9;
 
+
 			&::before {
 				position: absolute;
 				pointer-events: none;
@@ -162,7 +173,7 @@ form.autocomplete-search-form {
 			div.suggestion {
 				#transition .default();
 				text-align: left;
-				// #responsive-helpers .responsive-abstract-manual(height, 100px, 100px, 100px, 100px);
+				border-bottom: 1px solid @theme-light-aqua;
 				height: 75px;
 				background-color: white;
 				padding: 10px;
@@ -186,7 +197,20 @@ form.autocomplete-search-form {
 						color: white;
 					}
 				}
+
+				@media (max-width:@screen-sm-max) {
+					height: 150px;
+					text-align: center;
+
+					a{
+						&:hover{
+							text-decoration: none; 
+						}
+					}
+				}
 			}
+
+
 		}
 	}
 }
