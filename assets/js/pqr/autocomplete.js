@@ -18,8 +18,8 @@ pqr.autocomplete = {
  */
 pqr.autocomplete.init = function(input_selector) {
 	$(this.results_selector).slideUp();
-	var input_selector = '.autocomplete-search-form .search input';
 	this.typeahead();
+	this.formStyleHelper();
 };
 
 
@@ -48,7 +48,6 @@ pqr.autocomplete.typeahead = function() {
 			var nameTokens = Bloodhound.tokenizers.whitespace(data.name);
 			var formulaTokens = pqr.autocomplete.formulaTokenizer(data.formula);
 
-
 			return nameTokens.concat(formulaTokens);
 		},
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -75,7 +74,7 @@ pqr.autocomplete.typeahead = function() {
 	});
 
 	
-	//If using they keyboard following links on select
+	//If using the keyboard following links on select
 	this.TypeAhead.bind('typeahead:select', function(ev, suggestion) {
 		var element = $('.autocomplete-results [data-inchi="' + suggestion.inchikey + '"] a');
 		if(element.length){
@@ -119,4 +118,32 @@ pqr.autocomplete.renderHTML = function(result) {
 	'</div> ';
 	
 	return html;
+};
+
+/**
+ * [formStyleHelper description]
+ * @return {[type]} [description]
+ */
+pqr.autocomplete.formStyleHelper = function() {
+	[].slice.call(document.querySelectorAll('input.input-field')).forEach(function(inputEl) {
+		// in case the input is already filled..
+		if (inputEl.value.trim() !== '') {
+			classie.add(inputEl.parentNode.parentNode, 'input--filled');
+		}
+
+		// events:
+		inputEl.addEventListener('focus', onInputFocus);
+		inputEl.addEventListener('blur', onInputBlur);
+	});
+
+	function onInputFocus(ev) {
+		classie.add(ev.target.parentNode.parentNode, 'input--filled');
+	}
+
+	function onInputBlur(ev) {
+		if (ev.target.value.trim() === '') {
+			classie.remove(ev.target.parentNode.parentNode, 'input--filled');
+		}
+	}
+	
 };

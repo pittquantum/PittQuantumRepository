@@ -45,13 +45,15 @@
 	    </select>
 	</div>
 
+
+
 </form>
 {%- endmacro %}
 
 {% macro banner_search_auto_complete(id='home-molecule-search') -%}
 <form id='molecule-search-group' class="text-center form-inline autocomplete-search-form" role="form" action="/browse" method="GET">
     
-    <div class="input-group search">
+    <!-- <div class="input-group search">
             
         <label for="query"><i class="fa fa-search"></i></label>
         <input id='search-bar-auto' type="text" class="form-control typeahead query input-lg" autocomplete="off" name="query" placeholder="Enter Query">
@@ -59,7 +61,26 @@
         <span class="input-group-btn">
             <button class="btn btn-default btn-lg" type="button"><i class="fa fa-search"></i></button>
         </span>
-    </div>
+    </div> -->
+
+   <!--  <section class="input-group search">
+        <div class="input input--yoshiko">
+            <input id='search-bar-auto' name="query" class="input__field input__field--yoshiko query" type="text"  placeholder="Enter Query" autocomplete="off"/>
+            <label class="input__label input__label--yoshiko">
+                <span class="input__label-content input__label-content--yoshiko" data-content="Molecule Search"><i class="fa fa-search"></i></span>
+            </label>
+        </div>
+    </section> -->
+
+    <section class="input-group search">
+        <div class="input-wrapper">
+            <input id='search-bar-auto' name="query" class="input-field query" type="text"  placeholder="Enter Query" autocomplete="off"/>
+            <label class="input-label">
+                <span class="input-label-content" data-content="Molecule Search"><i class="fa fa-search"></i></span>
+            </label>
+        </div>
+    </section>
+
 
     <div class="form-group hidden"> 
         <label for="type" class='control-label hide'>Query Type:</label>

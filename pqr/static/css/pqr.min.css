@@ -8884,6 +8884,238 @@ h5 {
  * Form Styling
  * 
  */
+.pqr-form .input-wrapper {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 1em;
+  width: calc(98%);
+  vertical-align: top;
+  font-weight: bold;
+}
+.pqr-form .input-wrapper .input-field {
+  position: relative;
+  display: block;
+  float: right;
+  padding: 0.8em;
+  width: 60%;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  color: #aaa;
+  font-weight: 400;
+  -webkit-appearance: none;
+  /* for box shadows to show on iOS */
+  width: 100%;
+  background-color: #d0d1d0;
+  border: 2px solid transparent;
+  transition: background-color 0.25s, border-color 0.25s;
+  font-weight: bold;
+  padding-left: 3em;
+}
+.pqr-form .input-wrapper .input-field:focus {
+  outline: none;
+}
+.pqr-form .input-wrapper .input-label {
+  display: inline-block;
+  float: right;
+  padding: 0 1em;
+  width: 40%;
+  color: #696969;
+  font-weight: bold;
+  font-size: 70.25%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 100%;
+  text-align: left;
+  position: absolute;
+  bottom: 80%;
+  pointer-events: none;
+  overflow: hidden;
+  padding: 0 1.25em;
+  -webkit-transform: translate3d(0, 3em, 0);
+          transform: translate3d(0, 3em, 0);
+  transition: -webkit-transform 0.25s;
+  transition: transform 0.25s;
+  transition-timing-function: ease-in-out;
+}
+.pqr-form .input-wrapper .input-label .input-label-content {
+  position: relative;
+  display: block;
+  padding: 1.6em 0;
+  width: 100%;
+  color: #8B8C8B;
+  padding: 0.50em 0;
+  transition: -webkit-transform 0.25s;
+  transition: transform 0.25s;
+  transition-timing-function: ease-in-out;
+}
+.pqr-form .input-wrapper .input-label .input-label-content .fa {
+  font-size: 2em;
+  margin-right: 10px;
+}
+.pqr-form .input-wrapper .input-label .input-label-content::after {
+  content: attr(data-content);
+  position: absolute;
+  font-weight: 800;
+  bottom: 80%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  color: #9ad2d1;
+  padding: 0.15em 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85em;
+}
+.pqr-form .input-field:focus + .input-label,
+.pqr-form .input--filled .input-label {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.pqr-form .input-field:focus + .input-label .input-label-content,
+.pqr-form .input--filled .input-label-content {
+  -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+}
+.pqr-form .input-field:focus + .input-field,
+.pqr-form .input--filled .input-field {
+  background-color: white;
+  border-color: #9ad2d1;
+  padding-left: 1.25em;
+}
+.pqr-form input::-webkit-input-placeholder {
+  color: green;
+}
+.pqr-form input::-moz-placeholder {
+  color: green;
+}
+.pqr-form input:-ms-input-placeholder {
+  color: green;
+}
+.pqr-form input::placeholder {
+  color: green;
+}
+form.autocomplete-search-form .input-wrapper {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 1em;
+  width: calc(98%);
+  vertical-align: top;
+  font-weight: bold;
+}
+form.autocomplete-search-form .input-wrapper .input-field {
+  position: relative;
+  display: block;
+  float: right;
+  padding: 0.8em;
+  width: 60%;
+  border: none;
+  border-radius: 0;
+  background: #f0f0f0;
+  color: #aaa;
+  font-weight: 400;
+  -webkit-appearance: none;
+  /* for box shadows to show on iOS */
+  width: 100%;
+  background-color: #d0d1d0;
+  border: 2px solid transparent;
+  transition: background-color 0.25s, border-color 0.25s;
+  font-weight: bold;
+  padding-left: 3em;
+}
+form.autocomplete-search-form .input-wrapper .input-field:focus {
+  outline: none;
+}
+form.autocomplete-search-form .input-wrapper .input-label {
+  display: inline-block;
+  float: right;
+  padding: 0 1em;
+  width: 40%;
+  color: #696969;
+  font-weight: bold;
+  font-size: 70.25%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 100%;
+  text-align: left;
+  position: absolute;
+  bottom: 80%;
+  pointer-events: none;
+  overflow: hidden;
+  padding: 0 1.25em;
+  -webkit-transform: translate3d(0, 3em, 0);
+          transform: translate3d(0, 3em, 0);
+  transition: -webkit-transform 0.25s;
+  transition: transform 0.25s;
+  transition-timing-function: ease-in-out;
+}
+form.autocomplete-search-form .input-wrapper .input-label .input-label-content {
+  position: relative;
+  display: block;
+  padding: 1.6em 0;
+  width: 100%;
+  color: #8B8C8B;
+  padding: 0.50em 0;
+  transition: -webkit-transform 0.25s;
+  transition: transform 0.25s;
+  transition-timing-function: ease-in-out;
+}
+form.autocomplete-search-form .input-wrapper .input-label .input-label-content .fa {
+  font-size: 2em;
+  margin-right: 10px;
+}
+form.autocomplete-search-form .input-wrapper .input-label .input-label-content::after {
+  content: attr(data-content);
+  position: absolute;
+  font-weight: 800;
+  bottom: 80%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  color: #9ad2d1;
+  padding: 0.15em 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85em;
+}
+form.autocomplete-search-form .input-field:focus + .input-label,
+form.autocomplete-search-form .input--filled .input-label {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+form.autocomplete-search-form .input-field:focus + .input-label .input-label-content,
+form.autocomplete-search-form .input--filled .input-label-content {
+  -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+}
+form.autocomplete-search-form .input-field:focus + .input-field,
+form.autocomplete-search-form .input--filled .input-field {
+  background-color: white;
+  border-color: #9ad2d1;
+  padding-left: 1.25em;
+}
+form.autocomplete-search-form input::-webkit-input-placeholder {
+  color: green;
+}
+form.autocomplete-search-form input::-moz-placeholder {
+  color: green;
+}
+form.autocomplete-search-form input:-ms-input-placeholder {
+  color: green;
+}
+form.autocomplete-search-form input::placeholder {
+  color: green;
+}
 form.autocomplete-search-form .search.input-group {
   width: 100%;
   /* Small devices (tablets, 768px and up) */
@@ -8906,25 +9138,9 @@ form.autocomplete-search-form .search.input-group {
     width: 90%;
   }
 }
-form.autocomplete-search-form .search.input-group span {
+form.autocomplete-search-form .search.input-group .twitter-typeahead {
   width: 100%;
-}
-form.autocomplete-search-form .search.input-group label {
-  position: absolute;
-  z-index: 12;
-  left: 17px;
-  top: 12px;
-}
-form.autocomplete-search-form .search.input-group input {
-  width: 100%;
-  padding-left: 50px;
-}
-form.autocomplete-search-form .search.input-group .input-group-btn {
-  width: 1%;
-  top: -3px;
-}
-form.autocomplete-search-form .search.input-group .input-group-btn button {
-  border-radius: 0px;
+  display: block !important;
 }
 form.autocomplete-search-form .tt-menu {
   position: absolute !important;
@@ -8942,7 +9158,7 @@ form.autocomplete-search-form .tt-menu .autocomplete-results {
   position: absolute;
   width: 100%;
   z-index: 10;
-  top: 12px;
+  top: 65px;
   border: 1px solid #dcdcdc;
   box-shadow: 2px 2px 5px #f9f9f9;
 }
@@ -8975,6 +9191,7 @@ form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion {
 }
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion h3,
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion h4 {
+  color: #9ad2d1;
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -8989,7 +9206,7 @@ form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion img 
 }
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover,
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion.tt-cursor {
-  background-color: #f16b1d;
+  background-color: #9ad2d1;
 }
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion:hover h3,
 form.autocomplete-search-form .tt-menu .autocomplete-results div.suggestion.tt-cursor h3,

@@ -5232,28 +5232,51 @@ htmlutilities.updateFooterHeight = function(footer_selector, content_selector){
  * @param  {Function} callback [description]
  * @return {[type]}            [description]
  */
-jQuery.fn.contentChange = function(callback){
-    var elms = jQuery(this);
-    elms.each(
-      function(i){
-        var elm = jQuery(this);
-        elm.data("lastContents", elm.html());
-        window.watchContentChange = window.watchContentChange ? window.watchContentChange : [];
-        window.watchContentChange.push({"element": elm, "callback": callback});
-      }
-    )
-    return elms;
-  }
-  setInterval(function(){
-    if(window.watchContentChange){
-      for( i in window.watchContentChange){
-        if(window.watchContentChange[i].element.data("lastContents") != window.watchContentChange[i].element.html()){
-          window.watchContentChange[i].callback.apply(window.watchContentChange[i].element);
-          window.watchContentChange[i].element.data("lastContents", window.watchContentChange[i].element.html())
-        };
-      }
+
+// jQuery.fn.contentChange = function(callback){
+//     var elms = jQuery(this);
+//     elms.each(
+//       function(i){
+//         var elm = jQuery(this);
+//         elm.data("lastContents", elm.html());
+//         window.watchContentChange = window.watchContentChange ? window.watchContentChange : [];
+//         window.watchContentChange.push({"element": elm, "callback": callback});
+//       }
+//     )
+//     return elms;
+//   }
+//   setInterval(function(){
+//     if(window.watchContentChange){
+//       for( i in window.watchContentChange){
+//         if(window.watchContentChange[i].element.data("lastContents") != window.watchContentChange[i].element.html()){
+//           window.watchContentChange[i].callback.apply(window.watchContentChange[i].element);
+//           window.watchContentChange[i].element.data("lastContents", window.watchContentChange[i].element.html())
+//         };
+//       }
+//     }
+//   },500);
+
+
+/**
+ * @fileoverview Polyfills 
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ */
+
+var polyfill = polyfill || {};
+
+polyfill.trim = function(){
+    // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+    if (!String.prototype.trim) {
+        (function() {
+            // Make sure we trim BOM and NBSP
+            var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+            String.prototype.trim = function() {
+                return this.replace(rtrim, '');
+            };
+        })();
     }
-  },500);
+}();
+  
 /**
  * @fileoverview Initialize all JS for the website. Must be the 
  * first file concated in the pqr folder. 
@@ -23969,8 +23992,8 @@ pqr.autocomplete = {
  */
 pqr.autocomplete.init = function(input_selector) {
 	$(this.results_selector).slideUp();
-	var input_selector = '.autocomplete-search-form .search input';
 	this.typeahead();
+	this.formStyleHelper();
 };
 
 
@@ -23999,7 +24022,6 @@ pqr.autocomplete.typeahead = function() {
 			var nameTokens = Bloodhound.tokenizers.whitespace(data.name);
 			var formulaTokens = pqr.autocomplete.formulaTokenizer(data.formula);
 
-
 			return nameTokens.concat(formulaTokens);
 		},
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -24026,7 +24048,7 @@ pqr.autocomplete.typeahead = function() {
 	});
 
 	
-	//If using they keyboard following links on select
+	//If using the keyboard following links on select
 	this.TypeAhead.bind('typeahead:select', function(ev, suggestion) {
 		var element = $('.autocomplete-results [data-inchi="' + suggestion.inchikey + '"] a');
 		if(element.length){
@@ -24070,6 +24092,34 @@ pqr.autocomplete.renderHTML = function(result) {
 	'</div> ';
 	
 	return html;
+};
+
+/**
+ * [formStyleHelper description]
+ * @return {[type]} [description]
+ */
+pqr.autocomplete.formStyleHelper = function() {
+	[].slice.call(document.querySelectorAll('input.input-field')).forEach(function(inputEl) {
+		// in case the input is already filled..
+		if (inputEl.value.trim() !== '') {
+			classie.add(inputEl.parentNode.parentNode, 'input--filled');
+		}
+
+		// events:
+		inputEl.addEventListener('focus', onInputFocus);
+		inputEl.addEventListener('blur', onInputBlur);
+	});
+
+	function onInputFocus(ev) {
+		classie.add(ev.target.parentNode.parentNode, 'input--filled');
+	}
+
+	function onInputBlur(ev) {
+		if (ev.target.value.trim() === '') {
+			classie.remove(ev.target.parentNode.parentNode, 'input--filled');
+		}
+	}
+	
 };
 /**
  * @fileoverview Any event binding functions.
