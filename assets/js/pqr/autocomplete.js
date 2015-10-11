@@ -50,37 +50,51 @@ pqr.autocomplete.suggestionSorter = function(suggestions, query){
 	suggestions = this.filter(suggestions, query);
 	
 	var top_suggestions = [];
-
+	var top_formulas = [];
 	suggestions = $.map(suggestions, function(value, index){
 
-		//Prioritize Name
-		if(query.length > 3 && (noNumbers || !isFormula)){
-			if(query == value.name.substring(0,query.length)){
-				top_suggestions.push(value); 
-				return null; 
+		//Difficult to tell before 3
+		if(query.length > 2){	
+			//Prioritize Name
+			if(noNumbers || !isFormula){
+				if(query == value.name.substring(0,query.length).toLowerCase()){
+					top_suggestions.push(value); 
+					return null; 
+				}
 			}
 		}
 
-
-
+		//Prioritieze formulas by length
+		if(query.length > 2 && isFormula){
+			if(query == value.formula.substring(0,query.length).toLowerCase()){
+				// top_formulas.push(value); 
+				// return null; 
+			}
+		}
 
 		return value; 
 	});
 
-	//Add front items
-	
+
+
+	//Add top name suggestions by closest match
 	if(top_suggestions.length){
-		// console.log(top_suggestions);
-		// suggestions.unshift(top_suggestions);
-		// console.log(suggestions);
+		top_suggestions.sort(function(a,b){return b.name.length - a.name.length;});
 
 		$.each(top_suggestions, function(index, obj){
 			suggestions.unshift(obj);
 		});
 	}
-	
 
+	//Add top formula suggestions by closest match
+	if(top_formulas.length){ 
+		//Shortest formulas first
+		top_formulas.sort(function(a,b){return b.formula.length - a.formula.length});
 
+		$.each(top_formulas, function(index, obj){
+			suggestions.unshift(obj);
+		});
+	}
 
 	return suggestions.slice(0,this.results_size_max);
 };
@@ -173,7 +187,7 @@ pqr.autocomplete.typeahead = function() {
 		limit: 10000,
 		source: function(query, cb) {
 			pqr.autocomplete.engine.search(query, function(suggestions) {
-                cb(pqr.autocomplete.suggestionSorter(suggestions, query));
+                cb(pqr.autocomplete.suggestionSorter(suggestions, query.toLowerCase()));
             });
         },
 		templates: {
