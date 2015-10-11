@@ -21,8 +21,54 @@
 
                <form id="form-contact" role="form" method="POST" action="/contact/">
                     <h3> Send us a direct message! </h3>
+                    
+                    <section class="input-group">
+                         <div class="input-wrapper">
+                              <input class="input-field" type="text"  placeholder="John Doe" autocomplete="off"/>
+                              <label class="input-label">
+                                   <span class="input-label-content" data-content="Name"><i class="fa fa-user"></i></span>
+                              </label>
+                         </div>
+                    </section>
 
-                    <div class="form-group">
+                    <section class="input-group">
+                         <div class="input-wrapper">
+                              <input class="input-field" type="text"  placeholder="Enter your email" autocomplete="off"/>
+                              <label class="input-label">
+                                   <span class="input-label-content" data-content="Verify Email"><i class="fa fa-envelope-o"></i></span>
+                              </label>
+                         </div>
+                    </section>
+
+
+                    <section class="input-group">
+                         <div class="input-wrapper">
+                              <input class="input-field" type="text"  placeholder="Verify your email" autocomplete="off"/>
+                              <label class="input-label">
+                                   <span class="input-label-content" data-content="Email"><i class="fa fa-envelope-o"></i></span>
+                              </label>
+                         </div>
+                    </section>
+
+                    <section class="input-group">
+                         <div class="input-wrapper">
+                              <input class="input-field" type="text"  placeholder="Subject" autocomplete="off"/>
+                              <label class="input-label">
+                                   <span class="input-label-content" data-content="Subject"><i class="fa fa-lightbulb-o"></i></span>
+                              </label>
+                         </div>
+                    </section>
+
+                    <section class="input-group">
+                         <div class="input-wrapper">
+                              <textarea class="input-field" type="text"  placeholder="Message" autocomplete="off" /></textarea>
+                              <label class="input-label">
+                                   <span class="input-label-content" data-content="Message"><i class="fa fa-lightbulb-o"></i></span>
+                              </label>
+                         </div>
+                    </section>
+
+<!--                     <div class="form-group">
                          <label for="name">Name</label>
                          <input type="text" class="form-control" id="name" name='name' placeholder="John Doe">
                     </div>
@@ -40,7 +86,7 @@
                     <div class="form-group">
                          <label for="subject">Subject</label>
                          <input type="text" class="form-control" id="subject" name='subject' placeholder="Subject" value="" >
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                          <textarea class="form-control" id="message" placeholder="Please enter your message here" rows="8" name='message'></textarea>

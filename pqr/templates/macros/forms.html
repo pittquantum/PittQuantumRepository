@@ -21,12 +21,19 @@
 {%- endmacro %} 
 
 
-{% macro banner_search_auto_complete(id='home-molecule-search') -%}
+{% macro banner_search_auto_complete(query="Enter Molecule Query") -%}
 <form id='molecule-search-group' class="text-center form-inline autocomplete-search-form" role="form" action="/browse" method="GET">
     
     <section class="input-group search">
+        {% if query != 'Enter Molecule Query' %} 
+        <div class="input-wrapper input--filled">
+            <input id='search-bar-auto' name="query" class="input-field query" type="text"  placeholder="Enter Molecule Query" value='{{query}}' autocomplete="off"/>
+            <!-- <input id='search-bar-auto' name="query" class="input-field query" type="text"  value="{{query}}" autocomplete="off"/> -->
+        {% else %}
         <div class="input-wrapper">
-            <input id='search-bar-auto' name="query" class="input-field query" type="text"  placeholder="Enter Molecule Query" autocomplete="off"/>
+             <input id='search-bar-auto' name="query" class="input-field query" type="text"  placeholder="Enter Molecule Query" autocomplete="off"/>
+        {% endif %}
+            
             <label class="input-label">
                 <span class="input-label-content" data-content="Molecule Search"><i class="fa fa-search"></i></span>
             </label>

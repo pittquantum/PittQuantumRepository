@@ -5,12 +5,17 @@
 
 //Global form style
 .pqr-form {
+	.input-group{
+		width: 100%;
+		padding-bottom: 1.5em;
+	}
 	.input-wrapper {
 		position: relative;
 		z-index: 1;
 		display: inline-block;
-		margin: 1em;
-		width: calc(100% - 2em);
+		// margin: 1em;
+		// width: calc(100% - 2em);
+		width: 100%; 
 		vertical-align: top;
 		font-weight: bold;
 
@@ -66,6 +71,7 @@
 				width: 100%;
 				color: #8B8C8B;
 				padding: 0.50em 0;
+				 padding-bottom: 1px;
 				transition: transform 0.25s;
 				transition-timing-function: ease-in-out;
 
@@ -108,18 +114,55 @@
 	}
 
 	.input--filled{
-		input::placeholder {
+		input::placeholder, textarea::placeholder {
 			color: #ddd;
 		}
 	}
 	//Placeholder
-	input::placeholder {
+	input::placeholder, textarea::placeholder {
 		transition: color 300ms ease;
 		color: #999;
 	}
+
+	.inverse.input-wrapper {
+		.input-label {
+			transform: translate3d(0, 0, 0);
+		}
+		.input-label .input-label-content {
+			transform: translate3d(0, 100%, 0);
+		}
+		.input-field{
+			background-color: white;
+			border-color: @theme-light-aqua;
+			padding-left: 1.25em;
+		}
+
+		input::placeholder, textarea::placeholder {
+			color: #ddd;
+		}
+	}
 }
+
+form#form-contact{
+	.pqr-form();
+
+	.input-wrapper{
+		.inverse.input-wrapper();
+	}
+	
+
+
+	h3{
+		padding-bottom: 20px; 
+	}
+}
+
 form.autocomplete-search-form {
 	.pqr-form();
+
+	.input-wrapper{
+		margin: 1em; 
+	}
 
 	//Primary Search Input
 	.search.input-group {
