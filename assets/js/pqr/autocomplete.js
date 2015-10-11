@@ -18,7 +18,7 @@ pqr.autocomplete = {
  */
 pqr.autocomplete.init = function(input_selector) {
 	$(this.results_selector).slideUp();
-	this.typeahead();
+	this.typeahead(); 
 };
 
 
@@ -36,6 +36,25 @@ pqr.autocomplete.formulaTokenizer = function(formula) {
 };
 
 /**
+ * Sort all of the items this happens in search and after filter
+ * @param  {[type]} a [description]
+ * @param  {[type]} b [description]
+ * @return {[type]}   [description]
+ */
+pqr.autocomplete.suggestionSorter = function(suggestions, query){
+
+	$.each(suggestions, function(index, value){
+		console.log(value); 
+		return false; 
+	});
+	return suggestions.slice(0,10);
+};
+
+pqr.autocomplete.filter = function(suggestions, query){
+	
+}
+
+/**
  * Setup typeahead for autocomplete and suggested search
  * @return {[type]} [description]
  */
@@ -44,14 +63,28 @@ pqr.autocomplete.typeahead = function() {
 
 	this.engine = new Bloodhound({
 		datumTokenizer: function(data) {
+			// console.log(data); 
 			var nameTokens = Bloodhound.tokenizers.whitespace(data.name);
 			var formulaTokens = pqr.autocomplete.formulaTokenizer(data.formula);
+			var synonymTokens = data.synonyms; //Already in an array
+			var tagsTokens = data.tags; //Already in an array
 
-			return nameTokens.concat(formulaTokens);
+			//Quickly disabled tokens
+			// nameTokens = [];
+			// formulaTokens = [];
+			// synonymTokens = [];
+			tagsTokens = []; //Producing too many results
+
+			//Combine all of the tokens 
+			return nameTokens.concat(formulaTokens).concat(synonymTokens).concat(tagsTokens);
 		},
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		local: auto_complete
+		local: auto_complete,
+		identify: function(obj){return obj.inchikey},
+		// sorter: this.suggestionSorter
 	});
+
+
 
 	this.TypeAhead = $(this.input_selector).typeahead({
 		hint: false,
@@ -63,8 +96,12 @@ pqr.autocomplete.typeahead = function() {
 	}, {
 		name: 'name',
 		display: 'name',
-		limit: 10,
-		source: this.engine.ttAdapter(),
+		limit: 10000,
+		source: function(query, cb) {
+			pqr.autocomplete.engine.search(query, function(suggestions) {
+                cb(pqr.autocomplete.suggestionSorter(suggestions, query));
+            });
+        },
 		templates: {
 			suggestion: function(data) {
 				return pqr.autocomplete.renderHTML(data);
@@ -72,7 +109,6 @@ pqr.autocomplete.typeahead = function() {
 		}
 	});
 
-	
 	//If using the keyboard following links on select
 	this.TypeAhead.bind('typeahead:select', function(ev, suggestion) {
 		var element = $('.autocomplete-results [data-inchi="' + suggestion.inchikey + '"] a');

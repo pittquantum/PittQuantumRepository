@@ -2439,6 +2439,17 @@ h5 {
 .alert-feedback .alert-link {
   color: #bce3e1;
 }
+.alert-success {
+  background-color: #9ad2d1;
+  border-color: #bde2e1;
+  color: #316f6e;
+}
+.alert-success hr {
+  border-top-color: #acdad9;
+}
+.alert-success .alert-link {
+  color: #224b4b;
+}
 /**
  * Form Styling
  * 
@@ -3017,6 +3028,9 @@ body .page-browse nav.pagination .cogs i:nth-child(3) {
   font-size: 1.5em;
   top: 0.1em;
   left: 0.85em;
+}
+body .page-browse .meta-data {
+  text-align: center;
 }
 body .page-contact address {
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);

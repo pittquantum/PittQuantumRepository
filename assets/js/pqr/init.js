@@ -45,7 +45,9 @@ pqr.init = function() {
 			pqr.qrgen.addQRCode("#qr-print-wrapper", pqr.htmlUtilities.getQRURL());
 		}
 		else if($("#main").hasClass("page-browse")){
-			
+			pqr.autocomplete.init();
+
+			//Only Start AJAX if there are results 
 			if($('#molecule-browser').attr('data-has-results') === "true"){
 				pqr.masonary.init(); 
 				pqr.molecules.init_ajax_search(); 
@@ -54,7 +56,6 @@ pqr.init = function() {
 				pqr.bindevents.on_scoll_load_molecules();
 				pqr.bindevents.ajax_load_button();
 				pqr.bindevents.result_touch_helper();
-				pqr.autocomplete.init(); 
 			}
 			else{
 				if(pqr.debug) console.log("Search Resulted in no results");

@@ -23992,7 +23992,7 @@ pqr.autocomplete = {
  */
 pqr.autocomplete.init = function(input_selector) {
 	$(this.results_selector).slideUp();
-	this.typeahead();
+	this.typeahead(); 
 };
 
 
@@ -24010,6 +24010,25 @@ pqr.autocomplete.formulaTokenizer = function(formula) {
 };
 
 /**
+ * Sort all of the items this happens in search and after filter
+ * @param  {[type]} a [description]
+ * @param  {[type]} b [description]
+ * @return {[type]}   [description]
+ */
+pqr.autocomplete.suggestionSorter = function(suggestions, query){
+
+	$.each(suggestions, function(index, value){
+		console.log(value); 
+		return false; 
+	});
+	return suggestions.slice(0,10);
+};
+
+pqr.autocomplete.filter = function(suggestions, query){
+	
+}
+
+/**
  * Setup typeahead for autocomplete and suggested search
  * @return {[type]} [description]
  */
@@ -24018,14 +24037,28 @@ pqr.autocomplete.typeahead = function() {
 
 	this.engine = new Bloodhound({
 		datumTokenizer: function(data) {
+			// console.log(data); 
 			var nameTokens = Bloodhound.tokenizers.whitespace(data.name);
 			var formulaTokens = pqr.autocomplete.formulaTokenizer(data.formula);
+			var synonymTokens = data.synonyms; //Already in an array
+			var tagsTokens = data.tags; //Already in an array
 
-			return nameTokens.concat(formulaTokens);
+			//Quickly disabled tokens
+			// nameTokens = [];
+			// formulaTokens = [];
+			// synonymTokens = [];
+			tagsTokens = []; //Producing too many results
+
+			//Combine all of the tokens 
+			return nameTokens.concat(formulaTokens).concat(synonymTokens).concat(tagsTokens);
 		},
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
-		local: auto_complete
+		local: auto_complete,
+		identify: function(obj){return obj.inchikey},
+		// sorter: this.suggestionSorter
 	});
+
+
 
 	this.TypeAhead = $(this.input_selector).typeahead({
 		hint: false,
@@ -24037,8 +24070,12 @@ pqr.autocomplete.typeahead = function() {
 	}, {
 		name: 'name',
 		display: 'name',
-		limit: 10,
-		source: this.engine.ttAdapter(),
+		limit: 10000,
+		source: function(query, cb) {
+			pqr.autocomplete.engine.search(query, function(suggestions) {
+                cb(pqr.autocomplete.suggestionSorter(suggestions, query));
+            });
+        },
 		templates: {
 			suggestion: function(data) {
 				return pqr.autocomplete.renderHTML(data);
@@ -24046,7 +24083,6 @@ pqr.autocomplete.typeahead = function() {
 		}
 	});
 
-	
 	//If using the keyboard following links on select
 	this.TypeAhead.bind('typeahead:select', function(ev, suggestion) {
 		var element = $('.autocomplete-results [data-inchi="' + suggestion.inchikey + '"] a');
@@ -24465,7 +24501,9 @@ pqr.init = function() {
 			pqr.qrgen.addQRCode("#qr-print-wrapper", pqr.htmlUtilities.getQRURL());
 		}
 		else if($("#main").hasClass("page-browse")){
-			
+			pqr.autocomplete.init();
+
+			//Only Start AJAX if there are results 
 			if($('#molecule-browser').attr('data-has-results') === "true"){
 				pqr.masonary.init(); 
 				pqr.molecules.init_ajax_search(); 
@@ -24474,7 +24512,6 @@ pqr.init = function() {
 				pqr.bindevents.on_scoll_load_molecules();
 				pqr.bindevents.ajax_load_button();
 				pqr.bindevents.result_touch_helper();
-				pqr.autocomplete.init(); 
 			}
 			else{
 				if(pqr.debug) console.log("Search Resulted in no results");
@@ -24890,7 +24927,9 @@ pqr.threeDMole.changeStyle = function(newStyle) {
  * @author JoshJRogan@gmail.com (Josh Rogan)
  * @author ritwikg2004@live.com (Ritwik Gupta)
  */
-pqr.htmlUtilities = {};
+pqr.htmlUtilities = {
+	element_symbols: ['h','he','li','be','b','c','n','o','f','ne','na','mg','al','si','p','s','cl','ar','k','ca','sc','ti','v','cr','mn','fe','co','ni','cu','zn','ga','ge','as','se','br','kr','rb','sr','y','zr','nb','mo','tc','ru','rh','pd','ag','cd','in','sn','sb','te','i','xe','cs','ba','la','ce','pr','nd','pm','sm','eu','gd','tb','dy','ho','er','tm','yb','lu','hf','ta','w','re','os','ir','pt','au','hg','tl','pb','bi','po','at','rn','fr','ra','ac','th','pa','u','np','pu','am','cm','bk','cf','es','fm','md','no','lr','rf','db','sg','bh','hs','mt','ds','rg','cp','uut','uuq','uup','uuh','uus','uuo'],
+};
 
 /**
  * Get the INCHI key. Used to generate the QR Code
@@ -25061,6 +25100,76 @@ pqr.htmlUtilities.formStyleHelper = function() {
 	}
 	
 }();
+
+/**
+ * Returns true if the string is likely an inchi key
+ * @param  {[type]}  string [description]
+ * @return {Boolean}        [description]
+ * @source https://gist.github.com/lsauer/1312860 (slightly modified)
+ */
+pqr.htmlUtilities.isINCHI = function(string){
+	string = $.trim(string).toLowerCase(); 
+
+	return 27===string.length && '-'===string[14] && '-'===string[25]
+	&& !!string.match(/^([0-9A-Za-z\-]+)$/);
+	
+};
+
+/**
+ * Returns true if the string is likely a formula
+ * @param  {[type]}  string [description]
+ * @return {Boolean}        [description]
+ */
+pqr.htmlUtilities.isFormula = function(string){
+	string = $.trim(string).toLowerCase(); 
+	var numbers = string.match(/\d+/g);
+	var letters = string.match(/[a-zA-Z]+/g);
+	var isFormula = true; 
+
+	//Has Numbers
+	if (numbers != null) {
+		if(letters != null){
+			$.each(letters, function(index, value){
+				if(!pqr.htmlUtilities.isSymbol(value)) {
+					isFormula = false; 
+					return false;
+				}
+			});
+		}
+		else{
+			return false; 
+		}
+		
+	}
+	else{
+		//No Number
+		if(letters != null){
+			$.each(letters, function(index, value){ 
+				if(!pqr.htmlUtilities.isSymbol(value)) {
+					isFormula = false; 
+					return false;
+				}
+			});
+
+			return isFormula;
+		}
+
+		return false;
+	}
+
+	return isFormula; 
+};
+
+/**
+ * [isSymbol description]
+ * @param  {[type]}  symbol [description]
+ * @return {Boolean}        [description]
+ */
+pqr.htmlUtilities.isSymbol = function(symbol){
+	symbol = $.trim(symbol).toLowerCase(); 
+	return $.inArray(symbol, this.element_symbols) !== -1;
+};
+
 /**
  * animOnScroll.js v1.0.0
  * http://www.codrops.com
