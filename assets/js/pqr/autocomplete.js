@@ -19,6 +19,8 @@ pqr.autocomplete = {
 pqr.autocomplete.init = function(input_selector) {
 	$(this.results_selector).slideUp();
 	this.typeahead(); 
+	this.isFormula = pqr.htmlUtilities.isFormula;
+	this.isINCHI = pqr.htmlUtilities.isINCHI;
 };
 
 
@@ -42,17 +44,29 @@ pqr.autocomplete.formulaTokenizer = function(formula) {
  * @return {[type]}   [description]
  */
 pqr.autocomplete.suggestionSorter = function(suggestions, query){
+	suggestions = this.filter(suggestions, query);
+	
 
-	$.each(suggestions, function(index, value){
-		console.log(value); 
-		return false; 
-	});
-	return suggestions.slice(0,10);
+
+	return suggestions.slice(0,this.results_size_max);
 };
 
 pqr.autocomplete.filter = function(suggestions, query){
-	
-}
+	var isFormula = this.isFormula(query);
+	var isINCHI = this.isINCHI(query);
+
+	suggestions = $.map(suggestions, function(value, index){
+
+		//Remove long names if they aren't formula or inchi
+		// if(!isINCHI && !isFormula && value.name.length > 20){ 
+		// 	return null; 
+		// }
+
+		return value; 
+	});
+
+	return suggestions;
+};
 
 /**
  * Setup typeahead for autocomplete and suggested search
@@ -68,6 +82,7 @@ pqr.autocomplete.typeahead = function() {
 			var formulaTokens = pqr.autocomplete.formulaTokenizer(data.formula);
 			var synonymTokens = data.synonyms; //Already in an array
 			var tagsTokens = data.tags; //Already in an array
+			var inchiTokens = data.inchikey; //Just one value
 
 			//Quickly disabled tokens
 			// nameTokens = [];
@@ -76,7 +91,7 @@ pqr.autocomplete.typeahead = function() {
 			tagsTokens = []; //Producing too many results
 
 			//Combine all of the tokens 
-			return nameTokens.concat(formulaTokens).concat(synonymTokens).concat(tagsTokens);
+			return nameTokens.concat(formulaTokens).concat(synonymTokens).concat(tagsTokens).concat(inchiTokens);
 		},
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
 		local: auto_complete,
