@@ -24018,8 +24018,42 @@ pqr.autocomplete.formulaTokenizer = function(formula) {
  * @return {[type]}   [description]
  */
 pqr.autocomplete.suggestionSorter = function(suggestions, query){
+	var isFormula = this.isFormula(query);
+	var isINCHI = this.isINCHI(query);
+	var noNumbers = query.match(/\d+/g) == null;
 	suggestions = this.filter(suggestions, query);
 	
+	var top_suggestions = [];
+
+	suggestions = $.map(suggestions, function(value, index){
+
+		//Prioritize Name
+		if(query.length > 3 && (noNumbers || !isFormula)){
+			if(query == value.name.substring(0,query.length)){
+				top_suggestions.push(value); 
+				return null; 
+			}
+		}
+
+
+
+
+		return value; 
+	});
+
+	//Add front items
+	
+	if(top_suggestions.length){
+		// console.log(top_suggestions);
+		// suggestions.unshift(top_suggestions);
+		// console.log(suggestions);
+
+		$.each(top_suggestions, function(index, obj){
+			suggestions.unshift(obj);
+		});
+	}
+	
+
 
 
 	return suggestions.slice(0,this.results_size_max);
@@ -24028,13 +24062,21 @@ pqr.autocomplete.suggestionSorter = function(suggestions, query){
 pqr.autocomplete.filter = function(suggestions, query){
 	var isFormula = this.isFormula(query);
 	var isINCHI = this.isINCHI(query);
+	var noNumbers = query.match(/\d+/g) == null;
+	// var noBS = 
+
 
 	suggestions = $.map(suggestions, function(value, index){
 
 		//Remove long names if they aren't formula or inchi
-		// if(!isINCHI && !isFormula && value.name.length > 20){ 
-		// 	return null; 
-		// }
+		if(!isINCHI && !isFormula && value.name.length > 20){ 
+			// return null; 
+		}
+
+		//Length shortner
+		if( value.name.length > 20 || value.name.match(/[,-]/g) == null){ 
+			// return null; 
+		}
 
 		return value; 
 	});
@@ -24071,6 +24113,23 @@ pqr.autocomplete.typeahead = function() {
 		local: auto_complete,
 		identify: function(obj){return obj.inchikey},
 		// sorter: this.suggestionSorter
+	});
+
+	//Seperate engine for low ranking items 
+	this.lowRank = new Bloodhound({
+		datumTokenizer: function(data) {
+			var synonymTokens = data.synonyms; 
+			var tagsTokens = data.tags; 
+
+			synonymTokens = [];
+			tagsTokens = []; 
+
+			//Combine all of the tokens 
+			return synonymTokens.concat(tagsTokens);
+		},
+		queryTokenizer: Bloodhound.tokenizers.whitespace,
+		local: auto_complete,
+		identify: function(obj){return obj.inchikey},
 	});
 
 
