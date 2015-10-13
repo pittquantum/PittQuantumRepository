@@ -2460,6 +2460,17 @@ h5 {
     opacity: 1;
   }
 }
+nav {
+  background: white;
+}
+nav.navbar,
+nav .dropdown-menu {
+  border: none;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border: none;
+}
 /**
  * Form Styling
  * 

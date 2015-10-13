@@ -246,7 +246,6 @@ def browse(page_num="-1"):
 
 @pqr.route('/suggestions', strict_slashes=False)
 def searchSuggestions():
-    print request.headers
     if request.args.get('partial'): 
         partial = request.args.get('partial').strip()
         return_items = get_suggestions(partial)
