@@ -13,7 +13,6 @@
 @import "print.less";
 
 
-
 @import "_bootstrap.less";
 
 //Additional components 
@@ -118,7 +117,20 @@ body {
 
 		.the-news{
 			a.list-group-item, a.list-group-item{
-				.transition(background-color .2s ease-in-out);
+				.transition(background-color .25s ease-in-out);
+				background: @theme-cadet-blue;
+				color: white;
+				i.fa{
+					color: white; 
+				}
+
+				&:hover{
+					background-color: white; 
+					color: @theme-cadet-blue; 
+					i.fa{
+						color:@theme-cadet-blue;
+					}
+				}
 			}
 		}
 	}

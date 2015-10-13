@@ -44,7 +44,6 @@ pqr.autocomplete.formulaTokenizer = function(formula) {
  * @return {[type]}   [description]
  */
 pqr.autocomplete.suggestionSorter = function(suggestions, query){
-	console.log("SROR", suggestions);
 	var isFormula = this.isFormula(query);
 	var isINCHI = this.isINCHI(query);
 	var noNumbers = query.match(/\d+/g) == null;
@@ -165,6 +164,7 @@ pqr.autocomplete.typeahead = function() {
 			url: "/suggestions?partial=%QUERY", 
 			wildcard: '%QUERY'
 		},
+		cache: true, 
 		identify: function(obj){return obj.inchikey},
 		// sorter: this.suggestionSorter
 	});
@@ -198,19 +198,17 @@ pqr.autocomplete.typeahead = function() {
 	}, {
 		name: 'name',
 		display: 'name',
-		limit: 10000,
+		limit: 1000,
 		// source: this.engine,
 		source: function(query, sync, async) {
 			pqr.autocomplete.engine.search(
 				query, 
 
 				function(suggestions) {
-                	console.log("SYNC");
                 	sync(pqr.autocomplete.suggestionSorter(suggestions, query.toLowerCase()));
             	}, 
 
             	function(suggestions){
-            		console.log("ASYNC");
             		async(pqr.autocomplete.suggestionSorter(suggestions, query.toLowerCase()));
             	}
 
@@ -218,7 +216,6 @@ pqr.autocomplete.typeahead = function() {
         },
 		templates: {
 			empty: function(data){
-				console.log(data);
 				return "<div><a href='#'><div class='suggestion col-xs-12'><h3>Zero results. Search for <samp class='font-red'>" + data.query + "</samp></h3></div></a> </div>";
 			},
 			suggestion: function(data) {

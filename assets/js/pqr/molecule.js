@@ -156,3 +156,12 @@ pqr.molecules.request_to_load = function() {
     //Turn to false to disable ajax
     return true; 
 };
+
+
+/**
+ * Determine the type of search 
+ * @return {[type]} [description]
+ */
+pqr.molecules.determine_search_type = function(){
+
+};

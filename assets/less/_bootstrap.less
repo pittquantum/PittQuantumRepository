@@ -9,3 +9,15 @@
 .alert-success{
 	.alert-variant(@theme-light-aqua; lighten(@theme-light-aqua, 10%); darken(@theme-light-aqua, 40%)); //Background, border, textB2DFDB
 }
+
+@media (min-width:@screen-md-min) {
+	.dropdown-menu {
+	    transition: all 200ms ease-out;
+	    opacity: 0;
+	    display: block;
+	}
+
+	.open .dropdown-menu {
+	    opacity: 1;
+	}
+}

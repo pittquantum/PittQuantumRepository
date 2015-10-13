@@ -1178,19 +1178,19 @@ fieldset[disabled] .btn-danger.active {
   padding: 10px 16px;
   font-size: 20px;
   line-height: 1.3333333;
-  border-radius: 6px;
+  border-radius: 0px;
 }
 .btn-group-sm > .btn {
   padding: 5px 10px;
   font-size: 14px;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: 0px;
 }
 .btn-group-xs > .btn {
   padding: 1px 5px;
   font-size: 14px;
   line-height: 1.5;
-  border-radius: 3px;
+  border-radius: 0px;
 }
 select.input-group-lg > .form-control,
 select.input-group-lg > .input-group-addon,
@@ -1227,13 +1227,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .pagination-lg > li:first-child > a,
 .pagination-lg > li:first-child > span {
-  border-bottom-left-radius: 6px;
-  border-top-left-radius: 6px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
 }
 .pagination-lg > li:last-child > a,
 .pagination-lg > li:last-child > span {
-  border-bottom-right-radius: 6px;
-  border-top-right-radius: 6px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
 }
 .pagination-sm > li > a,
 .pagination-sm > li > span {
@@ -1242,13 +1242,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .pagination-sm > li:first-child > a,
 .pagination-sm > li:first-child > span {
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
 }
 .pagination-sm > li:last-child > a,
 .pagination-sm > li:last-child > span {
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
 }
 .label-default[href]:hover,
 .label-default[href]:focus {
@@ -2450,6 +2450,16 @@ h5 {
 .alert-success .alert-link {
   color: #224b4b;
 }
+@media (min-width: 992px) {
+  .dropdown-menu {
+    transition: all 200ms ease-out;
+    opacity: 0;
+    display: block;
+  }
+  .open .dropdown-menu {
+    opacity: 1;
+  }
+}
 /**
  * Form Styling
  * 
@@ -3053,10 +3063,25 @@ body .page-home #molecule-viewer canvas {
 }
 body .page-home .the-news a.list-group-item,
 body .page-home .the-news a.list-group-item {
-  -webkit-transition: background-color 0.2s ease-in-out;
-  -moz-transition: background-color 0.2s ease-in-out;
-  -o-transition: background-color 0.2s ease-in-out;
-  transition: background-color 0.2s ease-in-out;
+  -webkit-transition: background-color 0.25s ease-in-out;
+  -moz-transition: background-color 0.25s ease-in-out;
+  -o-transition: background-color 0.25s ease-in-out;
+  transition: background-color 0.25s ease-in-out;
+  background: #5f9ea0;
+  color: white;
+}
+body .page-home .the-news a.list-group-item i.fa,
+body .page-home .the-news a.list-group-item i.fa {
+  color: white;
+}
+body .page-home .the-news a.list-group-item:hover,
+body .page-home .the-news a.list-group-item:hover {
+  background-color: white;
+  color: #5f9ea0;
+}
+body .page-home .the-news a.list-group-item:hover i.fa,
+body .page-home .the-news a.list-group-item:hover i.fa {
+  color: #5f9ea0;
 }
 body .page-molecule h1#molecule-name {
   font-size: 23px;

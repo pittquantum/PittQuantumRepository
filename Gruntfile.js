@@ -1,9 +1,12 @@
 var browser_proxy = "pqr.app/"; //Proxy how you access your site on your local env
 var js_files =  [
             'assets/js/modernizr/**/*.js', 
-            'assets/js/jquery/**/*.js', 
+            'bower_components/jquery/dist/jquery.min.js', 
             'assets/js/bootstrap/**/*.js',
             'bower_components/classie/classie.js',  
+            'bower_components/handlebars/handlebars.min.js',  
+            'bower_components/typeahead.js/dist/typeahead.bundle.js',  
+            'bower_components/Materialize/dist/js/materialize.min.js',  
             'assets/js/helpers/**/*.js', 
             'assets/js/pqr/pqr.js', 
             'assets/js/pqr/config.js', 
@@ -72,7 +75,7 @@ module.exports = function(grunt) {
             },
             js: {
                 // the files to concatenate (modernizr, then jquery, then bootstrap, then everythign else)
-                src: ['assets/js/modernizr/**/*.js', 'assets/js/jquery/**/*.js', 'assets/js/bootstrap/**/*.js', 'assets/js/helpers/**/*.js', 'assets/js/pqr/pqr.js', 'assets/js/pqr/config.js', 'assets/js/**/*.js'],
+                src: js_files,
                 // the location of the resulting JS file
                 dest: 'pqr/static/js/pqr.js'
             },
