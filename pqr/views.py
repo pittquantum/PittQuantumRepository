@@ -244,6 +244,17 @@ def browse(page_num="-1"):
 
 #################################################
 
+@pqr.route('/suggestions', strict_slashes=False)
+def searchSuggestions():
+    print request.headers
+    if request.args.get('partial'): 
+        partial = request.args.get('partial').strip()
+        return_items = get_suggestions(partial)
+        return Response(json.dumps(return_items), mimetype='application/json')
+    else:
+        return Response(json.dumps([]), mimetype='application/json')
+
+#################################################
 
 @pqr.route('/api/weekly', strict_slashes=False)
 def weekly_molAPI():
@@ -656,10 +667,19 @@ def get_json_data_file(key_first_two, key):
 
 # Return suggestions for autocomplete search
 # db.molecules.find( { name: { $regex: /^meth/i } } )
-def get_autocomplete_suggestion(partial):
-    return ''
+def get_suggestions(partial):
     client = MongoClient()
     db = client.test
+    cursor = db.molecules.find({'name': { '$regex': str(partial) }}).limit(10)
+    results = []
+    
+    for i in cursor:
+        item = {}
+        item['name'] =  i["name"] 
+        item['inchikey'] =  i["inchikey"]
+        item['formula'] =  i["formula"]
+        results.append(item)
+    return results
 
 if __name__ == '__main__':
     pqr.run()

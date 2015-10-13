@@ -44,6 +44,7 @@ pqr.autocomplete.formulaTokenizer = function(formula) {
  * @return {[type]}   [description]
  */
 pqr.autocomplete.suggestionSorter = function(suggestions, query){
+	console.log("SROR", suggestions);
 	var isFormula = this.isFormula(query);
 	var isINCHI = this.isINCHI(query);
 	var noNumbers = query.match(/\d+/g) == null;
@@ -103,14 +104,23 @@ pqr.autocomplete.filter = function(suggestions, query){
 	var isFormula = this.isFormula(query);
 	var isINCHI = this.isINCHI(query);
 	var noNumbers = query.match(/\d+/g) == null;
-	// var noBS = 
-
+	var seenInchis = [];
 
 	suggestions = $.map(suggestions, function(value, index){
 
+
+		//Remove duplicate inchi values
+		if(seenInchis.indexOf(value.inchikey) < 0){
+			seenInchis.push(value.inchikey);
+		}
+		else{
+			return null; 
+		}
+
+
 		//Remove long names if they aren't formula or inchi
 		if(!isINCHI && !isFormula && value.name.length > 20){ 
-			// return null; 
+			return null; 
 		}
 
 		//Length shortner
@@ -151,6 +161,10 @@ pqr.autocomplete.typeahead = function() {
 		},
 		queryTokenizer: Bloodhound.tokenizers.whitespace,
 		local: auto_complete,
+		remote: {
+			url: "/suggestions?partial=%QUERY", 
+			wildcard: '%QUERY'
+		},
 		identify: function(obj){return obj.inchikey},
 		// sorter: this.suggestionSorter
 	});
@@ -185,15 +199,33 @@ pqr.autocomplete.typeahead = function() {
 		name: 'name',
 		display: 'name',
 		limit: 10000,
-		source: function(query, cb) {
-			pqr.autocomplete.engine.search(query, function(suggestions) {
-                cb(pqr.autocomplete.suggestionSorter(suggestions, query.toLowerCase()));
-            });
+		// source: this.engine,
+		source: function(query, sync, async) {
+			pqr.autocomplete.engine.search(
+				query, 
+
+				function(suggestions) {
+                	console.log("SYNC");
+                	sync(pqr.autocomplete.suggestionSorter(suggestions, query.toLowerCase()));
+            	}, 
+
+            	function(suggestions){
+            		console.log("ASYNC");
+            		async(pqr.autocomplete.suggestionSorter(suggestions, query.toLowerCase()));
+            	}
+
+            );
         },
 		templates: {
+			empty: function(data){
+				console.log(data);
+				return "<div><a href='#'><div class='suggestion col-xs-12'><h3>Zero results. Search for <samp class='font-red'>" + data.query + "</samp></h3></div></a> </div>";
+			},
 			suggestion: function(data) {
 				return pqr.autocomplete.renderHTML(data);
-			}
+			},
+			pending: "<div><a href='#'><div class='suggestion col-xs-12'><h3 class='text-center'><i class='fa fa-spinner fa-pulse'></i></h3></div></a> </div>",
+
 		}
 	});
 
@@ -201,7 +233,6 @@ pqr.autocomplete.typeahead = function() {
 	this.TypeAhead.bind('typeahead:select', function(ev, suggestion) {
 		var element = $('.autocomplete-results [data-inchi="' + suggestion.inchikey + '"] a');
 		if(element.length){
-			console.log("HERE");
 			element[0].click();
 		}
 	});
@@ -234,7 +265,7 @@ pqr.autocomplete.renderHTML = function(result) {
 		'<img class="img-responsive" src="/static/data/svg/' + result.inchikey.substring(0, 2) + '/' + result.inchikey + '.svg" alt="preview">' +
 		'</div> ' +
 		'<div class="col-md-10">' +
-		'<h3>' + result.name.substring(0, 36) + '</h3>' +
+		'<h3>' + result.name.substring(0, 36).toProperCase()+ '</h3>' +
 		'<h4>' +  formula + '</h4>' +
 	'</div>' +
 	'</a>' +
