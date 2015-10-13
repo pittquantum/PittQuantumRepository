@@ -17,14 +17,17 @@ pqr.init = function() {
 		bootstrapUtilities.FullToolTipOptIn();
 		pqr.htmlUtilities.initFontSize(); 
 		pqr.bindevents.bindFontSwitchers();
-		htmlutilities.footerToBottom('footer', '#main');
+		// htmlutilities.footerToBottom('footer', '#main');
 		loadCSS("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
 		// loadCSS("//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700");
+
+		
 
 		if ($("#main").hasClass("page-home")) {
 			pqr.threeDMole.initViewers();
 			pqr.bindevents.moleculeReset('#reset-molecule');
 			pqr.bindevents.moleculeToggleRotation('#rotationSwitch');
+			pqr.autocomplete.init(); 
 		}
 		else if ($("#main").hasClass("page-molecule")) {
 			pqr.threeDMole.initViewers();
@@ -42,8 +45,22 @@ pqr.init = function() {
 			pqr.qrgen.addQRCode("#qr-print-wrapper", pqr.htmlUtilities.getQRURL());
 		}
 		else if($("#main").hasClass("page-browse")){
-			pqr.masonary.init(); 
-			$('.molecule-results-masonary').removeClass('translucent'); 
+			pqr.autocomplete.init();
+
+			//Only Start AJAX if there are results 
+			if($('#molecule-browser').attr('data-has-results') === "true"){
+				pqr.masonary.init(); 
+				pqr.molecules.init_ajax_search(); 
+				$('.molecule-results-masonary').removeClass('translucent'); 
+				pqr.bindevents.ajax_timer();
+				pqr.bindevents.on_scoll_load_molecules();
+				pqr.bindevents.ajax_load_button();
+				pqr.bindevents.result_touch_helper();
+			}
+			else{
+				if(pqr.debug) console.log("Search Resulted in no results");
+			}
+			
 		}
 
 		if(pqr.debug) console.log("Finished loading PQR Web App!"); 
