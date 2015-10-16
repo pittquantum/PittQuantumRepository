@@ -6,4 +6,3 @@ Flask-Markdown
 redis
 uwsgi
 django-htmlmin
-

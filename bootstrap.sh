@@ -2,7 +2,7 @@ apt-get update
 
 #Build essentials for uwsgi
 apt-get install build-essential python
-
+apt-get install mongodb
 
 #Get and install PIP
 wget https://bootstrap.pypa.io/get-pip.py
