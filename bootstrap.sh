@@ -1,8 +1,16 @@
+#Vagrant Bootstrap for Ubuntu Server
+
 apt-get update
 
 #Build essentials for uwsgi
-apt-get install build-essential python
-apt-get install mongodb
+sudo apt-get install build-essential python
+
+#Install MongoDB
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+sudo service mongod start
 
 #Get and install PIP
 wget https://bootstrap.pypa.io/get-pip.py
