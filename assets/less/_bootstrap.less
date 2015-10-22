@@ -19,12 +19,14 @@
 }
 @media (min-width:@screen-md-min) {
 	.dropdown-menu {
-		transition: all 200ms ease-out;
+		transition: opacity 200ms ease-out;
 		opacity: 0;
+		z-index: -1;
 		display: block;
 	}
 	.open .dropdown-menu {
 		opacity: 1;
+		z-index: 1;
 	}
 }
 nav {
