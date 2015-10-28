@@ -74,3 +74,5 @@ Returns a plain-text response with mimetype `text/plain` containing every single
 ### /api/status  
 **_GET_**  
 Returns a JSON file with information about the application
+
+
