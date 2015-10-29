@@ -51,6 +51,8 @@ def index():
     new_articles = sorted(get_new_articles(articles, 14), reverse=True)
     articles = sorted(list(set(articles) - set(new_articles)), reverse=True)
 
+    MOLECULE_OF_THE_WEEK = get_weekly_molecule_list()[-1].split(',')[0]
+
     week_mol = (MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
     rendered_html = render_template("home.html", page=page, amount_mol=amount_mol, articles=articles, new_articles=new_articles, week_mol=week_mol, week_mol_name=WEEKLY_MOL_NAME)
@@ -193,11 +195,15 @@ def browse(page_num="-1"):
         x[searchType], x['formula'], lightest, str(query)), reverse=True)
 
     # If there is only one result, show that molecule page directly
-    if len(results) == 1:
+    total_results = len(results)
+    if total_results == 1:
         return redirect(url_for('molecule', key=results[0]["inchikey"]))
 
-    # Split the reults array into chunks of 10 each for search pagination
-    tempArr = list(chunks(results, 10))
+    # Split the reults array into chunks of 50 each for search pagination - 50 for AJAX (May want to change)
+    if request.args.get('ajax'):
+        tempArr = list(chunks(results, 100)) 
+    else:
+        tempArr = list(chunks(results, 100))
 
     # The number of pages is just the total number of chunks
     num_pages = len(tempArr)
@@ -230,13 +236,26 @@ def browse(page_num="-1"):
             active = 1
         else:
             active = page_num
-
-    rendered_html = render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active)
-    min_html = html_minify(rendered_html.encode('utf8'))
-    return min_html
+            
+    if request.args.get('ajax'):
+        return render_template("browse_ajax.html", results=results)
+    else:
+        rendered_html = render_template("browse.html", page=page, results=results, query=query, searchType=searchType, typenum_pages=num_pages, active=active, total_results=total_results)
+        min_html = html_minify(rendered_html.encode('utf8'))
+        return min_html
 
 #################################################
 
+@pqr.route('/suggestions', strict_slashes=False)
+def searchSuggestions():
+    if request.args.get('partial'): 
+        partial = request.args.get('partial').strip()
+        return_items = get_suggestions(partial)
+        return Response(json.dumps(return_items), mimetype='application/json')
+    else:
+        return Response(json.dumps([]), mimetype='application/json')
+
+#################################################
 
 @pqr.route('/api/weekly', strict_slashes=False)
 def weekly_molAPI():
@@ -649,10 +668,19 @@ def get_json_data_file(key_first_two, key):
 
 # Return suggestions for autocomplete search
 # db.molecules.find( { name: { $regex: /^meth/i } } )
-def get_autocomplete_suggestion(partial):
-    return ''
+def get_suggestions(partial):
     client = MongoClient()
     db = client.test
+    cursor = db.molecules.find({'name': { '$regex': str(partial) }}).limit(10)
+    results = []
+    
+    for i in cursor:
+        item = {}
+        item['name'] =  i["name"] 
+        item['inchikey'] =  i["inchikey"]
+        item['formula'] =  i["formula"]
+        results.append(item)
+    return results
 
 if __name__ == '__main__':
     pqr.run()

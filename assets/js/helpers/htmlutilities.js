@@ -96,3 +96,39 @@ htmlutilities.updateFooterHeight = function(footer_selector, content_selector){
         $(footer_selector).css('margin-top', '10px');
     }
 };
+
+
+/**
+ * Fire an event when content is changed
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
+
+// jQuery.fn.contentChange = function(callback){
+//     var elms = jQuery(this);
+//     elms.each(
+//       function(i){
+//         var elm = jQuery(this);
+//         elm.data("lastContents", elm.html());
+//         window.watchContentChange = window.watchContentChange ? window.watchContentChange : [];
+//         window.watchContentChange.push({"element": elm, "callback": callback});
+//       }
+//     )
+//     return elms;
+//   }
+//   setInterval(function(){
+//     if(window.watchContentChange){
+//       for( i in window.watchContentChange){
+//         if(window.watchContentChange[i].element.data("lastContents") != window.watchContentChange[i].element.html()){
+//           window.watchContentChange[i].callback.apply(window.watchContentChange[i].element);
+//           window.watchContentChange[i].element.data("lastContents", window.watchContentChange[i].element.html())
+//         };
+//       }
+//     }
+//   },500);
+
+htmlutilities.toProperCase = function(){
+    String.prototype.toProperCase = function () {
+        return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    };
+}();

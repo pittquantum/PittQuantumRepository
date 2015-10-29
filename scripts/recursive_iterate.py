@@ -13,10 +13,14 @@ DIRECTORY = '../pqr/static/data/json/'
 
 client = MongoClient()
 db = client.test
-
+count = 0
 for root, dirs, files in os.walk(DIRECTORY): # This path to replace
     for file in files:
-    	# print file
+    	if count % 100 == 0:
+            print count
+        count+=1;
+
+        # print file
         json_file = open(DIRECTORY + file[:2] + "/" + file, "r")
         try:
             json_data = json.load(json_file)

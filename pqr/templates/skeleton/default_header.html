@@ -46,6 +46,19 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="dropdown hidden">
+                        <a href="#" title="Search" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search hidden-xs"></i><span class="visible-xs"> <i class="fa fa-search"></i> Search </span></a>
+                        <ul class="dropdown-menu" role="menu"> 
+                            <li class="col-xs-12"> 
+                                <h3> Molecule Search</h3>
+                                <p class='hide'> Search our extensive database of <span class='font-red'>{# "{:,}".format(amount_mol) #}</span> molecules by InChI, Formula, Name, or keywords.</p>
+                                <p> Search our extensive database of molecules by InChI, Formula, Name, or keywords.</p>
+                                {% import '/macros/forms.html' as forms %} {{ forms.nav_molecule_search() }}
+                            </li>
+                        </ul>
+                    </li>
+
                 </ul>
             </div>
 

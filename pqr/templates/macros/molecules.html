@@ -5,40 +5,18 @@
 {%- endmacro %}
 <!-- View of a molecule for testing or displaying a simple view (such as the homepage)  -->
 
-<!-- View of a molecule in search results or browsing   -->
-{% macro resultMolecule(data, style='stick') -%}
-<div class="molecule-viwer row">
-    <div class="col-md-4 hidden-sm hidden-xs">
-        <div class='svg_viewer' style='background: url(/static/data/svg/{{data.mol2url}}.svg)'> </div>
-    </div>
-    <div class="col-md-8 properties">
-        <h3><a href="/mol/{{data.inchikey}}">{{data.name|title|truncate(32,True)}}</a>
-      <span class="pull-right">
-        <a href="#" data-toggle="modal" data-target="#qrcodemodal"> <i class="fa fa-qrcode hidden"></i> </a>
-      </span>
-    </h3>
-        <!-- Table for all of the properties -->
-        <div class="molecule-formula">
-            {{data.formula|subnumbers|safe}}
-        </div>
-    </div>
-</div>
-{%- endmacro %}
-<!-- View of a molecule in search results or browsing   -->
 
-<!-- Masonary View of a molecule in search results or browsing   -->
-{% macro resultMoleculeMasonary(result) -%}
-<a href="/mol/{{result.inchikey}}"> 
-    <div class="grid-item center-block"> 
-            
-        <img src="/static/data/svg/{{result.mol2url}}.svg">
-        <h3> {%if result.json_data%} {{result.json_data["name"]|title|truncate(16,True)}}  {% endif %}</h3>
-        <h4> {{result.formula|subnumbers|safe}} </h4>
+<!-- Custom Grid Layout W/Hover Effect   -->
+{% macro resultMoleculeGrid(result) -%}
+<li class='result'>
+    <a href='/mol/{{result.inchikey}}'>
+        <img src='/static/data/svg/{{result.mol2url}}.svg' alt='{{result.json_data["name"]|title}}'>
+        <h3 class='text-center'> {%if result.json_data%} {{result.json_data["name"]|title|truncate(24,True)}}  {% endif %}</h3>
+        <h4 class='text-center'> {{result.formula|subnumbers|safe}} </h4>
 
-        <div class='more-info'> 
-            <h3> {%if result.json_data%} {{result.json_data["name"]|title|truncate(32,True)}}  {% endif %} </h3>
-            <h4> {{result.formula|subnumbers|safe}}</h4>
-
+        <div class="more-info">
+            <h3 class='text-center'> {%if result.json_data%} {{result.json_data["name"]|title|truncate(24,True)}}  {% endif %}</h3>
+            <h4 class='text-center'> {{result.formula|subnumbers|safe}} </h4>
             <div class="table-responsive">
                 <table class="table">
                     {%if result.json_data%} 
@@ -69,13 +47,12 @@
                     {% endif %} 
                 </table>
             </div>
-            
         </div>
-    </div>
-</a> 
-<!-- <pre> {{result}} </pre> -->
+    </a>
+</li>
 {%- endmacro %}
-<!-- /Masonary View of a molecule in search results or browsing   -->
+<!-- Custom Grid Layout W/Hover Effect   -->
+
 
 {% macro moleculeMainView(mol2, jsonDict, style='stick') -%}
 <div class="molecule row">
@@ -125,7 +102,7 @@
                         </span>
                     </h2>
                 </div>
-                <div class="panel-body"></div>
+                
                 <div class="table-responsive">
                     <table class='table'>
                         <thead>
@@ -240,7 +217,7 @@
 
                             <tr class="molecule-qr-code">
                                 <td>QR Code<sup><a href="#" data-container="body" data-toggle="tooltip" title="Generate a QR code for this molecule"><i class="fa fa-question"></i></a></sup></td>
-                                <td> <a href="#" data-toggle="modal" data-target="#qrcodemodal"> Generate QR Code </a></td>
+                                <td> <a href="#qrcodemodal" data-toggle="modal" data-target="#qrcodemodal"> Generate QR Code </a></td>
                             </tr>
 
                             

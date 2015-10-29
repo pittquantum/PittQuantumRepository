@@ -1,3 +1,18 @@
+var browser_proxy = "pqr.app/"; //Proxy how you access your site on your local env
+var js_files =  [
+            'assets/js/modernizr/**/*.js', 
+            'bower_components/jquery/dist/jquery.min.js', 
+            'assets/js/bootstrap/**/*.js',
+            'bower_components/classie/classie.js',  
+            'bower_components/handlebars/handlebars.min.js',  
+            'bower_components/typeahead.js/dist/typeahead.bundle.js',  
+            'bower_components/Materialize/dist/js/materialize.min.js',  
+            'assets/js/helpers/**/*.js', 
+            'assets/js/pqr/pqr.js', 
+            'assets/js/pqr/config.js', 
+            'assets/js/**/*.js'
+        ];
+
 module.exports = function(grunt) {
     grunt.initConfig({
         //Less Comilation Options 
@@ -26,7 +41,7 @@ module.exports = function(grunt) {
                             browsers: 'last 2 versions'
                         }), // add vendor prefixes
                         require('cssnano')(), // minify the result
-                        require('cssnext')() // Plugins to use future CSS features now by adding backwards compatibility css processing
+                        // require('cssnext')() // Plugins to use future CSS features now by adding backwards compatibility css processing
                     ]
                 },
                 files: {
@@ -45,7 +60,7 @@ module.exports = function(grunt) {
                         require('autoprefixer-core')({
                             browsers: 'last 2 versions'
                         }), // add vendor prefixes
-                        require('cssnext')() // Plugins to use future CSS features now by adding backwards compatibility css processing
+                        // require('cssnext')() // Plugins to use future CSS features now by adding backwards compatibility css processing
                     ]
                 },
                 files: {
@@ -60,7 +75,7 @@ module.exports = function(grunt) {
             },
             js: {
                 // the files to concatenate (modernizr, then jquery, then bootstrap, then everythign else)
-                src: ['assets/js/modernizr/**/*.js', 'assets/js/jquery/**/*.js', 'assets/js/bootstrap/**/*.js', 'assets/js/helpers/**/*.js', 'assets/js/pqr/pqr.js', 'assets/js/pqr/config.js', 'assets/js/**/*.js'],
+                src: js_files,
                 // the location of the resulting JS file
                 dest: 'pqr/static/js/pqr.js'
             },
@@ -175,8 +190,23 @@ module.exports = function(grunt) {
                     reload: true
                 }
             }
+        },
+        browserSync: {
+            dev: {
+                bsFiles: {
+                    src : [
+                        'pqr/static/css/*.css',
+                        'pqr/static/js/*.js',
+                        'pqr/templates/**/*.html'
+                    ]
+                },
+                options: {
+                    proxy: browser_proxy 
+                }
+            }
         }
     });
+
     require('load-grunt-tasks')(grunt);
     grunt.registerTask('default', ['focus:prod']);
     grunt.registerTask('prod', ['less', 'concat:css', 'concat:js', 'postcss:prod', 'uglify:prod']);
