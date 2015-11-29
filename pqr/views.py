@@ -42,7 +42,7 @@ pqr.debug = True
 
 
 @pqr.before_request
-def beforeRequest:
+def beforeRequest():
     if 'https://' not in request.url:
         return redirect(request.url.replace('http://', 'https://'))
 
