@@ -41,6 +41,11 @@ pqr.debug = True
 ##########################################################################
 
 
+@pqr.before_request
+def beforeRequest:
+    if 'https://' not in request.url:
+        return redirect(request.url.replace('http://', 'https://'))
+
 @pqr.route('/')
 @pqr.route('/home', strict_slashes=False)
 # @cache.cached(timeout=86400)
