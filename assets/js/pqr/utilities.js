@@ -3,7 +3,9 @@
  * @author JoshJRogan@gmail.com (Josh Rogan)
  * @author ritwikg2004@live.com (Ritwik Gupta)
  */
-pqr.htmlUtilities = {};
+pqr.htmlUtilities = {
+	element_symbols: ['h','he','li','be','b','c','n','o','f','ne','na','mg','al','si','p','s','cl','ar','k','ca','sc','ti','v','cr','mn','fe','co','ni','cu','zn','ga','ge','as','se','br','kr','rb','sr','y','zr','nb','mo','tc','ru','rh','pd','ag','cd','in','sn','sb','te','i','xe','cs','ba','la','ce','pr','nd','pm','sm','eu','gd','tb','dy','ho','er','tm','yb','lu','hf','ta','w','re','os','ir','pt','au','hg','tl','pb','bi','po','at','rn','fr','ra','ac','th','pa','u','np','pu','am','cm','bk','cf','es','fm','md','no','lr','rf','db','sg','bh','hs','mt','ds','rg','cp','uut','uuq','uup','uuh','uus','uuo'],
+};
 
 /**
  * Get the INCHI key. Used to generate the QR Code
@@ -145,4 +147,102 @@ pqr.htmlUtilities.initQuickFit = function(selector, options) {
 	$(window).resize(function() {
 		$(selector).quickfit(options);
 	});
+};
+
+/**
+ * Add a fille effect to the forms on focus and remove on blur
+ * @return {[type]} [description]
+ */
+pqr.htmlUtilities.formStyleHelper = function() {
+	[].slice.call(document.querySelectorAll('.input-field')).forEach(function(inputEl) {
+		// in case the input is already filled..
+		if (inputEl.value.trim() !== '') {
+			classie.add(inputEl.parentNode, 'input--filled');
+		}
+
+		// events:
+		inputEl.addEventListener('focus', onInputFocus);
+		inputEl.addEventListener('blur', onInputBlur);
+	});
+
+	function onInputFocus(ev) {
+		classie.add(ev.target.parentNode.parentNode, 'input--filled');
+	}
+
+	function onInputBlur(ev) {
+		if (ev.target.value.trim() === '') {
+			classie.remove(ev.target.parentNode.parentNode, 'input--filled');
+			classie.remove(ev.target.parentNode, 'input--filled');
+		}
+	}
+	
+}();
+
+/**
+ * Returns true if the string is likely an inchi key
+ * @param  {[type]}  string [description]
+ * @return {Boolean}        [description]
+ * @source https://gist.github.com/lsauer/1312860 (slightly modified)
+ */
+pqr.htmlUtilities.isINCHI = function(string){
+	string = $.trim(string).toLowerCase(); 
+
+	return 27===string.length && '-'===string[14] && '-'===string[25]
+	&& !!string.match(/^([0-9A-Za-z\-]+)$/);
+	
+};
+
+/**
+ * Returns true if the string is likely a formula
+ * @param  {[type]}  string [description]
+ * @return {Boolean}        [description]
+ */
+pqr.htmlUtilities.isFormula = function(string){
+	string = $.trim(string).toLowerCase(); 
+	var numbers = string.match(/\d+/g);
+	var letters = string.match(/[a-zA-Z]+/g);
+	var isFormula = true; 
+
+	//Has Numbers
+	if (numbers != null) {
+		if(letters != null){
+			$.each(letters, function(index, value){
+				if(!pqr.htmlUtilities.isSymbol(value)) {
+					isFormula = false; 
+					return false;
+				}
+			});
+		}
+		else{
+			return false; 
+		}
+		
+	}
+	else{
+		//No Number
+		if(letters != null){
+			$.each(letters, function(index, value){ 
+				if(!pqr.htmlUtilities.isSymbol(value)) {
+					isFormula = false; 
+					return false;
+				}
+			});
+
+			return isFormula;
+		}
+
+		return false;
+	}
+
+	return isFormula; 
+};
+
+/**
+ * [isSymbol description]
+ * @param  {[type]}  symbol [description]
+ * @return {Boolean}        [description]
+ */
+pqr.htmlUtilities.isSymbol = function(symbol){
+	symbol = $.trim(symbol).toLowerCase(); 
+	return $.inArray(symbol, this.element_symbols) !== -1;
 };

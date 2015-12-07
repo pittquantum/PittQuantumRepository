@@ -15,35 +15,45 @@
 	        <option value='formula'>Formula</option>
         </select>
     </div>
-
+    
     <button type="submit" class="btn btn-primary btn-block">Search</button>
 </form>
 {%- endmacro %} 
 
-{% macro banner_search(style='btn-primary', id='home-molecule-search', query='Enter Query') -%}
-<form id="{{id}}" class="text-center form-inline" role="form" action="/browse" method="GET">
 
-    <div class="input-group">
-        {% if query != 'Enter Query' %}
-        <input type="text" class="form-control typeahead query" autocomplete="off" name="query" value="{{query}}">
+{% macro banner_search_auto_complete(query="Enter Molecule Query") -%}
+<form id='molecule-search-group' class="text-center form-inline autocomplete-search-form" role="form" action="/browse" method="GET">
+    
+    <section class="input-group search">
+        {% if query != 'Enter Molecule Query' %} 
+        <div class="input-wrapper input--filled">
+            <input id='search-bar-auto' name="query" class="input-field query" type="text"  placeholder="Enter Molecule Query" value='{{query}}' autocomplete="off"/>
+            <!-- <input id='search-bar-auto' name="query" class="input-field query" type="text"  value="{{query}}" autocomplete="off"/> -->
         {% else %}
-         <input type="text" class="form-control typeahead query" autocomplete="off" name="query" placeholder="{{query}}">
+        <div class="input-wrapper">
+             <input id='search-bar-auto' name="query" class="input-field query" type="text"  placeholder="Enter Molecule Query" autocomplete="off"/>
         {% endif %}
-        <span class="input-group-btn">
-        <button type="submit" class="btn {{style}}" aria-haspopup="true" aria-expanded="false"><i class="fa fa-search"></i></button>
-      </span>
-    </div>
+            
+            <label class="input-label">
+                <span class="input-label-content" data-content="Molecule Search"><i class="fa fa-search"></i></span>
+            </label>
+        </div>
+    </section>
 
-    <div class="form-group"> 
-	    <label for="type" class='control-label hide'>Query Type:</label>
-	    <select class="form-control search-options" name="type">
-	        <option value='name'>Name</option>
-	        <option value='inchi'>InChIKey</option>
-	        <option value='tag'>Tag</option>
-	        <option value='synonym'>Synonym</option>
-	        <option value='formula'>Formula</option>
-	    </select>
-	</div>
+
+    <div class="form-group hidden"> 
+        <label for="type" class='control-label hide'>Query Type:</label>
+        <select class="form-control search-options" name="type">
+            <option value='name'>Name</option>
+            <option value='inchi'>InChIKey</option>
+            <option value='tag'>Tag</option>
+            <option value='synonym'>Synonym</option>
+            <option value='formula'>Formula</option>
+        </select>
+    </div>
+    
+    
+    
 
 </form>
 {%- endmacro %}
