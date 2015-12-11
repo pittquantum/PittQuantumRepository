@@ -41,6 +41,11 @@ pqr.debug = True
 ##########################################################################
 
 
+@pqr.before_request
+def beforeRequest():
+    if 'https://' not in request.url:
+        return redirect(request.url.replace('http://', 'https://'))
+
 @pqr.route('/')
 @pqr.route('/home', strict_slashes=False)
 # @cache.cached(timeout=86400)
@@ -51,7 +56,9 @@ def index():
     new_articles = sorted(get_new_articles(articles, 14), reverse=True)
     articles = sorted(list(set(articles) - set(new_articles)), reverse=True)
 
-    MOLECULE_OF_THE_WEEK = get_weekly_molecule_list()[-1].split(',')[0]
+    weekly_mol = get_weekly_molecule_list()[-1].split(',')
+    MOLECULE_OF_THE_WEEK = weekly_mol[0]
+    WEEKLY_MOL_NAME = weekly_mol[1]
 
     week_mol = (MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
