@@ -81,7 +81,7 @@ certs/
 # Data
 pqr/static/data/**
 
-#Node Modules - Including Grunt
+#Node Modules
 node_modules/
 
 #Bower Modules

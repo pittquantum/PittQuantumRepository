@@ -1,20 +1,15 @@
 {
   "name": "PQR",
   "version": "1.0.0",
-  "description": "Some front end PQR dependencies",
-  "license": "MIT",
+  "description": "PQR style dependencies",
+  "license": "ISC",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
+    "assets/test"
   ],
   "dependencies": {
-    "classie": "~1.0.1",
-    "handlebars": "~4.0.3",
-    "lesshat": "~3.0.2",
-    "typeahead.js": "~0.11.1",
-    "waypoints": "~4.0.0"
+    "lesshat": "~3.0.2"
   }
 }

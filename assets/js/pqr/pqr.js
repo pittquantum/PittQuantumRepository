@@ -4,6 +4,7 @@
  * 
  * @author JoshJRogan@gmail.com (Josh Rogan)
  * @author ritwikg2004@live.com (Ritwik Gupta)
+ * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 
 var pqr = pqr || {

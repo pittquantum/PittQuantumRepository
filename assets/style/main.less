@@ -1,23 +1,20 @@
 //Import bootstrap variables and mixins to use variables 
+@import '../../bower_components/lesshat/build/lesshat.less';
 @import "bootstrap/variables.less";
 @import "bootstrap/mixins.less";
 @import (reference) "bootstrap/bootstrap.less";
-@import '../../bower_components/lesshat/build/lesshat.less';
-@import "utils.less";
-@import "helpers.less"; 
-@import "font-helpers.less";
-@import "transitions.less";
-@import "typography.less";
+@import "vendors/grid-layout.less";
 @import "vendors/bootstrap-notify.less";
-@import "vendors/grid-layout.less";  
-@import "print.less";
-
-
-@import "_bootstrap.less";
+@import "misc/utils.less";
+@import "misc/helpers.less"; 
+@import "misc/font-helpers.less";
+@import "misc/transitions.less";
+@import "misc/typography.less";
+@import "misc/print.less";
+@import "misc/_bootstrap.less";
 
 //Additional components 
 @import "components/forms.less";
-
 
 //Highligther 	
 color::-moz-selection {

@@ -2,39 +2,43 @@
   "name": "pqr",
   "version": "1.0.0",
   "description": "Flask backend for the Pitt Quantum Repository website.",
-  "main": "Gruntfile.js",
-  "dependencies": {},
+  "main": "gulpfile.js",
+  "dependencies": {
+    "desandro-classie": "^1.0.1",
+    "handlebars": "^4.0.5",
+    "jquery": "^2.2.0",
+    "typeahead": "^0.2.1",
+    "waypoints": "^4.0.0"
+  },
   "devDependencies": {
-    "assets": "0.0.1",
-    "autoprefixer-core": "~5.2.1",
-    "cssnano": "~2.6.1",
-    "cssnext": "~1.8.4",
-    "grunt": "~0.4.5",
-    "grunt-bower-concat": "^0.5.0",
-    "grunt-bower-install-simple": "^1.1.4",
-    "grunt-browser-sync": "^2.1.3",
-    "grunt-contrib-concat": "~0.5.1",
-    "grunt-contrib-less": "~1.0.0",
-    "grunt-contrib-uglify": "~0.9.1",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-cssnano": "~1.1.0",
-    "grunt-focus": "^0.1.1",
-    "grunt-postcss": "~0.5.5",
-    "load-grunt-tasks": "^3.2.0",
-    "modernizr": "~3.0.0-alpha.4",
-    "pixrem": "^2.0.0"
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-less": "^3.0.5",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tape": "0.0.7",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "gulp-watch": "^4.3.5",
+    "tape": "^4.4.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run start:dev",
+    "start:dev": "NODE_ENV=DEV gulp",
+    "start:prod": "NODE_ENV=PROD gulp",
+    "test": "NODE_END=TEST gulp test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pittquantum/backend.git"
+    "url": "https://github.com/pittquantum/PittQuantumRepository"
   },
-  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pittquantum/backend/issues"
+    "url": "https://github.com/pittquantum/PittQuantumRepository/issues"
   },
-  "homepage": "https://github.com/pittquantum/backend"
+  "homepage": "https://pqr.pitt.edu/"
 }
