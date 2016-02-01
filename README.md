@@ -13,6 +13,8 @@ To run PQR locally, do the following:
 5. On Linux systems, run `. venv/bin/activate` to activate the virtual enviroment. On Windows, run `.\venv\Scripts\activate`.
 6. Run `pip install -r requirements.txt`
 
+Also ensure you `scp` the `prq/static/data` folder from the server over VPN.
+
 ## Starting the Server
 ###Production
 Start the server by running `uwsgi pqr.ini`. Use `sudo nohup uwsgi pqr.ini &` to let it run in the background.

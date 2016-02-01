@@ -3,11 +3,14 @@
 var gulp = require('gulp'),
     path = require('path'),
     concat = require('gulp-concat'),
+    autoprefixer = require('gulp-autoprefixer'),
     sourcemaps = require('gulp-sourcemaps'),
     less = require('gulp-less'),
     cssnano = require('gulp-cssnano'),
     gutil = require('gulp-util'),
+    jshint = require('gulp-jshint'),
     browserify = require('browserify'),
+    glob = require('glob'), //TODO: remove after fix
     babelify = require('babelify'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
@@ -34,21 +37,31 @@ gulp.task('less', function () {
             })
                 .on('error', gutil.log))
             .pipe(cssnano())
-            .pipe(sourcemaps.write())
+            .pipe(autoprefixer({
+                browsers: [
+                    'last 2 versions',
+                    'android 4',
+                    'opera 12'
+                ]
+            }))
             .pipe(concat('pqr.min.css'))
+            .pipe(sourcemaps.write())
             .pipe(gulp.dest(paths.dist + paths.style));
     });
 });
 gulp.task('js', function () {
+    //TODO: should be one entry file, i.e. 'main.js'
+    var entryFilesGlob = glob.sync(paths.source + paths.js + '/**/*.js');
     watch(paths.source + paths.js + '/**/*.js', {
         ignoreInitial: false
     }, function () {
         browserify({
-            entries: paths.source + paths.js + 'main.js',
+            entries: entryFilesGlob,
             transform: [babelify]
         })
-            .bundle().on('errpr', gutil.log)
+            .bundle().on('error', gutil.log)
             .pipe(source('main.js'))
+            .pipe(jshint())
             .pipe(buffer())
             .pipe(sourcemaps.init())
             .pipe(uglify())

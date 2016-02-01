@@ -71,8 +71,6 @@ venv/
 # Secrets
 pqr/secret_key.py
 pqr/secret_config.py
-pqr.ini
-ngnix.conf
 certs/
 
 # Random files that pop out of nowhere

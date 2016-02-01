@@ -5,8 +5,12 @@
   "main": "gulpfile.js",
   "dependencies": {
     "desandro-classie": "^1.0.1",
+    "glob": "^6.0.4",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-jshint": "^2.0.0",
     "handlebars": "^4.0.5",
     "jquery": "^2.2.0",
+    "jshint": "^2.9.1",
     "typeahead": "^0.2.1",
     "waypoints": "^4.0.0"
   },
