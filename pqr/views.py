@@ -28,8 +28,8 @@ from difflib import SequenceMatcher as SM
 # Regular expressions for chemical formula parsing
 import re
 
-# cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
-# cache.init_app(pqr)
+cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
+cache.init_app(pqr)
 
 redirect_table = {}
 amount_mol = None
@@ -48,7 +48,7 @@ def beforeRequest():
 
 @pqr.route('/')
 @pqr.route('/home', strict_slashes=False)
-# @cache.cached(timeout=86400)
+@cache.cached(timeout=86400)
 def index():
     page = {'id': "page-home"}
     articles = [os.path.splitext(article)[0]
@@ -70,7 +70,7 @@ def index():
 ##########################################################################
 @pqr.route('/mol/<key>', strict_slashes=False)
 @pqr.route('/mol', strict_slashes=False)  # if no key lets default to the molecule of the day
-# @cache.cached(timeout=43200)
+@cache.cached(timeout=43200)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
@@ -110,7 +110,7 @@ def molecule(key="-1"):
 ##########################################################################
 @pqr.route('/news', strict_slashes=False)
 @pqr.route('/news/<title>', strict_slashes=False)
-# @cache.cached(timeout=86400)
+@cache.cached(timeout=86400)
 def news(title="-1"):
     page = {'id': "page-news"}
 
@@ -137,6 +137,7 @@ def news(title="-1"):
 
 @pqr.route('/browse', strict_slashes=False)
 @pqr.route('/browse/<page_num>', strict_slashes=False)
+@cache.cached(timeout=86400)
 def browse(page_num="-1"):
 
     # Get the page number that is passed in
@@ -265,6 +266,7 @@ def searchSuggestions():
 #################################################
 
 @pqr.route('/api/weekly', strict_slashes=False)
+@cache.cached(timeout=86400)
 def weekly_molAPI():
     return_list = get_weekly_molecule_list()
     return Response("\n".join(return_list), mimetype='text/plain')
@@ -341,6 +343,7 @@ def getStatus():
     return jsonify(stuff_to_print)
 
 @pqr.route('/api/json/<key>', strict_slashes=False)
+@cache.cached(timeout=86400)
 def jsonAPI(key):
 
     # Open the relevant JSON file
@@ -352,6 +355,7 @@ def jsonAPI(key):
 
 
 @pqr.route('/api/mol/<key>', strict_slashes=False)
+@cache.cached(timeout=86400)
 def molAPI(key):
 
     mol2 = []
@@ -381,7 +385,7 @@ def inchiAPI():
 
 
 @pqr.route('/contact', methods=['POST', 'GET'], strict_slashes=False)
-# @cache.cached(timeout=259200)
+@cache.cached(timeout=259200)
 def contact():
     page = {'id': "page-contact"}
 
