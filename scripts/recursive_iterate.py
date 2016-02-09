@@ -74,10 +74,10 @@ for root, dirs, files in os.walk(DIRECTORY): # This path to replace
         	"last_updated": datetime.now(),
         	"properties_id": properties_id,
         	"name": name,
-                "inchikey": inchikey,
+            "inchikey": inchikey,
         	"formula": formula,
-                "tags": tags,
-                "synonyms": synonyms
+            "tags": tags,
+            "synonyms": synonyms
         }).inserted_id #
 
         # pprint(data)

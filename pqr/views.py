@@ -146,7 +146,7 @@ def news(title="-1"):
 
 @pqr.route('/browse', strict_slashes=False)
 @pqr.route('/browse/<page_num>', strict_slashes=False)
-@cache.cached(timeout=86400)
+#@cache.memoize(timeout=86400)
 def browse(page_num="-1"):
 
     # Get the page number that is passed in
@@ -182,7 +182,7 @@ def browse(page_num="-1"):
     elif searchType == 'tag':
         searchType = 'tags'
     elif searchType == 'synonym':
-        searchType = 'synonym'
+        searchType = 'synonyms'
     elif searchType == 'inchi':
         searchType = 'inchikey'
         query = query.upper()
