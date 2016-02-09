@@ -478,7 +478,7 @@ def clear_cache():
 
 @pqr.errorhandler(404)
 def page_not_found(e):
-    flash("Page not found", 404)
+    #flash("Page not found", 404)
     return redirect(url_for('index'))
 
 
