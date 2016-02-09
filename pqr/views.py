@@ -22,7 +22,7 @@ from settings import APP_JSON, APP_MOL2, APP_ARTICLES
 import os
 import json
 import markdown
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date, time
 from difflib import SequenceMatcher as SM
 
 # Regular expressions for chemical formula parsing
@@ -37,6 +37,7 @@ MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 WEEKLY_MOL_NAME = None
 pqr.debug = True
 
+last_updated_wm = datetime.strptime('Aug 7 1996', '%b %d %Y')
 
 ##########################################################################
 
@@ -50,15 +51,23 @@ def beforeRequest():
 @pqr.route('/home', strict_slashes=False)
 @cache.cached(timeout=86400)
 def index():
+    global last_updated_wm
+
     page = {'id': "page-home"}
     articles = [os.path.splitext(article)[0]
                        for article in next(os.walk(APP_ARTICLES))[2]]
     new_articles = sorted(get_new_articles(articles, 14), reverse=True)
     articles = sorted(list(set(articles) - set(new_articles)), reverse=True)
 
-    weekly_mol = get_weekly_molecule_list()[-1].split(',')
-    MOLECULE_OF_THE_WEEK = weekly_mol[0]
-    WEEKLY_MOL_NAME = weekly_mol[1]
+    today = date.today()
+    idx = (today.weekday() + 1) % 7
+    sun = today - timedelta(7+idx)
+
+    if last_updated_wm < datetime.combine(sun, time(0, 0)):
+        weekly_mol = get_weekly_molecule_list()[-1].split(',')
+        MOLECULE_OF_THE_WEEK = weekly_mol[0]
+        WEEKLY_MOL_NAME = weekly_mol[1]
+        last_updated_wm = today
 
     week_mol = (MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
