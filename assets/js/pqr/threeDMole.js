@@ -5,16 +5,16 @@
  */
 
 pqr.threeDMole = {
-	all_viewers: [],
-	rotation_timers: [],
-	data_type: 'mol2',
-	default_style: 'stick',
-	backgroundColor: 0xffffff,
-	backgroundOpacity: 1.0,
-	rotationTime: 9,
-	rotationXDegree: 1, //How many degrees to move every rotationTime
-	rotationYDegree: 1,
-	showSurface: true
+    all_viewers: [],
+    rotation_timers: [],
+    data_type: 'mol2',
+    default_style: 'stick',
+    backgroundColor: 0xffffff,
+    backgroundOpacity: 1.0,
+    rotationTime: 9,
+    rotationXDegree: 1, //How many degrees to move every rotationTime
+    rotationYDegree: 1,
+    showSurface: true
 };
 
 /**
@@ -23,12 +23,12 @@ pqr.threeDMole = {
  * @param  {Object} config optional config to override default settings
  */
 pqr.threeDMole.initViewers = function(config) {
-	this.all_viewers = $3Dmol.viewers;
+    this.all_viewers = $3Dmol.viewers;
 
-	$.each(this.all_viewers, function(index, viewer) {
-		pqr.threeDMole.clearBackgrounds(viewer);
-		// pqr.threeDMole.rotate(viewer);
-	});
+    $.each(this.all_viewers, function(index, viewer) {
+        pqr.threeDMole.clearBackgrounds(viewer);
+        // pqr.threeDMole.rotate(viewer);
+    });
 };
 
 
@@ -39,11 +39,11 @@ pqr.threeDMole.initViewers = function(config) {
  * @param  {GLviewer}
  */
 pqr.threeDMole.clearBackgrounds = function(viewer) {
-	viewer.setBackgroundColor(this.backgroundColor, 0);
-	viewer.resize();
-	viewer.render();
+    viewer.setBackgroundColor(this.backgroundColor, 0);
+    viewer.resize();
+    viewer.render();
 
-	if (pqr.debug) console.log("Clearing Background: ", viewer);
+    if (pqr.debug) console.log("Clearing Background: ", viewer);
 };
 
 /**
@@ -52,15 +52,15 @@ pqr.threeDMole.clearBackgrounds = function(viewer) {
  * @param  {GLViewer}
  */
 pqr.threeDMole.rotate = function(viewer) {
-	var rotation_timers = window.setInterval(function() {
-		viewer.rotate(pqr.threeDMole.rotationYDegree, 'y');
-		viewer.rotate(pqr.threeDMole.rotationXDegree, 'x');
-		viewer.render();
-	}, this.rotationTime, viewer);
+    var rotation_timers = window.setInterval(function() {
+        viewer.rotate(pqr.threeDMole.rotationYDegree, 'y');
+        viewer.rotate(pqr.threeDMole.rotationXDegree, 'x');
+        viewer.render();
+    }, this.rotationTime, viewer);
 
-	this.rotation_timers.push(rotation_timers);
+    this.rotation_timers.push(rotation_timers);
 
-	if (pqr.debug) console.log("Adding Rotation: ", viewer);
+    if (pqr.debug) console.log("Adding Rotation: ", viewer);
 };
 
 /**
@@ -69,15 +69,15 @@ pqr.threeDMole.rotate = function(viewer) {
  * @param  {GLViewer} the viewer to toggle the rotation
  */
 pqr.threeDMole.toggleRotation = function(viewer) {
-	var rotation_timer = this.rotation_timers.pop();
-	if (pqr.debug) console.log("The rotation time is: ", rotation_timer);
-	if (rotation_timer !== undefined) {
-		if (pqr.debug) console.log("Rotation timer not null. Clearing interval");
-		clearInterval(rotation_timer);
-	} else {
-		if (pqr.debug) console.log("Rotation timer is null. Restarting rotation");
-		this.rotate(this.all_viewers[0]);
-	}
+    var rotation_timer = this.rotation_timers.pop();
+    if (pqr.debug) console.log("The rotation time is: ", rotation_timer);
+    if (rotation_timer !== undefined) {
+        if (pqr.debug) console.log("Rotation timer not null. Clearing interval");
+        clearInterval(rotation_timer);
+    } else {
+        if (pqr.debug) console.log("Rotation timer is null. Restarting rotation");
+        this.rotate(this.all_viewers[0]);
+    }
 };
 
 /**
@@ -95,11 +95,11 @@ pqr.threeDMole.setSurfaceColor = function(viewer) {
  * @param  {GLViewer}
  */
 pqr.threeDMole.toggleSurface = function(viewer) {
-	viewer = typeof viewer !== 'undefined' ? viewer : this.all_viewers[0];
+    viewer = typeof viewer !== 'undefined' ? viewer : this.all_viewers[0];
 
-	if (pqr.debug) console.log("Toggling the surface of ", viewer);
+    if (pqr.debug) console.log("Toggling the surface of ", viewer);
 
-	this.removeSurface(viewer);
+    this.removeSurface(viewer);
 };
 
 /**
@@ -108,9 +108,9 @@ pqr.threeDMole.toggleSurface = function(viewer) {
  * @param  {GLViewer}
  */
 pqr.threeDMole.removeSurface = function(viewer) {
-	viewer.removeAllSurfaces();
-	viewer.render();
-	if (pqr.debug) console.log("Surface Removed");
+    viewer.removeAllSurfaces();
+    viewer.render();
+    if (pqr.debug) console.log("Surface Removed");
 };
 
 /**
@@ -119,11 +119,11 @@ pqr.threeDMole.removeSurface = function(viewer) {
  * @param  {GLViewer}
  */
 pqr.threeDMole.resetView = function(viewer) {
-	pqr.threeDMole.all_viewers[0].zoomTo();
+    pqr.threeDMole.all_viewers[0].zoomTo();
 };
 
 pqr.threeDMole.addArrow = function(viewer, x, y, z) {
-	pqr.threeDMole.all_viewers[0].addArrow({end: new $3Dmol.Vector3(x, y, z), color: "black", wireframe: false});
+    pqr.threeDMole.all_viewers[0].addArrow({end: new $3Dmol.Vector3(x, y, z), color: "black", wireframe: false});
     pqr.threeDMole.all_viewers[0].render();
 };
 
@@ -133,31 +133,31 @@ pqr.threeDMole.addArrow = function(viewer, x, y, z) {
  * @param  {String} newStyle - the type of style to change this viewer to
  */
 pqr.threeDMole.changeStyle = function(newStyle) {
-	var viewer = this.all_viewers[0]; //Currently only getting the first viewer that exists 
-	if (viewer) {
-		if (newStyle == "sphere") {
-			viewer.setStyle({}, {
-				sphere: {}
-			});
-		} else if (newStyle == "stick") {
-			viewer.setStyle({}, {
-				stick: {}
-			});
-		} else if (newStyle == "cross") {
-			viewer.setStyle({}, {
-				cross: {}
-			});
-		} else if (newStyle == "line") {
-			viewer.setStyle({}, {
-				line: {}
-			});
-		} else if (newStyle == "ballstick") {
+    var viewer = this.all_viewers[0]; //Currently only getting the first viewer that exists 
+    if (viewer) {
+        if (newStyle == "sphere") {
+            viewer.setStyle({}, {
+                sphere: {}
+            });
+        } else if (newStyle == "stick") {
+            viewer.setStyle({}, {
+                stick: {}
+            });
+        } else if (newStyle == "cross") {
+            viewer.setStyle({}, {
+                cross: {}
+            });
+        } else if (newStyle == "line") {
+            viewer.setStyle({}, {
+                line: {}
+            });
+        } else if (newStyle == "ballstick") {
             viewer.setStyle({}, {
                 stick: {radius: 0.15},
                 sphere: {radius: 0.40}
             });
         }
 
-		viewer.render();
-	}
+        viewer.render();
+    }
 };
