@@ -52,6 +52,7 @@ def beforeRequest():
 @cache.cached(timeout=86400)
 def index():
     global last_updated_wm
+    global MOLECULE_OF_THE_WEEK
 
     page = {'id': "page-home"}
     articles = [os.path.splitext(article)[0]
