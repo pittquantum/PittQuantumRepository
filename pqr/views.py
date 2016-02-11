@@ -53,6 +53,7 @@ def beforeRequest():
 def index():
     global last_updated_wm
     global MOLECULE_OF_THE_WEEK
+    global WEEKLY_MOL_NAME
 
     page = {'id': "page-home"}
     articles = [os.path.splitext(article)[0]
