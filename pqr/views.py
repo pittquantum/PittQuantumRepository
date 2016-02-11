@@ -22,7 +22,7 @@ from settings import APP_JSON, APP_MOL2, APP_ARTICLES
 import os
 import json
 import markdown
-from datetime import datetime, timedelta, date, time
+import datetime
 from difflib import SequenceMatcher as SM
 
 # Regular expressions for chemical formula parsing
@@ -37,7 +37,7 @@ MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 WEEKLY_MOL_NAME = None
 pqr.debug = True
 
-last_updated_wm = datetime.strptime('Aug 7 1996', '%b %d %Y')
+last_updated_wm = datetime.datetime.strptime('Aug 7 1996', '%b %d %Y').date()
 
 ##########################################################################
 
@@ -59,11 +59,11 @@ def index():
     new_articles = sorted(get_new_articles(articles, 14), reverse=True)
     articles = sorted(list(set(articles) - set(new_articles)), reverse=True)
 
-    today = date.today()
+    today = datetime.date.today()
     idx = (today.weekday() + 1) % 7
-    sun = today - timedelta(7+idx)
+    sun = today - datetime.timedelta(7+idx)
 
-    if last_updated_wm.date() < sun:
+    if last_updated_wm < sun:
         weekly_mol = get_weekly_molecule_list()[-1].split(',')
         MOLECULE_OF_THE_WEEK = weekly_mol[0]
         WEEKLY_MOL_NAME = weekly_mol[1]
@@ -639,8 +639,8 @@ def get_new_articles(articles, days):
     for article in articles:
         date = article[:10]
         try:
-            dt = datetime.strptime(date, "%Y-%m-%d")
-            if dt > datetime.now()-timedelta(days=days):
+            dt = datetime.datetime.strptime(date, "%Y-%m-%d")
+            if dt > datetime.datetime.now()-datetime.timedelta(days=days):
                 new_articles.append(article)
         except ValueError:
             print "Invalid Date Format"
@@ -648,7 +648,6 @@ def get_new_articles(articles, days):
 
 #Get a list of the past weekly molecules
 def get_weekly_molecule_list():
-    import datetime
     # Gets todays date, then rewinds it to the last Sunday
     # (if today is Sunday it sticks with today)
     # Then it compares each line in the file to Sunday's date
