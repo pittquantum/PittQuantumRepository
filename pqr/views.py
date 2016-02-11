@@ -63,7 +63,7 @@ def index():
     idx = (today.weekday() + 1) % 7
     sun = today - timedelta(7+idx)
 
-    if last_updated_wm < datetime.combine(sun, time(0, 0)):
+    if last_updated_wm.date() < sun:
         weekly_mol = get_weekly_molecule_list()[-1].split(',')
         MOLECULE_OF_THE_WEEK = weekly_mol[0]
         WEEKLY_MOL_NAME = weekly_mol[1]
