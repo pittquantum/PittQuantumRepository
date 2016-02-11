@@ -122,6 +122,10 @@ pqr.threeDMole.resetView = function(viewer) {
 	pqr.threeDMole.all_viewers[0].zoomTo();
 };
 
+pqr.threeDMole.addArrow = function(viewer, x, y, z) {
+	pqr.threeDMole.all_viewers[0].addArrow({end: new $3Dmol.Vector3(x, y, z), color: "black", wireframe: false});
+    pqr.threeDMole.all_viewers[0].render();
+};
 
 /**
  * Change the layout style of the selected viewer
