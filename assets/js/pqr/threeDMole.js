@@ -151,7 +151,12 @@ pqr.threeDMole.changeStyle = function(newStyle) {
 			viewer.setStyle({}, {
 				line: {}
 			});
-		}
+		} else if (newStyle == "ballstick") {
+            viewer.setStyle({}, {
+                stick: {radius: 0.15},
+                sphere: {radius: 0.40}
+            });
+        }
 
 		viewer.render();
 	}
