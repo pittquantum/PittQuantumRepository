@@ -77,7 +77,6 @@ def index():
     min_html = html_minify(rendered_html.encode('utf8'))
     return min_html
 
-
 ##########################################################################
 @pqr.route('/mol/<key>', strict_slashes=False)
 @pqr.route('/mol', strict_slashes=False)  # if no key lets default to the molecule of the day
@@ -485,6 +484,13 @@ def clear_cache():
     return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
 ##########################################################################
+@pqr.route('/502/', strict_slashes=False)
+def fiveohtwo():
+  page = {'id': "page-error"}
+  rendered_html = render_template("502.html", page=page, amount_mol=amount_mol)
+  min_html = html_minify(rendered_html.encode('utf8'))
+  return min_html
+
 
 
 @pqr.errorhandler(404)
