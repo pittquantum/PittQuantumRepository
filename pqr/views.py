@@ -22,14 +22,14 @@ from settings import APP_JSON, APP_MOL2, APP_ARTICLES
 import os
 import json
 import markdown
-from datetime import datetime, timedelta
+import datetime
 from difflib import SequenceMatcher as SM
 
 # Regular expressions for chemical formula parsing
 import re
 
-# cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
-# cache.init_app(pqr)
+cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
+cache.init_app(pqr)
 
 redirect_table = {}
 amount_mol = None
@@ -37,6 +37,7 @@ MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
 WEEKLY_MOL_NAME = None
 pqr.debug = True
 
+last_updated_wm = datetime.datetime.strptime('Aug 7 1996', '%b %d %Y').date()
 
 ##########################################################################
 
@@ -48,17 +49,27 @@ def beforeRequest():
 
 @pqr.route('/')
 @pqr.route('/home', strict_slashes=False)
-# @cache.cached(timeout=86400)
+@cache.cached(timeout=86400)
 def index():
+    global last_updated_wm
+    global MOLECULE_OF_THE_WEEK
+    global WEEKLY_MOL_NAME
+
     page = {'id': "page-home"}
     articles = [os.path.splitext(article)[0]
                        for article in next(os.walk(APP_ARTICLES))[2]]
     new_articles = sorted(get_new_articles(articles, 14), reverse=True)
     articles = sorted(list(set(articles) - set(new_articles)), reverse=True)
 
-    weekly_mol = get_weekly_molecule_list()[-1].split(',')
-    MOLECULE_OF_THE_WEEK = weekly_mol[0]
-    WEEKLY_MOL_NAME = weekly_mol[1]
+    today = datetime.date.today()
+    idx = (today.weekday() + 1) % 7
+    sun = today - datetime.timedelta(7+idx)
+
+    if last_updated_wm < sun:
+        weekly_mol = get_weekly_molecule_list()[-1].split(',')
+        MOLECULE_OF_THE_WEEK = weekly_mol[0]
+        WEEKLY_MOL_NAME = weekly_mol[1]
+        last_updated_wm = today
 
     week_mol = (MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 
@@ -66,11 +77,10 @@ def index():
     min_html = html_minify(rendered_html.encode('utf8'))
     return min_html
 
-
 ##########################################################################
 @pqr.route('/mol/<key>', strict_slashes=False)
 @pqr.route('/mol', strict_slashes=False)  # if no key lets default to the molecule of the day
-# @cache.cached(timeout=43200)
+@cache.cached(timeout=43200)
 def molecule(key="-1"):
     if key == "-1":
         key = MOLECULE_OF_THE_WEEK
@@ -110,7 +120,7 @@ def molecule(key="-1"):
 ##########################################################################
 @pqr.route('/news', strict_slashes=False)
 @pqr.route('/news/<title>', strict_slashes=False)
-# @cache.cached(timeout=86400)
+@cache.cached(timeout=86400)
 def news(title="-1"):
     page = {'id': "page-news"}
 
@@ -137,6 +147,7 @@ def news(title="-1"):
 
 @pqr.route('/browse', strict_slashes=False)
 @pqr.route('/browse/<page_num>', strict_slashes=False)
+#@cache.memoize(timeout=86400)
 def browse(page_num="-1"):
 
     # Get the page number that is passed in
@@ -172,7 +183,7 @@ def browse(page_num="-1"):
     elif searchType == 'tag':
         searchType = 'tags'
     elif searchType == 'synonym':
-        searchType = 'synonym'
+        searchType = 'synonyms'
     elif searchType == 'inchi':
         searchType = 'inchikey'
         query = query.upper()
@@ -265,6 +276,7 @@ def searchSuggestions():
 #################################################
 
 @pqr.route('/api/weekly', strict_slashes=False)
+@cache.cached(timeout=86400)
 def weekly_molAPI():
     return_list = get_weekly_molecule_list()
     return Response("\n".join(return_list), mimetype='text/plain')
@@ -341,6 +353,7 @@ def getStatus():
     return jsonify(stuff_to_print)
 
 @pqr.route('/api/json/<key>', strict_slashes=False)
+@cache.cached(timeout=86400)
 def jsonAPI(key):
 
     # Open the relevant JSON file
@@ -352,6 +365,7 @@ def jsonAPI(key):
 
 
 @pqr.route('/api/mol/<key>', strict_slashes=False)
+@cache.cached(timeout=86400)
 def molAPI(key):
 
     mol2 = []
@@ -359,7 +373,7 @@ def molAPI(key):
     f = open(os.path.join(APP_MOL2, key[:2] + '/' + key + '.mol2'))
 
     # Return a MOL2 request with the proper MIME type
-    response =  Response(f.read().strip(), mimetype='chemical/mol2')
+    response =  Response(f.read().strip(), mimetype='chemical/x-mol2')
     response.headers['Content-Disposition'] = 'attachment; filename=%s' % (key + '.mol2')
     return response
 
@@ -381,7 +395,7 @@ def inchiAPI():
 
 
 @pqr.route('/contact', methods=['POST', 'GET'], strict_slashes=False)
-# @cache.cached(timeout=259200)
+@cache.cached(timeout=259200)
 def contact():
     page = {'id': "page-contact"}
 
@@ -470,11 +484,18 @@ def clear_cache():
     return redirect(url_for('molecule', key=MOLECULE_OF_THE_WEEK))
 
 ##########################################################################
+@pqr.route('/502/', strict_slashes=False)
+def fiveohtwo():
+  page = {'id': "page-error"}
+  rendered_html = render_template("502.html", page=page, amount_mol=amount_mol)
+  min_html = html_minify(rendered_html.encode('utf8'))
+  return min_html
+
 
 
 @pqr.errorhandler(404)
 def page_not_found(e):
-    flash("Page not found", 404)
+    #flash("Page not found", 404)
     return redirect(url_for('index'))
 
 
@@ -626,8 +647,8 @@ def get_new_articles(articles, days):
     for article in articles:
         date = article[:10]
         try:
-            dt = datetime.strptime(date, "%Y-%m-%d")
-            if dt > datetime.now()-timedelta(days=days):
+            dt = datetime.datetime.strptime(date, "%Y-%m-%d")
+            if dt > datetime.datetime.now()-datetime.timedelta(days=days):
                 new_articles.append(article)
         except ValueError:
             print "Invalid Date Format"
@@ -635,7 +656,6 @@ def get_new_articles(articles, days):
 
 #Get a list of the past weekly molecules
 def get_weekly_molecule_list():
-    import datetime
     # Gets todays date, then rewinds it to the last Sunday
     # (if today is Sunday it sticks with today)
     # Then it compares each line in the file to Sunday's date

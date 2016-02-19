@@ -1,0 +1,30 @@
+{% extends "skeleton/base.html" %}
+{% block header %}
+    {% include 'skeleton/default_header.html' %}
+{% endblock %}
+
+{% block footer %}
+    {% include 'skeleton/default_footer.html' %}
+{% endblock %}
+
+{% block title %}PQR | Home{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <meta http-equiv="refresh" content="5; url=https://pqr.pitt.edu" />
+{% endblock %}
+
+{% block lazyScripts %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div id='home-banner'>
+    <div class="row">
+        <div class="jumbotron text-center">
+            <h2>There was an error, please try again</h2>
+            <h3>You will be redirected to the home page in 5 seconds</h3>
+        </div>
+    </div>
+</div>
+{% endblock %}
