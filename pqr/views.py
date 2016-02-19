@@ -42,10 +42,10 @@ last_updated_wm = datetime.datetime.strptime('Aug 7 1996', '%b %d %Y').date()
 ##########################################################################
 
 
-@pqr.before_request
-def beforeRequest():
-    if 'https://' not in request.url:
-        return redirect(request.url.replace('http://', 'https://'))
+#@pqr.before_request
+#def beforeRequest():
+#    if 'https://' not in request.url:
+#        return redirect(request.url.replace('http://', 'https://'))
 
 @pqr.route('/')
 @pqr.route('/home', strict_slashes=False)
@@ -60,6 +60,17 @@ def index():
                        for article in next(os.walk(APP_ARTICLES))[2]]
     new_articles = sorted(get_new_articles(articles, 14), reverse=True)
     articles = sorted(list(set(articles) - set(new_articles)), reverse=True)
+
+    # Merge articles with formatted titles
+    titles = map(lambda x: x.split('-'), articles)
+    titles = map(lambda x: "{0} ({1})".format(' '.join(x[3:]), x[2] + ' ' + x[1] + ' ' + x[0]), titles)
+    articles = zip(articles, titles)
+
+    # Do the same thing with new articles
+    titles = map(lambda x: x.split('-'), new_articles)
+    titles = map(lambda x: "{0} ({1})".format(' '.join(x[3:]), x[2] + ' ' + x[1] + ' ' + x[0]), titles)
+    new_articles = zip(new_articles, titles)
+
 
     today = datetime.date.today()
     idx = (today.weekday() + 1) % 7
