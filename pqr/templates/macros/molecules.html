@@ -1,6 +1,6 @@
 <!-- View of a molecule for testing or displaying a simple view (such as the homepage)  -->
 {% macro simpleViewer(mol2='RY/RYYVLZVUVIJVGH-UHFFFAOYSA-N', style='stick') -%}
-<div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}' data-surface1='opacity:.7;color:white'>
+<div class='viewer_3Dmoljs' data-href='{{ url_for("static", filename="/data/mol2/"+mol2+".mol2") }}' data-type='mol2' data-backgroundcolor='0xffffff' data-style='{{style}}' data-surface1='opacity:.7;color:white'>
 </div>
 {%- endmacro %}
 <!-- View of a molecule for testing or displaying a simple view (such as the homepage)  -->
@@ -23,7 +23,7 @@
                         {%if result.json_data["molecular mass"]%}
                         <tr> 
                             <td><strong>Molecular Mass</strong></td>
-                            <td>{{ '%10.3f' % result.json_data["molecular mass"] }} g·mol<sup>−1</sup></td>
+                            <td>{{ '%10.3f' % result.json_data["molecular mass"]|float }} g·mol<sup>−1</sup></td>
                         </tr>
                         {% endif %}
                         {%if result.json_data["pm7"]["heatOfFormation"]%}
@@ -125,17 +125,17 @@
                             {%endif%} {%if jsonDict["molecular mass"]%}
                             <tr class="molecule-molecular-mass">
                                 <td>Molecular Mass<sup><a href="#" data-container="body" data-toggle="tooltip" title="The mass of the molecule in g/mol"><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ '%10.3f' % jsonDict["molecular mass"] }} g·mol<sup>−1</sup></td>
+                                <td>{{ '%10.3f' % jsonDict["molecular mass"]|float }} g·mol<sup>−1</sup></td>
                             </tr>
                             {%endif%} {%if jsonDict["pm7"]["heatOfFormation"]%}
                             <tr class="molecule-heat-of-formation">
                                 <td>Heat of Formation<sup><a href="#" data-container="body" data-toggle="tooltip" title="Change of enthalpy from the formation of 1 mol of a compound from its elements at 1 atm."><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ '%8.1f' % jsonDict["pm7"]["heatOfFormation"] }} &plusmn; 16.7 kJ·mol<sup>−1</sup></td>
+                                <td>{{ '%8.1f' % jsonDict["pm7"]["heatOfFormation"]|float }} &plusmn; 16.7 kJ·mol<sup>−1</sup></td>
                             </tr>
                             {%endif%} {%if jsonDict["pm7"]["dipoleMoment"]%}
                             <tr class="molecule-dipole-movement">
                                 <td>Dipole Moment<sup><a href="#" data-container="body" data-toggle="tooltip" title="Measure of electric polarity of a system of charges."><i class="fa fa-question"></i></a></sup></td>
-                                <td>{{ '%8.2f' % jsonDict["pm7"]["dipoleMoment"] }} &plusmn; 1.08 D</td>
+                                <td>{{ '%8.2f' % jsonDict["pm7"]["dipoleMoment"]|float }} &plusmn; 1.08 D</td>
                             </tr>
                             {%endif%}
 
