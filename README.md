@@ -1,4 +1,5 @@
 # Pitt Quantum Repository
+
 This is the code for the Pitt Quantum Repository maintained by @RitwikGupta and @vonbearshark.
 The Pitt Quantum Repository is developed by the Hutchison and Lambrecht labs at the University of Pittsburgh Chemistry Department. Please see [here](http://pqr.pitt.edu/news/2015-07-01-open-data) for how to cite PQR.
 
