@@ -71,7 +71,6 @@ def index():
     titles = map(lambda x: "{0} ({1})".format(' '.join(x[3:]), x[2] + ' ' + x[1] + ' ' + x[0]), titles)
     new_articles = zip(new_articles, titles)
 
-
     today = datetime.date.today()
     idx = (today.weekday() + 1) % 7
     sun = today - datetime.timedelta(7+idx)
@@ -350,6 +349,7 @@ def browseAPI(query, searchType):
 def getStatus():
     import os.path
     import time
+
     stuff_to_print = {}
 
     git_path = os.path.join(
@@ -360,6 +360,7 @@ def getStatus():
     stuff_to_print['last_data_update'] = time.ctime(
         os.path.getmtime(data_path))
     stuff_to_print['amount_of_molecules'] = amount_mol
+    stuff_to_print['last_motw_update'] = str(last_updated_wm)
 
     return jsonify(stuff_to_print)
 
