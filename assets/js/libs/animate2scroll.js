@@ -9,9 +9,7 @@
  * http://www.codrops.com
  */
 ;( function( window ) {
-    
     'use strict';
-    
     var docElem = window.document.documentElement;
 
     function getViewportH() {
@@ -100,7 +98,6 @@
                     itemSelector: 'li',
                     transitionDuration : 0
                 } );
-                
                 /*
                 if( Modernizr.cssanimations ) {
                 */

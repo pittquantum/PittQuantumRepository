@@ -10,7 +10,6 @@ var gulp = require('gulp'),
     gutil = require('gulp-util'),
     jshint = require('gulp-jshint'),
     browserify = require('browserify'),
-    glob = require('glob'), //TODO: remove after fix
     babelify = require('babelify'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
@@ -50,23 +49,28 @@ gulp.task('less', function () {
     });
 });
 gulp.task('js', function () {
-    //TODO: should be one entry file, i.e. 'main.js'
-    var entryFilesGlob = glob.sync(paths.source + paths.js + '/**/*.js');
     watch(paths.source + paths.js + '/**/*.js', {
         ignoreInitial: false
     }, function () {
         browserify({
-            entries: entryFilesGlob,
-            transform: [babelify]
+            entries: paths.source + paths.js + 'main.js',
+            transform: [[babelify, {
+                //TODO: until it's a module, ignore 3dmol
+                ignore: [paths.source + paths.js + '3DMol/3Dmol-nojquery.js'],
+
+                presets: ['es2015']
+            }]]
         })
             .bundle().on('error', gutil.log)
-            .pipe(source('main.js'))
+            .pipe(source('pqr.min.js'))
             .pipe(jshint())
             .pipe(buffer())
+            /*
+            //TODO: how to work this with console...
             .pipe(sourcemaps.init())
             .pipe(uglify())
             .pipe(sourcemaps.write())
-            .pipe(concat('pqr.min.js'))
+            */
             .pipe(gulp.dest(paths.dist + paths.js));
     });
 });

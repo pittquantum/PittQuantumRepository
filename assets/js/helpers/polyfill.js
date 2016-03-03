@@ -1,6 +1,7 @@
 /**
  * @fileoverview Polyfills 
  * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 
 var polyfill = polyfill || {};
@@ -17,4 +18,3 @@ polyfill.trim = function(){
         })();
     }
 }();
-  

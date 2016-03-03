@@ -91,3 +91,7 @@ bower_components
 #Vim temp files
 *.swp
 *.swo
+
+#fifo
+master.fifo
+

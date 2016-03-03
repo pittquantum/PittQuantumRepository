@@ -43,7 +43,7 @@
 
     <link rel="stylesheet" type="text/css" href="/static/css/pqr.min.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     {% endblock %}
 
     <!-- Google Analytics -->
@@ -130,7 +130,9 @@
     <!-- SOME SCRIPTS (MODIFY HOW THIS WORKS LATER) -->
     {% block lazyScripts %}
     <!-- Contains all of the files -->
-    <script async src="/static/js/pqr.min.js"></script>
+    <!--TODO: move when 3dmol is modularized-->
+    <script src="http://3Dmol.csb.pitt.edu/build/3Dmol-min.js"></script>
+    <script src="/static/js/pqr.min.js"></script>
     {% endblock %}
     <!-- SOME SCRIPTS (MODIFY HOW THIS WORKS LATER) -->
 </body>
