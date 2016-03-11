@@ -26,15 +26,15 @@ module.exports = (function() {
         var increaseButtonSelector = "#increasefont";
         var decreaseButtonSelector = "#reducefont";
         var resetButtonSelector = "#defaultfont";
-        $(increaseButtonSelector).on("vclick", function(event) {
+        $(increaseButtonSelector).on("click vclick", function(event) {
             event.preventDefault();
             util.updateFont(1);
         });
-        $(decreaseButtonSelector).on("vclick", function(event) {
+        $(decreaseButtonSelector).on("click vclick", function(event) {
             event.preventDefault();
             util.updateFont(-1);
         });
-        $(resetButtonSelector).on("vclick", function(event) {
+        $(resetButtonSelector).on("click vclick", function(event) {
             event.preventDefault();
             util.updateFont(0);
         });
@@ -46,7 +46,7 @@ module.exports = (function() {
      */
     bindevents.moleculeReset = function(selector) {
         if ($(selector).length) {
-            $(selector).on("vclick", function(event) {
+            $(selector).on("click vclick", function(event) {
                 event.preventDefault();
                 threeDMole.resetView();
                 util.bootstrapFeedback("Molecule viewer reset", "feedback",
@@ -61,7 +61,7 @@ module.exports = (function() {
      */
     bindevents.moleculeToggleRotation = function(selector) {
         if ($(selector).length) {
-            $(selector).on("vclick", function(event) {
+            $(selector).on("click vclick", function(event) {
                 event.preventDefault();
                 threeDMole.toggleRotation();
                 var toggle = $(this).children();
@@ -86,7 +86,7 @@ module.exports = (function() {
      */
     bindevents.propertiesViewerHandler = function() {
         console.log('binding...');
-        $("#simpleView").on("vclick click", function(event) {
+        $("#simpleView").on("click vclick", function(event) {
             console.log("clicked simple");
             event.preventDefault();
             $("#molecule-details table .detailed").fadeOut('fast');
@@ -100,7 +100,7 @@ module.exports = (function() {
             util.bootstrapFeedback("Switched to simple view",
             "feedback", "fa-desktop");
         });
-        $("#detailedView").on("vclick click", function(event) {
+        $("#detailedView").on("click vclick", function(event) {
             console.log("clicked detailed");
             event.preventDefault();
             $("#molecule-details table .detailed").removeClass('hidden');
@@ -123,7 +123,7 @@ module.exports = (function() {
      */
     bindevents.moleculeStyleChanger = function() {
         if ($('.changeStyleSphere').length) {
-            $('.changeStyleSphere').on("vclick", function(event) {
+            $('.changeStyleSphere').on("click vclick", function(event) {
                 event.preventDefault();
                 threeDMole.changeStyle("sphere");
                 /*
@@ -137,7 +137,7 @@ module.exports = (function() {
             });
         }
         if ($('.changeStyleLine').length) {
-            $('.changeStyleLine').on("vclick", function(event) {
+            $('.changeStyleLine').on("click vclick", function(event) {
                 event.preventDefault();
                 threeDMole.changeStyle("line");
                 /*
@@ -151,7 +151,7 @@ module.exports = (function() {
             });
         }
         if ($('.changeStyleCross').length) {
-            $('.changeStyleCross').on("vclick", function(event) {
+            $('.changeStyleCross').on("click vclick", function(event) {
                 event.preventDefault();
                 threeDMole.changeStyle("cross");
                 /*
@@ -165,7 +165,7 @@ module.exports = (function() {
             });
         }
         if ($('.changeStyleStick').length) {
-            $('.changeStyleStick').on("vclick", function(event) {
+            $('.changeStyleStick').on("click vclick", function(event) {
                 event.preventDefault();
                 threeDMole.changeStyle("stick");
                 /*
@@ -185,7 +185,7 @@ module.exports = (function() {
      */
     bindevents.moleculeToggleSurface = function(selector) {
         if ($(selector).length) {
-            $(selector).on("vclick", function(event) {
+            $(selector).on("click vclick", function(event) {
                 event.preventDefault();
                 threeDMole.toggleSurface();
                 $(this).addClass('disabled btn-success');
@@ -204,7 +204,7 @@ module.exports = (function() {
      */
     bindevents.printButton = function(selector) {
         if ($(selector).length) {
-            $(selector).on("vclick", function(event) {
+            $(selector).on("click vclick", function(event) {
                 event.preventDefault();
                 window.print();
                 util.bootstrapFeedback("Printing molecule data",
