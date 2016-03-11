@@ -55,6 +55,10 @@
 
 
 {% macro moleculeMainView(mol2, jsonDict, style='stick') -%}
+<meta id="dipoleOne" data-value="{{ jsonDict['pm7']['dipole'][0] }}">
+<meta id="dipoleTwo" data-value="{{ jsonDict['pm7']['dipole'][1] }}">
+<meta id="dipoleThree" data-value="{{ jsonDict['pm7']['dipole'][2] }}">
+
 <div class="molecule row">
     {%if jsonDict["name"]%}
     <h1 id="molecule-name"><!-- Molecule name as h1 for SEO-->
