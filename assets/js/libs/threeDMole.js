@@ -37,6 +37,14 @@ module.exports = (function() {
         threeDMole.allViewers = $3Dmol.viewers;
         $.each(threeDMole.allViewers, function(index, viewer) {
             threeDMole.clearBackgrounds(viewer);
+
+            var dipoleOne = $('#dipoleOne').data()["value"];
+            var dipoleTwo = $('#dipoleTwo').data()["value"];
+            var dipoleThree = $('#dipoleThree').data()["value"];
+
+            threeDMole.addArrow(viewer, dipoleOne, dipoleTwo, dipoleThree);
+            console.log(dipoleOne);
+            viewer.render();
             // pqr.threeDMole.rotate(viewer);
         });
     };
