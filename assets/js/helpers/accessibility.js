@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @fileoverview Various web accessibility functions
  * @author JoshJRogan@gmail.com (Josh Rogan)
@@ -5,13 +7,11 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 
-var accessibility = accessibility || {
-
-    fontSizeChangerIndex: 2,
-
-    defaultFontSize: 16
-
-};
+module.exports = (function() {
+    let accessibility = {
+        fontSizeChangerIndex: 2,
+        defaultFontSize: 16
+    };
 
 /**
  * Increases the body font size by some units multiplied by the fontSizeChangerIndex
@@ -38,4 +38,6 @@ accessibility.changeFontSize = function(size){
     $("body").css("font-size", size.toString() + "px");
     return size;
 };
+    return accessibility;
+})();
 

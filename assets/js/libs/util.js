@@ -9,7 +9,7 @@
 module.exports = (function() {
     let $ = require('jquery'),
         accessibility = require('../helpers/accessibility'),
-        classie = require('./classie'),
+        classie = require('./classie');
         //modernizr = require('modernizr');
     let util = {
         elementSymbols: ['h','he','li','be','b','c','n','o','f','ne','na','mg',
@@ -168,11 +168,15 @@ util.updatePropertiesViewer = function() {
  * @param  Objet options  Contains the options for the quickfit plugin
  */
 util.initQuickFit = function(selector, options) {
+
+    //where is this supposed to come from? Because it doesn't... vvv
+    /*
     $(selector).quickfit(options);
     //Update on window resize
     $(window).resize(function() {
         $(selector).quickfit(options);
     });
+    */
 };
 
 /**
@@ -403,7 +407,8 @@ util.FullToolTipOptIn = function() {
         event.preventDefault();
     });
     $(function() {
-        $('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips
+        //where is this supposed to come from? Because it doesn't... vvv
+        //$('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips
     });
 };
 

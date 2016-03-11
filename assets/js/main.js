@@ -20,13 +20,12 @@ let $ = require('jquery'),
     //modernizr = require('modernizr');
     bindevents = require('./libs/bindevents'),
     autocomplete = require('./libs/autocomplete'),
-    qrgen = require('./libs/autocomplete'),
+    qrgen = require('./libs/qrgen'),
     masonary = require('./libs/masonary'),
     molecule = require('./libs/molecule'),
     util = require('./libs/util'),
     threeDMole = require('./libs/threeDMole');
 
-console.log('Testing gulp...');
 /**
  * Initializes the application.
  */
@@ -38,12 +37,14 @@ function init() {
     // htmlutilities.footerToBottom('footer', '#main');
     //TODO: lots of stuff runs on all conditions?
     if ($("#main").hasClass("page-home")) {
+        console.log('has page home');
         threeDMole.initViewers();
         bindevents.moleculeReset('#reset-molecule');
         bindevents.moleculeToggleRotation('#rotationSwitch');
-        autocomplete.init();
+        //autocomplete.init();
     }
     else if ($("#main").hasClass("page-molecule")) {
+        console.log('has page molecule');
         threeDMole.initViewers();
         util.updatePropertiesViewer();
         //TODO: should probably pass in DOM instead of accessors...
@@ -59,9 +60,11 @@ function init() {
         qrgen.addQRCode("#qr-print-wrapper", util.getQRURL());
     }
     else if($("#main").hasClass("page-browse")){
-        autocomplete.init();
+        console.log('has page browse');
+        //autocomplete.init();
         //Only Start AJAX if there are results
         if($('#molecule-browser').attr('data-has-results') === "true"){
+            console.log('has molecule browser');
             masonary.init();
             molecule.initAjaxSearch();
             $('.molecule-results-masonary').removeClass('translucent');
@@ -75,6 +78,7 @@ function init() {
 
 // onready: init
 $(document).ready(function() {
+    console.log('ready');
     //no webgl support
     /*
     if (!modernizr.localstorage || !modernizr.webgl) {

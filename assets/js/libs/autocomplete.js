@@ -24,18 +24,21 @@ module.exports = (function() {
     /**
      * @return {[type]} [description]
      */
+    /*
     autocomplete.init = function() {
         $(autocomplete.resultsSelector).slideUp();
         this.typeahead();
         this.isFormula = util.isFormula;
         this.isINCHI = util.isINCHI;
     };
+     */
 
     /**
      * Tokenize a formula by breaking into it's molecular components
      * @param  {String} formula string representing a formula
      * @return {ARray}         tokenized results
      */
+    /*
     autocomplete.formulaTokenizer = function(formula) {
         formula = formula.toLowerCase();
         var splitFormula = formula.replace(/([a-z])/g, ' $1').trim();
@@ -43,6 +46,7 @@ module.exports = (function() {
         tokens.push(formula); //Add the full string
         return tokens;
     };
+     */
 
     /**
      * Sort all of the items this happens in search and after filter
@@ -50,6 +54,7 @@ module.exports = (function() {
      * @param  {[type]} b [description]
      * @return {[type]}   [description]
      */
+    /*
     autocomplete.suggestionSorter = function(suggestions, query){
         var isFormula = this.isFormula(query);
         var noNumbers = query.match(/\d+/g) === null;
@@ -102,7 +107,9 @@ module.exports = (function() {
 
         return suggestions.slice(0,this.resultsSizeMax);
     };
+    */
 
+    /*
     autocomplete.filter = function(suggestions, query){
         var isFormula = this.isFormula(query);
         var isINCHI = this.isINCHI(query);
@@ -126,16 +133,17 @@ module.exports = (function() {
             if( value.name.length > 20 || value.name.match(/[,-]/g) === null){
                 // return null;
             }
-            */
             return value;
         });
         return suggestions;
     };
+    */
 
     /**
      * Setup typeahead for autocomplete and suggested search
      * @return {[type]} [description]
      */
+    /*
     autocomplete.typeahead = function() {
         var data = autoComplete;
         this.engine = new Bloodhound({
@@ -230,22 +238,26 @@ module.exports = (function() {
             }
         });
     };
+    */
 
     /**
      * Create an object to allow auto complete
      * @return Object An object containing data to determine search results
      */
+    /*
     autocomplete.getData = function() {
         var object = {};
         // return object;
         return this.placeholderDatabase;
     };
+    */
 
     /**
      * Render the HTML for one result to be added to the DOM
      * @param  {Object} result Parse the object and generate HTMl
      * @return {String} HTML string to be added to the Dom
      */
+    /*
     autocomplete.renderHTML = function(result) {
         var formula = result.formula.replace(/(\d+)/g, "<sub>$1</sub>");
         var html = '<div data-inchi="' + result.inchikey + '">' +
@@ -265,6 +277,7 @@ module.exports = (function() {
 
         return html;
     };
+    */
 
     return autocomplete;
 })();

@@ -35,7 +35,8 @@ module.exports = (function() {
         // var baseURL = htmlutilities.getRootURL();
         if ($(selector).length) {
             config.defaultOptions.text = url;
-            $(selector).qrcode(config.defaultOptions);
+            //wut? vvv
+            //$(selector).qrcode(config.defaultOptions);
         } else {
             console.log("Couldn't find the selector", selector);
         }

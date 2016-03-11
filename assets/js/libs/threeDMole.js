@@ -32,6 +32,8 @@ module.exports = (function() {
      * @param  {Object} config optional config to override default settings
      */
     threeDMole.initViewers = function() {
+
+        console.log('init firing');
         threeDMole.allViewers = $3Dmol.viewers;
         $.each(threeDMole.allViewers, function(index, viewer) {
             threeDMole.clearBackgrounds(viewer);
