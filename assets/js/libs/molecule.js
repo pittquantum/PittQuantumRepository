@@ -7,7 +7,7 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 module.exports = (function() {
-    let $ = require('jquery'),
+    let //$ = require('jquery'),
         bindevents = require('./bindevents'),
         masonary = require('./masonary');
     let molecule = {

@@ -7,7 +7,10 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 module.exports = (function() {
-    let $ = require('jquery'),
+    //TODO: boostrap plugins seem unnecessary (and depend on jquery)
+    //require('bootstrap-notify');
+    require('bootstrap');
+    let //$ = require('jquery'), //jquery already included with 3dmol
         accessibility = require('../helpers/accessibility'),
         classie = require('./classie');
         //modernizr = require('modernizr');
@@ -315,7 +318,6 @@ util.smoothScrollingAnchors = function() {
  * @param  String icon_class A font awesome icon class
  */
 util.bootstrapFeedback = function(message, type, iconClass) {
-    /*
     var html = '<i class="fa ' + iconClass + '"></i> ' + message; 
     //TODO: replace bootstrap-notify
     $('.top-right').notify({
@@ -327,7 +329,7 @@ util.bootstrapFeedback = function(message, type, iconClass) {
             enabled: true,
             delay: util.feedbackTimeout
         }
-     */
+    /*
     var $message = $('<i class="fa ' + iconClass + '"></i> ' + message); 
     $('.top-right').append($message);
     $message.slideDown(300, function() {
@@ -337,7 +339,8 @@ util.bootstrapFeedback = function(message, type, iconClass) {
             });
         }, util.feedbackTimeout);
     });
-    //}).show();
+     */
+    }).show();
 };
 /**
  * Keep the footer at the bottom of the page regardless of the content size.
@@ -421,7 +424,7 @@ util.FullToolTipOptIn = function() {
     });
     $(function() {
         //where is this supposed to come from? Because it doesn't... vvv
-        //$('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips
+        $('[data-toggle="tooltip"]').tooltip(); //Opt in to tool tips
     });
 };
 

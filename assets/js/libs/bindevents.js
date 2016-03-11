@@ -10,7 +10,7 @@ module.exports = (function() {
     let util = require('./util'),
         //TODO: shouldn't need jquery...
         //Shouldnt even rely on DOM objects on its own! Should be passed nodes
-        $ = require('jquery'),
+        //$ = require('jquery'),
         //TODO: probably don't need this lib, either
         threeDMole = require('./threeDMole'),
         //modernizr = require('modernizr'),

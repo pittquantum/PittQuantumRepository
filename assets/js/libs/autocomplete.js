@@ -10,8 +10,8 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 module.exports = (function() {
-    let util = require('./util'),
-        $ = require('jquery');
+    let util = require('./util');
+        //$ = require('jquery');
 
     let autocomplete = {
         debug: true,

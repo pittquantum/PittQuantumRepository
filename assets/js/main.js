@@ -16,7 +16,7 @@
  */
 
 
-let $ = require('jquery'),
+let //$ = require('jquery'),
     //modernizr = require('modernizr');
     bindevents = require('./libs/bindevents'),
     autocomplete = require('./libs/autocomplete'),

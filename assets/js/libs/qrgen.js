@@ -7,7 +7,7 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 module.exports = (function() {
-    let $ = require('jquery');
+    //let $ = require('jquery');
 
     let config = {
         element: null,
@@ -35,8 +35,7 @@ module.exports = (function() {
         // var baseURL = htmlutilities.getRootURL();
         if ($(selector).length) {
             config.defaultOptions.text = url;
-            //wut? vvv
-            //$(selector).qrcode(config.defaultOptions);
+            $(selector).qrcode(config.defaultOptions);
         } else {
             console.log("Couldn't find the selector", selector);
         }

@@ -36,7 +36,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-      "postinstall" : "bower install",
+    "postinstall": "bower install",
     "start": "npm run start:dev",
     "start:dev": "NODE_ENV=DEV gulp",
     "start:prod": "NODE_ENV=PROD gulp",
