@@ -85,7 +85,9 @@ module.exports = (function() {
      *  the local storate to reflect the changes.
      */
     bindevents.propertiesViewerHandler = function() {
-        $("#simpleView").on("vclick", function(event) {
+        console.log('binding...');
+        $("#simpleView").on("vclick click", function(event) {
+            console.log("clicked simple");
             event.preventDefault();
             $("#molecule-details table .detailed").fadeOut('fast');
             /*
@@ -98,7 +100,8 @@ module.exports = (function() {
             util.bootstrapFeedback("Switched to simple view",
             "feedback", "fa-desktop");
         });
-        $("#detailedView").on("vclick", function(event) {
+        $("#detailedView").on("vclick click", function(event) {
+            console.log("clicked detailed");
             event.preventDefault();
             $("#molecule-details table .detailed").removeClass('hidden');
             $("#molecule-details table .detailed").fadeIn('fast');

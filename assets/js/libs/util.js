@@ -306,6 +306,7 @@ util.smoothScrollingAnchors = function() {
         });
     });
 };
+
 /**
  * Display bootstrap like notificaitons for a brief amount of time
  * @param  String message The message for the bootstrap feedback
@@ -314,7 +315,9 @@ util.smoothScrollingAnchors = function() {
  * @param  String icon_class A font awesome icon class
  */
 util.bootstrapFeedback = function(message, type, iconClass) {
+    /*
     var html = '<i class="fa ' + iconClass + '"></i> ' + message; 
+    //TODO: replace bootstrap-notify
     $('.top-right').notify({
         message: {
             html: html
@@ -322,9 +325,19 @@ util.bootstrapFeedback = function(message, type, iconClass) {
         type: type, 
         fadeOut: {
             enabled: true,
-            delay: this.feedbackTimeout
+            delay: util.feedbackTimeout
         }
-    }).show();
+     */
+    var $message = $('<i class="fa ' + iconClass + '"></i> ' + message); 
+    $('.top-right').append($message);
+    $message.slideDown(300, function() {
+        window.setTimeout(function() {
+            $message.slideUp(300, function() {
+                $message.remove();
+            });
+        }, util.feedbackTimeout);
+    });
+    //}).show();
 };
 /**
  * Keep the footer at the bottom of the page regardless of the content size.

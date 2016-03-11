@@ -39,9 +39,21 @@ function init() {
     if ($("#main").hasClass("page-home")) {
         console.log('has page home');
         threeDMole.initViewers();
+        /*
         bindevents.moleculeReset('#reset-molecule');
         bindevents.moleculeToggleRotation('#rotationSwitch');
+         */
         //autocomplete.init();
+        util.updatePropertiesViewer();
+        //TODO: should probably pass in DOM instead of accessors...
+        //at least should pass in vars instead of strings.
+        util.initQuickFit("#molecule-name", {min: 12, max:36});
+        bindevents.propertiesViewerHandler();
+        bindevents.moleculeStyleChanger();
+        bindevents.moleculeReset('#reset-molecule');
+        bindevents.moleculeToggleRotation('#rotationSwitch');
+        bindevents.moleculeToggleSurface('.surfaceSwitch');
+        bindevents.printButton('#print-molecule');
     }
     else if ($("#main").hasClass("page-molecule")) {
         console.log('has page molecule');
