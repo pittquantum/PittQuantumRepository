@@ -95,3 +95,5 @@ bower_components
 #fifo
 master.fifo
 
+.tern-port
+

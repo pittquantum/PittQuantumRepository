@@ -15,9 +15,13 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 
+//TODO: this is ugly...
+//modernizr/browsernizr tests
+require('browsernizr/test/webgl');
+require('browsernizr/test/storage/localstorage');
 
 let //$ = require('jquery'),
-    //modernizr = require('modernizr');
+    modernizr = require('browsernizr'),
     bindevents = require('./libs/bindevents'),
     autocomplete = require('./libs/autocomplete'),
     qrgen = require('./libs/qrgen'),
@@ -40,6 +44,8 @@ function init() {
         console.log('has page home');
         threeDMole.initViewers();
         /*
+         //is this necessary
+         //TODO: is this broken on dev?
         bindevents.moleculeReset('#reset-molecule');
         bindevents.moleculeToggleRotation('#rotationSwitch');
          */
@@ -92,16 +98,12 @@ function init() {
 $(document).ready(function() {
     console.log('ready');
     //no webgl support
-    /*
     if (!modernizr.localstorage || !modernizr.webgl) {
         util.redirectNoWebGL();
     }
     else {
-    */
         init();
-    /*
     }
-    */
 });
 
 

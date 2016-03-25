@@ -1,6 +1,10 @@
 'use strict';
 
+//TODO: where was the original masonry file?
 //TODO: how to load animeOnScroll as module?
+//TODO: for now, as a jquery plugin (remove from vendors...)
+//TODO: infact, images loaded, too. Check all vendors!
+//TODO: There should be no /vendors....
 
 /**
  * @fileoverview Masonary Related Functions
@@ -27,7 +31,6 @@ module.exports = (function() {
      */
     masonary.init = function(container, itemSelector, columnWidth) {
         // var options = this.defaultOptions;
-        // options.columnWidth = '.grid-sizer';
         // options.percentPosition = true;
         // this.grid = $('.grid').masonry(options);
         // this.imagesLoadedInit();

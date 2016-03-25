@@ -7,13 +7,18 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 module.exports = (function() {
+    //TODO: this is ugly...
+    //modernizr/browsernizr tests
+    require('browsernizr/test/webgl');
+    require('browsernizr/test/storage/localstorage');
+
     let util = require('./util'),
         //TODO: shouldn't need jquery...
         //Shouldnt even rely on DOM objects on its own! Should be passed nodes
         //$ = require('jquery'),
         //TODO: probably don't need this lib, either
         threeDMole = require('./threeDMole'),
-        //modernizr = require('modernizr'),
+        modernizr = require('browsernizr'),
         molecule = require('./molecule'),
         autocomplete = require('./autocomplete');
 
@@ -90,13 +95,9 @@ module.exports = (function() {
             console.log("clicked simple");
             event.preventDefault();
             $("#molecule-details table .detailed").fadeOut('fast');
-            /*
             if (modernizr.localstorage) {
-            */
                 localStorage.setItem("moleculeLayout", "simple");
-            /*
             }
-            */
             util.bootstrapFeedback("Switched to simple view",
             "feedback", "fa-desktop");
         });
@@ -105,13 +106,9 @@ module.exports = (function() {
             event.preventDefault();
             $("#molecule-details table .detailed").removeClass('hidden');
             $("#molecule-details table .detailed").fadeIn('fast');
-            /*
             if (modernizr.localstorage) {
-            */
                 localStorage.setItem("moleculeLayout", "detailed");
-            /*
             }
-            */
             util.bootstrapFeedback("Switched to detailed view ",
                 "feedback", "fa-desktop");
         });
@@ -168,11 +165,9 @@ module.exports = (function() {
             $('.changeStyleStick').on("click vclick", function(event) {
                 event.preventDefault();
                 threeDMole.changeStyle("stick");
-                /*
                 if (modernizr.localstorage) {
                     localStorage.setItem("moleculeViewerlayout", "sticks");
                 }
-                */
 
                 util.bootstrapFeedback("Switched to stick display ",
                     "feedback", "fa-desktop");

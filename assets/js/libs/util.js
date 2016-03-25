@@ -12,8 +12,8 @@ module.exports = (function() {
     require('bootstrap');
     let //$ = require('jquery'), //jquery already included with 3dmol
         accessibility = require('../helpers/accessibility'),
-        classie = require('./classie');
-        //modernizr = require('modernizr');
+        classie = require('./classie'),
+        modernizr = require('browsernizr');
     let util = {
         elementSymbols: ['h','he','li','be','b','c','n','o','f','ne','na','mg',
             'al','si','p','s','cl','ar','k','ca','sc','ti','v','cr','mn','fe',
@@ -113,9 +113,7 @@ util.updateFont = function(type) {
  */
 
 util.getCurrentFontSize = function() {
-    /*
     if (modernizr.localstorage) {
-    */
         var fontSize = localStorage.getItem("baseFontSize");
         if (fontSize !== null) {
             return fontSize;
@@ -123,36 +121,28 @@ util.getCurrentFontSize = function() {
             localStorage.setItem("baseFontSize", accessibility.defaultFontSize);
             return accessibility.defaultFontSize;
         }
-    /*
     } else {
         return accessibility.defaultFontSize;
     }
-    */
 };
 
 /**
  * If there is no WebGL redirect the user.
  */
 util.redirectNoWebGL = function() {
-/*
     if (!modernizr.webGL) {
-*/
         var msg = "<div class='alert alert-danger' role='alert'> <strong> <a href='http://get.webgl.org/'>WebGL</a> </strong> is not supported on your device! </div";
         $("#main").prepend(msg);
         //Currently sending them to get web gl page
         window.location.replace("https://get.webgl.org/");
-    /*
     }
-    */
 };
 
 /**
  * Updates the property viewer if there was a pervious value in localstorage
  */
 util.updatePropertiesViewer = function() {
-    /*
     if (modernizr.localstorage) {
-    */
         if (localStorage.getItem("moleculeLayout") === "detailed") {
             //Probably not necessary
             $("#molecule-details table .detailed").removeClass("hidden");
@@ -160,9 +150,7 @@ util.updatePropertiesViewer = function() {
         else {
             $("#molecule-details table .detailed").addClass("hidden");
         }
-    /*
     }
-    */
 };
 
 /**
