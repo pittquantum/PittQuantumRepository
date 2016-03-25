@@ -208,16 +208,18 @@ def browse(page_num="-1"):
         results.append(i)
 
     if len(results) == 0:
-        cursor = db.molecules.find({"$text": {"$search": str(query)}})
-        if len(list(cursor)) == 0:
-            rendered_html = render_template("browse.html", page=page, results=[], query=query, searchType=searchType, typenum_pages=1, active=active, total_results=0)
-            min_html = html_minify(rendered_html.encode('utf8'))
-            return min_html
-
+        cursor = db.molecules.find({"$text": {"$search": str(query)}}) 
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
-            i["json_data"] = get_json_data_file(i["inchikey"][:2], i["inchikey"])
-            results.append(i)
+            try:
+                i["json_data"] = get_json_data_file(i["inchikey"][:2], i["inchikey"])
+                results.append(i)
+            except:
+                if len(list(cursor)) == 0:
+                    rendered_html = render_template("browse.html", page=page, results=[], query=query, searchType=searchType, typenum_pages=1, active=active, total_results=0)
+                    min_html = html_minify(rendered_html.encode('utf8'))
+                    return min_html
+
 
     # Find lightest molecule to normalize mass-based search
     temp = sorted(
