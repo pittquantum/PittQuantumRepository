@@ -23,7 +23,7 @@ import os
 import ujson as json
 import markdown
 import datetime
-from difflib import SequenceMatcher as SM
+from Levenshtein import ratio
 
 # Regular expressions for chemical formula parsing
 import re
@@ -571,17 +571,10 @@ def similar(x, f, m0, query):
     #else:
         # if x in query:
     if query in x:
-        # Sort by similarity & mass
-        score = 10 + SM(None, x, query).ratio() + m0 / formula2mass(f)
-        # score = 10 + SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity
-        # score = 10 + m0/formula2mass(f) # Sort by increasing mass
+        score = 10 + ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
     else:
-        # Sort by similarity & mass
-        score = SM(None, x, query).ratio() + m0 / formula2mass(f)
-        # score = SM(None, x, query).ratio() # Sort by similarity
-        # score = m0/formula2mass(f) # Sort by increasing mass
+        score = ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
     return score
-
 
 def formula2mass(f):
     Masses = dict(H=1.01, He=4.00, Li=6.94, Be=9.01, B=10.81, C=12.01,

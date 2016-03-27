@@ -6,3 +6,4 @@ Flask-Markdown
 uwsgi
 django-htmlmin
 ujson
+python-Levenshtein
