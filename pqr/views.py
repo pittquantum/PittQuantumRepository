@@ -71,7 +71,6 @@ def index():
     titles = map(lambda x: "{0} ({1})".format(' '.join(x[3:]), x[2] + ' ' + x[1] + ' ' + x[0]), titles)
     new_articles = zip(new_articles, titles)
 
-
     today = datetime.date.today()
     idx = (today.weekday() + 1) % 7
     sun = today - datetime.timedelta(7+idx)
@@ -209,11 +208,18 @@ def browse(page_num="-1"):
         results.append(i)
 
     if len(results) == 0:
-        cursor = db.molecules.find({"$text": {"$search": str(query)}})
+        cursor = db.molecules.find({"$text": {"$search": str(query)}}) 
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
-            i["json_data"] = get_json_data_file(i["inchikey"][:2], i["inchikey"])
-            results.append(i)
+            try:
+                i["json_data"] = get_json_data_file(i["inchikey"][:2], i["inchikey"])
+                results.append(i)
+            except:
+                if len(list(cursor)) == 0:
+                    rendered_html = render_template("browse.html", page=page, results=[], query=query, searchType=searchType, typenum_pages=1, active=active, total_results=0)
+                    min_html = html_minify(rendered_html.encode('utf8'))
+                    return min_html
+
 
     # Find lightest molecule to normalize mass-based search
     temp = sorted(
@@ -230,7 +236,7 @@ def browse(page_num="-1"):
 
     # Split the reults array into chunks of 50 each for search pagination - 50 for AJAX (May want to change)
     if request.args.get('ajax'):
-        tempArr = list(chunks(results, 100)) 
+        tempArr = list(chunks(results, 100))
     else:
         tempArr = list(chunks(results, 100))
 
@@ -265,7 +271,7 @@ def browse(page_num="-1"):
             active = 1
         else:
             active = page_num
-            
+
     if request.args.get('ajax'):
         return render_template("browse_ajax.html", results=results)
     else:
@@ -277,7 +283,7 @@ def browse(page_num="-1"):
 
 @pqr.route('/suggestions', strict_slashes=False)
 def searchSuggestions():
-    if request.args.get('partial'): 
+    if request.args.get('partial'):
         partial = request.args.get('partial').strip()
         return_items = get_suggestions(partial)
         return Response(json.dumps(return_items), mimetype='application/json')
@@ -350,6 +356,7 @@ def browseAPI(query, searchType):
 def getStatus():
     import os.path
     import time
+
     stuff_to_print = {}
 
     git_path = os.path.join(
@@ -360,6 +367,7 @@ def getStatus():
     stuff_to_print['last_data_update'] = time.ctime(
         os.path.getmtime(data_path))
     stuff_to_print['amount_of_molecules'] = amount_mol
+    stuff_to_print['last_motw_update'] = str(last_updated_wm)
 
     return jsonify(stuff_to_print)
 
@@ -711,10 +719,10 @@ def get_suggestions(partial):
     db = client.test
     cursor = db.molecules.find({'name': { '$regex': str(partial) }}).limit(10)
     results = []
-    
+
     for i in cursor:
         item = {}
-        item['name'] =  i["name"] 
+        item['name'] =  i["name"]
         item['inchikey'] =  i["inchikey"]
         item['formula'] =  i["formula"]
         results.append(item)
