@@ -8,27 +8,7 @@ from difflib import SequenceMatcher as SM
 import ujson as json
 #import json
 
-def chunks(l, n):
-    """ Yield successive n-sized chunks from l.
-    """
-    for i in xrange(0, len(l), n):
-        yield l[i:i + n]
-
-def similar(x, f, m0, query):
-    #print x
-    #if isinstance(x, list):
-    #    score_list = map(lambda z: similar(z, f, m0, query), x)
-    #    return sum(score_list)
-    #else:
-    # if x in query:
-    if query in x:
-        score = 10 + SM(None, x, query).ratio() + m0 / formula2mass(f)
-    else:
-        score = SM(None, x, query).ratio() + m0 / formula2mass(f)
-    return score
-
-def formula2mass(f):
-    Masses = dict(H=1.01, He=4.00, Li=6.94, Be=9.01, B=10.81, C=12.01,
+Masses = dict(H=1.01, He=4.00, Li=6.94, Be=9.01, B=10.81, C=12.01,
                   N=14.01, O=16.00, F=19.00, Ne=20.18, Na=22.99, Mg=24.31,
                   Al=26.98, Si=28.09, P=30.97, S=32.07, Cl=35.45, Ar=39.95,
                   K=39.10, Ca=40.08, Sc=44.96, Ti=47.87, V=50.94, Cr=52.00,
@@ -50,40 +30,36 @@ def formula2mass(f):
                   Lr=262.00, Rf=261.00, Db=262.00, Sg=266.00, Bh=264.00,
                   Hs=269.00, Mt=268.00)
 
-    # Makes an array that counts the number of each element
-    atom = re.findall('[A-Z][a-z]?|[0-9]+', f)
-    consistent = False
-    # string = ""
-    while not consistent:
-        ok = True
-        for i in range(0, len(atom), 2):
-            try:
-                num = int(atom[i + 1])
-                # string += "  i = " + str(i) + "   atom[i] = " + atom[i] + "
-                # atom[i+1] = " + str(num) + "<br>"
-            except (IndexError, ValueError) as e:
-                # string += "  exception caught <br>"
-                ok = False
-                atom.insert(i + 1, 1)
-                # string += "    i = " + str(i) + "   atom[i] = " +
-                # str(atom[i]) + "   atom[i+1] = " + str(atom[i+1]) + "<br>"
-                break
-        consistent = ok
 
-    mass = 1e-6
-    for i in range(0, len(atom), 2):
-        # string += "  m = Masses[" + str(atom[i]) + "] <br>"
-        # string += "  n = " + str(atom[i+1]) + " <br>"
-        try:
-            m = Masses[atom[i]]
-            n = float(atom[i + 1])
-            mass += n * m
-        except (KeyError, ValueError) as e:
-            # return string
-            continue
+def chunks(l, n):
+    """ Yield successive n-sized chunks from l.
+    """
+    for i in xrange(0, len(l), n):
+        yield l[i:i + n]
 
-    # return string
-    return mass
+def similar(x, f, m0, query):
+    #print x
+    #if isinstance(x, list):
+    #    score_list = map(lambda z: similar(z, f, m0, query), x)
+    #    return sum(score_list)
+    #else:
+    # if x in query:
+    if query in x:
+        score = 10 + SM(None, x, query).ratio() + m0 / formula2mass(f)
+    else:
+        score = SM(None, x, query).ratio() + m0 / formula2mass(f)
+    return score
+
+def formula2mass(f):
+    element_pat = re.compile("([A-Z][a-z]?)(\d*)")
+    all_elements = []
+    for (element_name, count) in element_pat.findall("CH3COOH"):
+        if count == "":
+            count = 1
+        else:
+            count = int(count)
+        all_elements.extend([element_name] * count)
+    return sum(map(lambda x: Masses[x], all_elements))
 
 def get_json_data_file(key_first_two, key):
     try:
@@ -208,7 +184,7 @@ pr.enable()
 browse("acid", "name", "1")
 pr.disable()
 s = StringIO.StringIO()
-sortby = 'cumulative'
+sortby = 'tottime'
 ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
 ps.print_stats()
 print s.getvalue()
