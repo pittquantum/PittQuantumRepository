@@ -3,6 +3,6 @@ pymongo
 Flask-Cache
 flask-mandrill
 Flask-Markdown
-redis
 uwsgi
 django-htmlmin
+ujson

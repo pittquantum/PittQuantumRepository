@@ -20,7 +20,7 @@ from settings import APP_JSON, APP_MOL2, APP_ARTICLES
 
 # Python library imports
 import os
-import json
+import ujson as json
 import markdown
 import datetime
 from difflib import SequenceMatcher as SM
@@ -565,22 +565,22 @@ def send_email(form):
 
 
 def similar(x, f, m0, query):
-    if isinstance(x, list):
-        score_list = map(lambda z: similar(z, f, m0, query), x)
-        return sum(score_list)
-    else:
+    #if isinstance(x, list):
+    #    score_list = map(lambda z: similar(z, f, m0, query), x)
+    #    return sum(score_list)
+    #else:
         # if x in query:
-        if query in x:
-            # Sort by similarity & mass
-            score = 10 + SM(None, x, query).ratio() + m0 / formula2mass(f)
-            # score = 10 + SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity
-            # score = 10 + m0/formula2mass(f) # Sort by increasing mass
-        else:
-            # Sort by similarity & mass
-            score = SM(None, x, query).ratio() + m0 / formula2mass(f)
-            # score = SM(None, x, query).ratio() # Sort by similarity
-            # score = m0/formula2mass(f) # Sort by increasing mass
-        return score
+    if query in x:
+        # Sort by similarity & mass
+        score = 10 + SM(None, x, query).ratio() + m0 / formula2mass(f)
+        # score = 10 + SM(None, x, query).ratio() + m0/formula2mass(f) # Sort by similarity
+        # score = 10 + m0/formula2mass(f) # Sort by increasing mass
+    else:
+        # Sort by similarity & mass
+        score = SM(None, x, query).ratio() + m0 / formula2mass(f)
+        # score = SM(None, x, query).ratio() # Sort by similarity
+        # score = m0/formula2mass(f) # Sort by increasing mass
+    return score
 
 
 def formula2mass(f):
