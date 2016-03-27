@@ -354,10 +354,17 @@ def browseAPI(query, searchType):
         results.append(i)
 
     if len(results) == 0:
-        cursor = db.molecules.find({"$text": {"$search": str(query)}})
+        cursor = db.molecules.find({"$text": {"$search": str(query)}}) 
         for i in cursor:
             i["mol2url"] = i["inchikey"][:2] + "/" + i["inchikey"]
-            results.append(i)
+            try:
+                i["json_data"] = get_json_data_file(i["inchikey"][:2], i["inchikey"])
+                results.append(i)
+            except:
+                if len(list(cursor)) == 0:
+                    rendered_html = "<html><body></body></html>"
+                    min_html = html_minify(rendered_html.encode('utf8'))
+                    return min_html
 
     # Find lightest molecule to normalize mass-based search
     # temp = sorted(map(lambda x: x["formula"], results), key=lambda x: formula2mass(x))
@@ -587,15 +594,15 @@ def send_email(form):
 
 
 def similar(x, f, m0, query):
-    #if isinstance(x, list):
-    #    score_list = map(lambda z: similar(z, f, m0, query), x)
-    #    return sum(score_list)
-    #else:
-        # if x in query:
-    if query in x:
-        score = 10 + ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
+    if isinstance(x, list):
+        score_list = map(lambda z: similar(z, f, m0, query), x)
+        return sum(score_list)
     else:
-        score = ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
+        # if x in query:
+        if query in x:
+            score = 10 + ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
+        else:
+	    score = ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
     return score
 
 def formula2mass(f):
