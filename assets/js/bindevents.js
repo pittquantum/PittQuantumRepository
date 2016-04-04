@@ -13,9 +13,7 @@ module.exports = (function() {
     require('browsernizr/test/storage/localstorage');
 
     let util = require('./util'),
-        //TODO: shouldn't need jquery...
         //Shouldnt even rely on DOM objects on its own! Should be passed nodes
-        //$ = require('jquery'),
         //TODO: probably don't need this lib, either
         threeDMole = require('./threeDMole'),
         modernizr = require('browsernizr'),
@@ -215,24 +213,6 @@ module.exports = (function() {
         $('#molecule-ajax-loader').on('click', function(){
             // TODO: this was commented out; molecules.show_results(10);
             molecule.ajaxSearch();
-        });
-    };
-
-    /**
-     *  When the bottom of the page hits the pagination add more with jquery
-     * @return {[type]} [description]
-     */
-    bindevents.onScollLoadMolecules = function() {
-        //TODO: was assigned var waypoints
-        new Waypoint({
-            element: document.getElementsByClassName('pagination')[0],
-            handler: function() {
-                if(molecule.requestToLoad()){
-                    molecule.ajaxSearch();
-                }
-                molecule.showResults(10);
-            },
-            offset: 'bottom-in-view' 
         });
     };
 

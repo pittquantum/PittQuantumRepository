@@ -7,9 +7,7 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 module.exports = (function() {
-    let //$ = require('jquery'),
-        bindevents = require('./bindevents'),
-        masonary = require('./masonary');
+    let animonscroll = require('./animonscroll');
     let molecule = {
         debug: false,
         nextPageNum: 2, //Page number for the next query
@@ -100,9 +98,7 @@ module.exports = (function() {
         if (this.results.length > 0) {
             $.each(this.results.splice(0, maxResults), function(key, value) {
                 $('#grid').append(value);
-                masonary.animateOnScroll(); //Allow the new items to be animated
-                //Add the event to the new items 
-                //bindevents.resultTouchHelper();
+                animonscroll.init(); //Allow the new items to be animated
             });
         }
     };

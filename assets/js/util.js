@@ -8,11 +8,8 @@
  */
 module.exports = (function() {
     //TODO: boostrap plugins seem unnecessary (and depend on jquery)
-    //require('bootstrap-notify');
     require('bootstrap');
-    let //$ = require('jquery'), //jquery already included with 3dmol
-        accessibility = require('../helpers/accessibility'),
-        classie = require('./classie'),
+    let accessibility = require('./accessibility'),
         modernizr = require('browsernizr');
     let util = {
         elementSymbols: ['h','he','li','be','b','c','n','o','f','ne','na','mg',
@@ -179,7 +176,7 @@ util.formStyleHelper = (function() {
         .forEach(function(inputEl) {
         // in case the input is already filled..
         if (inputEl.value.trim() !== '') {
-            classie.add(inputEl.parentNode, 'input--filled');
+            inputEl.parentNode.className += " input--filled";
         }
 
         // events:
@@ -188,13 +185,14 @@ util.formStyleHelper = (function() {
     });
 
     function onInputFocus(ev) {
-        classie.add(ev.target.parentNode.parentNode, 'input--filled');
+        ev.target.parentNode.parentNode.className += " input--filled";
     }
 
     function onInputBlur(ev) {
         if (ev.target.value.trim() === '') {
-            classie.remove(ev.target.parentNode.parentNode, 'input--filled');
-            classie.remove(ev.target.parentNode, 'input--filled');
+            let reg = new RegExp('(\\s|^)' + 'input--filled' + '(\\s|$)');
+            ev.target.parentNode.parentNode.className = ev.target.parentNode.parentNode.className.replace(reg, ' ')
+            ev.target.parentNode.className = ev.target.parentNode.className.replace(reg, ' ')
         }
     }
 })();

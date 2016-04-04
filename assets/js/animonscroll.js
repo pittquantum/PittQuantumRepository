@@ -1,18 +1,15 @@
-//TODO: wtf is this...
-
+'use strict';
 
 /**
- * animOnScroll.js v1.0.0
- * http://www.codrops.com
- *
- * Licensed under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- * 
- * Copyright 2013, Codrops
- * http://www.codrops.com
+ * @fileoverview Animating ajax on scroll
+ * @author JoshJRogan@gmail.com (Josh Rogan)
+ * @author ritwikg2004@live.com (Ritwik Gupta)
+ * @author jjnaughton93@gmail.com (JJ Naughton)
  */
-;( function( window ) {
-    'use strict';
+
+module.exports = (function() {
+    let modernizr = require('browsernizr');
+    
     var docElem = window.document.documentElement;
 
     function getViewportH() {
@@ -94,49 +91,42 @@
 
             var self = this;
 
-            imagesLoaded( this.el, function() {
-                
-                // initialize masonry
-                new Masonry( self.el, {
-                    itemSelector: 'li',
-                    transitionDuration : 0
-                } );
-                /*
-                if( Modernizr.cssanimations ) {
-                */
-                    // the items already shown...
-                    self.items.forEach( function( el, i ) {
-                        if( inViewport( el ) ) {
-                            self._checkTotalRendered();
-                            classie.add( el, 'shown' );
-                        }
-                    } );
+            if(modernizr.cssanimations) {
+                // the items already shown...
+                self.items.forEach(function(el, i) {
+                    if(inViewport(el)) {
+                        self._checkTotalRendered();
+                        el.className += " shown";
+                    }
+                });
 
-                    // animate on scroll the items inside the viewport
-                    window.addEventListener( 'scroll', function() {
-                        self._onScrollFn();
-                    }, false );
-                    window.addEventListener( 'resize', function() {
-                        self._resizeHandler();
-                    }, false );
-                /*
-                }
-                */
-
-            });
+                // animate on scroll the items inside the viewport
+                window.addEventListener('scroll', function() {
+                    self._onScrollFn();
+                }, false);
+                window.addEventListener('resize', function() {
+                    self._resizeHandler();
+                }, false);
+            }
         },
         _onScrollFn : function() {
             var self = this;
             if( !this.didScroll ) {
                 this.didScroll = true;
-                setTimeout( function() { self._scrollPage(); }, 60 );
+                setTimeout(function() {
+                    self._scrollPage();
+                }, 60 );
             }
         },
         _scrollPage : function() {
             var self = this;
-            this.items.forEach( function( el, i ) {
-                if( !classie.has( el, 'shown' ) && !classie.has( el, 'animate' ) && inViewport( el, self.options.viewportFactor ) ) {
-                    setTimeout( function() {
+            this.items.forEach( function(el, i) {
+                //check for classes
+                var hasShown = (' ' + el.className + ' ').indexOf(' ' + 'shown' + ' ') > -1;
+                var hasAnimate = (' ' + el.className + ' ').indexOf(' ' + 'animate' + ' ') > -1;
+
+                if(!hasShown && !hasAnimate && inViewport(el, self.options.viewportFactor)) {
+                    setTimeout(function() {
                         var perspY = scrollY() + getViewportH() / 2;
                         self.el.style.WebkitPerspectiveOrigin = '50% ' + perspY + 'px';
                         self.el.style.MozPerspectiveOrigin = '50% ' + perspY + 'px';
@@ -144,14 +134,15 @@
 
                         self._checkTotalRendered();
 
-                        if( self.options.minDuration && self.options.maxDuration ) {
-                            var randDuration = ( Math.random() * ( self.options.maxDuration - self.options.minDuration ) + self.options.minDuration ) + 's';
+                        if(self.options.minDuration && self.options.maxDuration) {
+                            var randDuration = (Math.random() * (self.options.maxDuration - self.options.minDuration) + self.options.minDuration) + 's';
                             el.style.WebkitAnimationDuration = randDuration;
                             el.style.MozAnimationDuration = randDuration;
                             el.style.animationDuration = randDuration;
                         }
                         
-                        classie.add( el, 'animate' );
+                        //add class
+                        el.className += " animate";
                     }, 25 );
                 }
             });
@@ -174,9 +165,21 @@
                 window.removeEventListener( 'scroll', this._onScrollFn );
             }
         }
-    }
+    };
 
-    // add to global namespace
-    window.AnimOnScroll = AnimOnScroll;
+    //module object:
+    let animonscroll = {};
 
-} )( window );
+    animonscroll.init = function() {
+        new AnimOnScroll(document.getElementById('grid'), {
+            minDuration: 0.4,
+            maxDuration: 0.7,
+            viewportFactor: 0.2
+        });
+    };
+
+
+    //return module
+    return animonscroll;
+
+})();

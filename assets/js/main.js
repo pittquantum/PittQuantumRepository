@@ -19,16 +19,17 @@
 //modernizr/browsernizr tests
 require('browsernizr/test/webgl');
 require('browsernizr/test/storage/localstorage');
+require('browsernizr/test/css/animations');
 
 let //$ = require('jquery'),
     modernizr = require('browsernizr'),
-    bindevents = require('./libs/bindevents'),
-    autocomplete = require('./libs/autocomplete'),
-    qrgen = require('./libs/qrgen'),
-    masonary = require('./libs/masonary'),
-    molecule = require('./libs/molecule'),
-    util = require('./libs/util'),
-    threeDMole = require('./libs/threeDMole');
+    bindevents = require('./bindevents'),
+    autocomplete = require('./autocomplete'),
+    qrgen = require('./qrgen'),
+    animonscroll = require('./animonscroll'),
+    molecule = require('./molecule'),
+    util = require('./util'),
+    threeDMole = require('./threeDMole');
 
 /**
  * Initializes the application.
@@ -83,11 +84,10 @@ function init() {
         //Only Start AJAX if there are results
         if($('#molecule-browser').attr('data-has-results') === "true"){
             console.log('has molecule browser');
-            masonary.init();
+            animonscroll.init();
             molecule.initAjaxSearch();
             $('.molecule-results-masonary').removeClass('translucent');
             bindevents.ajaxTimer();
-            bindevents.onScollLoadMolecules();
             bindevents.ajaxLoadButton();
             bindevents.resultTouchHelper();
         }

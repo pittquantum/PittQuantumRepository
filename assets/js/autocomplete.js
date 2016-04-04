@@ -11,7 +11,6 @@
  */
 module.exports = (function() {
     let util = require('./util');
-        //$ = require('jquery');
 
     let autocomplete = {
         debug: true,

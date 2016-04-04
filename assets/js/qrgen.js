@@ -7,8 +7,6 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 module.exports = (function() {
-    //let $ = require('jquery');
-
     let config = {
         element: null,
         defaultOptions: {

@@ -10,7 +10,6 @@
 //TODO: modularize 3dmol lib at the end of its file
 
 module.exports = (function() {
-    //let $ = require('jquery');
     //TODO: this should be a module..
     //let 3Dmol = require('../3Dmol/3Dmol-nojquery');
     //TODO: these should be vars..
