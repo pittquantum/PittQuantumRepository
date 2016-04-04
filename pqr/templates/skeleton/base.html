@@ -131,7 +131,8 @@
     {% block lazyScripts %}
     <!-- Contains all of the files -->
     <!--TODO: move when 3dmol is modularized and we don't need jquery or bootstrap-->
-    <script src="http://3Dmol.csb.pitt.edu/build/3Dmol-min.js"></script>
+    <!--TODO: Mixed origins <script src="http://3Dmol.csb.pitt.edu/build/3Dmol-min.js"></script>-->
+    <script src="/static/js/3Dmol-min.js"></script>
     <!--manually include bootstrap-notify-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
     <!--manually include jquery qrcode-->
