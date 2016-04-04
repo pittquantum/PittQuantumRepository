@@ -599,10 +599,13 @@ def similar(x, f, m0, query):
         return sum(score_list)
     else:
         # if x in query:
-        if query in x:
-            score = 10 + ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
-        else:
-	    score = ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
+        try:
+            if query in x:
+                score = 10 + ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
+            else:
+	            score = ratio(x.encode('utf8', 'ignore'), query.encode('utf8', 'ignore')) + m0 / formula2mass(f)
+        except ZeroDivisionError:
+            score = 100
     return score
 
 def formula2mass(f):
