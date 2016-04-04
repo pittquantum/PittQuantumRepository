@@ -97,6 +97,7 @@ module.exports = (function() {
             $("#molecule-details table .detailed").fadeOut('fast');
             if (modernizr.localstorage) {
                 localStorage.setItem("moleculeLayout", "simple");
+                localStorage.setItem("moleculeLayout", "simple");
             }
             util.bootstrapFeedback("Switched to simple view",
             "feedback", "fa-desktop");
@@ -186,8 +187,7 @@ module.exports = (function() {
                 $(this).addClass('disabled btn-success');
                 $(this).removeClass('btn-danger');
                 $(this).html('Surface Removed');
-                util.bootstrapFeedback("Surface removed. Reload to add surface",
-                    "feedback", "fa-desktop");
+                    //"feedback", "fa-desktop");
             });
         }
     };
@@ -224,14 +224,15 @@ module.exports = (function() {
      */
     bindevents.onScollLoadMolecules = function() {
         //TODO: was assigned var waypoints
-        $('.pagination, footer').waypoint({
+        new Waypoint({
+            element: document.getElementsByClassName('pagination')[0],
             handler: function() {
                 if(molecule.requestToLoad()){
                     molecule.ajaxSearch();
                 }
                 molecule.showResults(10);
             },
-            offset: 'bottom-in-view'
+            offset: 'bottom-in-view' 
         });
     };
 

@@ -102,7 +102,8 @@ module.exports = (function() {
                 $('#grid').append(value);
                 masonary.animateOnScroll(); //Allow the new items to be animated
                 //Add the event to the new items 
-                bindevents.resultTouchHelper();            });
+                //bindevents.resultTouchHelper();
+            });
         }
     };
 
