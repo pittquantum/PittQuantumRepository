@@ -20,4 +20,4 @@ pqv.amount_mol = db.molecules.count()
 client.close()
 
 if __name__ == '__main__':
-    pqr.run(debug=True)
+    pqr.run(debug=False)
