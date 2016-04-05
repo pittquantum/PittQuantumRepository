@@ -91,23 +91,21 @@ module.exports = (function() {
 
             var self = this;
 
-            if(modernizr.cssanimations) {
-                // the items already shown...
-                self.items.forEach(function(el, i) {
-                    if(inViewport(el)) {
-                        self._checkTotalRendered();
-                        el.className += " shown";
-                    }
-                });
+            // the items already shown...
+            self.items.forEach(function(el, i) {
+                if(inViewport(el)) {
+                    self._checkTotalRendered();
+                    el.className += " shown";
+                }
+            });
 
-                // animate on scroll the items inside the viewport
-                window.addEventListener('scroll', function() {
-                    self._onScrollFn();
-                }, false);
-                window.addEventListener('resize', function() {
-                    self._resizeHandler();
-                }, false);
-            }
+            // animate on scroll the items inside the viewport
+            window.addEventListener('scroll', function() {
+                self._onScrollFn();
+            }, false);
+            window.addEventListener('resize', function() {
+                self._resizeHandler();
+            }, false);
         },
         _onScrollFn : function() {
             var self = this;
@@ -168,9 +166,9 @@ module.exports = (function() {
     };
 
     //module object:
-    let animonscroll = {};
+    let scrollload = {};
 
-    animonscroll.init = function() {
+    scrollload.init = function() {
         new AnimOnScroll(document.getElementById('grid'), {
             minDuration: 0.4,
             maxDuration: 0.7,
@@ -180,6 +178,6 @@ module.exports = (function() {
 
 
     //return module
-    return animonscroll;
+    return scrollload;
 
 })();

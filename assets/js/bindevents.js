@@ -71,13 +71,11 @@ module.exports = (function() {
                 if (toggle.hasClass('fa-toggle-on')) {
                     toggle.removeClass('fa-toggle-on');
                     toggle.addClass('fa-toggle-off');
-                    util.bootstrapFeedback("Rotation deactivated",
-                        "feedback", "fa-refresh");
+                    util.bootstrapFeedback("Rotation deactivated", "fa-refresh");
                 } else {
                     toggle.removeClass('fa-toggle-off');
                     toggle.addClass('fa-toggle-on');
-                    util.bootstrapFeedback("Rotation activated",
-                        "feedback", "fa-refresh");
+                    util.bootstrapFeedback("Rotation activated", "fa-refresh");
                 }
             });
         }
@@ -88,9 +86,7 @@ module.exports = (function() {
      *  the local storate to reflect the changes.
      */
     bindevents.propertiesViewerHandler = function() {
-        console.log('binding...');
         $("#simpleView").on("click vclick", function(event) {
-            console.log("clicked simple");
             event.preventDefault();
             $("#molecule-details table .detailed").fadeOut('fast');
             if (modernizr.localstorage) {
@@ -101,7 +97,6 @@ module.exports = (function() {
             "feedback", "fa-desktop");
         });
         $("#detailedView").on("click vclick", function(event) {
-            console.log("clicked detailed");
             event.preventDefault();
             $("#molecule-details table .detailed").removeClass('hidden');
             $("#molecule-details table .detailed").fadeIn('fast');
@@ -230,17 +225,6 @@ module.exports = (function() {
                 }
             }
         }, 1000);
-    };
-
-    /**
-     * Fire a click if a user taps a result molecule
-     */
-    bindevents.resultTouchHelper = function(){
-        if($('.result').length){
-            $('.result').on('tap', function(){
-                console.log($(this));
-            });
-        }
     };
 
     /**

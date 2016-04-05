@@ -32,7 +32,6 @@ module.exports = (function() {
      */
     threeDMole.initViewers = function() {
 
-        console.log('init firing');
         threeDMole.allViewers = $3Dmol.viewers;
         $.each(threeDMole.allViewers, function(index, viewer) {
             threeDMole.clearBackgrounds(viewer);
@@ -43,7 +42,6 @@ module.exports = (function() {
                 var dipoleThree = $('#dipoleThree').data()["value"];
 
                 threeDMole.addArrow(viewer, dipoleOne, dipoleTwo, dipoleThree);
-                console.log(dipoleOne);
                 viewer.render();
             }
             // pqr.threeDMole.rotate(viewer);

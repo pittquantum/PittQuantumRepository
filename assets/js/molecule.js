@@ -7,7 +7,7 @@
  * @author jjnaughton93@gmail.com (JJ Naughton)
  */
 module.exports = (function() {
-    let animonscroll = require('./animonscroll');
+    let scrollload = require('./scrollload');
     let molecule = {
         debug: false,
         nextPageNum: 2, //Page number for the next query
@@ -98,7 +98,8 @@ module.exports = (function() {
         if (this.results.length > 0) {
             $.each(this.results.splice(0, maxResults), function(key, value) {
                 $('#grid').append(value);
-                animonscroll.init(); //Allow the new items to be animated
+                //Allow the new items to be animated
+                scrollload.init(); 
             });
         }
     };

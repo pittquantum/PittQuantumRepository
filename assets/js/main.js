@@ -4,9 +4,7 @@
     //TODO: all lib functions should be module-system agnostic...
     //So set to var and use a mod export like mithril does...
     //add 'use strict' to everything
-    //remove vendors garbage asap
     //TODO: add unit simple unit tests and hook up with gulp
-    //where is classie used...
 
 /**
  * @fileoverview main entry point for pqr site.
@@ -16,6 +14,7 @@
  */
 
 //TODO: this is ugly...
+require('./polyfill');
 //modernizr/browsernizr tests
 require('browsernizr/test/webgl');
 require('browsernizr/test/storage/localstorage');
@@ -26,7 +25,7 @@ let //$ = require('jquery'),
     bindevents = require('./bindevents'),
     autocomplete = require('./autocomplete'),
     qrgen = require('./qrgen'),
-    animonscroll = require('./animonscroll'),
+    scrollload = require('./scrollload'),
     molecule = require('./molecule'),
     util = require('./util'),
     threeDMole = require('./threeDMole');
@@ -38,11 +37,8 @@ function init() {
     util.FullToolTipOptIn();
     util.initFontSize();
     bindevents.bindFontSwitchers();
-    //TODO: what is this:
-    // htmlutilities.footerToBottom('footer', '#main');
     //TODO: lots of stuff runs on all conditions?
     if ($("#main").hasClass("page-home")) {
-        console.log('has page home');
         threeDMole.initViewers();
         /*
          //is this necessary
@@ -54,7 +50,10 @@ function init() {
         util.updatePropertiesViewer();
         //TODO: should probably pass in DOM instead of accessors...
         //at least should pass in vars instead of strings.
-        util.initQuickFit("#molecule-name", {min: 12, max:36});
+        util.initQuickFit("#molecule-name", {
+            min: 12,
+            max:36
+        });
         bindevents.propertiesViewerHandler();
         bindevents.moleculeStyleChanger();
         bindevents.moleculeReset('#reset-molecule');
@@ -63,7 +62,6 @@ function init() {
         bindevents.printButton('#print-molecule');
     }
     else if ($("#main").hasClass("page-molecule")) {
-        console.log('has page molecule');
         threeDMole.initViewers();
         util.updatePropertiesViewer();
         //TODO: should probably pass in DOM instead of accessors...
@@ -75,28 +73,24 @@ function init() {
         bindevents.moleculeToggleRotation('#rotationSwitch');
         bindevents.moleculeToggleSurface('.surfaceSwitch');
         bindevents.printButton('#print-molecule');
-        qrgen.addQRCode("#qrcode", util.getQRURL());
-        qrgen.addQRCode("#qr-print-wrapper", util.getQRURL());
+        qrgen.addQRCode("qrcode", util.getQRURL());
+        qrgen.addQRCode("qr-print-wrapper", util.getQRURL());
     }
     else if($("#main").hasClass("page-browse")){
-        console.log('has page browse');
         //autocomplete.init();
         //Only Start AJAX if there are results
         if($('#molecule-browser').attr('data-has-results') === "true"){
-            console.log('has molecule browser');
-            animonscroll.init();
+            scrollload.init();
             molecule.initAjaxSearch();
             $('.molecule-results-masonary').removeClass('translucent');
             bindevents.ajaxTimer();
             bindevents.ajaxLoadButton();
-            bindevents.resultTouchHelper();
         }
     }
 }
 
 // onready: init
 $(document).ready(function() {
-    console.log('ready');
     //no webgl support
     if (!modernizr.localstorage || !modernizr.webgl) {
         util.redirectNoWebGL();

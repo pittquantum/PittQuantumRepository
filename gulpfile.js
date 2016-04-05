@@ -65,12 +65,10 @@ gulp.task('js', function () {
             .pipe(source('pqr.min.js'))
             .pipe(jshint())
             .pipe(buffer())
-            /*
             //TODO: how to work this with console...
             .pipe(sourcemaps.init())
             .pipe(uglify())
             .pipe(sourcemaps.write())
-            */
             .pipe(gulp.dest(paths.dist + paths.js));
     });
 });
