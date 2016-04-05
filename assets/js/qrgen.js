@@ -16,22 +16,32 @@ module.exports = (function() {
      * @param {String} The selector the element to place the generated QR Code
      * @param {String} url      The end of the URL to send to
      */
-    qrgen.addQRCode = function(id, url) {
+    function addQRCode(id, size, url) {
         let parent = document.getElementById(id);
         if (parent) {
             //qr code data
-            let qrCode = qr.qrcode(6, 'M');
+            let qrCode = qr.qrcode(size, 'M');
             qrCode.addData(url);
             //generate code
             qrCode.make();
             //create img tag from code
-            let table = qrCode.createImgTag(6);
+            let table = qrCode.createImgTag(size);
             //add table to parent container
             parent.innerHTML = table;
         }
         else {
-            console.log("Couldn't find the selector", selector);
+            console.log("Couldn't find the id: " + id);
         }
+    }
+    qrgen.addQRCodeMolecule = function(url) {
+        let id = "qrcode";
+        let size = 6;
+        addQRCode(id, size, url);
+    };
+    qrgen.addQRCodePrint = function(url) {
+        let id = "qr-print-wrapper";
+        let size = 2;
+        addQRCode(id, size, url);
     };
     return qrgen;
 })();

@@ -73,8 +73,8 @@ function init() {
         bindevents.moleculeToggleRotation('#rotationSwitch');
         bindevents.moleculeToggleSurface('.surfaceSwitch');
         bindevents.printButton('#print-molecule');
-        qrgen.addQRCode("qrcode", util.getQRURL());
-        qrgen.addQRCode("qr-print-wrapper", util.getQRURL());
+        qrgen.addQRCodeMolecule(util.getQRURL());
+        qrgen.addQRCodePrint(util.getQRURL());
     }
     else if($("#main").hasClass("page-browse")){
         //autocomplete.init();
