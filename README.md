@@ -37,7 +37,7 @@ The first time you run the server, or any time you update the data in the folder
 ### Current Tasks
 - `gulp less`: compiles and watches less files
 - `gulp js`: compiles and watches js files
-- `gulp compile`: both `less` and `js` command. Both are minified and included with sourcemaps in DEV, TEST, and PROD.
+- `gulp compile`: both `less` and `js` command. (Both are minified and included with sourcemaps in DEV, TEST, and PROD.)
 - `gulp test`: runs tape testing
 
 ### Install
