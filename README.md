@@ -17,11 +17,11 @@ To run PQR locally, do the following:
 Also ensure you `scp` the `prq/static/data` folder from the server over VPN.
 
 ## Starting the Server
-###Production
+### Production
 Start the server by running `uwsgi pqr.ini`. Use `sudo nohup uwsgi pqr.ini &` to let it run in the background.
 If you are running for the first time, follow the steps below instead!
 
-###Development
+### Development
 Start the server by running `./server.py [PORT NUMBER] [dev/prod]` on Linux systems. On Windows, run `.\venv\Scripts\python .\server.py [PORT NUMBER] [dev/prod]`.
 
 ## First run/Data update
