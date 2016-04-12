@@ -73,26 +73,6 @@
     </h1> {%endif%}
     <!--3DMol Viewer Container-->
     <div id="molecule-viewer" class="col-sm-12 col-md-7 col-md-push-5">
-	<div class="panel-heading molecule-switchview molecule-buttons text-center">
-	    <!-- Normal Screen Buttons  -->
-	    <div class="btn-group btn-group-sm hidden-xs hidden-sm" role="group">
-		<button type="button" class="btn btn-primary changeStyleSphere">Spheres</button>
-		<button type="button" class="btn btn-primary changeStyleLine">Lines</button>
-		<button type="button" class="btn btn-primary changeStyleStick">Sticks</button>
-		<button type="button" class="btn btn-danger surfaceSwitch">Remove Surface</button>
-	    </div>
-	    <!-- Normal Screen Buttons  -->
-
-	    <!-- Small Screen Buttons  -->
-	     <div class="visible-xs visible-sm mobile">
-		<button type="button" class="btn btn-primary changeStyleSphere">Spheres</button>
-		<button type="button" class="btn btn-primary changeStyleLine">Lines</button>
-		<button type="button" class="btn btn-primary changeStyleStick">Sticks</button>
-		<button type="button" class="btn btn-danger surfaceSwitch">Remove Surface</button>
-	    </div>
-	    <!-- Small Screen Buttons  -->
-
-	</div>
         <div class='viewer_3Dmoljs' data-href='/static/data/mol2/{{mol2}}.mol2' data-type='mol2' data-backgroundcolor='0xffffff' data-surface1='opacity:.8;color:white' data-style='{{style}}'></div>
     </div>
     <!--3DMol Viewer Container-->
@@ -314,6 +294,27 @@
                             {%endif%}
                         </tbody>
                     </table>
+                </div>
+                <div class="panel-footer molecule-switchview block-center center-block text-center">
+                    <!-- Normal Screen Buttons  -->
+                    <div class="btn-group btn-group-sm hidden-xs hidden-sm" role="group">
+                        <button type="button" class="btn btn-primary changeStyleSphere">Spheres</button>
+                        <button type="button" class="btn btn-primary changeStyleLine">Lines</button>
+                        <button type="button" class="btn btn-primary changeStyleStick">Sticks</button>
+                        <button type="button" class="btn btn-danger surfaceSwitch">Remove Surface</button>
+                    </div>
+                    <!-- Normal Screen Buttons  -->
+
+                    <!-- Small Screen Buttons  -->
+                     <div class="visible-xs visible-sm mobile">
+                        <button type="button" class="btn btn-primary changeStyleSphere">Spheres</button>
+                        <button type="button" class="btn btn-primary changeStyleLine">Lines</button>
+                        <button type="button" class="btn btn-primary changeStyleStick">Sticks</button>
+                        <button type="button" class="btn btn-danger surfaceSwitch">Remove Surface</button>
+                    </div>
+                    <!-- Small Screen Buttons  -->
+
+
                 </div>
             </div>
         </div>
