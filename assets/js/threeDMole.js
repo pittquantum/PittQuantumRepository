@@ -31,10 +31,13 @@ module.exports = (function() {
      * @param  {Object} config optional config to override default settings
      */
     threeDMole.initViewers = function() {
+        $3Dmol.syncSurface = false;
 
         threeDMole.allViewers = $3Dmol.viewers;
         $.each(threeDMole.allViewers, function(index, viewer) {
             threeDMole.clearBackgrounds(viewer);
+            viewer.setViewStyle({style: "outline", color: "black", width: 0.03});
+            viewer.render();
 /*
             if ($('#dipoleOne').length) {
                 var dipoleOne = $('#dipoleOne').data()["value"];
