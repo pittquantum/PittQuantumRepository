@@ -35,7 +35,7 @@ module.exports = (function() {
     }
     qrgen.addQRCodeMolecule = function(url) {
         let id = "qrcode";
-        let size = 6;
+        let size = 2;
         addQRCode(id, size, url);
     };
     qrgen.addQRCodePrint = function(url) {
