@@ -28,6 +28,7 @@ let //$ = require('jquery'),
     scrollload = require('./scrollload'),
     molecule = require('./molecule'),
     util = require('./util'),
+    chemdoodle = require('./chemdoodle'),
     threeDMole = require('./threeDMole');
 
 /**
@@ -36,6 +37,7 @@ let //$ = require('jquery'),
 function init() {
     util.FullToolTipOptIn();
     util.initFontSize();
+    chemdoodle.init();
     bindevents.bindFontSwitchers();
     //TODO: lots of stuff runs on all conditions?
     if ($("#main").hasClass("page-home")) {
