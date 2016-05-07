@@ -28,6 +28,9 @@ from Levenshtein import ratio
 # Regular expressions for chemical formula parsing
 import re
 
+# Pybel
+import pybel
+
 cache = Cache(pqr, config={'CACHE_TYPE': 'simple'})
 cache.init_app(pqr)
 
