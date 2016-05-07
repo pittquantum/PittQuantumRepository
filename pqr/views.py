@@ -442,6 +442,13 @@ def inchiAPI():
 ##########################################################################
 
 
+@pqr.route('/api/mti', strict_slashes=False, methods=['POST'])
+def mol_to_smiles():
+    mol_str = request.form['mol']
+    p_obj = pybel.readstring("mol", mol_str)
+    ikey = p_obj.write("inchikey")
+    return ikey
+
 @pqr.route('/contact', methods=['POST', 'GET'], strict_slashes=False)
 @cache.cached(timeout=259200)
 def contact():
