@@ -127,31 +127,6 @@ module.exports = (function() {
         threeDMole.allViewers[0].render();
     };
 
-    threeDMole.changeSurface = function(newSurface) {
-        var viewer = threeDMole.allViewers[0];
-        if(viewer) {
-            if (newSurface == "none") {
-                viewer.removeAllSurfaces();
-            }
-            else if (newSurface == "simple") {
-                viewer.removeAllSurfaces();
-                var sty = {
-                            opacity:.8,
-                            color:'white'
-                        };
-                viewer.addSurface($3Dmol.SurfaceType.VDW, sty, {});  
-            }
-            else if (newSurface == "electrostatics") {
-                viewer.removeAllSurfaces();
-                var sty = {
-                            opacity:.85,
-                            volscheme: new $3Dmol.Gradient.RWB(-10,10)
-                        };
-                viewer.addSurface($3Dmol.SurfaceType.VDW, sty, {}); 
-            }
-            viewer.render();
-        }
-    };
     /**
      * Change the layout style of the selected viewer
      * @param  {String} newStyle - the type of style to change this viewer to
