@@ -14,7 +14,7 @@ from flask.ext.mandrill import Mandrill
 from pymongo import MongoClient
 
 # PQR specific imports
-from pqr import pqr, secret_config
+from pqr import pqr#, secret_config
 
 from settings import APP_JSON, APP_MOL2, APP_ARTICLES
 
@@ -33,7 +33,7 @@ cache.init_app(pqr)
 
 redirect_table = {}
 amount_mol = None
-MOLECULE_OF_THE_WEEK = 'GZCGUPFRVQAUEE-SLPGGIOYSA-N'
+MOLECULE_OF_THE_WEEK = 'ULGZDMOVFRHVEP-RWJQBGPGSA-N'
 WEEKLY_MOL_NAME = None
 pqr.debug = True
 
@@ -97,11 +97,11 @@ def index():
     idx = (today.weekday() + 1) % 7
     sun = today - datetime.timedelta(7+idx)
 
-    if last_updated_wm < sun:
-        weekly_mol = get_weekly_molecule_list()[-1].split(',')
-        MOLECULE_OF_THE_WEEK = weekly_mol[0]
-        WEEKLY_MOL_NAME = weekly_mol[1]
-        last_updated_wm = today
+    # if last_updated_wm < sun:
+    #     weekly_mol = get_weekly_molecule_list()[-1].split(',')
+    #     MOLECULE_OF_THE_WEEK = weekly_mol[0]
+    #     WEEKLY_MOL_NAME = weekly_mol[1]
+    #     last_updated_wm = today
 
     week_mol = (MOLECULE_OF_THE_WEEK[:2] + "/" + MOLECULE_OF_THE_WEEK)
 

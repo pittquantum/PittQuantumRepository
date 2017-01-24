@@ -167,6 +167,68 @@ module.exports = (function() {
                     "feedback", "fa-desktop");
             });
         }
+        if ($('.changeStyleBallsAndSticks').length) {
+            $('.changeStyleBallsAndSticks').on("click vclick", function(event) {
+                event.preventDefault();
+                threeDMole.changeStyle("ballstick");
+                if (modernizr.localstorage) {
+                    localStorage.setItem("moleculeViewerlayout", "sticks");
+                }
+
+                util.bootstrapFeedback("Switched to balls and sticks display ",
+                    "feedback", "fa-desktop");
+            });
+        }
+    };
+
+    /**
+     * Binds the buttons to change the surface of the molecule between none,
+     * simple or electrostatics.
+     */
+    bindevents.moleculeSurfaceChanger = function() {
+        if ($('.changeSurfaceNone').length) {
+            $('.changeSurfaceNone').on("click vclick", function(event) {
+                event.preventDefault();
+                threeDMole.changeSurface("none");
+                /*
+                //TODO: this was commented out
+                    if (modernizr.localstorage) {
+                        localStorage.setItem("moleculeViewerlayout", "spheres");
+                    }
+                */
+                util.bootstrapFeedback("Switched to no surface ",
+                    "feedback", "fa-desktop");
+            });
+        }
+        if ($('.changeSurfaceSimple').length) {
+            $('.changeSurfaceSimple').on("click vclick", function(event) {
+                event.preventDefault();
+                threeDMole.changeSurface("simple");
+                /*
+                //TODO: this was commented out
+                if (modernizr.localstorage) {
+                    localStorage.setItem("moleculeViewerlayout", "lines");
+                }
+                */
+                util.bootstrapFeedback("Switched to simple surface ",
+                    "feedback", "fa-desktop");
+            });
+        }
+        if ($('.changeSurfaceElectrostatics').length) {
+            $('.changeSurfaceElectrostatics').on("click vclick", function(event) {
+                event.preventDefault();
+                threeDMole.changeSurface("electrostatics");
+                /*
+                TODO: this was commented out...
+                if (modernizr.localstorage) {
+                    localStorage.setItem("moleculeViewerlayout", "crosses");
+                }
+                */
+                util.bootstrapFeedback("Switched to electrostatics surface ",
+                    "feedback", "fa-desktop");
+            });
+        }
+        
     };
     /**
      * Deactive the surface of the viewer.

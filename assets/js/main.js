@@ -56,6 +56,7 @@ function init() {
         });
         bindevents.propertiesViewerHandler();
         bindevents.moleculeStyleChanger();
+        bindevents.moleculeSurfaceChanger();
         bindevents.moleculeReset('#reset-molecule');
         bindevents.moleculeToggleRotation('#rotationSwitch');
         bindevents.moleculeToggleSurface('.surfaceSwitch');
@@ -69,6 +70,7 @@ function init() {
         util.initQuickFit("#molecule-name", {min: 12, max:36});
         bindevents.propertiesViewerHandler();
         bindevents.moleculeStyleChanger();
+        bindevents.moleculeSurfaceChanger();
         bindevents.moleculeReset('#reset-molecule');
         bindevents.moleculeToggleRotation('#rotationSwitch');
         bindevents.moleculeToggleSurface('.surfaceSwitch');
