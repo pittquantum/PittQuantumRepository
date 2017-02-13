@@ -102,7 +102,7 @@
                 <div class="panel-heading">
                     <h2>Properties
                       <span class='pull-right properties-view-options'> 
-                        <a href="#" id="simpleView">Simple</a> | <a href="#" id="detailedView">Detailed</a>
+                        <a href="#" id="simpleView">Simple</a> | <a href="#" id="detailedView">Detailed</a> | <a href="#" id="toggleOrbitals">Orbitals</a>
                         </span>
                     </h2>
                 </div>
@@ -294,6 +294,12 @@
                             {%endif%}
                         </tbody>
                     </table>
+                    <div id='orbitals' hidden>
+                        <canvas id='orbitalsCanvas'></canvas>
+                        <menu>
+                            <a id='orbitalZoomOut' href="#"> Zoom Out </a>
+                        </menu>
+                    </div>
                 </div>
                 <div class="panel-footer molecule-switchview block-center center-block text-center">
                     <!-- Normal Screen Buttons  -->
@@ -344,5 +350,12 @@
         </div>
     </section>
 </div>
+{%if jsonDict["pm7"]["orbitals"] and jsonDict["pm7"]["homo"] and jsonDict["pm7"]["lumo"]%}
+<script> 
+    var orbitalData = {{ jsonDict["pm7"]["orbitals"]|tojson }};
+    var homo = {{jsonDict["pm7"]["homo"]|tojson}};
+    var lumo = {{jsonDict["pm7"]["lumo"]|tojson}};
+</script>
+{% endif %}
 {%- endmacro %}
 <!-- Main view of a molecule -->

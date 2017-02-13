@@ -141,11 +141,155 @@ module.exports = (function() {
                 //Probably not necessary
                 $("#molecule-details table .detailed").removeClass("hidden");
             }
-            else {
+            else if(localStorage.getItem("moleculeLayout") === "simple") {
                 $("#molecule-details table .detailed").addClass("hidden");
+            }
+            else{
+                $("#molecule-details table").hide();
+                $("#molecule-details #orbitals").show();
             }
         }
     };
+
+    /**
+    * Generates the orbital diagram for the molecule.
+    */
+    util.generateOrbitalDiagram = function(homo_range,lumo_range) {
+        function fitToContainer(canvas){
+          // Make it visually fill the positioned parent
+          canvas.style.width ='100%';
+          canvas.style.height='100%';
+          // ...then set the internal size to match
+          canvas.height = 500;
+          canvas.width = 400;
+        };
+        function maxOfArray(numArray) {
+          return Math.max.apply(null, numArray);
+        };
+        function minOfArray(numArray) {
+          return Math.min.apply(null, numArray);
+        };
+        function convertRange(originalStart, originalEnd, newStart, newEnd, value, proportion)
+        {
+            var originalRange = originalEnd - originalStart;
+            var newRange = newEnd - newStart;
+            var ratio = newRange / originalRange;
+            var newValue = value * ratio * proportion;
+            var finalValue = newValue + newStart;
+            return finalValue;
+        }
+        function generateOrbitalsCoordinates(orbitals){
+            var thresh = 0.02;
+
+            // get the energy range
+            var minE = orbitals[0];
+            var maxE = orbitals[0];
+            orbitals.forEach(function(e){
+                minE = Math.min(minE, e);
+                maxE = Math.max(maxE, e);
+            });
+
+            var spanE = maxE - minE;
+            // add 10% margin
+            minE = minE - spanE * 0.05;
+            maxE = maxE + spanE * 0.05;
+
+            var x = Array.apply(null, Array(orbitals.length)).map(Number.prototype.valueOf,0.0);
+            var y = Array.apply(null, Array(orbitals.length)).map(Number.prototype.valueOf,0.0);
+            for(var a=0; a< orbitals.length; a++){
+                y[a] = (maxE - orbitals[a]);
+                for(var b=a+1; b < orbitals.length; b++){
+                    if(Math.abs(orbitals[a] - orbitals[b]) < thresh){
+                        x[a] = x[a] - 3.5;
+                        x[b] = x[b] + 3.5;
+                    }
+
+                }
+            }
+
+
+            var map = {}
+            for(var a=0; a< orbitals.length; a++){
+                map[parseFloat(orbitals[a])] = {'x1':x[a],'y1':y[a]};
+            }
+            return map
+
+        }
+
+        //Draw orbitals within some energy range. Initially this will be between homo-5 and lumo+2
+        function drawOrbitals(canvas,orbitalMap,homo,lumo,homo_range,lumo_range){
+            function withinRange(value) {
+              return value >= homo+homo_range && value <= lumo+lumo_range;
+            }
+
+            var filtered = Object.keys(orbitalMap).filter(withinRange);
+            var minX = orbitalMap[filtered[0]]['x1'];
+            var maxX = minX;
+            filtered.forEach(function(e){
+                minX = Math.min(minX, orbitalMap[e]['x1']);
+                maxX = Math.max(maxX, orbitalMap[e]['x1']);
+            });
+
+            var rangeX = maxX - minX;
+            minX = minX - rangeX * 0.05;
+            maxX = maxX + rangeX * 0.05
+            rangeX = rangeX * 1.1;
+
+            var maxE = maxOfArray(Object.keys(orbitalMap));
+            var minE = minOfArray(Object.keys(orbitalMap));
+            var spanE = maxE - minE;
+            minE = minE - spanE * 0.05;
+            maxE = maxE + spanE * 0.05;
+
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.globalCompositeOperation = "destination-over"
+            ctx.lineWidth = 1;
+            var cw=canvas.width;
+            var ch=canvas.height;
+            var coordinates = {};
+            var scrWidthLow = cw*.25;
+            var scrWidthHigh = cw*.75;
+            var scrHeightLow = 0;
+            var scrHeightHigh = ch;
+            filtered.forEach(function(e){
+                coordinates = orbitalMap[e];
+                var x1 = convertRange(minX,maxX,scrWidthLow,scrWidthHigh,coordinates['x1']-minX-1,1);
+                var x2 = convertRange(minX,maxX,scrWidthLow,scrWidthHigh,coordinates['x1']-minX+1,1);
+                var y1 = convertRange(minE,maxE,scrHeightLow,scrHeightHigh,coordinates['y1'],1);
+                console.log(e,y1);
+                ctx.beginPath();
+                ctx.moveTo(x1,y1);
+                ctx.lineTo(x2,y1);
+                if(parseFloat(e) === homo){
+                    console.log([parseFloat(e),homo,lumo])
+                    ctx.strokeStyle = '#ff0000';
+                    ctx.lineWidth = 2;
+                }
+                else if(parseFloat(e) === lumo){
+                    console.log([parseFloat(e),homo,lumo])
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#0061ff';
+                }
+                else{
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 1;
+
+                }
+                ctx.stroke();
+            });
+            $("#orbitalsCanvas").data('homo-range',homo_range);
+            $("#orbitalsCanvas").data('lumo-range',lumo_range);
+        }
+
+        var canvas = document.getElementById('orbitalsCanvas');
+        fitToContainer(canvas);
+        //console.log(orbitalData);
+        var orbitalMap = generateOrbitalsCoordinates(orbitalData);
+        drawOrbitals(canvas,orbitalMap,homo,lumo,homo_range,lumo_range);
+
+    };
+
 
     /**
      * Update the element name size to fit on the line

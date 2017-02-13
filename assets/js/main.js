@@ -54,6 +54,7 @@ function init() {
             min: 12,
             max:36
         });
+
         bindevents.propertiesViewerHandler();
         bindevents.moleculeStyleChanger();
         bindevents.moleculeSurfaceChanger();
@@ -68,6 +69,8 @@ function init() {
         //TODO: should probably pass in DOM instead of accessors...
         //at least should pass in vars instead of strings.
         util.initQuickFit("#molecule-name", {min: 12, max:36});
+        util.generateOrbitalDiagram(-5,2);
+        bindevents.orbitalDiagramControls();
         bindevents.propertiesViewerHandler();
         bindevents.moleculeStyleChanger();
         bindevents.moleculeSurfaceChanger();

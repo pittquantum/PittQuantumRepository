@@ -22,6 +22,14 @@ module.exports = (function() {
 
     let bindevents = {};
 
+    bindevents.orbitalDiagramControls = function() {
+        $("#orbitalZoomOut").on("click vclick", function(event) {
+            event.preventDefault();
+            var homo_range = $("#orbitalsCanvas").data('homo-range') - 5;
+            var lumo_range = $("#orbitalsCanvas").data('lumo-range') + 2;
+            util.generateOrbitalDiagram(homo_range,lumo_range);
+        });
+    }
     /**
      * Bind the events to the proper font switching buttons for accessibility.
      */
@@ -88,6 +96,12 @@ module.exports = (function() {
     bindevents.propertiesViewerHandler = function() {
         $("#simpleView").on("click vclick", function(event) {
             event.preventDefault();
+            if($("#molecule-details #orbitals:visible").length){
+                $("#molecule-details #orbitals:visible").fadeOut('fast');
+            }
+            if($("#molecule-details table:hidden").length){
+                $("#molecule-details table:hidden").fadeIn('fast');
+            }
             $("#molecule-details table .detailed").fadeOut('fast');
             if (modernizr.localstorage) {
                 localStorage.setItem("moleculeLayout", "simple");
@@ -98,12 +112,29 @@ module.exports = (function() {
         });
         $("#detailedView").on("click vclick", function(event) {
             event.preventDefault();
+            if($("#molecule-details #orbitals:visible").length){
+                $("#molecule-details #orbitals:visible").fadeOut('fast');
+            }
+            if($("#molecule-details table:hidden").length){
+                $("#molecule-details table:hidden").fadeIn('fast');
+            }
             $("#molecule-details table .detailed").removeClass('hidden');
             $("#molecule-details table .detailed").fadeIn('fast');
             if (modernizr.localstorage) {
                 localStorage.setItem("moleculeLayout", "detailed");
             }
             util.bootstrapFeedback("Switched to detailed view ",
+                "feedback", "fa-desktop");
+        });
+        $("#toggleOrbitals").on("click vclick", function(event) {
+            event.preventDefault();
+            console.log("clicked");
+            $("#molecule-details table").fadeOut('fast');
+            $("#molecule-details #orbitals").fadeIn('fast');
+            if (modernizr.localstorage) {
+                localStorage.setItem("moleculeLayout", "orbitals");
+            }
+            util.bootstrapFeedback("Switched to orbitals view",
                 "feedback", "fa-desktop");
         });
     };
