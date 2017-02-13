@@ -25,9 +25,7 @@ module.exports = (function() {
     bindevents.orbitalDiagramControls = function() {
         $("#orbitalZoomOut").on("click vclick", function(event) {
             event.preventDefault();
-            var homo_range = $("#orbitalsCanvas").data('homo-range') - 5;
-            var lumo_range = $("#orbitalsCanvas").data('lumo-range') + 2;
-            util.generateOrbitalDiagram(homo_range,lumo_range);
+            console.log([$("#orbitalsCanvas").data('zoom-factor'),$("#orbitalsCanvas").data('coordinates')]);
         });
     }
     /**
