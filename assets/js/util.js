@@ -9,6 +9,7 @@
 module.exports = (function() {
     //TODO: boostrap plugins seem unnecessary (and depend on jquery)
     require('bootstrap');
+    let canvasLib = require('./canvasLib');
     let accessibility = require('./accessibility'),
         modernizr = require('browsernizr');
     let util = {
@@ -155,22 +156,13 @@ module.exports = (function() {
     * Generates the orbital diagram for the molecule.
     */
     util.generateOrbitalDiagram = function(homo_range,lumo_range) {
-        function fitToContainer(canvas){
-          // Make it visually fill the positioned parent
-          canvas.style.width ='100%';
-          canvas.style.height='100%';
-          // ...then set the internal size to match
-          canvas.height = 500;
-          canvas.width = 400;
-        };
         function maxOfArray(numArray) {
           return Math.max.apply(null, numArray);
-        };
+        }
         function minOfArray(numArray) {
           return Math.min.apply(null, numArray);
-        };
-        function convertRange(originalStart, originalEnd, newStart, newEnd, value, proportion)
-        {
+        }
+        function convertRange(originalStart, originalEnd, newStart, newEnd, value, proportion){
             var originalRange = originalEnd - originalStart;
             var newRange = newEnd - newStart;
             var ratio = newRange / originalRange;
@@ -178,6 +170,7 @@ module.exports = (function() {
             var finalValue = newValue + newStart;
             return finalValue;
         }
+
         function generateOrbitalsCoordinates(orbitals){
             var thresh = 0.02;
 
@@ -210,17 +203,14 @@ module.exports = (function() {
 
             var map = {}
             for(var a=0; a< orbitals.length; a++){
-                map[parseFloat(orbitals[a])] = {'x1':x[a],'y1':y[a]};
+                map[Math.round(parseFloat(orbitals[a]) * 1000) / 1000] = {'x1':x[a],'y1':y[a]};
             }
             return map
 
         }
 
         //Draw orbitals within some energy range. Initially this will be between homo-5 and lumo+2
-        function drawOrbitals(canvas,ctx,orbitalMap,homo,lumo,homo_range,lumo_range){
-            function withinRange(value) {
-              return value >= homo+homo_range && value <= lumo+lumo_range;
-            }
+        function drawOrbitals(s,orbitalMap,homo,lumo,homo_range,lumo_range, factor, lastX, lastY){
 
             //var filtered = Object.keys(orbitalMap).filter(withinRange);
             var filtered = Object.keys(orbitalMap);
@@ -242,11 +232,6 @@ module.exports = (function() {
             minE = minE - spanE * 0.05;
             maxE = maxE + spanE * 0.05;
 
-            //var ctx = canvas.getContext("2d");
-            var p1 = ctx.transformedPoint(0,0);
-            var p2 = ctx.transformedPoint(canvas.width,canvas.height);
-            ctx.clearRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
-
 
             var lowE, highE,lowDist,highDist;
             Object.keys(orbitalMap).sort(function(a,b){return a-b}).forEach(function(e){
@@ -261,196 +246,66 @@ module.exports = (function() {
                 }
             });
 
-            ctx.globalCompositeOperation = "destination-over"
-            ctx.lineWidth = 1;
-            var cw=canvas.width;
-            var ch=canvas.height;
+            var cw=s.width;
+            var ch=s.height;
             var coordinates = {};
             var scrWidthLow = 0;//cw*.25;
             var scrWidthHigh = cw;//cw*.75;
             var scrHeightLow = 0;
             var scrHeightHigh = ch;
+            // var o = new rect("TEST",(0+lastX),(0+lastY),100*factor,.5*factor,'#0061ff','#0061ff',0,factor,lastX,lastY);
+            // o.draw();
+            //orbitalObjects.push(o);
             filtered.forEach(function(e){
                 coordinates = orbitalMap[e];
                 var x1 = convertRange(minX,maxX,scrWidthLow,scrWidthHigh,coordinates['x1']-minX-1,1);
                 var x2 = convertRange(minX,maxX,scrWidthLow,scrWidthHigh,coordinates['x1']-minX+1,1);
                 var y1 = convertRange(minE,maxE,scrHeightLow,scrHeightHigh,coordinates['y1'],1);
-                //console.log(e,y1);
-                ctx.beginPath();
-                ctx.moveTo(x1,y1);
-                ctx.lineTo(x2,y1);
+                // var x1 = ((x[a] - minX)-1)*(cw%rangeX);
+                // var x2 = ((x[a] - minX)+1)*(cw%rangeX);
+                // var y1 = y[a]*(ch%(maxE - minE));
+                //console.log(x1,y1);
                 if(parseFloat(e) === homo || parseFloat(e) === lowE){
-                    //console.log([parseFloat(e),homo,lumo])
-                    ctx.strokeStyle = '#ff0000';
-                    ctx.lineWidth = 2;
+                    var o = new canvasLib.Shape(e,x1,y1,x2-x1,factor,'#ff0000');
                 }
                 else if(parseFloat(e) === lumo || parseFloat(e) === highE){
-                    //console.log([parseFloat(e),homo,lumo])
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = '#0061ff';
+                    var o = new canvasLib.Shape(e,x1,y1,x2-x1,factor,'#0061ff');
                 }
                 else{
-                    ctx.strokeStyle = '#000000';
-                    ctx.lineWidth = .5;
-
-                }
-                ctx.stroke();
+                    var o = new canvasLib.Shape(e,x1,y1,x2-x1,factor,'#000000');
+                } 
+                s.addShape(o);
             });
             // $("#orbitalsCanvas").data('homo-range',homo_range);
             // $("#orbitalsCanvas").data('lumo-range',lumo_range);
         }
-        var scaleFactor = 1.1;
 
-        // Adds ctx.getTransform() - returns an SVGMatrix
-        // Adds ctx.transformedPoint(x,y) - returns an SVGPoint
-        function trackTransforms(ctx){
-            var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
-            var xform = svg.createSVGMatrix();
-            ctx.getTransform = function(){ return xform; };
-            
-            var savedTransforms = [];
-            var save = ctx.save;
-            ctx.save = function(){
-                savedTransforms.push(xform.translate(0,0));
-                return save.call(ctx);
-            };
-            var restore = ctx.restore;
-            ctx.restore = function(){
-                xform = savedTransforms.pop();
-                return restore.call(ctx);
-            };
+        function init() {
+            var s = new canvasLib.CanvasState(document.getElementById('orbitalsCanvas'));
+            var orbitalMap = generateOrbitalsCoordinates(orbitalData);
+            drawOrbitals(s,orbitalMap,-9.059,1.06,-5.0,2.0);
+            // var lowE, highE,lowDist,highDist, minE = minOfArray(Object.keys(orbitalMap)), maxE = maxOfArray(Object.keys(orbitalMap));
+            // Object.keys(orbitalMap).sort(function(a,b){return a-b}).forEach(function(e){
+            //     if (!lowDist || Math.abs(e - (homo+homo_range)) < lowDist){
+            //         lowDist = Math.abs(e - (homo+homo_range));
+            //         lowE = e;
+            //     }
+            //     if (!highDist || Math.abs(e - (lumo+lumo_range)) < highDist){
+            //         highDist = Math.abs(e - (lumo+lumo_range));
+            //         highE = e;
+            //     }
+            // });
 
-            var scale = ctx.scale;
-            ctx.scale = function(sx,sy){
-                xform = xform.scaleNonUniform(sx,sy);
-                return scale.call(ctx,sx,sy);
-            };
-            var rotate = ctx.rotate;
-            ctx.rotate = function(radians){
-                xform = xform.rotate(radians*180/Math.PI);
-                return rotate.call(ctx,radians);
-            };
-            var translate = ctx.translate;
-            ctx.translate = function(dx,dy){
-                xform = xform.translate(dx,dy);
-                return translate.call(ctx,dx,dy);
-            };
-            var transform = ctx.transform;
-            ctx.transform = function(a,b,c,d,e,f){
-                var m2 = svg.createSVGMatrix();
-                m2.a=a; m2.b=b; m2.c=c; m2.d=d; m2.e=e; m2.f=f;
-                xform = xform.multiply(m2);
-                return transform.call(ctx,a,b,c,d,e,f);
-            };
-            var setTransform = ctx.setTransform;
-            ctx.setTransform = function(a,b,c,d,e,f){
-                xform.a = a;
-                xform.b = b;
-                xform.c = c;
-                xform.d = d;
-                xform.e = e;
-                xform.f = f;
-                return setTransform.call(ctx,a,b,c,d,e,f);
-            };
-            var pt  = svg.createSVGPoint();
-            ctx.transformedPoint = function(x,y){
-                pt.x=x; pt.y=y;
-                return pt.matrixTransform(xform.inverse());
-            }
+            // var adjustedLow = convertRange(orbitalMap[maxE]['y1'],orbitalMap[minE]['y1'],0,s.height,orbitalMap[lowE]['y1'],1);
+            // var adjustedHigh = convertRange(orbitalMap[maxE]['y1'],orbitalMap[minE]['y1'],0,s.height,orbitalMap[highE]['y1'],1);
+            // var zoomExp = (adjustedLow + adjustedHigh)/s.height;
+            // s.zoom(zoomExp,{},10);
+
+            // var lastY = convertRange(orbitalMap[maxE]['y1'],orbitalMap[minE]['y1'],0,s.height,(orbitalMap[lumo]['y1']+s.height,orbitalMap[homo]['y1'])/2,1);
+            // var lastX = s.width/2;
+            // s.pan(-lastX,-lastY);
         }
-        var canvas = document.getElementById('orbitalsCanvas');
-        fitToContainer(canvas);
-        var ctx = canvas.getContext('2d');
-        trackTransforms(ctx);
-
-
-        //console.log(orbitalData);
-        var orbitalMap = generateOrbitalsCoordinates(orbitalData);
-        var zoom = function(clicks){
-            var pt = ctx.transformedPoint(lastX,lastY);
-            ctx.translate(pt.x,pt.y);
-            var factor = Math.pow(scaleFactor,clicks);
-            ctx.scale(factor,factor);
-            ctx.translate(-pt.x,-pt.y);
-            drawOrbitals(canvas,ctx,orbitalMap,homo,lumo,homo_range,lumo_range);
-            if($("#orbitalsCanvas").data('zoom-factor')){
-                $("#orbitalsCanvas").data('zoom-factor', parseFloat($("#orbitalsCanvas").data('zoom-factor'))+clicks);
-            }
-            else{
-                $("#orbitalsCanvas").data('zoom-factor',clicks);
-            }               
-        }
-
-        var handleScroll = function(evt){
-            var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 0;
-            if (delta) zoom(delta);
-            return evt.preventDefault() && false;
-        };
-
-
-        var lowE, highE,lowDist,highDist, minE = minOfArray(Object.keys(orbitalMap)), maxE = maxOfArray(Object.keys(orbitalMap));
-        //console.log({"minE":orbitalMap[minE]['y1'],"maxE":orbitalMap[maxE]['y1']});
-        Object.keys(orbitalMap).sort(function(a,b){return a-b}).forEach(function(e){
-            if (!lowDist || Math.abs(e - (homo+homo_range)) < lowDist){
-                lowDist = Math.abs(e - (homo+homo_range));
-                lowE = e;
-            }
-            if (!highDist || Math.abs(e - (lumo+lumo_range)) < highDist){
-                highDist = Math.abs(e - (lumo+lumo_range));
-                highE = e;
-            }
-        });
-        // console.log(
-        //     {
-        //         "low-end": {
-        //             "lowE":lowE,
-        //             "homo+homo_range":homo+homo_range,
-        //             "y-coordinate":orbitalMap[lowE]['y1'],
-        //             "adjusted":convertRange(orbitalMap[maxE]['y1'],orbitalMap[minE]['y1'],0,canvas.height,orbitalMap[lowE]['y1'],1)
-        //         },
-        //         "high-end": {
-        //             "highE":highE,
-        //             "lumo+lumo_range":lumo+lumo_range,
-        //             "y-coordinate":orbitalMap[highE]['y1'],
-        //             "adjusted":convertRange(orbitalMap[maxE]['y1'],orbitalMap[minE]['y1'],0,canvas.height,orbitalMap[highE]['y1'],1)
-        //         }
-        //     });
-        var lastY = convertRange(orbitalMap[maxE]['y1'],orbitalMap[minE]['y1'],0,canvas.height,(orbitalMap[lumo]['y1']+canvas.height,orbitalMap[homo]['y1'])/2,1);
-        var lastX=canvas.width/2;
-
-        var adjustedLow = convertRange(orbitalMap[maxE]['y1'],orbitalMap[minE]['y1'],0,canvas.height,orbitalMap[lowE]['y1'],1);
-        var adjustedHigh = convertRange(orbitalMap[maxE]['y1'],orbitalMap[minE]['y1'],0,canvas.height,orbitalMap[highE]['y1'],1);
-        var zoomExp = (adjustedLow + adjustedHigh)/canvas.height;
-        var clickLevel = 10 * Math.pow(scaleFactor,zoomExp);
-        zoom(clickLevel);
-        $("#orbitalsCanvas").data('zoom-factor',clickLevel);
-        $("#orbitalsCanvas").data('coordinates', [lastX,lastY]);
-        var dragStart,dragged;
-        canvas.addEventListener('mousedown',function(evt){
-            document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
-            lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
-            lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
-            dragStart = ctx.transformedPoint(lastX,lastY);
-            dragged = false;
-        },false);
-        canvas.addEventListener('mousemove',function(evt){
-            lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
-            lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
-            dragged = true;
-            if (dragStart){
-                var pt = ctx.transformedPoint(lastX,lastY);
-                ctx.translate(pt.x-dragStart.x,pt.y-dragStart.y);
-                $("#orbitalsCanvas").data('coordinates', [lastX,lastY]);
-                drawOrbitals(canvas,ctx,orbitalMap,homo,lumo,homo_range,lumo_range);
-            }
-        },false);
-        canvas.addEventListener('mouseup',function(evt){
-            dragStart = null;
-            if (!dragged) zoom(evt.shiftKey ? -1 : 1 );
-        },false);
-        canvas.addEventListener('DOMMouseScroll',handleScroll,false);
-        canvas.addEventListener('mousewheel',handleScroll,false);
-        drawOrbitals(canvas,ctx,orbitalMap,homo,lumo,homo_range,lumo_range);
+        init();
 
     };
 
