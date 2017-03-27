@@ -4,10 +4,6 @@
 body, figure {
     margin: 0;
 }
-#orbitalsCanvas{
-	width:100%;
-	height:600px;
-}
 .navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse, .pre-scrollable {
     max-height: 340px;
 }
@@ -6227,5 +6223,55 @@ body footer .footer-social .fa {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+#orbitals {
+	position:relative;
+}
+/* Tooltip text */
+#orbitals .tooltiptext {
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.#orbitals:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+.tooltip-right{
+
+}
+.tooltip-left{
+
+}
+.tooltip-right::after{
+	content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+.tooltip-left::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
 }
 

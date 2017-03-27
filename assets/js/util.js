@@ -162,17 +162,17 @@ module.exports = (function() {
         function minOfArray(numArray) {
           return Math.min.apply(null, numArray);
         }
-        function convertRange(originalStart, originalEnd, newStart, newEnd, value, proportion){
+        function convertRange(originalStart, originalEnd, newStart, newEnd, value){
             var originalRange = originalEnd - originalStart;
             var newRange = newEnd - newStart;
             var ratio = newRange / originalRange;
-            var newValue = value * ratio * proportion;
+            var newValue = value * ratio;
             var finalValue = newValue + newStart;
             return finalValue;
         }
 
         function generateOrbitalsCoordinates(orbitals){
-            var thresh = 0.02;
+            var thresh = 0.01;
 
             // get the energy range
             var minE = orbitals[0];
@@ -258,9 +258,9 @@ module.exports = (function() {
             //orbitalObjects.push(o);
             filtered.forEach(function(e){
                 coordinates = orbitalMap[e];
-                var x1 = convertRange(minX,maxX,scrWidthLow,scrWidthHigh,coordinates['x1']-minX-1,1);
-                var x2 = convertRange(minX,maxX,scrWidthLow,scrWidthHigh,coordinates['x1']-minX+1,1);
-                var y1 = convertRange(minE,maxE,scrHeightLow,scrHeightHigh,coordinates['y1'],1);
+                var x1 = convertRange(minX,maxX,scrWidthLow,scrWidthHigh,coordinates['x1']-minX-1);
+                var x2 = convertRange(minX,maxX,scrWidthLow,scrWidthHigh,coordinates['x1']-minX+1);
+                var y1 = convertRange(minE,maxE,scrHeightLow,scrHeightHigh,coordinates['y1']);
                 // var x1 = ((x[a] - minX)-1)*(cw%rangeX);
                 // var x2 = ((x[a] - minX)+1)*(cw%rangeX);
                 // var y1 = y[a]*(ch%(maxE - minE));
@@ -283,7 +283,7 @@ module.exports = (function() {
         function init() {
             var s = new canvasLib.CanvasState(document.getElementById('orbitalsCanvas'));
             var orbitalMap = generateOrbitalsCoordinates(orbitalData);
-            drawOrbitals(s,orbitalMap,-9.059,1.06,-5.0,2.0);
+            drawOrbitals(s,orbitalMap,homo,lumo,homo_range,lumo_range);
             // var lowE, highE,lowDist,highDist, minE = minOfArray(Object.keys(orbitalMap)), maxE = maxOfArray(Object.keys(orbitalMap));
             // Object.keys(orbitalMap).sort(function(a,b){return a-b}).forEach(function(e){
             //     if (!lowDist || Math.abs(e - (homo+homo_range)) < lowDist){

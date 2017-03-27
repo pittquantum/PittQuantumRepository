@@ -1,6 +1,8 @@
 'use strict';
 /**
  * @fileoverview Library for dealing with an interactable canvas.
+ * @author mlputterman@gmail.com (Laurence Putterman)
+ * @author Adapted from Simon Sarris' Canvas Tutorial (sarris@acm.org)
  */
 
 // Constructor for Shape objects to hold data for all drawn objects.
@@ -62,9 +64,8 @@ Shape.prototype.contains = function(mx, my) {
     this.selection = null;
     this.dragoffx = 0; // See mousedown and mousemove events for explanation
     this.dragoffy = 0;
-    
+    this.currToolTipID = null;
     // **** events ****
-
     var myState = this;
     
     //fixes a problem where double clicking causes text to get selected on the canvas
@@ -82,8 +83,6 @@ Shape.prototype.contains = function(mx, my) {
       for (var i = l-1; i >= 0; i--) {
         if (shapes[i].contains(mx, my)) {
           var mySel = shapes[i];
-          // Keep track of where in the object we clicked
-          // so we can move it smoothly (see mousemove)
           console.log(mySel.energyLevel);
           myState.selection = mySel;
           myState.valid = false;
@@ -98,14 +97,13 @@ Shape.prototype.contains = function(mx, my) {
       }
     }, true);
     canvas.addEventListener('mousemove', function(e) {
+      var mouse = myState.getMouse(e);
+      var mx = mouse.x;
+      var my = mouse.y;
+      var shapes = myState.shapes;
+      var l = shapes.length;
       if (myState.dragging && !myState.selection){
-          var mouse = myState.getMouse(e);
-          var mx = mouse.x;
-          var my = mouse.y;
-          var shapes = myState.shapes;
-          var l = shapes.length;
-            // We don't want to drag the object by its top-left corner, we want to drag it
-            // from where we clicked. Thats why we saved the offset and use it here
+          removeCurrToolTip();
           for (var i = l-1; i >= 0; i--) {
               var mySel = shapes[i];
               mySel.y -= myState.dragoffy-my; 
@@ -115,14 +113,21 @@ Shape.prototype.contains = function(mx, my) {
           myState.dragoffx = mx;
           myState.dragoffy = my;
       }
+      else{
+        for (var i = l-1; i >= 0; i--) {
+          if (shapes[i].contains(mx, my)) {
+            var mySel = shapes[i];
+            removeCurrToolTip();
+            createToolTip(mx,my,mySel);
+            myState.selection = mySel;
+            myState.valid = false;
+            return;
+          }
+        }
+      }
     }, true);
     canvas.addEventListener('mouseup', function(e) {
       myState.dragging = false;
-    }, true);
-    // double click for making new shapes
-    canvas.addEventListener('dblclick', function(e) {
-      var mouse = myState.getMouse(e);
-      myState.addShape(new Shape(mouse.x - 10, mouse.y - 10, 20, 20, 'rgba(0,255,0,.6)'));
     }, true);
     //canvas.addEventListener('DOMMouseScroll',handleScroll,false);
    // canvas.addEventListener('mousewheel',handleScroll,false);
@@ -134,10 +139,48 @@ Shape.prototype.contains = function(mx, my) {
           }
           return evt.preventDefault() && false;
     },false); 
+
+    // *** Helper Functions *** //
+    
+    function createToolTip(mx,my,mySel){
+      var id = mySel.energyLevel+"-tooltip";
+      var tooltip = document.createElement("span");
+      var idNode = document.createAttribute("id");
+      var classNode = document.createAttribute("class");
+      var styleNode = document.createAttribute("style");
+      var textNode = document.createTextNode(mySel.energyLevel);
+
+      idNode.value = id;
+      classNode.value = "tooltiptext ";
+      if(mx >= (mySel.x+mySel.x+mySel.w)/2){
+        classNode.value += "tooltip-left ";
+        styleNode.value = 'left:'+(mySel.x+mySel.w+10)+'px;';
+      }
+      else{
+         classNode.value += "tooltip-right ";
+          styleNode.value = 'left:'+(mySel.x-130)+'px;';
+      }
+
+      styleNode.value += 'opacity:1;top:'+(my-16)+'px;';
+      tooltip.setAttributeNode(idNode);
+      tooltip.setAttributeNode(classNode);
+      tooltip.setAttributeNode(styleNode);
+      tooltip.appendChild(textNode);
+      canvas.parentNode.appendChild(tooltip);
+      myState.currToolTipID = id;
+    }
+    function removeCurrToolTip(){
+      if(myState.currToolTipID){
+        var element = document.getElementById(myState.currToolTipID);
+        element.parentNode.removeChild(element);
+        myState.currToolTipID = null;
+      }
+    }
+
     // **** Options! ****
     
     this.selectionColor = '#CC0000';
-    this.selectionWidth = 5;  
+    this.selectionWidth = 1;  
     this.interval = 30;
     setInterval(function() { myState.draw(); }, myState.interval);
   }
