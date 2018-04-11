@@ -114,7 +114,23 @@ module.exports = (function() {
         viewer.removeAllSurfaces();
         viewer.render();
     };
-
+    /**
+     * Toggle the surface of this viewer.
+     * @param  {GLViewer}
+     */
+    threeDMole.toggleSurface2 = function(viewer) {
+        viewer = typeof viewer !== 'undefined' ?
+            viewer : threeDMole.allViewers[0];
+        threeDMole.addSurface(viewer);
+    };
+    /**
+    * Add all the surface to this viewer
+    * @param  {GLViewer}
+    */
+    threeDMole.addSurface = function(viewer) {
+        viewer.addSurface($3Dmol.SurfaceType.MS, {color: "white", opacity: 0.80});
+        viewer.render();
+    };
     /**
      * Reset the viewer to the default zoom level
      */

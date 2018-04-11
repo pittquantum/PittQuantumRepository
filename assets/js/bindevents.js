@@ -176,11 +176,19 @@ module.exports = (function() {
         if ($(selector).length) {
             $(selector).on("click vclick", function(event) {
                 event.preventDefault();
-                threeDMole.toggleSurface();
-                $(this).addClass('disabled btn-success');
-                $(this).removeClass('btn-danger');
-                $(this).html('Surface Removed');
+                if $(this).text()=="Remove Surface"{
+                    threeDMole.toggleSurface();
+                    $(this).addClass('btn-success');
+                    $(this).removeClass('btn-danger');
+                    $(this).html('Add Surface');
                     //"feedback", "fa-desktop");
+                }
+                else {
+                    threeDMole.toggleSurface2();
+                    $(this).addClass('btn-danger');
+                    $(this).removeClass('btn-success');
+                    $(this).html('Remove Surface');
+                }
             });
         }
     };
