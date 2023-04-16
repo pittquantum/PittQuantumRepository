@@ -5,7 +5,7 @@ import tempfile
 
 class PQRTestCase(unittest.TestCase):
 
-    mol = "GNBHRKFJIUUOQI-UHFFFAOYSA-N"
+    mol = "ULGZDMOVFRHVEP-RWJQBGPGSA-N"
 
     def setUp(self):
         pqr.pqr.config['TESTING'] = True

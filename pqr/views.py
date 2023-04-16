@@ -14,7 +14,7 @@ from flask.ext.mandrill import Mandrill
 from pymongo import MongoClient
 
 # PQR specific imports
-from pqr import pqr, secret_config
+from pqr import pqr
 
 from settings import APP_JSON, APP_MOL2, APP_ARTICLES
 
@@ -658,6 +658,7 @@ def get_weekly_molecule_list():
     sunday = today - (today % 7)
     sunday = datetime.date.fromordinal(sunday)
     sunday = datetime.date.isoformat(sunday)
+    last = None
     with open("./pqr/server_start/mol_of_the_week", "r") as molfile:
         for line in molfile:
 
@@ -668,13 +669,15 @@ def get_weekly_molecule_list():
             tokens = line.strip().split(",")
             if len(tokens) < 3:
                 continue
-            if tokens[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
-                return_list.append( # inchikey, title, date
-                    tokens[1] + "," + tokens[2].title() + "," + tokens[0][0:4] + '-' + tokens[0][4:6] + '-' + tokens[0][6:]
-                )
 
-            else: # We are now past the current date, don't show them yet
-                return return_list
+            # inchikey, title, date
+            last = tokens[1] + "," + tokens[2].title() + "," + tokens[0][0:4] + '-' + tokens[0][4:6] + '-' + tokens[0][6:]
+            if tokens[0] <= datetime.datetime.isoformat(datetime.datetime.now()).replace('-', ''):
+                return_list.append(last)
+            else:  # We are now past the current date, don't show them yet
+                continue
+    return return_list or [last]
+
 
 def get_json_data_file(key_first_two, key):
     try:

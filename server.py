@@ -1,4 +1,4 @@
-#!./venv/bin/python
+#!/usr/bin/env python
 from pymongo import MongoClient
 import datetime
 import threading

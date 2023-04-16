@@ -1,6 +1,6 @@
 'use strict';
 
-var gulp = require('gulp'),
+const gulp = require('gulp'),
     path = require('path'),
     concat = require('gulp-concat'),
     autoprefixer = require('gulp-autoprefixer'),
@@ -16,9 +16,10 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     tape = require('gulp-tape'),
     watch = require('gulp-watch');
-var paths = {
-    source : path.join(__dirname, 'assets/'),
-    dist : path.join(__dirname, 'pqr/static/'),
+
+const paths = {
+    source: path.join(__dirname, 'assets/'),
+    dist: path.join(__dirname, 'pqr/static/'),
     style: 'style/',
     js: 'js/',
     test: 'test/'
@@ -72,11 +73,11 @@ gulp.task('js', function () {
             .pipe(gulp.dest(paths.dist + paths.js));
     });
 });
-gulp.task('compile', ['less', 'js']);
+gulp.task('compile', gulp.series('less', 'js'));
 //test
 gulp.task('test', function() {
   return gulp.src(paths.source + paths.test + 'main.test.js')
     .pipe(tape());
 });
 //default
-gulp.task('default', ['compile']);
+gulp.task('default', gulp.series('compile'));
