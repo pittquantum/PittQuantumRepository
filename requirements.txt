@@ -1,4 +1,5 @@
-Flask
+Flask==0.11.0
+Werkzeug==0.16.1
 pymongo
 Flask-Cache
 flask-mandrill

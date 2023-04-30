@@ -176,14 +176,13 @@ module.exports = (function() {
         if ($(selector).length) {
             $(selector).on("click vclick", function(event) {
                 event.preventDefault();
-                if $(this).text()=="Remove Surface"{
+                if ($(this).text()==="Remove Surface") {
                     threeDMole.toggleSurface();
                     $(this).addClass('btn-success');
                     $(this).removeClass('btn-danger');
                     $(this).html('Add Surface');
                     //"feedback", "fa-desktop");
-                }
-                else {
+                } else {
                     threeDMole.toggleSurface2();
                     $(this).addClass('btn-danger');
                     $(this).removeClass('btn-success');

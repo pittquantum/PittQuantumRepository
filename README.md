@@ -8,7 +8,7 @@ PQR is built upon Flask, a lightweight MVC in Python. PQR also uses MongoDB. We 
 
 To run PQR locally, do the following:
 1. Clone this repository
-2. Make sure you have Python 2.7.6 or Python 2.7.9
+2. Make sure you have Python 2.7.18.
 3. Install `virtualenv`. On Debian systems, run `sudo pip install virtualenv`. On Windows, `pip install virtualenv`
 4. Make sure you are in the root of the repo, aka the same level as this README. Then, run `virtualenv venv`. This will create a virtual environment named `venv` in the root of the repo.
 5. On Linux systems, run `. venv/bin/activate` to activate the virtual enviroment. On Windows, run `.\venv\Scripts\activate`.
